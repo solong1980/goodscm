@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xlw.goodscm.dao.ChannelSaleRecodeMapper">
+  <resultMap id="BaseResultMap" type="com.xlw.goodscm.model.ChannelSaleRecode">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="channel" jdbcType="BIGINT" property="channel" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="release_state" jdbcType="SMALLINT" property="releaseState" />
+    <result column="release_price" jdbcType="DECIMAL" property="releasePrice" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from channel_sale_recode
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xlw.goodscm.model.ChannelSaleRecode">
+    insert into channel_sale_recode (id, channel, goods_id, 
+      release_state, release_price, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{channel,jdbcType=BIGINT}, #{goodsId,jdbcType=INTEGER}, 
+      #{releaseState,jdbcType=SMALLINT}, #{releasePrice,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.ChannelSaleRecode">
+    update channel_sale_recode
+    set channel = #{channel,jdbcType=BIGINT},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      release_state = #{releaseState,jdbcType=SMALLINT},
+      release_price = #{releasePrice,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, channel, goods_id, release_state, release_price, create_time, update_time
+    from channel_sale_recode
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, channel, goods_id, release_state, release_price, create_time, update_time
+    from channel_sale_recode
+  </select>
+</mapper>

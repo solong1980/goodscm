@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xlw.goodscm.dao.GoodsHisMapper">
+  <resultMap id="BaseResultMap" type="com.xlw.goodscm.model.GoodsHis">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name_zh" jdbcType="VARCHAR" property="nameZh" />
+    <result column="name_en" jdbcType="VARCHAR" property="nameEn" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="operator_id" jdbcType="BIGINT" property="operatorId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from goods_his
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xlw.goodscm.model.GoodsHis">
+    insert into goods_his (id, goods_id, code, 
+      name_zh, name_en, status, 
+      create_time, update_time, operator_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, 
+      #{nameZh,jdbcType=VARCHAR}, #{nameEn,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=BIGINT}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.GoodsHis">
+    update goods_his
+    set goods_id = #{goodsId,jdbcType=BIGINT},
+      code = #{code,jdbcType=VARCHAR},
+      name_zh = #{nameZh,jdbcType=VARCHAR},
+      name_en = #{nameEn,jdbcType=VARCHAR},
+      status = #{status,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      operator_id = #{operatorId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, goods_id, code, name_zh, name_en, status, create_time, update_time, operator_id
+    from goods_his
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, goods_id, code, name_zh, name_en, status, create_time, update_time, operator_id
+    from goods_his
+  </select>
+</mapper>
