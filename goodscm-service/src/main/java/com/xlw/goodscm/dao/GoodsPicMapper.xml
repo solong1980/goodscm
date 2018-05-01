@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xlw.goodscm.dao.GoodsPicMapper">
+	<resultMap id="BaseResultMap" type="com.xlw.goodscm.model.GoodsPic">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+		<result column="no" property="no" jdbcType="SMALLINT" />
+		<result column="relative_path" property="relativePath" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="is_thumbnail" property="isThumbnail" jdbcType="BIT" />
+		<result column="state" property="state" jdbcType="TINYINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from goods_pic
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insert" parameterType="com.xlw.goodscm.model.GoodsPic" useGeneratedKeys="true" keyProperty="id">
+		insert into goods_pic (goods_id, no,
+		relative_path, name, is_thumbnail,
+		state, create_time)
+		values (#{goodsId,jdbcType=BIGINT}, #{no,jdbcType=SMALLINT},
+		#{relativePath,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR}, #{isThumbnail,jdbcType=BIT},
+		#{state,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.GoodsPic">
+		update goods_pic
+		set goods_id = #{goodsId,jdbcType=BIGINT},
+		no = #{no,jdbcType=SMALLINT},
+		relative_path = #{relativePath,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR},
+		is_thumbnail = #{isThumbnail,jdbcType=BIT},
+		state =
+		#{state,jdbcType=TINYINT},
+		create_time = #{createTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select id, goods_id, no, relative_path, name, is_thumbnail, state,
+		create_time
+		from goods_pic
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, goods_id, no, relative_path, name, is_thumbnail, state, create_time
+		from goods_pic
+	</select>
+
+	<select id="getGoodsThumbnail" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select id, goods_id, no, relative_path, name, is_thumbnail, state,
+		create_time
+		from goods_pic where goods_id=#{goodsId} and is_thumbnail = 1 
+		order by create_time desc limit 1;
+	</select>
+
+</mapper>

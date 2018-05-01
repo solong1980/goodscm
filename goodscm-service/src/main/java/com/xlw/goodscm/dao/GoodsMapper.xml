@@ -1,88 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xlw.goodscm.dao.GoodsMapper">
-  <resultMap id="BaseResultMap" type="com.xlw.goodscm.model.Goods">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="code" jdbcType="VARCHAR" property="code" />
-    <result column="vendor_goods_code" jdbcType="VARCHAR" property="vendorGoodsCode" />
-    <result column="name_zh" jdbcType="VARCHAR" property="nameZh" />
-    <result column="name_en" jdbcType="VARCHAR" property="nameEn" />
-    <result column="net_weight" jdbcType="DECIMAL" property="netWeight" />
-    <result column="weight_after_packing" jdbcType="DECIMAL" property="weightAfterPacking" />
-    <result column="length" jdbcType="DECIMAL" property="length" />
-    <result column="width" jdbcType="DECIMAL" property="width" />
-    <result column="height" jdbcType="DECIMAL" property="height" />
-    <result column="packing_length" jdbcType="DECIMAL" property="packingLength" />
-    <result column="packing_width" jdbcType="DECIMAL" property="packingWidth" />
-    <result column="packing_height" jdbcType="DECIMAL" property="packingHeight" />
-    <result column="purchase_price" jdbcType="DECIMAL" property="purchasePrice" />
-    <result column="retail_price" jdbcType="DECIMAL" property="retailPrice" />
-    <result column="trade_price" jdbcType="DECIMAL" property="tradePrice" />
-    <result column="stock" jdbcType="DECIMAL" property="stock" />
-    <result column="stock_unit" jdbcType="SMALLINT" property="stockUnit" />
-    <result column="status" jdbcType="SMALLINT" property="status" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="memo" jdbcType="LONGVARCHAR" property="memo" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from goods
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.xlw.goodscm.model.Goods">
-    insert into goods (id, code, vendor_goods_code, 
-      name_zh, name_en, net_weight, 
-      weight_after_packing, length, width, 
-      height, packing_length, packing_width, 
-      packing_height, purchase_price, retail_price, 
-      trade_price, stock, stock_unit, 
-      status, create_time, update_time, 
-      memo)
-    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{vendorGoodsCode,jdbcType=VARCHAR}, 
-      #{nameZh,jdbcType=VARCHAR}, #{nameEn,jdbcType=VARCHAR}, #{netWeight,jdbcType=DECIMAL}, 
-      #{weightAfterPacking,jdbcType=DECIMAL}, #{length,jdbcType=DECIMAL}, #{width,jdbcType=DECIMAL}, 
-      #{height,jdbcType=DECIMAL}, #{packingLength,jdbcType=DECIMAL}, #{packingWidth,jdbcType=DECIMAL}, 
-      #{packingHeight,jdbcType=DECIMAL}, #{purchasePrice,jdbcType=DECIMAL}, #{retailPrice,jdbcType=DECIMAL}, 
-      #{tradePrice,jdbcType=DECIMAL}, #{stock,jdbcType=DECIMAL}, #{stockUnit,jdbcType=SMALLINT}, 
-      #{status,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{memo,jdbcType=LONGVARCHAR})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.Goods">
-    update goods
-    set code = #{code,jdbcType=VARCHAR},
-      vendor_goods_code = #{vendorGoodsCode,jdbcType=VARCHAR},
-      name_zh = #{nameZh,jdbcType=VARCHAR},
-      name_en = #{nameEn,jdbcType=VARCHAR},
-      net_weight = #{netWeight,jdbcType=DECIMAL},
-      weight_after_packing = #{weightAfterPacking,jdbcType=DECIMAL},
-      length = #{length,jdbcType=DECIMAL},
-      width = #{width,jdbcType=DECIMAL},
-      height = #{height,jdbcType=DECIMAL},
-      packing_length = #{packingLength,jdbcType=DECIMAL},
-      packing_width = #{packingWidth,jdbcType=DECIMAL},
-      packing_height = #{packingHeight,jdbcType=DECIMAL},
-      purchase_price = #{purchasePrice,jdbcType=DECIMAL},
-      retail_price = #{retailPrice,jdbcType=DECIMAL},
-      trade_price = #{tradePrice,jdbcType=DECIMAL},
-      stock = #{stock,jdbcType=DECIMAL},
-      stock_unit = #{stockUnit,jdbcType=SMALLINT},
-      status = #{status,jdbcType=SMALLINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      memo = #{memo,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, code, vendor_goods_code, name_zh, name_en, net_weight, weight_after_packing, 
-    length, width, height, packing_length, packing_width, packing_height, purchase_price, 
-    retail_price, trade_price, stock, stock_unit, status, create_time, update_time, memo
-    from goods
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, code, vendor_goods_code, name_zh, name_en, net_weight, weight_after_packing, 
-    length, width, height, packing_length, packing_width, packing_height, purchase_price, 
-    retail_price, trade_price, stock, stock_unit, status, create_time, update_time, memo
-    from goods
-  </select>
+	<resultMap id="BaseResultMap" type="com.xlw.goodscm.model.Goods">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="code" jdbcType="VARCHAR" property="code" />
+		<result column="vendor_goods_code" jdbcType="VARCHAR" property="vendorGoodsCode" />
+		<result column="name_zh" jdbcType="VARCHAR" property="nameZh" />
+		<result column="name_en" jdbcType="VARCHAR" property="nameEn" />
+		<result column="net_weight" jdbcType="DECIMAL" property="netWeight" />
+		<result column="weight_after_packing" jdbcType="DECIMAL" property="weightAfterPacking" />
+		<result column="length" jdbcType="DECIMAL" property="length" />
+		<result column="width" jdbcType="DECIMAL" property="width" />
+		<result column="height" jdbcType="DECIMAL" property="height" />
+		<result column="packing_length" jdbcType="DECIMAL" property="packingLength" />
+		<result column="packing_width" jdbcType="DECIMAL" property="packingWidth" />
+		<result column="packing_height" jdbcType="DECIMAL" property="packingHeight" />
+		<result column="purchase_price" jdbcType="DECIMAL" property="purchasePrice" />
+		<result column="retail_price" jdbcType="DECIMAL" property="retailPrice" />
+		<result column="trade_price" jdbcType="DECIMAL" property="tradePrice" />
+		<result column="stock" jdbcType="DECIMAL" property="stock" />
+		<result column="stock_unit" jdbcType="SMALLINT" property="stockUnit" />
+		<result column="status" jdbcType="SMALLINT" property="status" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+		<result column="memo" jdbcType="LONGVARCHAR" property="memo" />
+	</resultMap>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from goods
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	
+	<insert id="insert" parameterType="com.xlw.goodscm.model.Goods" useGeneratedKeys="true" keyProperty="id">
+		insert into goods (code, vendor_goods_code,
+		name_zh, name_en, net_weight,
+		weight_after_packing, length, width,
+		height, packing_length, packing_width,
+		packing_height, purchase_price, retail_price,
+		trade_price, stock, stock_unit,
+		status, create_time, update_time,
+		memo)
+		values (#{code,jdbcType=VARCHAR}, #{vendorGoodsCode,jdbcType=VARCHAR},
+		#{nameZh,jdbcType=VARCHAR}, #{nameEn,jdbcType=VARCHAR}, #{netWeight,jdbcType=DECIMAL},
+		#{weightAfterPacking,jdbcType=DECIMAL}, #{length,jdbcType=DECIMAL}, #{width,jdbcType=DECIMAL},
+		#{height,jdbcType=DECIMAL}, #{packingLength,jdbcType=DECIMAL}, #{packingWidth,jdbcType=DECIMAL},
+		#{packingHeight,jdbcType=DECIMAL}, #{purchasePrice,jdbcType=DECIMAL}, #{retailPrice,jdbcType=DECIMAL},
+		#{tradePrice,jdbcType=DECIMAL}, #{stock,jdbcType=DECIMAL}, #{stockUnit,jdbcType=SMALLINT},
+		#{status,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+		#{memo,jdbcType=LONGVARCHAR})
+	</insert>
+	
+	<update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.Goods">
+		update goods
+		set 
+		<if test="#{code != null}">
+			code = #{code,jdbcType=VARCHAR},
+		</if>
+		vendor_goods_code = #{vendorGoodsCode,jdbcType=VARCHAR},
+		name_zh = #{nameZh,jdbcType=VARCHAR},
+		name_en = #{nameEn,jdbcType=VARCHAR},
+		net_weight = #{netWeight,jdbcType=DECIMAL},
+		weight_after_packing = #{weightAfterPacking,jdbcType=DECIMAL},
+		length = #{length,jdbcType=DECIMAL},
+		width = #{width,jdbcType=DECIMAL},
+		height = #{height,jdbcType=DECIMAL},
+		packing_length = #{packingLength,jdbcType=DECIMAL},
+		packing_width = #{packingWidth,jdbcType=DECIMAL},
+		packing_height = #{packingHeight,jdbcType=DECIMAL},
+		purchase_price = #{purchasePrice,jdbcType=DECIMAL},
+		retail_price = #{retailPrice,jdbcType=DECIMAL},
+		trade_price = #{tradePrice,jdbcType=DECIMAL},
+		stock = #{stock,jdbcType=DECIMAL},
+		stock_unit = #{stockUnit,jdbcType=SMALLINT},
+		status = #{status,jdbcType=SMALLINT},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		update_time = #{updateTime,jdbcType=TIMESTAMP},
+		memo = #{memo,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select id, code, vendor_goods_code, name_zh, name_en, net_weight, weight_after_packing,
+		length, width, height, packing_length, packing_width, packing_height, purchase_price,
+		retail_price, trade_price, stock, stock_unit, status, create_time, update_time, memo
+		from goods
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, code, vendor_goods_code, name_zh, name_en, net_weight, weight_after_packing,
+		length, width, height, packing_length, packing_width, packing_height, purchase_price,
+		retail_price, trade_price, stock, stock_unit, status, create_time, update_time, memo
+		from goods
+	</select>
+	
+	<update id="updateStatus" parameterType="com.xlw.goodscm.model.Goods">
+		update goods
+		set status = #{status,jdbcType=SMALLINT} 
+		where id = #{id,jdbcType=BIGINT}
+	</update>
 </mapper>

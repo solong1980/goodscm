@@ -1,5 +1,6 @@
 package com.xlw.goodscm.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.xlw.goodscm.model.Goods;
@@ -12,7 +13,11 @@ public interface GoodsService {
 
 	Goods getById(Long id);
 
-	void add(Goods goods);
+	void add(Goods goods) throws IOException;
 
 	void update(Goods goods);
+
+	void updateStatus(Goods goods);
+
+	void deleteById(Long id);
 }

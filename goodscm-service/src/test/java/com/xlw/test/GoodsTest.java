@@ -1,5 +1,8 @@
 package com.xlw.test;
 
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +12,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,9 +20,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.utils.JsonUtilTool;
 
 public class GoodsTest {
@@ -52,10 +59,10 @@ public class GoodsTest {
 				JSONObject.class);
 		JSONObject body = forEntity.getBody();
 		HttpHeaders headers = forEntity.getHeaders();
-//		for (Entry<String, List<String>> entry : headers.entrySet()) {
-//			System.out.println(entry.getKey());
-//			System.out.println(entry.getValue());
-//		}
+		// for (Entry<String, List<String>> entry : headers.entrySet()) {
+		// System.out.println(entry.getKey());
+		// System.out.println(entry.getValue());
+		// }
 		System.out.println(JsonUtilTool.toJson(body));
 		Integer status = body.getInteger("status");
 		if (status == 200) {
@@ -65,13 +72,12 @@ public class GoodsTest {
 		}
 	}
 
-	private JSONObject doGet(String url) {
+	public JSONObject doGet(String url) {
 		JSONObject body = restTemplate.getForEntity(url, JSONObject.class).getBody();
 		return body;
 	}
 
-	private JSONObject doPost(String url, Object object) {
-		// post json数据
+	public JSONObject doPost(String url, Object object) {
 		JSONObject postData = JsonUtilTool.toJsonObj(object);
 		JSONObject json = restTemplate.postForEntity(url, postData, JSONObject.class).getBody();
 		return json;
@@ -81,7 +87,7 @@ public class GoodsTest {
 		MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
 		headers.setContentType(type);
 		headers.add("Accept", MediaType.APPLICATION_JSON.toString());
-		//headers.add("Authorization", "35e8cb2b-96ee-44da-9dc1-41650166753d");
+		// headers.add("Authorization", "35e8cb2b-96ee-44da-9dc1-41650166753d");
 		if (jsonObj == null) {
 			HttpEntity<String> formEntity = new HttpEntity<String>(headers);
 			String result = restTemplate.getForObject(url, String.class, formEntity);
@@ -91,10 +97,11 @@ public class GoodsTest {
 
 			ResponseEntity<String> postForEntity = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class, new HashMap<>());
 
-			//String result = restTemplate.postForObject(url, formEntity, String.class);
-			//System.out.println(result);
-			
-			//ResponseEntity<String> postForEntity = restTemplate.postForEntity(url, jsonObj, String.class, formEntity);
+			// String result = restTemplate.postForObject(url, formEntity, String.class);
+			// System.out.println(result);
+
+			// ResponseEntity<String> postForEntity = restTemplate.postForEntity(url,
+			// jsonObj, String.class, formEntity);
 			HttpStatus httpStatus = postForEntity.getStatusCode();
 			if (httpStatus.is3xxRedirection()) {
 				HttpHeaders headers2 = postForEntity.getHeaders();
@@ -109,6 +116,7 @@ public class GoodsTest {
 				Object object = jsonToMap.get("status");
 				if ("201".equals(object.toString())) {
 					HttpHeaders login = login();
+					System.out.println(login);
 				} else {
 
 				}
@@ -118,13 +126,106 @@ public class GoodsTest {
 
 	@Test
 	public void testDologin() {
-		// http://localhost:8080/login/dologin
 		login();
 	}
 
 	@Test
 	public void testGoodsQuery() {
 		sendWithHeader(localhost + "/goods/query", new JSONObject(), new HttpHeaders());
+	}
+
+	@Test
+	public void testGoodsAdd() throws URISyntaxException {
+		URI url = new URI(localhost + "/goods/add");
+
+		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
+
+		FileSystemResource resource = new FileSystemResource(new File("2016-10-19 2016-10-19 002 001.jpg"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-10-19 2016-10-19 002 001.jpg");
+
+		resource = new FileSystemResource(new File("2016-10-27 2016-10-27 001 001.jpg"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-10-27 2016-10-27 001 001.jpg");
+
+		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.gif"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-11-01 2016-11-01 001 001.gif");
+		Goods goods = new Goods();
+		goods.setCode("1111");
+		JSONObject jsonObj = JsonUtilTool.toJsonObj(goods);
+		param.setAll(jsonObj);
+
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
+
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+		System.out.println(responseEntity.getBody());
+
+	}
+
+	@Test
+	public void testAddGoodsPic() throws URISyntaxException {
+
+		URI url = new URI(localhost + "/goodspic/upload/");
+
+		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
+
+		FileSystemResource resource = new FileSystemResource(new File("2016-10-19 2016-10-19 002 001.jpg"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-10-19 2016-10-19 002 001.jpg");
+
+		resource = new FileSystemResource(new File("2016-10-27 2016-10-27 001 001.jpg"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-10-27 2016-10-27 001 001.jpg");
+
+		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.gif"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-11-01 2016-11-01 001 001.gif");
+
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
+
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+		System.out.println(responseEntity.getBody());
+	}
+
+	@Test
+	public void testUpdateGoods() throws URISyntaxException {
+
+		URI url = new URI(localhost + "/goods/update/1");
+
+		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
+
+		FileSystemResource resource = new FileSystemResource(new File("2016-10-19 2016-10-19 002 001.jpg"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-10-19 2016-10-19 002 001.jpg");
+
+		resource = new FileSystemResource(new File("2016-10-27 2016-10-27 001 001.jpg"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-10-27 2016-10-27 001 001.jpg");
+
+		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.gif"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-11-01 2016-11-01 001 001.gif");
+
+		Goods goods = new Goods();
+		goods.setId(1L);
+		goods.setCode("2222");
+		JSONObject jsonObj = JsonUtilTool.toJsonObj(goods);
+		param.setAll(jsonObj);
+
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
+
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+		System.out.println(responseEntity.getBody());
 	}
 
 	@Test
