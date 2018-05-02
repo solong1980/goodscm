@@ -2,6 +2,7 @@ package com.xlw.goodscm.service.impl;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +46,14 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Override
 	public void add(Goods goods) throws IOException {
+		goods.setCreateTime(new Date());
 		List<GoodsPic> goodsPics = goods.getGoodsPics();
 		goodsMapper.insert(goods);
 		Long id = goods.getId();
-		for (GoodsPic goodsPic : goodsPics) {
-			goodsPic.setGoodsId(id);
-		}
 		if (goodsPics != null && !goodsPics.isEmpty()) {
+			for (GoodsPic goodsPic : goodsPics) {
+				goodsPic.setGoodsId(id);
+			}
 			goodsPicService.add(goodsPics);
 		}
 	}

@@ -53,6 +53,22 @@ public class GoodsController {
 	}
 
 	@ResponseBody
+	@RequestMapping("/fastadd")
+	public CmResult fastAdd(Goods goods) throws Exception {
+		logger.info("fast add goods " + goods);
+		Subject subject = SecurityUtils.getSubject();
+		User principal = (User) subject.getPrincipal();
+		if (principal == null) {
+			goods.setStatus(Consts.GoodsAuditStatus.UNADUIT.getCode());
+		} else {
+			goods.setStatus(Consts.GoodsAuditStatus.AUDIT.getCode());
+		}
+		goodsService.add(goods);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS);
+		return cmResult;
+	}
+	
+	@ResponseBody
 	@RequestMapping("/get")
 	public CmResult get(Long id) throws Exception {
 		logger.info("query goods id=" + id);

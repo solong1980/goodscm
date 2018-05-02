@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,6 +32,15 @@ public class GoodsCategoryController {
 		return cmResult;
 	}
 
+	@ResponseBody
+	@RequestMapping("/querysubcategory/{parentId}")
+	public CmResult querySubCategory(@PathVariable("parentId")Long parentId) throws Exception {
+		logger.info("query by parentId=" + parentId);
+		List<GoodsCategory> categories = goodsCategoryService.querySubCategory(parentId);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS, categories);
+		return cmResult;
+	}
+	
 	@ResponseBody
 	@RequestMapping("/get")
 	public CmResult get(Long id) throws Exception {

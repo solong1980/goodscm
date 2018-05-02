@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class GoodsCategoryCodeGenUtil {
 	private static String getChildrenSubCode(int level, String code) {
@@ -22,7 +23,7 @@ public class GoodsCategoryCodeGenUtil {
 	}
 
 	private static String createChildrenCode(int level, String parentCode, Integer max) {
-		String subCode = String.format("%03d", max);
+		String subCode = String.format("%03d", max + 1);
 		switch (level) {
 		case 1:
 			return subCode + "000000";
@@ -47,21 +48,30 @@ public class GoodsCategoryCodeGenUtil {
 		} else {
 			throw new InvalidParameterException("last level can not add child");
 		}
-		final int f_level = level;
-		Optional<Integer> max = allChildren.stream().map(new Function<String, Integer>() {
-			@Override
-			public Integer apply(String t) {
-				return Integer.parseInt(getChildrenSubCode(f_level, t));
+		int maxLevel = 0;
+		if (allChildren != null && !allChildren.isEmpty()) {
+			final int f_level = level;
+			Stream<Integer> map = allChildren.stream().map(new Function<String, Integer>() {
+				@Override
+				public Integer apply(String t) {
+					System.out.println(t);
+					return Integer.parseInt(getChildrenSubCode(f_level, t));
+				}
+			});
+			Optional<Integer> max = map.max(new Comparator<Integer>() {
+				@Override
+				public int compare(Integer o1, Integer o2) {
+					return o1.compareTo(o2);
+				}
+			});
+			if (max == null) {
+				throw new InvalidParameterException("get max child code error");
 			}
-		}).sorted().max(new Comparator<Integer>() {
-			@Override
-			public int compare(Integer o1, Integer o2) {
-				return o1.compareTo(02);
-			}
-		});
-		if (max == null) {
-			throw new InvalidParameterException("get max child code error");
+			if (max.get() == null)
+				maxLevel = 0;
+			else
+				maxLevel = max.get();
 		}
-		return createChildrenCode(level, parentCode, max.get());
+		return createChildrenCode(level, parentCode, maxLevel);
 	}
 }

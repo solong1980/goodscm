@@ -9,6 +9,10 @@ public class Goods {
 
 	private String code;
 
+	private String shortName;
+
+	private Long categoryId;
+
 	private String vendorGoodsCode;
 
 	private String nameZh;
@@ -49,6 +53,14 @@ public class Goods {
 
 	private String memo;
 
+	private String zhInfo;
+
+	private String enInfo;
+
+	private String extInfo;
+
+	private GoodsCategory category;
+
 	private List<GoodsPic> goodsPics;
 
 	public Long getId() {
@@ -65,6 +77,22 @@ public class Goods {
 
 	public void setCode(String code) {
 		this.code = code == null ? null : code.trim();
+	}
+
+	public String getShortName() {
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public String getVendorGoodsCode() {
@@ -225,6 +253,38 @@ public class Goods {
 
 	public void setMemo(String memo) {
 		this.memo = memo == null ? null : memo.trim();
+	}
+
+	public String getZhInfo() {
+		return zhInfo;
+	}
+
+	public void setZhInfo(String zhInfo) {
+		this.zhInfo = zhInfo;
+	}
+
+	public String getEnInfo() {
+		return enInfo;
+	}
+
+	public void setEnInfo(String enInfo) {
+		this.enInfo = enInfo;
+	}
+
+	public String getExtInfo() {
+		return extInfo;
+	}
+
+	public void setExtInfo(String extInfo) {
+		this.extInfo = extInfo;
+	}
+
+	public GoodsCategory getCategory() {
+		return category;
+	}
+
+	public void setCategory(GoodsCategory category) {
+		this.category = category;
 	}
 
 	public List<GoodsPic> getGoodsPics() {

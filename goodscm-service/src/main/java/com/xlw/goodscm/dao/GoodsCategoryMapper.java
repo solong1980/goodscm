@@ -14,5 +14,7 @@ public interface GoodsCategoryMapper {
 
     int updateByPrimaryKey(GoodsCategory record);
 
-	List<String> selectChildrenCode(String parentCategoryCode);
+	List<String> selectSubCategoryCode(Long parentId);
+
+	List<GoodsCategory> selectByParentId(Long parentId);
 }

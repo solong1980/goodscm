@@ -1,6 +1,7 @@
 package com.xlw.goodscm.service.impl;
 
 import java.security.InvalidParameterException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 			throw new InvalidParameterException("need parent category id");
 		}
 		genCategoryCode(parentId, goodsCategory);
+		goodsCategory.setCreateTime(new Date());
 		goodsCategoryMapper.insert(goodsCategory);
 	}
 
@@ -59,8 +61,6 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 		goodsCategoryMapper.updateByPrimaryKey(goodsCategory);
 	}
 
-	
-	
 	/**
 	 * Setup category code, across parent category code to query all sibling
 	 * category,computer this new category code
@@ -71,13 +71,16 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 	 *            updated category
 	 */
 	private void genCategoryCode(Long parentId, GoodsCategory goodsCategory) {
+		List<String> allChildrenCodes = goodsCategoryMapper.selectSubCategoryCode(parentId);
 		GoodsCategory parentCategory = goodsCategoryMapper.selectByPrimaryKey(parentId);
 		String parentCategoryCode = parentCategory.getCategoryCode();
-		List<String> allChildrenCodes = goodsCategoryMapper.selectChildrenCode(parentCategoryCode);
 		String genCode = GoodsCategoryCodeGenUtil.genCode(parentCategoryCode, allChildrenCodes);
 		goodsCategory.setCategoryCode(genCode);
 	}
-	
-	
+
+	@Override
+	public List<GoodsCategory> querySubCategory(Long parentId) {
+		return goodsCategoryMapper.selectByParentId(parentId);
+	}
 
 }

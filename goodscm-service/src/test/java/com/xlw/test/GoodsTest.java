@@ -1,8 +1,10 @@
 package com.xlw.test;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xlw.goodscm.model.Goods;
+import com.xlw.goodscm.model.GoodsCategory;
 import com.xlw.goodscm.utils.JsonUtilTool;
 
 public class GoodsTest {
@@ -135,41 +138,69 @@ public class GoodsTest {
 	}
 
 	@Test
-	public void testGoodsAdd() throws URISyntaxException {
-		URI url = new URI(localhost + "/goods/add");
+	public void testGoodsFastAdd() throws URISyntaxException {
+		URI url = new URI(localhost + "/goods/fastadd");
 
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
 
-		FileSystemResource resource = new FileSystemResource(new File("2016-10-19 2016-10-19 002 001.jpg"));
-
-		param.add("files", resource);
-		param.add("fileName", "2016-10-19 2016-10-19 002 001.jpg");
-
-		resource = new FileSystemResource(new File("2016-10-27 2016-10-27 001 001.jpg"));
-
-		param.add("files", resource);
-		param.add("fileName", "2016-10-27 2016-10-27 001 001.jpg");
-
-		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.gif"));
-
-		param.add("files", resource);
-		param.add("fileName", "2016-11-01 2016-11-01 001 001.gif");
 		Goods goods = new Goods();
 		goods.setCode("1111");
+		goods.setCategoryId(1000L);
+		goods.setShortName("company short name");
+
+		goods.setNameZh("强强强");
+
+		goods.setNameEn("strongstring");
+
+		goods.setNetWeight(new BigDecimal("10"));
+
+		goods.setWeightAfterPacking(new BigDecimal("10"));
+
+		goods.setLength(new BigDecimal("10"));
+
+		goods.setWidth(new BigDecimal("10"));
+
+		goods.setHeight(new BigDecimal("10"));
+
+		goods.setPackingLength(new BigDecimal("10"));
+
+		goods.setPackingWidth(new BigDecimal("10"));
+
+		goods.setPackingHeight(new BigDecimal("10"));
+
+		goods.setPurchasePrice(new BigDecimal("10"));
+
+		goods.setRetailPrice(new BigDecimal("10"));
+
+		goods.setTradePrice(new BigDecimal("10"));
+
+		goods.setStock(new BigDecimal("10"));
+
+		goods.setStockUnit((short) 1);
+
+		goods.setStatus((short) 1);
+ 
+		goods.setMemo("Meno");
+
+		goods.setZhInfo("zh_info");
+
+		goods.setEnInfo("en_info");
+
+		goods.setExtInfo("ext_info");
+
 		JSONObject jsonObj = JsonUtilTool.toJsonObj(goods);
 		param.setAll(jsonObj);
 
 		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
-
+		System.out.println(httpEntity.toString());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 
 	}
-
+	
 	@Test
-	public void testAddGoodsPic() throws URISyntaxException {
-
-		URI url = new URI(localhost + "/goodspic/upload/");
+	public void testGoodsAdd() throws URISyntaxException {
+		URI url = new URI(localhost + "/goods/add/1");
 
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
 
@@ -187,11 +218,60 @@ public class GoodsTest {
 
 		param.add("files", resource);
 		param.add("fileName", "2016-11-01 2016-11-01 001 001.gif");
+		
+		Goods goods = new Goods();
+		goods.setCode("1111");
+		goods.setCategoryId(1000L);
+		goods.setShortName("company short name");
+
+		goods.setNameZh("强强强");
+
+		goods.setNameEn("strongstring");
+
+		goods.setNetWeight(new BigDecimal("10"));
+
+		goods.setWeightAfterPacking(new BigDecimal("10"));
+
+		goods.setLength(new BigDecimal("10"));
+
+		goods.setWidth(new BigDecimal("10"));
+
+		goods.setHeight(new BigDecimal("10"));
+
+		goods.setPackingLength(new BigDecimal("10"));
+
+		goods.setPackingWidth(new BigDecimal("10"));
+
+		goods.setPackingHeight(new BigDecimal("10"));
+
+		goods.setPurchasePrice(new BigDecimal("10"));
+
+		goods.setRetailPrice(new BigDecimal("10"));
+
+		goods.setTradePrice(new BigDecimal("10"));
+
+		goods.setStock(new BigDecimal("10"));
+
+		goods.setStockUnit((short) 1);
+
+		goods.setStatus((short) 1);
+ 
+		goods.setMemo("Meno");
+
+		goods.setZhInfo("zh_info");
+
+		goods.setEnInfo("en_info");
+
+		goods.setExtInfo("ext_info");
+
+		JSONObject jsonObj = JsonUtilTool.toJsonObj(goods);
+		param.setAll(jsonObj);
 
 		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
-
+		System.out.println(httpEntity.toString());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
+
 	}
 
 	@Test
@@ -228,6 +308,61 @@ public class GoodsTest {
 		System.out.println(responseEntity.getBody());
 	}
 
+	@Test
+	public void testAddGoodsPic() throws URISyntaxException {
+
+		URI url = new URI(localhost + "/goodspic/upload/");
+
+		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
+
+		FileSystemResource resource = new FileSystemResource(new File("2016-10-19 2016-10-19 002 001.jpg"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-10-19 2016-10-19 002 001.jpg");
+
+		resource = new FileSystemResource(new File("2016-10-27 2016-10-27 001 001.jpg"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-10-27 2016-10-27 001 001.jpg");
+
+		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.gif"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-11-01 2016-11-01 001 001.gif");
+
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
+
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+		System.out.println(responseEntity.getBody());
+	}
+	
+	@Test
+	public void testAddCategory() throws URISyntaxException {
+		GoodsCategory category = new GoodsCategory();
+		category.setParentId(11L);
+		category.setName("高级镜头");
+		
+		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
+		URI url = new URI(localhost + "/goodscategory/add");
+		
+		JSONObject jsonObj = JsonUtilTool.toJsonObj(category);
+		param.setAll(jsonObj);
+		
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity , String.class);
+		System.out.println(responseEntity.getBody());
+	}
+	
+	@Test
+	public void testQuerySubCategory() throws URISyntaxException {
+		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
+		URI url = new URI(localhost + "/goodscategory/querysubcategory/0");
+		param.setAll(new JSONObject());
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity , String.class);
+		System.out.println(responseEntity.getBody());
+	}
+	
 	@Test
 	public void test() {
 	}
