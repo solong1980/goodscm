@@ -13,7 +13,7 @@ public class GoodsPic {
 
 	private String name;
 
-	private Boolean isThumbnail;
+	private Boolean isThumbnail = false;
 
 	private Byte state;
 

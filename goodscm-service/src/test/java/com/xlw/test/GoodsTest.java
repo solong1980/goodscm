@@ -4,6 +4,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,9 +27,15 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.GoodsCategory;
+import com.xlw.goodscm.model.GoodsPic;
+import com.xlw.goodscm.model.Supplier;
+import com.xlw.goodscm.model.SupplierRecode;
+import com.xlw.goodscm.pojo.CmResult;
 import com.xlw.goodscm.utils.JsonUtilTool;
 
 public class GoodsTest {
@@ -50,7 +57,6 @@ public class GoodsTest {
 		factory.setReadTimeout(50000);// 单位为ms
 		factory.setConnectTimeout(50000);// 单位为ms
 		restTemplate = new RestTemplate(factory);
-
 	}
 
 	@After
@@ -58,8 +64,8 @@ public class GoodsTest {
 	}
 
 	private HttpHeaders login() {
-		ResponseEntity<JSONObject> forEntity = restTemplate.getForEntity(localhost + "/login/dologin?account=admin&password=123456",
-				JSONObject.class);
+		ResponseEntity<JSONObject> forEntity = restTemplate
+				.getForEntity(localhost + "/login/dologin?account=admin&password=123456", JSONObject.class);
 		JSONObject body = forEntity.getBody();
 		HttpHeaders headers = forEntity.getHeaders();
 		// for (Entry<String, List<String>> entry : headers.entrySet()) {
@@ -98,7 +104,8 @@ public class GoodsTest {
 		} else {
 			HttpEntity<String> formEntity = new HttpEntity<String>(jsonObj.toString(), headers);
 
-			ResponseEntity<String> postForEntity = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class, new HashMap<>());
+			ResponseEntity<String> postForEntity = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class,
+					new HashMap<>());
 
 			// String result = restTemplate.postForObject(url, formEntity, String.class);
 			// System.out.println(result);
@@ -139,7 +146,15 @@ public class GoodsTest {
 
 	@Test
 	public void testGoodsFastAdd() throws URISyntaxException {
-		URI url = new URI(localhost + "/goods/fastadd");
+
+		List<Long> addGoodsPics = addGoodsPics();
+
+		URI url = new URI(localhost + "/goods/addupdatepics");
+
+		HttpHeaders headers = new HttpHeaders();
+		MediaType type = MediaType.APPLICATION_JSON_UTF8;
+		headers.setContentType(type);
+		headers.add("Accept", MediaType.APPLICATION_JSON_UTF8.toString());
 
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
 
@@ -179,7 +194,7 @@ public class GoodsTest {
 		goods.setStockUnit((short) 1);
 
 		goods.setStatus((short) 1);
- 
+
 		goods.setMemo("Meno");
 
 		goods.setZhInfo("zh_info");
@@ -188,16 +203,97 @@ public class GoodsTest {
 
 		goods.setExtInfo("ext_info");
 
-		JSONObject jsonObj = JsonUtilTool.toJsonObj(goods);
-		param.setAll(jsonObj);
+		goods.setSupplierRecodes(new ArrayList<SupplierRecode>() {
+			private static final long serialVersionUID = 1L;
+			{
+				for (int i = 0; i < 4; i++) {
+					SupplierRecode recode = new SupplierRecode();
+					recode.setSupplierId(i + 1L);
+					recode.setQuantity(1);
+					recode.setPurchaseTime(new Date());
+					recode.setTotalPrice(new BigDecimal("100"));
+					recode.setUnitPrice(new BigDecimal("100"));
+					add(recode);
+				}
+			}
+		});
 
-		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
-		System.out.println(httpEntity.toString());
+		// goods.setSuppliers(new ArrayList<Supplier>() {
+		// private static final long serialVersionUID = 1L;
+		// {
+		// Supplier sp = new Supplier();
+		// sp.setName("aaaaa");
+		// add(sp);
+		// sp = new Supplier();
+		// sp.setName("aaaaa");
+		// add(sp);
+		// }
+		// });
+
+		goods.setGoodsPics(new ArrayList<GoodsPic>() {
+			private static final long serialVersionUID = 1L;
+			{
+				for (int i = 0; i < addGoodsPics.size(); i++) {
+					GoodsPic goodsPic = new GoodsPic();
+					goodsPic.setId(addGoodsPics.get(i));
+					if (i == 0)
+						goodsPic.setIsThumbnail(true);
+					add(goodsPic);
+				}
+			}
+		});
+
+		// JSONObject jsonObj = JsonUtilTool.toJsonObj(goods);
+		// param.setAll(jsonObj);
+		// HttpEntity<MultiValueMap<String, Object>> httpEntity = new
+		// HttpEntity<MultiValueMap<String, Object>>(param);
+		// System.out.println(httpEntity.toString());
+		// ResponseEntity<String> responseEntity = restTemplate.exchange(url,
+		// HttpMethod.POST, httpEntity, String.class);
+		System.out.println(JsonUtilTool.toJson(goods));
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(goods), headers);
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
-
 	}
-	
+
+	@Test
+	public void testAddGoodsPic() throws URISyntaxException {
+		List<Long> addGoodsPics = addGoodsPics();
+		assert (addGoodsPics.size() == 3);
+	}
+
+	public List<Long> addGoodsPics() throws URISyntaxException {
+		URI url = new URI(localhost + "/goodspic/upload");
+
+		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
+
+		FileSystemResource resource = new FileSystemResource(new File("2016-10-19 2016-10-19 002 001.jpg"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-10-19 2016-10-19 002 001.jpg");
+
+		resource = new FileSystemResource(new File("2016-10-27 2016-10-27 001 001.jpg"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-10-27 2016-10-27 001 001.jpg");
+
+		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.gif"));
+
+		param.add("files", resource);
+		param.add("fileName", "2016-11-01 2016-11-01 001 001.jpg");
+
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
+
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+		System.out.println(responseEntity.getBody());
+		CmResult cmResult = JsonUtilTool.fromJson(responseEntity.getBody(), CmResult.class);
+
+		List<Long> fromJson = JsonUtilTool.fromJson(cmResult.getData().toString(), new TypeReference<List<Long>>() {
+		});
+		System.out.println(fromJson);
+		return fromJson;
+	}
+
 	@Test
 	public void testGoodsAdd() throws URISyntaxException {
 		URI url = new URI(localhost + "/goods/add/1");
@@ -218,7 +314,7 @@ public class GoodsTest {
 
 		param.add("files", resource);
 		param.add("fileName", "2016-11-01 2016-11-01 001 001.gif");
-		
+
 		Goods goods = new Goods();
 		goods.setCode("1111");
 		goods.setCategoryId(1000L);
@@ -255,7 +351,7 @@ public class GoodsTest {
 		goods.setStockUnit((short) 1);
 
 		goods.setStatus((short) 1);
- 
+
 		goods.setMemo("Meno");
 
 		goods.setZhInfo("zh_info");
@@ -309,60 +405,32 @@ public class GoodsTest {
 	}
 
 	@Test
-	public void testAddGoodsPic() throws URISyntaxException {
-
-		URI url = new URI(localhost + "/goodspic/upload/");
-
-		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
-
-		FileSystemResource resource = new FileSystemResource(new File("2016-10-19 2016-10-19 002 001.jpg"));
-
-		param.add("files", resource);
-		param.add("fileName", "2016-10-19 2016-10-19 002 001.jpg");
-
-		resource = new FileSystemResource(new File("2016-10-27 2016-10-27 001 001.jpg"));
-
-		param.add("files", resource);
-		param.add("fileName", "2016-10-27 2016-10-27 001 001.jpg");
-
-		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.gif"));
-
-		param.add("files", resource);
-		param.add("fileName", "2016-11-01 2016-11-01 001 001.gif");
-
-		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
-
-		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
-		System.out.println(responseEntity.getBody());
-	}
-	
-	@Test
 	public void testAddCategory() throws URISyntaxException {
 		GoodsCategory category = new GoodsCategory();
 		category.setParentId(11L);
 		category.setName("高级镜头");
-		
+
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
 		URI url = new URI(localhost + "/goodscategory/add");
-		
+
 		JSONObject jsonObj = JsonUtilTool.toJsonObj(category);
 		param.setAll(jsonObj);
-		
+
 		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
-		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity , String.class);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}
-	
+
 	@Test
 	public void testQuerySubCategory() throws URISyntaxException {
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
 		URI url = new URI(localhost + "/goodscategory/querysubcategory/0");
 		param.setAll(new JSONObject());
 		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
-		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity , String.class);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}
-	
+
 	@Test
 	public void test() {
 	}

@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -66,7 +67,8 @@ public class GoodsPicController {
 	}
 
 	@RequestMapping("/getthumbnail/{goodsId}")
-	public void getThumbnail(@PathVariable("goodsId") Long goodsId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void getThumbnail(@PathVariable("goodsId") Long goodsId, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		logger.info("query goods thrumbnail picture by goodsid=" + goodsId);
 		GoodsPic goodsPic = goodsPicService.getThrumbnail(goodsId);
 
@@ -88,7 +90,8 @@ public class GoodsPicController {
 						fileName = URLDecoder.decode(fileName, characterEncoding);// 其他浏览器
 					}
 					response.setContentLengthLong(f.length());
-					response.setHeader("Content-disposition", "attachment; filename=" + new String(fileName.getBytes("utf-8"), "ISO8859-1")); // 指定下载的文件名
+					response.setHeader("Content-disposition",
+							"attachment; filename=" + new String(fileName.getBytes("utf-8"), "ISO8859-1")); // 指定下载的文件名
 					os.write(FileUtils.readFileToByteArray(f));
 					os.flush();
 				} catch (IOException e) {
@@ -107,9 +110,8 @@ public class GoodsPicController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/upload/{thumbnailNum}", method = RequestMethod.POST)
-	public CmResult upload(HttpServletRequest request, @PathVariable("thumbnailNum") Integer thumbnailNum,
-			@RequestParam("files") MultipartFile[] files) {
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public CmResult upload(HttpServletRequest request, @RequestParam("files") MultipartFile[] files) {
 		try {
 			String usrHome = System.getProperty("user.home");
 			String savePath = request.getServletContext().getInitParameter(Consts.FILE_STORE_DIRECTORY_KEY);
@@ -120,26 +122,19 @@ public class GoodsPicController {
 			List<GoodsPic> goodsPics = new ArrayList<>();
 			for (int i = 0; i < files.length; i++) {
 				GoodsPic goodsPic = new GoodsPic();
-				if (thumbnailNum.equals(i)) {
-					// create thumbnail
-					goodsPic.setIsThumbnail(true);
-				} else {
-					goodsPic.setIsThumbnail(false);
-				}
 				goodsPic.setRelativePath(savePath + File.separator + UUID.randomUUID().toString().replace("-", ""));
 				goodsPic.setName(files[i].getOriginalFilename());
+				goodsPic.setNo((short) i);
+				goodsPic.setState((byte)0);
 				goodsPic.setPicData(files[i].getBytes());
-
+				goodsPic.setCreateTime(new Date());
 				goodsPics.add(goodsPic);
 			}
-
 			goodsPicService.add(goodsPics);
-
 			List<Long> picIds = new ArrayList<>();
 			for (GoodsPic pic : goodsPics) {
 				picIds.add(pic.getId());
 			}
-
 			CmResult cmResult = CmResult.build(Codes.SUCCESS, picIds);
 			return cmResult;
 		} catch (IOException e) {

@@ -14,7 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,22 +55,6 @@ public class GoodsController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/fastadd")
-	public CmResult fastAdd(Goods goods) throws Exception {
-		logger.info("fast add goods " + goods);
-		Subject subject = SecurityUtils.getSubject();
-		User principal = (User) subject.getPrincipal();
-		if (principal == null) {
-			goods.setStatus(Consts.GoodsAuditStatus.UNADUIT.getCode());
-		} else {
-			goods.setStatus(Consts.GoodsAuditStatus.AUDIT.getCode());
-		}
-		goodsService.add(goods);
-		CmResult cmResult = CmResult.build(Codes.SUCCESS);
-		return cmResult;
-	}
-	
-	@ResponseBody
 	@RequestMapping("/get")
 	public CmResult get(Long id) throws Exception {
 		logger.info("query goods id=" + id);
@@ -78,10 +64,27 @@ public class GoodsController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/add/{thumbnailNum}")
-	public CmResult add(HttpServletRequest request, Goods goods, @PathVariable("thumbnailNum") Integer thumbnailNum,
-			@RequestParam("files") MultipartFile[] files) throws Exception {
-		logger.info("add goods " + goods);
+	@RequestMapping(value = "/addupdatepics", method = RequestMethod.POST)
+	public CmResult addUpdatePicsGoodsId(@RequestBody Goods goods) throws Exception {
+		logger.info("addUpdatePicsGoodsId " + goods);
+		Subject subject = SecurityUtils.getSubject();
+		User principal = (User) subject.getPrincipal();
+		if (principal == null) {
+			goods.setStatus(Consts.GoodsAuditStatus.UNADUIT.getCode());
+		} else {
+			goods.setStatus(Consts.GoodsAuditStatus.AUDIT.getCode());
+		}
+		goodsService.addUpdatePicsGoodsId(goods);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS);
+		return cmResult;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/addsavepics/{thumbnailNum}", method = RequestMethod.POST)
+	public CmResult addSavePics(HttpServletRequest request, Goods goods,
+			@PathVariable("thumbnailNum") Integer thumbnailNum, @RequestParam("files") MultipartFile[] files)
+			throws Exception {
+		logger.info("addSavePics " + goods);
 
 		Subject subject = SecurityUtils.getSubject();
 		User principal = (User) subject.getPrincipal();
@@ -115,12 +118,14 @@ public class GoodsController {
 		}
 
 		goods.setGoodsPics(goodsPics);
-		goodsService.add(goods);
+		goodsService.addSavePics(goods);
 
 		CmResult cmResult = CmResult.build(Codes.SUCCESS);
 		return cmResult;
 	}
 
+	
+	
 	@ResponseBody
 	@RequestMapping("/update/{thumbnailNum}")
 	public CmResult update(HttpServletRequest request, Goods goods, @PathVariable("thumbnailNum") Integer thumbnailNum,
@@ -132,7 +137,8 @@ public class GoodsController {
 
 	@ResponseBody
 	@RequestMapping("/update")
-	public CmResult update(HttpServletRequest request, Goods goods, @RequestParam("files") MultipartFile[] files) throws Exception {
+	public CmResult update(HttpServletRequest request, Goods goods, @RequestParam("files") MultipartFile[] files)
+			throws Exception {
 		logger.info("update goods" + goods);
 		return update(request, goods, null, files);
 	}

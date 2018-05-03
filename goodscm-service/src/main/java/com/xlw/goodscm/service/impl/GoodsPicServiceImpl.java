@@ -68,7 +68,15 @@ public class GoodsPicServiceImpl implements GoodsPicService {
 	@Override
 	public GoodsPic getThrumbnail(Long goodsId) {
 		GoodsPic goodsPic = goodsPicMapper.getGoodsThumbnail(goodsId);
-		return null;
+		return goodsPic;
+	}
+
+	@Override
+	public void updateGoodsId(List<GoodsPic> goodsPics) {
+	}
+
+	@Override
+	public void createThumbnail(GoodsPic goodsPic) {
 	}
 
 }

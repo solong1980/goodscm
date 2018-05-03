@@ -13,11 +13,15 @@ public interface GoodsService {
 
 	Goods getById(Long id);
 
-	void add(Goods goods) throws IOException;
+	Long add(Goods goods);
 
 	void update(Goods goods);
 
 	void updateStatus(Goods goods);
 
 	void deleteById(Long id);
+
+	void addUpdatePicsGoodsId(Goods goods) throws IOException;
+
+	void addSavePics(Goods goods) throws IOException;
 }

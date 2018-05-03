@@ -22,4 +22,8 @@ public interface GoodsPicService {
 	void addBatch(List<GoodsPic> goodsPics) throws IOException;
 
 	GoodsPic getThrumbnail(Long goodsId);
+
+	void updateGoodsId(List<GoodsPic> goodsPics);
+
+	void createThumbnail(GoodsPic goodsPic);
 }

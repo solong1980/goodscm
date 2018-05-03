@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.xlw.goodscm.dao.GoodsMapper;
 import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.GoodsPic;
+import com.xlw.goodscm.model.SupplierRecode;
 import com.xlw.goodscm.service.GoodsPicService;
 import com.xlw.goodscm.service.GoodsService;
 
@@ -45,17 +46,20 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public void add(Goods goods) throws IOException {
+	public Long add(Goods goods) {
 		goods.setCreateTime(new Date());
-		List<GoodsPic> goodsPics = goods.getGoodsPics();
 		goodsMapper.insert(goods);
-		Long id = goods.getId();
-		if (goodsPics != null && !goodsPics.isEmpty()) {
-			for (GoodsPic goodsPic : goodsPics) {
-				goodsPic.setGoodsId(id);
+		Long goodsId = goods.getId();
+		List<SupplierRecode> supplierRecodes = goods.getSupplierRecodes();
+		if (supplierRecodes != null && !supplierRecodes.isEmpty()) {
+			for (SupplierRecode supplierRecode : supplierRecodes) {
+				// save goods supplier relation
+				supplierRecode.setGoodsId(goodsId);
+				supplierRecode.setCreateTime(new Date());
+
 			}
-			goodsPicService.add(goodsPics);
 		}
+		return goodsId;
 	}
 
 	@Override
@@ -74,5 +78,35 @@ public class GoodsServiceImpl implements GoodsService {
 	@Override
 	public void deleteById(Long id) {
 		goodsMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public void addUpdatePicsGoodsId(Goods goods) throws IOException {
+		Long id = add(goods);
+		List<GoodsPic> goodsPics = goods.getGoodsPics();
+		if (goodsPics != null && !goodsPics.isEmpty()) {
+			for (GoodsPic goodsPic : goodsPics) {
+				goodsPic.setGoodsId(id);
+			}
+			goodsPicService.updateGoodsId(goodsPics);
+			for (GoodsPic goodsPic : goodsPics) {
+				if(goodsPic.getIsThumbnail()) {
+					goodsPicService.createThumbnail(goodsPic);
+					break;
+				}
+			}
+		}
+	}
+
+	@Override
+	public void addSavePics(Goods goods) throws IOException {
+		Long id = add(goods);
+		List<GoodsPic> goodsPics = goods.getGoodsPics();
+		if (goodsPics != null && !goodsPics.isEmpty()) {
+			for (GoodsPic goodsPic : goodsPics) {
+				goodsPic.setGoodsId(id);
+			}
+			goodsPicService.add(goodsPics);
+		}
 	}
 }

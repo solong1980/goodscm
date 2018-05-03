@@ -4,73 +4,103 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class SupplierRecode {
-    private Long id;
+	private Long id;
 
-    private Long supplierId;
+	private String code;// 供应商编码
 
-    private Long goodsId;
+	private String name;// 供应商名称
 
-    private BigDecimal unitPrice;
+	private Long supplierId;
 
-    private Integer quantity;
+	private Long goodsId;
 
-    private BigDecimal totalPrice;
+	private BigDecimal unitPrice;
 
-    private Date createTime;
+	private Integer quantity;
 
-    public Long getId() {
-        return id;
-    }
+	private BigDecimal totalPrice;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	private Date purchaseTime;
 
-    public Long getSupplierId() {
-        return supplierId;
-    }
+	private Date createTime;
 
-    public void setSupplierId(Long supplierId) {
-        this.supplierId = supplierId;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Long getGoodsId() {
-        return goodsId;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public BigDecimal getUnitPrice() {
-        return unitPrice;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Integer getQuantity() {
-        return quantity;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
+	public Long getSupplierId() {
+		return supplierId;
+	}
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
+	public void setSupplierId(Long supplierId) {
+		this.supplierId = supplierId;
+	}
 
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+	public Long getGoodsId() {
+		return goodsId;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setGoodsId(Long goodsId) {
+		this.goodsId = goodsId;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public BigDecimal getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(BigDecimal unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public Date getPurchaseTime() {
+		return purchaseTime;
+	}
+
+	public void setPurchaseTime(Date purchaseTime) {
+		this.purchaseTime = purchaseTime;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 }

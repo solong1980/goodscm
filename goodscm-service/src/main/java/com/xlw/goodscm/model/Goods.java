@@ -61,6 +61,10 @@ public class Goods {
 
 	private GoodsCategory category;
 
+	private List<Supplier> suppliers;
+
+	private List<SupplierRecode> supplierRecodes;
+
 	private List<GoodsPic> goodsPics;
 
 	public Long getId() {
@@ -285,6 +289,22 @@ public class Goods {
 
 	public void setCategory(GoodsCategory category) {
 		this.category = category;
+	}
+
+	public List<Supplier> getSuppliers() {
+		return suppliers;
+	}
+
+	public void setSuppliers(List<Supplier> suppliers) {
+		this.suppliers = suppliers;
+	}
+
+	public List<SupplierRecode> getSupplierRecodes() {
+		return supplierRecodes;
+	}
+
+	public void setSupplierRecodes(List<SupplierRecode> supplierRecodes) {
+		this.supplierRecodes = supplierRecodes;
 	}
 
 	public List<GoodsPic> getGoodsPics() {
