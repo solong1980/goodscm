@@ -7,13 +7,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.xlw.goodscm.dao.GoodsMapper;
 import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.GoodsPic;
 import com.xlw.goodscm.model.SupplierRecode;
+import com.xlw.goodscm.pojo.CmPage;
 import com.xlw.goodscm.service.GoodsPicService;
 import com.xlw.goodscm.service.GoodsService;
+import com.xlw.goodscm.service.SupplierRecodeService;
 
 /**
  * @author longlianghua
@@ -25,6 +28,9 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsMapper goodsMapper;
 
 	@Autowired
+	private SupplierRecodeService supplierRecodeService;
+
+	@Autowired
 	private GoodsPicService goodsPicService;
 
 	@Override
@@ -34,12 +40,21 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
+	public List<Goods> pageQuery(CmPage<Goods, List<?>> goodsPageQuery) {
+		return goodsMapper.pageQuery(goodsPageQuery);
+	}
+
+	@Override
 	public Goods getById(Long id) {
 		Goods goods = goodsMapper.selectByPrimaryKey(id);
 		if (goods != null) {
 			GoodsPic goodsPic = new GoodsPic();
 			goodsPic.setGoodsId(id);
-			List<GoodsPic> goodsPics = goodsPicService.query(goodsPic);
+
+			List<SupplierRecode> supplierRecodes = supplierRecodeService.selectByGoodsId(id);
+			goods.setSupplierRecodes(supplierRecodes);
+
+			List<GoodsPic> goodsPics = goodsPicService.selectGoodsPics(id);
 			goods.setGoodsPics(goodsPics);
 		}
 		return goods;
@@ -56,18 +71,61 @@ public class GoodsServiceImpl implements GoodsService {
 				// save goods supplier relation
 				supplierRecode.setGoodsId(goodsId);
 				supplierRecode.setCreateTime(new Date());
-
+				supplierRecodeService.add(supplierRecode);
 			}
 		}
 		return goodsId;
 	}
 
 	@Override
-	public void update(Goods goods) {
+	@Transactional
+	public void addUpdatePicsGoodsId(Goods goods) throws Exception {
+		Long id = add(goods);
+		List<GoodsPic> goodsPics = goods.getGoodsPics();
+		if (goodsPics != null && !goodsPics.isEmpty()) {
+			for (GoodsPic goodsPic : goodsPics) {
+				goodsPic.setGoodsId(id);
+			}
+			goodsPicService.updateGoodsId(goodsPics);
+			for (GoodsPic goodsPic : goodsPics) {
+				if (goodsPic.getIsThumbnail()) {
+					goodsPicService.createThumbnail(goodsPic);
+					break;
+				}
+			}
+		}
+	}
+
+	@Override
+	@Transactional
+	public void update(Goods goods) throws Exception {
 		if (goods.getId() == null) {
 			throw new InvalidParameterException("goods id is null");
 		}
+		goodsMapper.updateByPrimaryKey(goods);
 
+		List<SupplierRecode> supplierRecodes = goods.getSupplierRecodes();
+		for (SupplierRecode supplierRecode : supplierRecodes) {
+			Long id = supplierRecode.getId();
+			if (id == null) {
+				// do add
+				supplierRecode.setGoodsId(goods.getId());
+				supplierRecode.setCreateTime(new Date());
+				supplierRecodeService.add(supplierRecode);
+			} else {
+				supplierRecodeService.update(supplierRecode);
+			}
+		}
+
+		// no matter goods id ,update all recode
+		List<GoodsPic> goodsPics = goods.getGoodsPics();
+		goodsPicService.updateGoodsId(goodsPics);
+		for (GoodsPic goodsPic : goodsPics) {
+			if (goodsPic.getIsThumbnail()) {
+				goodsPicService.createThumbnail(goodsPic);
+				break;
+			}
+		}
 	}
 
 	@Override
@@ -81,24 +139,7 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
-	public void addUpdatePicsGoodsId(Goods goods) throws IOException {
-		Long id = add(goods);
-		List<GoodsPic> goodsPics = goods.getGoodsPics();
-		if (goodsPics != null && !goodsPics.isEmpty()) {
-			for (GoodsPic goodsPic : goodsPics) {
-				goodsPic.setGoodsId(id);
-			}
-			goodsPicService.updateGoodsId(goodsPics);
-			for (GoodsPic goodsPic : goodsPics) {
-				if(goodsPic.getIsThumbnail()) {
-					goodsPicService.createThumbnail(goodsPic);
-					break;
-				}
-			}
-		}
-	}
-
-	@Override
+	@Deprecated
 	public void addSavePics(Goods goods) throws IOException {
 		Long id = add(goods);
 		List<GoodsPic> goodsPics = goods.getGoodsPics();
@@ -109,4 +150,5 @@ public class GoodsServiceImpl implements GoodsService {
 			goodsPicService.add(goodsPics);
 		}
 	}
+
 }

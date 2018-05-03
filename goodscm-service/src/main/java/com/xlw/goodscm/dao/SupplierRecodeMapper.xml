@@ -8,37 +8,77 @@
     <result column="unit_price" jdbcType="DECIMAL" property="unitPrice" />
     <result column="quantity" jdbcType="INTEGER" property="quantity" />
     <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="purchase_time" jdbcType="TIMESTAMP" property="purchaseTime" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from supplier_recode
     where id = #{id,jdbcType=BIGINT}
   </delete>
+  
+  <sql id="Columns">
+		id,
+		supplier_id, 
+		goods_id, 
+      	unit_price, 
+      	quantity, 
+      	total_price, 
+		purchase_time,
+		create_time
+	</sql>
+  
   <insert id="insert" parameterType="com.xlw.goodscm.model.SupplierRecode">
-    insert into supplier_recode (id, supplier_id, goods_id, 
-      unit_price, quantity, total_price, 
-      create_time)
-    values (#{id,jdbcType=BIGINT}, #{supplierId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
-      #{unitPrice,jdbcType=DECIMAL}, #{quantity,jdbcType=INTEGER}, #{totalPrice,jdbcType=DECIMAL}, 
-      #{createTime,jdbcType=TIMESTAMP})
+    insert into supplier_recode (
+		supplier_id, 
+		goods_id, 
+      	unit_price, 
+      	quantity, 
+      	total_price, 
+		purchase_time,
+		create_time
+	)
+    values (
+		#{supplierId,jdbcType=BIGINT}, 
+		#{goodsId,jdbcType=BIGINT}, 
+      	#{unitPrice,jdbcType=DECIMAL}, 
+      	#{quantity,jdbcType=INTEGER}, 
+      	#{totalPrice,jdbcType=DECIMAL}, 
+        #{purchaseTime,jdbcType=TIMESTAMP},
+        #{createTime,jdbcType=TIMESTAMP}
+    )
   </insert>
+  
   <update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.SupplierRecode">
     update supplier_recode
-    set supplier_id = #{supplierId,jdbcType=BIGINT},
-      goods_id = #{goodsId,jdbcType=BIGINT},
+    set 
       unit_price = #{unitPrice,jdbcType=DECIMAL},
       quantity = #{quantity,jdbcType=INTEGER},
       total_price = #{totalPrice,jdbcType=DECIMAL},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      purchase_time = #{purchaseTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, supplier_id, goods_id, unit_price, quantity, total_price, create_time
+    select 
+	<include refid="Columns"></include>
     from supplier_recode
     where id = #{id,jdbcType=BIGINT}
   </select>
+  
+  <select id="selectByGoodsId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+	sr.*,
+	s.name,
+	s.code
+    from supplier_recode sr, supplier s
+    where sr.supplier_id=s.id and goods_id = #{goodsId,jdbcType=BIGINT}
+  </select>
+  
+  
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, supplier_id, goods_id, unit_price, quantity, total_price, create_time
+    select 
+	<include refid="Columns"></include>
     from supplier_recode
   </select>
 </mapper>

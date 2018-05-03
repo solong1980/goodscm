@@ -40,6 +40,13 @@
 		where id = #{id,jdbcType=BIGINT}
 	</update>
 
+	<update id="updateGoodsId" parameterType="com.xlw.goodscm.model.GoodsPic">
+		update goods_pic
+		set goods_id = #{goodsId,jdbcType=BIGINT},
+		is_thumbnail = #{isThumbnail,jdbcType=BIT}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select id, goods_id, no, relative_path, name, is_thumbnail, state,
 		create_time
@@ -58,5 +65,12 @@
 		from goods_pic where goods_id=#{goodsId} and is_thumbnail = 1 
 		order by create_time desc limit 1;
 	</select>
+	
+	<select id="selectGoodsPics" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select id, goods_id, no, relative_path, name, is_thumbnail, state, create_time
+		from goods_pic where goods_id = #{goodsId,jdbcType=BIGINT}
+	</select>
+	
+	
 
 </mapper>

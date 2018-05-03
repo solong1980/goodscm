@@ -11,6 +11,8 @@ import com.xlw.goodscm.model.GoodsPic;
 public interface GoodsPicService {
 	List<GoodsPic> query(GoodsPic goodsPic);
 
+	List<GoodsPic> selectGoodsPics(Long goodsId);
+	
 	GoodsPic getById(Long id);
 
 	void add(GoodsPic goodsPic);
@@ -18,12 +20,12 @@ public interface GoodsPicService {
 	void update(GoodsPic goodsPic);
 
 	void add(List<GoodsPic> goodsPics) throws IOException;
-	
+
 	void addBatch(List<GoodsPic> goodsPics) throws IOException;
 
 	GoodsPic getThrumbnail(Long goodsId);
 
 	void updateGoodsId(List<GoodsPic> goodsPics);
 
-	void createThumbnail(GoodsPic goodsPic);
+	void createThumbnail(GoodsPic goodsPic) throws Exception;
 }

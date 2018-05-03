@@ -3,63 +3,76 @@ package com.xlw.goodscm.model;
 import java.util.Date;
 
 public class GoodsCategory {
-    private Long id;
+	private Long id;
 
-    private Long parentId;
+	private Long parentId;
 
-    private String categoryCode;
+	private String categoryCode;
 
-    private String name;
+	private String categoryCodeRadical;// 部首
 
-    private Date createTime;
+	private String name;
 
-    private Date updateTime;
+	private Date createTime;
 
-    public Long getId() {
-        return id;
-    }
+	private Date updateTime;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Long getParentId() {
-        return parentId;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
+	public Long getParentId() {
+		return parentId;
+	}
 
-    public String getCategoryCode() {
-        return categoryCode;
-    }
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
 
-    public void setCategoryCode(String categoryCode) {
-        this.categoryCode = categoryCode == null ? null : categoryCode.trim();
-    }
+	public String getCategoryCode() {
+		return categoryCode;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setCategoryCode(String categoryCode) {
+		this.categoryCode = categoryCode == null ? null : categoryCode.trim();
+		if (this.categoryCode != null) {
+			this.categoryCodeRadical = categoryCode.replaceAll("000", "");
+		}
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public String getCategoryCodeRadical() {
+		return categoryCodeRadical;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setCategoryCodeRadical(String categoryCodeRadical) {
+		this.categoryCodeRadical = categoryCodeRadical;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 }

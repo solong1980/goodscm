@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.xlw.goodscm.model.Goods;
+import com.xlw.goodscm.pojo.CmPage;
 
 /**
  * @author longlianghua
@@ -15,13 +16,16 @@ public interface GoodsService {
 
 	Long add(Goods goods);
 
-	void update(Goods goods);
-
 	void updateStatus(Goods goods);
 
 	void deleteById(Long id);
 
-	void addUpdatePicsGoodsId(Goods goods) throws IOException;
+	void addUpdatePicsGoodsId(Goods goods) throws Exception;
 
+	void update(Goods goods) throws Exception;
+
+	@Deprecated
 	void addSavePics(Goods goods) throws IOException;
+
+	List<Goods> pageQuery(CmPage<Goods, List<?>> goodsPageQuery);
 }

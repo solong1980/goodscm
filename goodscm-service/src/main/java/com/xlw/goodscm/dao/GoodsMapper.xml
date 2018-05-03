@@ -6,6 +6,7 @@
 		<result column="code" jdbcType="VARCHAR" property="code" />
 		<result column="short_name" jdbcType="VARCHAR" property="shortName" />
 		<result column="category_id" jdbcType="BIGINT" property="categoryId" />
+		<result column="category_code" jdbcType="BIGINT" property="categoryCode" />
 		<result column="vendor_goods_code" jdbcType="VARCHAR" property="vendorGoodsCode" />
 		<result column="name_zh" jdbcType="VARCHAR" property="nameZh" />
 		<result column="name_en" jdbcType="VARCHAR" property="nameEn" />
@@ -160,6 +161,23 @@
 	
 	<select id="selectAll" resultMap="BaseResultMap">
 		select <include refid="Columns"></include> from goods
+	</select>
+	
+	<select id="pageQuery" resultMap="BaseResultMap"
+		parameterType="com.xlw.goodscm.pojo.CmPage">
+		select
+		g.*,
+		gc.category_code
+		from goods g ,goods_category gc where g.category_id = gc.id 
+		<if test="page.c.category!=null and page.c.category.categoryCodeRadical!=null">
+			and gc.category_code like
+			concat(#{page.c.category.categoryCodeRadical,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="page.c.shortName!=null">
+			and short_name like
+			concat(#{page.c.shortName,jdbcType=VARCHAR},'%')
+		</if>
+		limit #{page.start},#{page.count}
 	</select>
 	
 	<update id="updateStatus" parameterType="com.xlw.goodscm.model.Goods">

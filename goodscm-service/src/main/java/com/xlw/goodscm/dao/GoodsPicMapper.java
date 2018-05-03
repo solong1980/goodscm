@@ -19,4 +19,8 @@ public interface GoodsPicMapper {
 	void insertGoodsPics(List<GoodsPic> goodsPics);
 
 	GoodsPic getGoodsThumbnail(@Param("goodsId") Long goodsId);
+
+	void updateGoodsId(GoodsPic goodsPic);
+
+	List<GoodsPic> selectGoodsPics(@Param("goodsId") Long goodsId);
 }

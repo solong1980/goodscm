@@ -26,6 +26,7 @@ import com.xlw.goodscm.ReturnCode.Codes;
 import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.GoodsPic;
 import com.xlw.goodscm.model.User;
+import com.xlw.goodscm.pojo.CmPage;
 import com.xlw.goodscm.pojo.CmResult;
 import com.xlw.goodscm.service.GoodsService;
 
@@ -47,16 +48,16 @@ public class GoodsController {
 	// @RequiresPermissions(value = { "user:view", "user:create" }, logical =
 	// Logical.AND)
 	@RequestMapping("/query")
-	public CmResult query(Goods goods) throws Exception {
-		logger.info("query " + goods);
-		List<Goods> goodsList = goodsService.query(goods);
+	public CmResult query(@RequestBody CmPage<Goods, List<?>> goodsPageQuery) throws Exception {
+		logger.info("query " + goodsPageQuery);
+		List<Goods> goodsList = goodsService.pageQuery(goodsPageQuery);
 		CmResult cmResult = CmResult.build(Codes.SUCCESS, goodsList);
 		return cmResult;
 	}
 
 	@ResponseBody
-	@RequestMapping("/get")
-	public CmResult get(Long id) throws Exception {
+	@RequestMapping("/get/{id}")
+	public CmResult get(@PathVariable("id") Long id) throws Exception {
 		logger.info("query goods id=" + id);
 		Goods goods = goodsService.getById(id);
 		CmResult cmResult = CmResult.build(Codes.SUCCESS, goods);
@@ -81,9 +82,9 @@ public class GoodsController {
 
 	@ResponseBody
 	@RequestMapping(value = "/addsavepics/{thumbnailNum}", method = RequestMethod.POST)
-	public CmResult addSavePics(HttpServletRequest request, Goods goods,
-			@PathVariable("thumbnailNum") Integer thumbnailNum, @RequestParam("files") MultipartFile[] files)
-			throws Exception {
+	@Deprecated
+	public CmResult addSavePics(HttpServletRequest request, Goods goods, @PathVariable("thumbnailNum") Integer thumbnailNum,
+			@RequestParam("files") MultipartFile[] files) throws Exception {
 		logger.info("addSavePics " + goods);
 
 		Subject subject = SecurityUtils.getSubject();
@@ -124,23 +125,17 @@ public class GoodsController {
 		return cmResult;
 	}
 
-	
-	
-	@ResponseBody
-	@RequestMapping("/update/{thumbnailNum}")
-	public CmResult update(HttpServletRequest request, Goods goods, @PathVariable("thumbnailNum") Integer thumbnailNum,
-			@RequestParam("files") MultipartFile[] files) throws Exception {
-		logger.info("update goods" + goods);
-		CmResult cmResult = CmResult.build(Codes.SUCCESS);
-		return cmResult;
-	}
-
 	@ResponseBody
 	@RequestMapping("/update")
-	public CmResult update(HttpServletRequest request, Goods goods, @RequestParam("files") MultipartFile[] files)
-			throws Exception {
-		logger.info("update goods" + goods);
-		return update(request, goods, null, files);
+	public CmResult update(HttpServletRequest request, Goods goods) throws Exception {
+		logger.info("update goods " + goods);
+
+		/**
+		 * 修改goods基本信息 修改供应商信息（如果有id update,否则insert） 图片没有修改，只有新增
+		 */
+		goodsService.update(goods);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS);
+		return cmResult;
 	}
 
 	/**

@@ -13,6 +13,9 @@ public class Goods {
 
 	private Long categoryId;
 
+	private String categoryCode;
+
+	@Deprecated
 	private String vendorGoodsCode;
 
 	private String nameZh;
@@ -97,6 +100,14 @@ public class Goods {
 
 	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	public String getCategoryCode() {
+		return categoryCode;
+	}
+
+	public void setCategoryCode(String categoryCode) {
+		this.categoryCode = categoryCode;
 	}
 
 	public String getVendorGoodsCode() {
