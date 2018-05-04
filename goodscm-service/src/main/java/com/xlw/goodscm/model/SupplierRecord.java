@@ -3,7 +3,7 @@ package com.xlw.goodscm.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class SupplierRecode {
+public class SupplierRecord {
 	private Long id;
 
 	private String code;// 供应商编码

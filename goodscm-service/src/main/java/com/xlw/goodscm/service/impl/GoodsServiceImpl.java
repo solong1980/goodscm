@@ -12,11 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.xlw.goodscm.dao.GoodsMapper;
 import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.GoodsPic;
-import com.xlw.goodscm.model.SupplierRecode;
+import com.xlw.goodscm.model.SupplierRecord;
 import com.xlw.goodscm.pojo.CmPage;
 import com.xlw.goodscm.service.GoodsPicService;
 import com.xlw.goodscm.service.GoodsService;
-import com.xlw.goodscm.service.SupplierRecodeService;
+import com.xlw.goodscm.service.SupplierRecordService;
 
 /**
  * @author longlianghua
@@ -28,7 +28,7 @@ public class GoodsServiceImpl implements GoodsService {
 	private GoodsMapper goodsMapper;
 
 	@Autowired
-	private SupplierRecodeService supplierRecodeService;
+	private SupplierRecordService supplierRecordService;
 
 	@Autowired
 	private GoodsPicService goodsPicService;
@@ -51,8 +51,8 @@ public class GoodsServiceImpl implements GoodsService {
 			GoodsPic goodsPic = new GoodsPic();
 			goodsPic.setGoodsId(id);
 
-			List<SupplierRecode> supplierRecodes = supplierRecodeService.selectByGoodsId(id);
-			goods.setSupplierRecodes(supplierRecodes);
+			List<SupplierRecord> supplierRecords = supplierRecordService.selectByGoodsId(id);
+			goods.setSupplierRecords(supplierRecords);
 
 			List<GoodsPic> goodsPics = goodsPicService.selectGoodsPics(id);
 			goods.setGoodsPics(goodsPics);
@@ -65,13 +65,13 @@ public class GoodsServiceImpl implements GoodsService {
 		goods.setCreateTime(new Date());
 		goodsMapper.insert(goods);
 		Long goodsId = goods.getId();
-		List<SupplierRecode> supplierRecodes = goods.getSupplierRecodes();
-		if (supplierRecodes != null && !supplierRecodes.isEmpty()) {
-			for (SupplierRecode supplierRecode : supplierRecodes) {
+		List<SupplierRecord> supplierRecords = goods.getSupplierRecords();
+		if (supplierRecords != null && !supplierRecords.isEmpty()) {
+			for (SupplierRecord supplierRecord : supplierRecords) {
 				// save goods supplier relation
-				supplierRecode.setGoodsId(goodsId);
-				supplierRecode.setCreateTime(new Date());
-				supplierRecodeService.add(supplierRecode);
+				supplierRecord.setGoodsId(goodsId);
+				supplierRecord.setCreateTime(new Date());
+				supplierRecordService.add(supplierRecord);
 			}
 		}
 		return goodsId;
@@ -104,20 +104,20 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 		goodsMapper.updateByPrimaryKey(goods);
 
-		List<SupplierRecode> supplierRecodes = goods.getSupplierRecodes();
-		for (SupplierRecode supplierRecode : supplierRecodes) {
-			Long id = supplierRecode.getId();
+		List<SupplierRecord> supplierRecords = goods.getSupplierRecords();
+		for (SupplierRecord supplierRecord : supplierRecords) {
+			Long id = supplierRecord.getId();
 			if (id == null) {
 				// do add
-				supplierRecode.setGoodsId(goods.getId());
-				supplierRecode.setCreateTime(new Date());
-				supplierRecodeService.add(supplierRecode);
+				supplierRecord.setGoodsId(goods.getId());
+				supplierRecord.setCreateTime(new Date());
+				supplierRecordService.add(supplierRecord);
 			} else {
-				supplierRecodeService.update(supplierRecode);
+				supplierRecordService.update(supplierRecord);
 			}
 		}
 
-		// no matter goods id ,update all recode
+		// no matter goods id ,update all record
 		List<GoodsPic> goodsPics = goods.getGoodsPics();
 		goodsPicService.updateGoodsId(goodsPics);
 		for (GoodsPic goodsPic : goodsPics) {

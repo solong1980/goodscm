@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xlw.goodscm.dao.GoodsPostRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.xlw.goodscm.model.GoodsPostRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="goods_his_id" property="goodsHisId" jdbcType="BIGINT" />
+    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
+    <result column="post_status" property="postStatus" jdbcType="SMALLINT" />
+    <result column="export_time" property="exportTime" jdbcType="TIMESTAMP" />
+    <result column="post_time" property="postTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from goods_post_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xlw.goodscm.model.GoodsPostRecord" >
+    insert into goods_post_record (id, goods_id, goods_his_id, 
+      customer_id, post_status, export_time, 
+      post_time, create_time, update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{goodsHisId,jdbcType=BIGINT}, 
+      #{customerId,jdbcType=BIGINT}, #{postStatus,jdbcType=SMALLINT}, #{exportTime,jdbcType=TIMESTAMP}, 
+      #{postTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.GoodsPostRecord" >
+    update goods_post_record
+    set goods_id = #{goodsId,jdbcType=BIGINT},
+      goods_his_id = #{goodsHisId,jdbcType=BIGINT},
+      customer_id = #{customerId,jdbcType=BIGINT},
+      post_status = #{postStatus,jdbcType=SMALLINT},
+      export_time = #{exportTime,jdbcType=TIMESTAMP},
+      post_time = #{postTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, goods_id, goods_his_id, customer_id, post_status, export_time, post_time, 
+    create_time, update_time
+    from goods_post_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, goods_id, goods_his_id, customer_id, post_status, export_time, post_time, 
+    create_time, update_time
+    from goods_post_record
+  </select>
+</mapper>

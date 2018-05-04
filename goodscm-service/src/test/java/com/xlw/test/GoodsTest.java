@@ -21,7 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.GoodsCategory;
 import com.xlw.goodscm.model.GoodsPic;
-import com.xlw.goodscm.model.SupplierRecode;
+import com.xlw.goodscm.model.SupplierRecord;
 import com.xlw.goodscm.pojo.CmPage;
 import com.xlw.goodscm.utils.JsonUtilTool;
 
@@ -111,17 +111,17 @@ public class GoodsTest extends BaseTest {
 
 		goods.setExtInfo("ext_info");
 
-		goods.setSupplierRecodes(new ArrayList<SupplierRecode>() {
+		goods.setSupplierRecords(new ArrayList<SupplierRecord>() {
 			private static final long serialVersionUID = 1L;
 			{
 				for (int i = 0; i < 4; i++) {
-					SupplierRecode recode = new SupplierRecode();
-					recode.setSupplierId(i + 1L);
-					recode.setQuantity(1);
-					recode.setPurchaseTime(new Date());
-					recode.setTotalPrice(new BigDecimal("100"));
-					recode.setUnitPrice(new BigDecimal("100"));
-					add(recode);
+					SupplierRecord record = new SupplierRecord();
+					record.setSupplierId(i + 1L);
+					record.setQuantity(1);
+					record.setPurchaseTime(new Date());
+					record.setTotalPrice(new BigDecimal("100"));
+					record.setUnitPrice(new BigDecimal("100"));
+					add(record);
 				}
 			}
 		});

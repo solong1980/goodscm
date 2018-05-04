@@ -2,7 +2,7 @@ package com.xlw.goodscm.model;
 
 import java.util.Date;
 
-public class GoodsPostRecode {
+public class GoodsPostRecord {
     private Long id;
 
     private Long goodsId;

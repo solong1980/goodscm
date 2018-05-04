@@ -4,43 +4,59 @@
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 	<!--数据库驱动 -->
-	<classPathEntry location="D:/tools/.m2/repository/mysql/mysql-connector-java/5.1.42/mysql-connector-java-5.1.42.jar" />
+	<classPathEntry
+		location="E:/tools/.m2/repository/mysql/mysql-connector-java/5.1.42/mysql-connector-java-5.1.42.jar" />
 	<context id="DB2Tables" targetRuntime="MyBatis3Simple">
-		<!--关闭MyBatis注释  type="org.xlw.generator.MyCommentGenerator"-->
+		<!--关闭MyBatis注释 type="org.xlw.generator.MyCommentGenerator" -->
 		<commentGenerator>
 			<property name="suppressDate" value="true" />
 			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
-		
+
 		<!--数据库链接地址账号密码 -->
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/goodscm" userId="longlh"
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost/goodscm" userId="longlh"
 			password="solong1980">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="true" />
 		</javaTypeResolver>
 		<!--生成Model类存放位置 -->
-		<javaModelGenerator targetPackage="com.xlw.goodscm.model" targetProject="src/main/java">
+		<javaModelGenerator targetPackage="com.xlw.goodscm.model"
+			targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 		<!--生成映射文件存放位置 -->
-		<sqlMapGenerator targetPackage="com.xlw.goodscm.dao" targetProject="src/main/java">
+		<sqlMapGenerator targetPackage="com.xlw.goodscm.dao"
+			targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 		<!--生成Dao类存放位置 -->
-		<javaClientGenerator type="XMLMAPPER" targetPackage="com.xlw.goodscm.dao" targetProject="src/main/java">
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.xlw.goodscm.dao" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
 		<!--生成对应表及类名 -->
-		<table tableName="goods_pic" domainObjectName="GoodsPic"></table>
-		<!-- <table tableName="goods" domainObjectName="Goods"></table> <table tableName="goods" domainObjectName="Goods" enableCountByExample="false" enableUpdateByExample="false" 
-			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> <table tableName="goods_his" domainObjectName="GoodsHis" 
-			enableCountByExample="false"></table> <table tableName="goods_post_recode" domainObjectName="GoodsPostRecode" enableSelectByExample="true"></table> <table 
-			tableName="channel_sale_recode" domainObjectName="ChannelSaleRecode" enableSelectByExample="true"></table> <table tableName="supplier" domainObjectName="Supplier" 
-			enableSelectByExample="true"></table> <table tableName="supplier_recode" domainObjectName="SupplierRecode" enableSelectByExample="true"></table> <table 
-			tableName="users" domainObjectName="User" enableSelectByExample="true"></table> <table tableName="goods_category" domainObjectName="GoodsCategory" enableSelectByExample="true"></table> -->
+		<!-- mybatis-generator:generate -->
+		
+<!-- 		<table tableName="customer" domainObjectName="Customer"></table>
+		<table tableName="plateform" domainObjectName="Plateform"></table> -->
+		<table tableName="plateform_release_record" domainObjectName="PlateformReleaseRecord"></table>
+		<table tableName="goods_post_record" domainObjectName="GoodsPostRecord"></table> 
+		<!-- <table tableName="goods_pic" domainObjectName="GoodsPic"></table><table 
+			tableName="goods" domainObjectName="Goods"></table> <table tableName="goods" 
+			domainObjectName="Goods" enableCountByExample="false" enableUpdateByExample="false" 
+			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
+			<table tableName="goods_his" domainObjectName="GoodsHis" enableCountByExample="false"></table> 
+			<table tableName="goods_post_recode" domainObjectName="GoodsPostRecode" enableSelectByExample="true"></table> 
+			<table tableName="channel_sale_recode" domainObjectName="ChannelSaleRecode" 
+			enableSelectByExample="true"></table> <table tableName="supplier" domainObjectName="Supplier" 
+			enableSelectByExample="true"></table> <table tableName="supplier_recode" 
+			domainObjectName="SupplierRecode" enableSelectByExample="true"></table> <table 
+			tableName="users" domainObjectName="User" enableSelectByExample="true"></table> 
+			<table tableName="goods_category" domainObjectName="GoodsCategory" enableSelectByExample="true"></table> -->
 
 	</context>
 </generatorConfiguration>

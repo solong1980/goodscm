@@ -66,7 +66,7 @@ public class Goods {
 
 	private List<Supplier> suppliers;
 
-	private List<SupplierRecode> supplierRecodes;
+	private List<SupplierRecord> supplierRecords;
 
 	private List<GoodsPic> goodsPics;
 
@@ -310,12 +310,12 @@ public class Goods {
 		this.suppliers = suppliers;
 	}
 
-	public List<SupplierRecode> getSupplierRecodes() {
-		return supplierRecodes;
+	public List<SupplierRecord> getSupplierRecords() {
+		return supplierRecords;
 	}
 
-	public void setSupplierRecodes(List<SupplierRecode> supplierRecodes) {
-		this.supplierRecodes = supplierRecodes;
+	public void setSupplierRecords(List<SupplierRecord> supplierRecords) {
+		this.supplierRecords = supplierRecords;
 	}
 
 	public List<GoodsPic> getGoodsPics() {

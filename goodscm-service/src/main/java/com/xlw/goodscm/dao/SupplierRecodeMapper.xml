@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xlw.goodscm.dao.SupplierRecodeMapper">
-  <resultMap id="BaseResultMap" type="com.xlw.goodscm.model.SupplierRecode">
+<mapper namespace="com.xlw.goodscm.dao.SupplierRecordMapper">
+  <resultMap id="BaseResultMap" type="com.xlw.goodscm.model.SupplierRecord">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="supplier_id" jdbcType="BIGINT" property="supplierId" />
     <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
@@ -13,7 +13,7 @@
   </resultMap>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from supplier_recode
+    delete from supplier_record
     where id = #{id,jdbcType=BIGINT}
   </delete>
   
@@ -28,8 +28,8 @@
 		create_time
 	</sql>
   
-  <insert id="insert" parameterType="com.xlw.goodscm.model.SupplierRecode">
-    insert into supplier_recode (
+  <insert id="insert" parameterType="com.xlw.goodscm.model.SupplierRecord">
+    insert into supplier_record (
 		supplier_id, 
 		goods_id, 
       	unit_price, 
@@ -49,8 +49,8 @@
     )
   </insert>
   
-  <update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.SupplierRecode">
-    update supplier_recode
+  <update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.SupplierRecord">
+    update supplier_record
     set 
       unit_price = #{unitPrice,jdbcType=DECIMAL},
       quantity = #{quantity,jdbcType=INTEGER},
@@ -62,7 +62,7 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
 	<include refid="Columns"></include>
-    from supplier_recode
+    from supplier_record
     where id = #{id,jdbcType=BIGINT}
   </select>
   
@@ -71,7 +71,7 @@
 	sr.*,
 	s.name,
 	s.code
-    from supplier_recode sr, supplier s
+    from supplier_record sr, supplier s
     where sr.supplier_id=s.id and goods_id = #{goodsId,jdbcType=BIGINT}
   </select>
   
@@ -79,6 +79,6 @@
   <select id="selectAll" resultMap="BaseResultMap">
     select 
 	<include refid="Columns"></include>
-    from supplier_recode
+    from supplier_record
   </select>
 </mapper>

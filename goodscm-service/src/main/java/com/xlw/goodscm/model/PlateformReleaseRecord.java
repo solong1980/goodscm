@@ -3,12 +3,12 @@ package com.xlw.goodscm.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class ChannelSaleRecode {
+public class PlateformReleaseRecord {
     private Long id;
 
-    private Long channel;
+    private Long platformId;
 
-    private Integer goodsId;
+    private Long goodsId;
 
     private Short releaseState;
 
@@ -26,19 +26,19 @@ public class ChannelSaleRecode {
         this.id = id;
     }
 
-    public Long getChannel() {
-        return channel;
+    public Long getPlatformId() {
+        return platformId;
     }
 
-    public void setChannel(Long channel) {
-        this.channel = channel;
+    public void setPlatformId(Long platformId) {
+        this.platformId = platformId;
     }
 
-    public Integer getGoodsId() {
+    public Long getGoodsId() {
         return goodsId;
     }
 
-    public void setGoodsId(Integer goodsId) {
+    public void setGoodsId(Long goodsId) {
         this.goodsId = goodsId;
     }
 
