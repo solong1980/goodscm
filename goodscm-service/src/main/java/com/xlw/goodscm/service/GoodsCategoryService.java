@@ -17,6 +17,8 @@ public interface GoodsCategoryService {
 
 	void update(GoodsCategory goodsCategory);
 
+	void delete(Long id);
+	
 	List<GoodsCategory> querySubCategory(Long parentId);
 
 	 

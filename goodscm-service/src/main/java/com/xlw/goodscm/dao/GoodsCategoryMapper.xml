@@ -32,11 +32,7 @@
   
   <update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.GoodsCategory" >
     update goods_category
-    set parent_id = #{parentId,jdbcType=BIGINT},
-      category_code = #{categoryCode,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    set name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   
@@ -63,5 +59,13 @@
     where parent_id = #{parentId,jdbcType=BIGINT}
   </select>
   
+  <update id="updateChildrenCodeRadical" parameterType="com.xlw.goodscm.model.GoodsCategory" >
+    update goods_category
+    set category_code=CONCAT(#{newCodeRadical},SUBSTR(category_code,LENGTH(#{oldCodeRadical})+1))
+    where category_code like CONCAT(#{oldCodeRadical},'%')
+  </update>
   
+  <select id="checkCategoryGoodsCount" resultType="java.lang.Integer" parameterType="java.lang.Long">
+    select count(*) from goods where category_id = #{id,jdbcType=BIGINT}
+  </select>
 </mapper>

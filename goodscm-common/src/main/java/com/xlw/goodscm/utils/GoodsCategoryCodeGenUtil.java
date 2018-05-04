@@ -54,7 +54,6 @@ public class GoodsCategoryCodeGenUtil {
 			Stream<Integer> map = allChildren.stream().map(new Function<String, Integer>() {
 				@Override
 				public Integer apply(String t) {
-					System.out.println(t);
 					return Integer.parseInt(getChildrenSubCode(f_level, t));
 				}
 			});

@@ -56,9 +56,16 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 		GoodsCategory dbCategory = goodsCategoryMapper.selectByPrimaryKey(id);
 		Long dbParentId = dbCategory.getParentId();
 		if (!dbParentId.equals(parentId)) {
-			genCategoryCode(parentId, goodsCategory);
+			throw new IllegalStateException("category parent id changed");
+			// String oldCodeRadical = dbCategory.getCategoryCodeRadical();
+			// genCategoryCode(parentId, dbCategory);
+			// String newCodeRadical = dbCategory.getCategoryCodeRadical();
+			// dbCategory.setParentId(parentId);
+			// goodsCategoryMapper.updateChildrenCodeRadical(goodsCategory.getId(),
+			// oldCodeRadical, newCodeRadical);
+		} else {
+			goodsCategoryMapper.updateByPrimaryKey(goodsCategory);
 		}
-		goodsCategoryMapper.updateByPrimaryKey(goodsCategory);
 	}
 
 	/**
@@ -81,6 +88,15 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 	@Override
 	public List<GoodsCategory> querySubCategory(Long parentId) {
 		return goodsCategoryMapper.selectByParentId(parentId);
+	}
+
+	@Override
+	public void delete(Long id) {
+		Integer relGoodsCount = goodsCategoryMapper.checkCategoryGoodsCount(id);
+		if (relGoodsCount > 0) {
+			throw new IllegalStateException("category id=" + id + " has related goods");
+		}
+		goodsCategoryMapper.deleteByPrimaryKey(id);
 	}
 
 }

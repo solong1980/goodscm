@@ -17,4 +17,8 @@ public interface GoodsCategoryMapper {
 	List<String> selectSubCategoryCode(Long parentId);
 
 	List<GoodsCategory> selectByParentId(Long parentId);
+
+	void updateChildrenCodeRadical(Long parentId, String oldCodeRadical, String newCodeRadical);
+
+	Integer checkCategoryGoodsCount(Long id);
 }

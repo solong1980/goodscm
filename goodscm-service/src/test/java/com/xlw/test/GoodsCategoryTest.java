@@ -42,6 +42,18 @@ public class GoodsCategoryTest extends BaseTest {
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}
+	
+	@Test
+	public void testUpdateCategory() throws URISyntaxException {
+		URI url = new URI(localhost + "/goodscategory/update");
+		GoodsCategory category = new GoodsCategory();
+		category.setId(10L);
+		category.setParentId(0L);
+		category.setName("高级镜头2");
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(category),createJsonHeader());
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+		System.out.println(responseEntity.getBody());
+	}
 
 	@Test
 	public void test() {

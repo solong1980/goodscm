@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -61,7 +62,7 @@ public class GoodsCategoryController {
 
 	@ResponseBody
 	@RequestMapping("/update")
-	public CmResult update(GoodsCategory goodsCategory) throws Exception {
+	public CmResult update(@RequestBody GoodsCategory goodsCategory) throws Exception {
 		logger.info("update goods category" + goodsCategory);
 		goodsCategoryService.update(goodsCategory);
 		CmResult cmResult = CmResult.build(Codes.SUCCESS);
