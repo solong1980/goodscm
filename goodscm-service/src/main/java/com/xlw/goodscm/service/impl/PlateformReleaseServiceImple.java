@@ -1,5 +1,6 @@
 package com.xlw.goodscm.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class PlateformReleaseServiceImple implements PlateformReleaseService {
 	private PlateformReleaseRecordMapper plateformReleaseRecordMapper;
 	@Autowired
 	private PlateformService plateformService;
-	
+
 	@Override
 	public void batchReleaseRecord(Map<String, PlateformReleaseRecord> batchRecordMap) {
 
@@ -34,14 +35,15 @@ public class PlateformReleaseServiceImple implements PlateformReleaseService {
 
 	@Override
 	public void addReleaseRecord(PlateformReleaseRecord record) {
+		record.setCreateTime(new Date());
 		plateformReleaseRecordMapper.insert(record);
 	}
 
 	@Override
 	public List<Map<String, Object>> queryGoodsAllReleaseRecord(CmPage<Goods, List<Map<String, Object>>> page) {
-		
+
 		List<Plateform> plateforms = plateformService.selectAll();
-		return plateformReleaseRecordMapper.queryGoodsAllReleaseRecord(page,plateforms);
+		return plateformReleaseRecordMapper.queryGoodsAllReleaseRecord(page, plateforms);
 	}
 
 	@Override

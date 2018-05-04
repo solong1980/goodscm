@@ -1,123 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xlw.goodscm.dao.PlateformReleaseRecordMapper">
-  <resultMap id="BaseResultMap" type="com.xlw.goodscm.model.PlateformReleaseRecord">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="platform_id" jdbcType="BIGINT" property="platformId" />
-    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
-    <result column="release_state" jdbcType="SMALLINT" property="releaseState" />
-    <result column="release_price" jdbcType="DECIMAL" property="releasePrice" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-  </resultMap>
-  
-  <sql id="Columns">
-	id, 
-	platform_id, 
-	goods_id, 
-    release_state, 
-    release_price, 
-    create_time, 
-    update_time
-  </sql>
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from plateform_release_record
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  
-  <insert id="insert" parameterType="com.xlw.goodscm.model.PlateformReleaseRecord">
-    insert into plateform_release_record (
-    	platform_id, 
-    	goods_id, 
-		release_state, 
-		release_price, 
-		create_time, 
-    )
-    values (
-		#{platformId,jdbcType=BIGINT}, 
-		#{goodsId,jdbcType=BIGINT}, 
-		#{releaseState,jdbcType=SMALLINT}, 
-		#{releasePrice,jdbcType=DECIMAL}, 
+	<resultMap id="BaseResultMap" type="com.xlw.goodscm.model.PlateformReleaseRecord">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="platform_id" jdbcType="BIGINT" property="platformId" />
+		<result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+		<result column="release_state" jdbcType="SMALLINT" property="releaseState" />
+		<result column="release_price" jdbcType="DECIMAL" property="releasePrice" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+	</resultMap>
+
+	<sql id="Columns">
+		id,
+		platform_id,
+		goods_id,
+		release_state,
+		release_price,
+		create_time,
+		update_time
+	</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from plateform_release_record
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insert" parameterType="com.xlw.goodscm.model.PlateformReleaseRecord" useGeneratedKeys="true" keyProperty="id">
+		insert into plateform_release_record (
+		platform_id,
+		goods_id,
+		release_state,
+		release_price,
+		create_time
+		)
+		values (
+		#{platformId,jdbcType=BIGINT},
+		#{goodsId,jdbcType=BIGINT},
+		#{releaseState,jdbcType=SMALLINT},
+		#{releasePrice,jdbcType=DECIMAL},
 		#{createTime,jdbcType=TIMESTAMP}
-	)
-  </insert>
-  
-  <update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.PlateformReleaseRecord">
-    update plateform_release_record
-    set 
+		)
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.PlateformReleaseRecord">
+		update plateform_release_record
+		set
 		release_state = #{releaseState,jdbcType=SMALLINT},
 		release_price = #{releasePrice,jdbcType=DECIMAL}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-		id, 
-		platform_id, 
-		goods_id, 
-		release_state, 
-		release_price, 
-		create_time, 
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select
+		id,
+		platform_id,
+		goods_id,
+		release_state,
+		release_price,
+		create_time,
 		update_time
-    from plateform_release_record
-    where 
+		from plateform_release_record
+		where
 		id = #{id,jdbcType=BIGINT}
-  </select>
-  
-  <select id="selectAll" resultMap="BaseResultMap">
-    select <include refid="Columns"></include> from plateform_release_record
-  </select>
-  
-  <select id="queryGoodsAllReleaseRecord" resultType="java.util.Map">
-    select 
-    	gs.id 					AS id,
-		gs.code					AS code,
-		gs.short_name			AS shortName,
-		gs.category_id			AS categoryId,
-		gs.vendor_goods_code	AS vendorGoodsCode,
-		gs.name_zh				AS nameZh,
-		gs.name_en				AS nameEn,
-		gs.net_weight			AS netWeight,
-		gs.weight_after_packing	AS weightAfterPacking,
-		gs.length				AS length,
-		gs.width				AS width,
-		gs.height				AS height,
-		gs.packing_length		AS packingLength,
-		gs.packing_width		AS packingWidth,
-		gs.packing_height		AS packingHeight,
-		gs.purchase_price		AS purchasePrice,
-		gs.retail_price			AS retailPrice,
-		gs.trade_price			AS tradePrice,
-		gs.stock				AS stock,
-		gs.stock_unit			AS stockUnit,
-		gs.status				AS status,
-		gs.memo					AS memo,
-		gs.zh_info				AS zhInfo,
-		gs.en_info				AS enInfo,
-		gs.ext_info				AS extInfo,
-		gs.create_time			AS createTime,
-		gs.update_time			AS updateTime, 
-    	gc.category_code		AS categoryCode, 
-    	tt.*
-    	from  goods gs left join goods_category gc on gs.category_id = gc.id left join (
+	</select>
+
+	<select id="selectAll" resultMap="BaseResultMap">
+		select
+		<include refid="Columns"></include>
+		from plateform_release_record
+	</select>
+
+	<select id="queryGoodsAllReleaseRecord" resultType="java.util.Map">
+		select
+		gs.id AS id,
+		gs.code AS code,
+		gs.short_name AS shortName,
+		gs.category_id AS categoryId,
+		gs.vendor_goods_code AS vendorGoodsCode,
+		gs.name_zh AS nameZh,
+		gs.name_en AS nameEn,
+		gs.net_weight AS netWeight,
+		gs.weight_after_packing AS weightAfterPacking,
+		gs.length AS length,
+		gs.width AS width,
+		gs.height AS
+		height,
+		gs.packing_length AS packingLength,
+		gs.packing_width AS packingWidth,
+		gs.packing_height AS packingHeight,
+		gs.purchase_price AS purchasePrice,
+		gs.retail_price AS retailPrice,
+		gs.trade_price AS tradePrice,
+		gs.stock AS stock,
+		gs.stock_unit AS stockUnit,
+		gs.status AS status,
+		gs.memo AS memo,
+		gs.zh_info AS zhInfo,
+		gs.en_info AS enInfo,
+		gs.ext_info AS extInfo,
+		gs.create_time AS createTime,
+		gs.update_time AS updateTime,
+		gc.category_code AS categoryCode,
+		tt.*
+		from goods gs left join goods_category gc on gs.category_id = gc.id left join (
 		SELECT goods_id,
 		<foreach collection="plateforms" item="plateform" open="" close="" separator="," index="idx">
-			max(CASE platform_id WHEN 1  THEN platform_id ELSE 0 END)   AS ${plateform.code}Id ,
-			max(CASE platform_id WHEN 1  THEN release_state ELSE 0 END) AS ${plateform.code}State ,
-			max(CASE platform_id WHEN 1  THEN release_price ELSE 0 END) AS ${plateform.code}Price 
+			max(CASE platform_id WHEN 1 THEN platform_id ELSE 0
+			END) AS ${plateform.code}Id ,
+			max(CASE platform_id WHEN 1 THEN release_state ELSE 0 END) AS ${plateform.code}State ,
+			max(CASE platform_id WHEN 1 THEN
+			release_price ELSE 0 END) AS ${plateform.code}Price
 		</foreach>
 		FROM plateform_release_record GROUP BY goods_id
-	 ) tt on gs.id = tt.goods_id where 1=1
-	    <if test="page.c.category!=null and page.c.category.categoryCodeRadical!=null">
+		) tt on gs.id = tt.goods_id where 1=1
+		<if test="page.c.category!=null and page.c.category.categoryCodeRadical!=null">
 			and gc.category_code like
 			concat(#{page.c.category.categoryCodeRadical,jdbcType=VARCHAR},'%')
-	    </if>
+		</if>
 		<if test="page.c.shortName!=null">
 			and gs.short_name like
 			concat(#{page.c.shortName,jdbcType=VARCHAR},'%')
 		</if>
 		limit #{page.start},#{page.count}
-  </select>
-  
+	</select>
+
 </mapper>

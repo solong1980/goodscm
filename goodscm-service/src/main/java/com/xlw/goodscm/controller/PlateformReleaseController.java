@@ -62,9 +62,8 @@ public class PlateformReleaseController {
 	 * @throws Exception
 	 */
 	@ResponseBody
-	@RequestMapping("/batchrecord")
-	public CmResult batchReleaseRecord(@RequestBody Map<String, PlateformReleaseRecord> batchRecordMap)
-			throws Exception {
+	@RequestMapping("/batch")
+	public CmResult batchReleaseRecord(@RequestBody Map<String, PlateformReleaseRecord> batchRecordMap) throws Exception {
 		logger.info("batchReleaseRecord " + batchRecordMap);
 		plateformReleaseService.batchReleaseRecord(batchRecordMap);
 		CmResult cmResult = CmResult.build(ReturnCode.Codes.SUCCESS, null);
@@ -72,7 +71,7 @@ public class PlateformReleaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/updatereleaserecord")
+	@RequestMapping("/update")
 	public CmResult updateReleaseRecord(@RequestBody PlateformReleaseRecord record) throws Exception {
 		logger.info("updateReleaseRecord " + record);
 		plateformReleaseService.updateReleaseRecord(record);
@@ -81,11 +80,11 @@ public class PlateformReleaseController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/addreleaserecord")
+	@RequestMapping("/add")
 	public CmResult addReleaseRecord(@RequestBody PlateformReleaseRecord record) throws Exception {
 		logger.info("addReleaseRecord " + record);
 		plateformReleaseService.addReleaseRecord(record);
-		CmResult cmResult = CmResult.build(ReturnCode.Codes.SUCCESS, null);
+		CmResult cmResult = CmResult.build(ReturnCode.Codes.SUCCESS, record.getId());
 		return cmResult;
 	}
 

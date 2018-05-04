@@ -1,52 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xlw.goodscm.dao.CustomerMapper">
-  <resultMap id="BaseResultMap" type="com.xlw.goodscm.model.Customer">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="code" jdbcType="VARCHAR" property="code" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="phone" jdbcType="VARCHAR" property="phone" />
-    <result column="qq" jdbcType="VARCHAR" property="qq" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="memo" jdbcType="LONGVARCHAR" property="memo" />
-  </resultMap>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from customer
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="com.xlw.goodscm.model.Customer">
-    insert into customer (id, code, name, 
-      address, phone, qq, 
-      email, create_time, update_time, 
-      memo)
-    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{memo,jdbcType=LONGVARCHAR})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.Customer">
-    update customer
-    set code = #{code,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      qq = #{qq,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      memo = #{memo,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, code, name, address, phone, qq, email, create_time, update_time, memo
-    from customer
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, code, name, address, phone, qq, email, create_time, update_time, memo
-    from customer
-  </select>
+	<resultMap id="BaseResultMap" type="com.xlw.goodscm.model.Customer">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="code" jdbcType="VARCHAR" property="code" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="qq" jdbcType="VARCHAR" property="qq" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+		<result column="memo" jdbcType="LONGVARCHAR" property="memo" />
+	</resultMap>
+	<sql id="Columns">
+		id,
+		type,
+		code,
+		name,
+		address,
+		phone,
+		qq,
+		email,
+		memo,
+		create_time,
+		update_time
+	</sql>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from customer
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insert" parameterType="com.xlw.goodscm.model.Customer" useGeneratedKeys="true" keyProperty="id">
+		insert into customer (
+		type,
+		code,
+		name,
+		address,
+		phone,
+		qq,
+		email,
+		memo,
+		create_time
+		) values (
+		#{type,jdbcType=VARCHAR},
+		#{code,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{qq,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR},
+		#{memo,jdbcType=LONGVARCHAR},
+		#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.Customer">
+		update customer
+		set
+		type = #{code,jdbcType=VARCHAR},
+		code = #{code,jdbcType=VARCHAR},
+		name =
+		#{name,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		qq = #{qq,jdbcType=VARCHAR},
+		email =
+		#{email,jdbcType=VARCHAR},
+		memo = #{memo,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select
+		<include refid="Columns"></include>
+		from customer
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="selectAll" resultMap="BaseResultMap">
+		select
+		<include refid="Columns"></include>
+		from customer
+	</select>
+
+	<select id="pageQuery" resultMap="BaseResultMap" parameterType="com.xlw.goodscm.pojo.CmPage">
+		select
+		<include refid="Columns"></include>
+		from customer
+		where 1=1
+		<if test="page.c.type!=null">
+			and type = #{type,jdbcType=VARCHAR}
+		</if>
+		<if test="page.c.name!=null">
+			and name like
+			concat(#{page.c.name,jdbcType=VARCHAR},'%')
+		</if>
+		<if test="page.c.code!=null">
+			and code like
+			concat(#{page.c.code,jdbcType=VARCHAR},'%')
+		</if>
+		limit #{page.start},#{page.count}
+	</select>
 </mapper>

@@ -3,103 +3,114 @@ package com.xlw.goodscm.model;
 import java.util.Date;
 
 public class Customer {
-    private Long id;
+	private Long id;
 
-    private String code;
+	private String type;
 
-    private String name;
+	private String code;
 
-    private String address;
+	private String name;
 
-    private String phone;
+	private String address;
 
-    private String qq;
+	private String phone;
 
-    private String email;
+	private String qq;
 
-    private Date createTime;
+	private String email;
 
-    private Date updateTime;
+	private String memo;
 
-    private String memo;
+	private Date createTime;
 
-    public Long getId() {
-        return id;
-    }
+	private Date updateTime;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
-    }
+	public String getType() {
+		return type;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public void setCode(String code) {
+		this.code = code == null ? null : code.trim();
+	}
 
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public String getQq() {
-        return qq;
-    }
+	public void setAddress(String address) {
+		this.address = address == null ? null : address.trim();
+	}
 
-    public void setQq(String qq) {
-        this.qq = qq == null ? null : qq.trim();
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone == null ? null : phone.trim();
+	}
 
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
+	public String getQq() {
+		return qq;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setQq(String qq) {
+		this.qq = qq == null ? null : qq.trim();
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public void setEmail(String email) {
+		this.email = email == null ? null : email.trim();
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public String getMemo() {
+		return memo;
+	}
 
-    public String getMemo() {
-        return memo;
-    }
+	public void setMemo(String memo) {
+		this.memo = memo == null ? null : memo.trim();
+	}
 
-    public void setMemo(String memo) {
-        this.memo = memo == null ? null : memo.trim();
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
 }

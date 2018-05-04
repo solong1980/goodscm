@@ -76,11 +76,10 @@ public class CmResult implements Serializable {
 	}
 
 	public static CmResult build(Codes code, Object data) {
+		if (data instanceof Exception) {
+			return new CmResult(code.getCode(), ((Exception) data).getMessage(), null);
+		}
 		return new CmResult(code.getCode(), code.getMessage(), data);
-	}
-
-	public static CmResult build(Codes code, Exception e) {
-		return new CmResult(code.getCode(), e.getMessage(), null);
 	}
 
 	public static CmResult build(Codes code) {
