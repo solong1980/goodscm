@@ -1,8 +1,11 @@
 package com.xlw.goodscm.service;
 
+import java.util.List;
 import java.util.Map;
 
+import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.PlateformReleaseRecord;
+import com.xlw.goodscm.pojo.CmPage;
 
 public interface PlateformReleaseService {
 
@@ -12,7 +15,7 @@ public interface PlateformReleaseService {
 
 	void addReleaseRecord(PlateformReleaseRecord record);
 
-	void queryGoodsAllReleaseRecord(PlateformReleaseRecord record);
+	List<Map<String, Object>> queryGoodsAllReleaseRecord(CmPage<Goods, List<Map<String, Object>>> page);
 
 	void delete(Long id);
 

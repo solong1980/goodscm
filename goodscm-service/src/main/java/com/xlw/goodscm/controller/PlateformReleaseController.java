@@ -1,5 +1,6 @@
 package com.xlw.goodscm.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xlw.goodscm.ReturnCode;
+import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.PlateformReleaseRecord;
+import com.xlw.goodscm.pojo.CmPage;
 import com.xlw.goodscm.pojo.CmResult;
 import com.xlw.goodscm.service.PlateformReleaseService;
 
@@ -26,10 +29,10 @@ public class PlateformReleaseController {
 
 	@ResponseBody
 	@RequestMapping("/querygoodsreleaserecord")
-	public CmResult queryGoodsAllReleaseRecord(@RequestBody PlateformReleaseRecord record) throws Exception {
-		logger.info("addReleaseRecord " + record);
-		plateformReleaseService.queryGoodsAllReleaseRecord(record);
-		CmResult cmResult = CmResult.build(ReturnCode.Codes.SUCCESS, null);
+	public CmResult queryGoodsAllReleaseRecord(@RequestBody CmPage<Goods, List<Map<String, Object>>> page) throws Exception {
+		logger.info("queryGoodsAllReleaseRecord " + page);
+		List<Map<String, Object>> goodsAllReleaseRecord = plateformReleaseService.queryGoodsAllReleaseRecord(page);
+		CmResult cmResult = CmResult.build(ReturnCode.Codes.SUCCESS, goodsAllReleaseRecord);
 		return cmResult;
 	}
 

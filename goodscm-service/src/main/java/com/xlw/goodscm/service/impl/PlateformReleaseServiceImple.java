@@ -1,20 +1,26 @@
 package com.xlw.goodscm.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.xlw.goodscm.dao.PlateformReleaseRecordMapper;
+import com.xlw.goodscm.model.Goods;
+import com.xlw.goodscm.model.Plateform;
 import com.xlw.goodscm.model.PlateformReleaseRecord;
+import com.xlw.goodscm.pojo.CmPage;
 import com.xlw.goodscm.service.PlateformReleaseService;
+import com.xlw.goodscm.service.PlateformService;
 
 @Service
 public class PlateformReleaseServiceImple implements PlateformReleaseService {
 
 	@Autowired
 	private PlateformReleaseRecordMapper plateformReleaseRecordMapper;
-	
+	@Autowired
+	private PlateformService plateformService;
 	
 	@Override
 	public void batchReleaseRecord(Map<String, PlateformReleaseRecord> batchRecordMap) {
@@ -28,22 +34,24 @@ public class PlateformReleaseServiceImple implements PlateformReleaseService {
 
 	@Override
 	public void addReleaseRecord(PlateformReleaseRecord record) {
-
+		plateformReleaseRecordMapper.insert(record);
 	}
 
 	@Override
-	public void queryGoodsAllReleaseRecord(PlateformReleaseRecord record) {
-
+	public List<Map<String, Object>> queryGoodsAllReleaseRecord(CmPage<Goods, List<Map<String, Object>>> page) {
+		
+		List<Plateform> plateforms = plateformService.selectAll();
+		return plateformReleaseRecordMapper.queryGoodsAllReleaseRecord(page,plateforms);
 	}
 
 	@Override
 	public void delete(Long id) {
-
+		plateformReleaseRecordMapper.deleteByPrimaryKey(id);
 	}
 
 	@Override
 	public PlateformReleaseRecord get(Long id) {
-		return null;
+		return plateformReleaseRecordMapper.selectByPrimaryKey(id);
 	}
 
 }
