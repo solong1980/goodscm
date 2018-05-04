@@ -132,6 +132,7 @@ public class GoodsController {
 
 		/**
 		 * 修改goods基本信息 修改供应商信息（如果有id update,否则insert） 图片没有修改，只有新增
+		 * 除非修改了缩略图 ，在更新 goods id的时候遍历全部更新一次
 		 */
 		goodsService.update(goods);
 		CmResult cmResult = CmResult.build(Codes.SUCCESS);
