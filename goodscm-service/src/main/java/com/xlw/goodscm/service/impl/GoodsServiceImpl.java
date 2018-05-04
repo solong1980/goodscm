@@ -119,13 +119,13 @@ public class GoodsServiceImpl implements GoodsService {
 
 		// no matter goods id ,update all record
 		List<GoodsPic> goodsPics = goods.getGoodsPics();
-		goodsPicService.updateGoodsId(goodsPics);
 		for (GoodsPic goodsPic : goodsPics) {
 			if (goodsPic.getIsThumbnail()) {
 				goodsPicService.createThumbnail(goodsPic);
-				break;
 			}
+			goodsPic.setGoodsId(goods.getId());
 		}
+		goodsPicService.updateGoodsId(goodsPics);
 	}
 
 	@Override

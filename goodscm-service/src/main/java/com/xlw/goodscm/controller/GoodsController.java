@@ -127,7 +127,7 @@ public class GoodsController {
 
 	@ResponseBody
 	@RequestMapping("/update")
-	public CmResult update(HttpServletRequest request, Goods goods) throws Exception {
+	public CmResult update(@RequestBody Goods goods) throws Exception {
 		logger.info("update goods " + goods);
 
 		/**

@@ -23,6 +23,7 @@ import com.xlw.goodscm.model.GoodsCategory;
 import com.xlw.goodscm.model.GoodsPic;
 import com.xlw.goodscm.model.SupplierRecord;
 import com.xlw.goodscm.pojo.CmPage;
+import com.xlw.goodscm.pojo.CmResult;
 import com.xlw.goodscm.utils.JsonUtilTool;
 
 public class GoodsTest extends BaseTest {
@@ -231,34 +232,107 @@ public class GoodsTest extends BaseTest {
 	@Test
 	public void testUpdateGoods() throws URISyntaxException {
 
-		URI url = new URI(localhost + "/goods/update/1");
+		URI url = new URI(localhost + "/goods/update");
 
-		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
+		List<Long> addGoodsPics = addGoodsPics();
 
-		FileSystemResource resource = new FileSystemResource(new File("2016-10-19 2016-10-19 002 001.jpg"));
+		HttpHeaders headers = createJsonHeader();
 
-		param.add("files", resource);
-		param.add("fileName", "2016-10-19 2016-10-19 002 001.jpg");
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/21", HttpMethod.GET, null, String.class);
+		System.out.println(responseEntity.getBody());
+		CmResult result = JsonUtilTool.fromJson(responseEntity.getBody(), CmResult.class);
 
-		resource = new FileSystemResource(new File("2016-10-27 2016-10-27 001 001.jpg"));
+		Goods goods = JsonUtilTool.fromJson(result.getData().toString(), Goods.class);
 
-		param.add("files", resource);
-		param.add("fileName", "2016-10-27 2016-10-27 001 001.jpg");
+		System.out.println("-----------------------------------Get By 21");
+		System.out.println(goods);
 
-		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.gif"));
+		goods.setCategoryId(11L);
+		goods.setShortName("Company Long name");
 
-		param.add("files", resource);
-		param.add("fileName", "2016-11-01 2016-11-01 001 001.gif");
+		goods.setNameZh("太强了");
 
-		Goods goods = new Goods();
-		goods.setId(1L);
-		goods.setCode("2222");
-		JSONObject jsonObj = JsonUtilTool.toJsonObj(goods);
-		param.setAll(jsonObj);
+		goods.setNameEn("toostromg");
 
-		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
+		goods.setNetWeight(new BigDecimal("140"));
 
-		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+		goods.setWeightAfterPacking(new BigDecimal("180"));
+
+		goods.setLength(new BigDecimal("210"));
+
+		goods.setWidth(new BigDecimal("120"));
+
+		goods.setHeight(new BigDecimal("120"));
+
+		goods.setPackingLength(new BigDecimal("120"));
+
+		goods.setPackingWidth(new BigDecimal("120"));
+
+		goods.setPackingHeight(new BigDecimal("120"));
+
+		goods.setPurchasePrice(new BigDecimal("120"));
+
+		goods.setRetailPrice(new BigDecimal("120"));
+
+		goods.setTradePrice(new BigDecimal("120"));
+
+		goods.setStock(new BigDecimal("120"));
+
+		goods.setStockUnit((short) 2);
+
+		goods.setStatus((short) 2);
+
+		goods.setMemo("MenoMeno");
+
+		goods.setZhInfo("zh_infozh_info");
+
+		goods.setEnInfo("en_infoen_info");
+
+		goods.setExtInfo("ext_infoext_info");
+
+		List<SupplierRecord> supplierRecords = goods.getSupplierRecords();
+		if (supplierRecords == null) {
+			supplierRecords = new ArrayList<>();
+		}
+		supplierRecords.addAll(new ArrayList<SupplierRecord>() {
+			private static final long serialVersionUID = 1L;
+			{
+				for (int i = 0; i < 2; i++) {
+					SupplierRecord record = new SupplierRecord();
+					record.setSupplierId(i + 1L);
+					record.setQuantity(1);
+					record.setPurchaseTime(new Date());
+					record.setTotalPrice(new BigDecimal("100"));
+					record.setUnitPrice(new BigDecimal("100"));
+					add(record);
+				}
+			}
+		});
+
+		List<GoodsPic> goodsPics = goods.getGoodsPics();
+		if (goodsPics == null) {
+			goodsPics = new ArrayList<>();
+		}
+		for (GoodsPic goodsPic : goodsPics) {
+			goodsPic.setIsThumbnail(false);
+		}
+		goodsPics.addAll(new ArrayList<GoodsPic>() {
+			private static final long serialVersionUID = 1L;
+			{
+				for (int i = 0; i < addGoodsPics.size(); i++) {
+					GoodsPic goodsPic = new GoodsPic();
+					goodsPic.setId(addGoodsPics.get(i));
+					if (i == 0)
+						goodsPic.setIsThumbnail(true);
+					add(goodsPic);
+				}
+			}
+		});
+		System.out.println("-----------------------------------Update By 2");
+		System.out.println(JsonUtilTool.toJson(goods));
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(goods), headers);
+		responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+		System.out.println("-----------------------------------After");
 		System.out.println(responseEntity.getBody());
 	}
 
