@@ -73,6 +73,7 @@
 	s.code
     from supplier_record sr, supplier s
     where sr.supplier_id=s.id and goods_id = #{goodsId,jdbcType=BIGINT}
+    order by purchase_time
   </select>
   
   
@@ -81,4 +82,18 @@
 	<include refid="Columns"></include>
     from supplier_record
   </select>
+  
+  <select id="batchQuery" resultMap="BaseResultMap">
+    select 
+	sr.*,
+	s.name,
+	s.code
+    from supplier_record sr, supplier s
+    where sr.supplier_id=s.id and sr.goods_id in 
+    <foreach collection="goodsIds" open="(" close=")" separator="," item="goodsId">
+    	#{goodsId,jdbcType=BIGINT}
+    </foreach>
+    order by purchase_time
+  </select>
+  
 </mapper>

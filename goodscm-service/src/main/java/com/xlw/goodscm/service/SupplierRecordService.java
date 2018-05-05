@@ -14,5 +14,7 @@ public interface SupplierRecordService {
 	List<SupplierRecord> selectByGoodsId(Long id);
 
 	void update(SupplierRecord supplierRecord);
+
+	List<SupplierRecord> batchQuery(List<Long> goodsIds);
 	
 }

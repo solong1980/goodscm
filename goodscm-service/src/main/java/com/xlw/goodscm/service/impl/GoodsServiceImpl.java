@@ -2,6 +2,9 @@ package com.xlw.goodscm.service.impl;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import com.xlw.goodscm.dao.GoodsMapper;
 import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.GoodsPic;
@@ -41,7 +46,53 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Override
 	public List<Goods> pageQuery(CmPage<Goods, List<?>> goodsPageQuery) {
-		return goodsMapper.pageQuery(goodsPageQuery);
+		List<Goods> pageQuery = goodsMapper.pageQuery(goodsPageQuery);
+		// query supplier recode for every row
+		List<Long> goodsIds = new ArrayList<>();
+		for (Goods goods : pageQuery) {
+			goodsIds.add(goods.getId());
+		}
+		// query supplier record order by goods id and update date
+		List<SupplierRecord> supplierRecords = supplierRecordService.batchQuery(goodsIds);
+		if (supplierRecords == null || supplierRecords.isEmpty())
+			return pageQuery;
+		
+		// group by goods id
+		Multimap<Long, SupplierRecord> supplierRecordMap = ArrayListMultimap.create();
+
+		for (SupplierRecord supplierRecord : supplierRecords) {
+			supplierRecordMap.put(supplierRecord.getGoodsId(), supplierRecord);
+		}
+		for (Goods goods : pageQuery) {
+			Collection<SupplierRecord> collection = supplierRecordMap.get(goods.getId());
+			if (collection.size() > 0) {
+				// order lowest price to index 1(first is 0)
+				ArrayList<SupplierRecord> arrayList = new ArrayList<>(collection);
+				List<SupplierRecord> subList = arrayList.subList(1, arrayList.size());
+				subList.sort(new Comparator<SupplierRecord>() {
+					@Override
+					public int compare(SupplierRecord o1, SupplierRecord o2) {
+						if (o1 == null || o1.getUnitPrice() == null)
+							return 1;
+						if (o2 == null || o2.getUnitPrice() == null)
+							return 1;
+						if (o1.getUnitPrice().equals(o2.getUnitPrice()))
+							return 0;
+						return o1.getUnitPrice().compareTo(o2.getUnitPrice());
+					}
+				});
+				goods.setSupplierRecords(new ArrayList<SupplierRecord>() {
+					private static final long serialVersionUID = 1L;
+					{
+						add(arrayList.get(0));
+						if (subList.size() > 0)
+							addAll(subList);
+					}
+				});
+			}
+		}
+
+		return pageQuery;
 	}
 
 	@Override
@@ -52,6 +103,33 @@ public class GoodsServiceImpl implements GoodsService {
 			goodsPic.setGoodsId(id);
 
 			List<SupplierRecord> supplierRecords = supplierRecordService.selectByGoodsId(id);
+			
+			if (supplierRecords.size() > 0) {
+				// order lowest price to index 1(first is 0)
+				List<SupplierRecord> subList = supplierRecords.subList(1, supplierRecords.size());
+				subList.sort(new Comparator<SupplierRecord>() {
+					@Override
+					public int compare(SupplierRecord o1, SupplierRecord o2) {
+						if (o1 == null || o1.getUnitPrice() == null)
+							return 1;
+						if (o2 == null || o2.getUnitPrice() == null)
+							return 1;
+						if (o1.getUnitPrice().equals(o2.getUnitPrice()))
+							return 0;
+						return o1.getUnitPrice().compareTo(o2.getUnitPrice());
+					}
+				});
+				goods.setSupplierRecords(new ArrayList<SupplierRecord>() {
+					private static final long serialVersionUID = 1L;
+					{
+						add(supplierRecords.get(0));
+						if (subList.size() > 0)
+							addAll(subList);
+					}
+				});
+			}
+			
+			
 			goods.setSupplierRecords(supplierRecords);
 
 			List<GoodsPic> goodsPics = goodsPicService.selectGoodsPics(id);

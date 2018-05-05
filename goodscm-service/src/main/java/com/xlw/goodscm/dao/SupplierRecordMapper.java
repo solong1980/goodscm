@@ -17,4 +17,6 @@ public interface SupplierRecordMapper {
 	int updateByPrimaryKey(SupplierRecord record);
 
 	List<SupplierRecord> selectByGoodsId(@Param("goodsId") Long goodsId);
+
+	List<SupplierRecord> batchQuery(@Param("goodsIds") List<Long> goodsIds);
 }

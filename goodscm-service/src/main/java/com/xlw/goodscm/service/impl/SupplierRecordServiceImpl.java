@@ -1,5 +1,6 @@
 package com.xlw.goodscm.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,13 @@ public class SupplierRecordServiceImpl implements SupplierRecordService {
 	@Override
 	public void update(SupplierRecord supplierRecord) {
 		supplierRecordMapper.updateByPrimaryKey(supplierRecord);
+	}
+
+	@Override
+	public List<SupplierRecord> batchQuery(List<Long> goodsIds) {
+		if (goodsIds == null || goodsIds.isEmpty())
+			return Collections.emptyList();
+		return supplierRecordMapper.batchQuery(goodsIds);
 	}
 
 }

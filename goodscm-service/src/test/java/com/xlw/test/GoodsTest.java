@@ -5,8 +5,10 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Test;
 import org.springframework.core.io.FileSystemResource;
@@ -39,7 +41,7 @@ public class GoodsTest extends BaseTest {
 		goods.setShortName("compan");
 		goods.setCategoryId(10L);
 		GoodsCategory category = new GoodsCategory();
-		category.setCategoryCode("007000000");
+		//category.setCategoryCode("007000000");
 		goods.setCategory(category);
 
 		CmPage<Goods, List<Goods>> page = new CmPage<>();
@@ -54,7 +56,7 @@ public class GoodsTest extends BaseTest {
 
 	@Test
 	public void testGoodsGet() {
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/25", HttpMethod.GET, null, String.class);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/21", HttpMethod.GET, null, String.class);
 		System.out.println(responseEntity.getBody());
 	}
 
@@ -338,6 +340,41 @@ public class GoodsTest extends BaseTest {
 
 	@Test
 	public void test() {
+		List<SupplierRecord> records = new ArrayList<>();
+		for (int i = 0; i < 4; i++) {
+			float nextFloat = new Random().nextFloat();
+			SupplierRecord record = new SupplierRecord();
+			record.setUnitPrice(new BigDecimal(nextFloat));
+			records.add(record);
+		}
+		records.add(null);
+		records.add(null);
+		for (SupplierRecord record : records) {
+			if (record != null)
+				System.out.println(record.getUnitPrice().toString());
+			else
+				System.out.println("null");
+		}
+		List<SupplierRecord> subList = records.subList(1, records.size());
+		subList.sort(new Comparator<SupplierRecord>() {
+			@Override
+			public int compare(SupplierRecord o1, SupplierRecord o2) {
+				if (o1 == null || o1.getUnitPrice() == null)
+					return 1;
+				if (o2 == null || o2.getUnitPrice() == null)
+					return 1;
+				if (o1.getUnitPrice().equals(o2.getUnitPrice()))
+					return 0;
+				return o1.getUnitPrice().compareTo(o2.getUnitPrice());
+			}
+		});
+		System.out.println("-------------------------");
+		for (SupplierRecord supplierRecord : subList) {
+			if (supplierRecord == null) {
+				System.out.println("null");
+			} else
+				System.out.println(supplierRecord.getUnitPrice().toString());
+		}
 	}
 
 }
