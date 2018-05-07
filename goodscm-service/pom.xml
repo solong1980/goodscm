@@ -62,11 +62,7 @@
 			<artifactId>druid</artifactId>
 		</dependency>
 
-<!-- 		<dependency>
-			<groupId>com.sun</groupId>
-			<artifactId>tools</artifactId>
-			<version>1.8.0</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>com.sun</groupId> <artifactId>tools</artifactId> <version>1.8.0</version> </dependency> -->
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -124,6 +120,23 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>UTF-8</encoding>
+					<compilerArguments>
+						<verbose />
+						<bootclasspath>${java.home}\jre\lib\rt.jar;${java.home}\jre\lib\jce.jar</bootclasspath>
+						<bootclasspath>${JAVA_HOME}\jre\lib\rt.jar;${JAVA_HOME}\jre\lib\jce.jar</bootclasspath>
+					</compilerArguments>
+
+				</configuration>
+
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

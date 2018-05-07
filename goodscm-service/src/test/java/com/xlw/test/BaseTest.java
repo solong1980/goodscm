@@ -29,7 +29,7 @@ import com.xlw.goodscm.pojo.CmResult;
 import com.xlw.goodscm.utils.JsonUtilTool;
 
 public class BaseTest {
-	public static final String localhost = "http://localhost:8080";
+	public static final String localhost = "http://localhost:9905";
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {

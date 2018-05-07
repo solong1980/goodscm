@@ -1,0 +1,1 @@
+java -cp lib/*;goodscm.jar springboot.Application
