@@ -136,20 +136,17 @@ public class BaseTest {
 
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
 
-		FileSystemResource resource = new FileSystemResource(new File("2016-10-19 2016-10-19 002 001.jpg"));
-
-		param.add("files", resource);
 		param.add("fileName", "2016-10-19 2016-10-19 002 001.jpg");
-
-		resource = new FileSystemResource(new File("2016-10-27 2016-10-27 001 001.jpg"));
-
+		FileSystemResource resource = new FileSystemResource(new File("2016-10-19 2016-10-19 002 001.jpg"));
 		param.add("files", resource);
+
 		param.add("fileName", "2016-10-27 2016-10-27 001 001.jpg");
-
-		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.gif"));
-
+		resource = new FileSystemResource(new File("2016-10-27 2016-10-27 001 001.jpg"));
 		param.add("files", resource);
+
 		param.add("fileName", "2016-11-01 2016-11-01 001 001.jpg");
+		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.jpg"));
+		param.add("files", resource);
 
 		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
 

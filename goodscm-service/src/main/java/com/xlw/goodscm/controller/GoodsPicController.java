@@ -77,6 +77,8 @@ public class GoodsPicController {
 			String path = goodsPic.getRelativePath();
 
 			String thumbnailPath = path + "_thumbnail";
+			fileName = "thumbnail_" + fileName;
+
 			File f = new File(thumbnailPath);
 			String characterEncoding = request.getCharacterEncoding();
 			if (f.exists()) {
@@ -95,7 +97,7 @@ public class GoodsPicController {
 					os.write(FileUtils.readFileToByteArray(f));
 					os.flush();
 				} catch (IOException e) {
-					logger.error("download file for goodsId=" + goodsId + " fail,file not exists", e);
+					logger.error("download file for goodsId=" + goodsId + " fail", e);
 					e.printStackTrace();
 				} finally {
 					if (os != null) {
@@ -109,23 +111,68 @@ public class GoodsPicController {
 		}
 	}
 
+	@RequestMapping("/pic/{id}")
+	public void getPic(@PathVariable("id") Long picId, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		logger.info("query picture by id=" + picId);
+		GoodsPic goodsPic = goodsPicService.getById(picId);
+
+		if (goodsPic != null) {
+			String fileName = goodsPic.getName();
+			String path = goodsPic.getRelativePath();
+			File f = new File(path);
+			String characterEncoding = request.getCharacterEncoding();
+			if (f.exists()) {
+				// 读取文件
+				OutputStream os = new BufferedOutputStream(response.getOutputStream());
+				try {
+					response.setContentType("application/octet-stream");
+					if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) { // IE浏览器
+						fileName = URLEncoder.encode(fileName, "UTF-8");
+					} else {
+						fileName = URLDecoder.decode(fileName, characterEncoding);// 其他浏览器
+					}
+					response.setContentLengthLong(f.length());
+					response.setHeader("Content-disposition",
+							"attachment; filename=" + new String(fileName.getBytes("utf-8"), "ISO8859-1")); // 指定下载的文件名
+					response.setHeader("filename", new String(fileName.getBytes("utf-8"), "ISO8859-1"));// 方便rest
+																										// template使用
+					os.write(FileUtils.readFileToByteArray(f));
+					os.flush();
+				} catch (IOException e) {
+					logger.error("download file for picture id=" + picId + " fail", e);
+					e.printStackTrace();
+				} finally {
+					if (os != null) {
+						os.close();
+					}
+				}
+			} else {
+				logger.error("download file for picture id=" + picId + " fail,file not exists");
+				throw new RuntimeException("File not exists");
+			}
+		}
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public CmResult upload(HttpServletRequest request, @RequestParam("files") MultipartFile[] files) {
 		try {
-			String usrHome = System.getProperty("user.home");
-			String savePath = request.getServletContext().getInitParameter(Consts.FILE_STORE_DIRECTORY_KEY);
+			String directory = request.getServletContext().getInitParameter(Consts.FILE_STORE_DIRECTORY_KEY);
+			if (directory == null)
+				directory = System.getProperty("user.home");
+			String savePath = request.getServletContext().getInitParameter(Consts.SUB_DIRECTORY_KEY);
 			if (savePath == null) {
-				savePath = Consts.DIR_STORE;
+				savePath = Consts.SUB_DIR;
 			}
-			savePath = usrHome + File.separator + savePath + File.separator + "goodspics";
+			savePath = directory + File.separator + savePath + File.separator + "goodspics";
 			List<GoodsPic> goodsPics = new ArrayList<>();
 			for (int i = 0; i < files.length; i++) {
 				GoodsPic goodsPic = new GoodsPic();
 				goodsPic.setRelativePath(savePath + File.separator + UUID.randomUUID().toString().replace("-", ""));
 				goodsPic.setName(files[i].getOriginalFilename());
 				goodsPic.setNo((short) i);
-				goodsPic.setState((byte)0);
+				goodsPic.setState((byte) 0);
 				goodsPic.setPicData(files[i].getBytes());
 				goodsPic.setCreateTime(new Date());
 				goodsPics.add(goodsPic);

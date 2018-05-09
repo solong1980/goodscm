@@ -15,7 +15,7 @@ public class IndexListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
-		servletContextEvent.getServletContext().setInitParameter(Consts.FILE_STORE_DIRECTORY_KEY, Consts.DIR_STORE);
+		//servletContextEvent.getServletContext().setInitParameter(Consts.FILE_STORE_DIRECTORY_KEY, Consts.DIR_STORE);
 		log.info("IndexListener contextInitialized");
 		// ClassLoadUtil.contextInitialized(servletContextEvent);
 	}

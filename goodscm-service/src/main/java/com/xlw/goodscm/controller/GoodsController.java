@@ -98,7 +98,7 @@ public class GoodsController {
 		String usrHome = System.getProperty("user.home");
 		String savePath = request.getServletContext().getInitParameter(Consts.FILE_STORE_DIRECTORY_KEY);
 		if (savePath == null) {
-			savePath = Consts.DIR_STORE;
+			savePath = Consts.SUB_DIR;
 		}
 		savePath = usrHome + File.separator + savePath + File.separator + "goodspics";
 		List<GoodsPic> goodsPics = new ArrayList<>();

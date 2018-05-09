@@ -18,6 +18,7 @@ public class WebAppRootContext implements ServletContextInitializer {
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		servletContext.addListener(WebAppRootListener.class);
-		servletContext.setInitParameter(Consts.FILE_STORE_DIRECTORY_KEY, Consts.DIR_STORE);
+		servletContext.setInitParameter(Consts.FILE_STORE_DIRECTORY_KEY, Consts.FILE_DIR);
+		servletContext.setInitParameter(Consts.SUB_DIRECTORY_KEY, Consts.SUB_DIR);
 	}
 }
