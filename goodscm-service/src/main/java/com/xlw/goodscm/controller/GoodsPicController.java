@@ -86,7 +86,8 @@ public class GoodsPicController {
 				OutputStream os = new BufferedOutputStream(response.getOutputStream());
 				try {
 					response.setContentType("application/octet-stream");
-					if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) { // IE浏览器
+					String header = request.getHeader("User-Agent");
+					if (header != null && header.toUpperCase().indexOf("MSIE") > 0) { // IE浏览器
 						fileName = URLEncoder.encode(fileName, "UTF-8");
 					} else {
 						fileName = URLDecoder.decode(fileName, characterEncoding);// 其他浏览器
@@ -127,7 +128,8 @@ public class GoodsPicController {
 				OutputStream os = new BufferedOutputStream(response.getOutputStream());
 				try {
 					response.setContentType("application/octet-stream");
-					if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) { // IE浏览器
+					String header = request.getHeader("User-Agent");
+					if (header != null && header.toUpperCase().indexOf("MSIE") > 0) { // IE浏览器
 						fileName = URLEncoder.encode(fileName, "UTF-8");
 					} else {
 						fileName = URLDecoder.decode(fileName, characterEncoding);// 其他浏览器
