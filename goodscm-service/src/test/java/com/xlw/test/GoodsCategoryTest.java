@@ -24,11 +24,8 @@ public class GoodsCategoryTest extends BaseTest {
 
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
 		URI url = new URI(localhost + "/goodscategory/add");
-
-		JSONObject jsonObj = JsonUtilTool.toJsonObj(category);
-		param.setAll(jsonObj);
-
-		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
+		System.out.println(JsonUtilTool.toJson(category));
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(category), createJsonHeader());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}
@@ -55,6 +52,13 @@ public class GoodsCategoryTest extends BaseTest {
 		System.out.println(responseEntity.getBody());
 	}
 
+	@Test
+	public void testDelete() throws URISyntaxException {
+		URI url = new URI(localhost + "/goodscategory/delete/13");
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<JSONObject>(new JSONObject()), String.class);
+		System.out.println(responseEntity.getBody());
+	}
+	
 	@Test
 	public void test() {
 	}

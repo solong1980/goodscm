@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xlw.goodscm.ReturnCode.Codes;
@@ -26,7 +27,7 @@ public class GoodsCategoryController {
 
 	@ResponseBody
 	@RequestMapping("/query")
-	public CmResult query(GoodsCategory goodsCategory) throws Exception {
+	public CmResult query(@RequestBody GoodsCategory goodsCategory) throws Exception {
 		logger.info("query " + goodsCategory);
 		List<GoodsCategory> categories = goodsCategoryService.query(goodsCategory);
 		CmResult cmResult = CmResult.build(Codes.SUCCESS, categories);
@@ -35,16 +36,16 @@ public class GoodsCategoryController {
 
 	@ResponseBody
 	@RequestMapping("/querysubcategory/{parentId}")
-	public CmResult querySubCategory(@PathVariable("parentId")Long parentId) throws Exception {
+	public CmResult querySubCategory(@PathVariable("parentId") Long parentId) throws Exception {
 		logger.info("query by parentId=" + parentId);
 		List<GoodsCategory> categories = goodsCategoryService.querySubCategory(parentId);
 		CmResult cmResult = CmResult.build(Codes.SUCCESS, categories);
 		return cmResult;
 	}
-	
+
 	@ResponseBody
-	@RequestMapping("/get")
-	public CmResult get(Long id) throws Exception {
+	@RequestMapping("/get/{id}")
+	public CmResult get(@PathVariable("id") Long id) throws Exception {
 		logger.info("get goods category id=" + id);
 		GoodsCategory goodsCategory = goodsCategoryService.getById(id);
 		CmResult cmResult = CmResult.build(Codes.SUCCESS, goodsCategory);
@@ -52,8 +53,8 @@ public class GoodsCategoryController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/add")
-	public CmResult add(GoodsCategory goodsCategory) throws Exception {
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public CmResult add(@RequestBody GoodsCategory goodsCategory) throws Exception {
 		logger.info("add goods category" + goodsCategory);
 		goodsCategoryService.add(goodsCategory);
 		CmResult cmResult = CmResult.build(Codes.SUCCESS);
@@ -70,8 +71,10 @@ public class GoodsCategoryController {
 	}
 
 	@ResponseBody
-	@RequestMapping("/delete")
-	public CmResult delete(GoodsCategory goodsCategory) throws Exception {
+	@RequestMapping("/delete/{id}")
+	public CmResult delete(@PathVariable("id") Long id) throws Exception {
+		logger.info("delete goods category id=" + id);
+		goodsCategoryService.delete(id);
 		CmResult cmResult = CmResult.build(Codes.SUCCESS);
 		return cmResult;
 	}
