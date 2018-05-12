@@ -19,8 +19,8 @@ public class GoodsCategoryTest extends BaseTest {
 	@Test
 	public void testAddCategory() throws URISyntaxException {
 		GoodsCategory category = new GoodsCategory();
-		category.setParentId(11L);
-		category.setName("高级镜头");
+		category.setParentId(10L);
+		category.setName("高级镜头-1");
 
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
 		URI url = new URI(localhost + "/goodscategory/add");
@@ -54,7 +54,7 @@ public class GoodsCategoryTest extends BaseTest {
 
 	@Test
 	public void testDelete() throws URISyntaxException {
-		URI url = new URI(localhost + "/goodscategory/delete/13");
+		URI url = new URI(localhost + "/goodscategory/delete/11");
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<JSONObject>(new JSONObject()), String.class);
 		System.out.println(responseEntity.getBody());
 	}

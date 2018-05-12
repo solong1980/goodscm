@@ -14,6 +14,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.support.spring.FastJsonJsonView;
+import com.xlw.goodscm.GoodsCMException;
 import com.xlw.goodscm.ReturnCode.Codes;
 import com.xlw.goodscm.pojo.CmResult;
 import com.xlw.goodscm.utils.JsonUtilTool;
@@ -33,8 +34,11 @@ public class MyExceptionHandler implements HandlerExceptionResolver {
 		} else if (ex instanceof UnauthorizedException) {
 			CmResult result = CmResult.build(Codes.NO_PERMISSION);
 			attributes.putAll(JsonUtilTool.toJsonObj(result));
-		} else {
-			CmResult result = CmResult.build(Codes.FAILURE, ex.getMessage());
+		} else if(ex instanceof GoodsCMException){
+			CmResult result = CmResult.build(((GoodsCMException) ex).getCode(), ex);
+			attributes.putAll(JsonUtilTool.toJsonObj(result));
+		}else {
+			CmResult result = CmResult.build(Codes.FAILURE, ex);
 			attributes.putAll(JsonUtilTool.toJsonObj(result));
 		}
 

@@ -23,6 +23,8 @@ public class ReturnCode {
 		
 		USER_NOEXIST(503, "该用户不存在"),
 		
+		RELATED_GOODS(521, "此类别有商品关联"), 
+		SUB_CATEGORIES(522, "此类别有子类别"), 
 		;
 		private Integer code;
 		private String message;

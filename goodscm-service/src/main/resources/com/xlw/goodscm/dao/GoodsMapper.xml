@@ -131,6 +131,7 @@
 			code = #{code,jdbcType=VARCHAR},
 		</if>
 		vendor_goods_code = #{vendorGoodsCode,jdbcType=VARCHAR},
+		category_id = #{categoryId,jdbcType=BIGINT},
 		name_zh = #{nameZh,jdbcType=VARCHAR},
 		name_en = #{nameEn,jdbcType=VARCHAR},
 		net_weight = #{netWeight,jdbcType=DECIMAL},
@@ -149,7 +150,10 @@
 		status = #{status,jdbcType=SMALLINT},
 		create_time = #{createTime,jdbcType=TIMESTAMP},
 		update_time = #{updateTime,jdbcType=TIMESTAMP},
-		memo = #{memo,jdbcType=LONGVARCHAR}
+		memo = #{memo,jdbcType=LONGVARCHAR},
+		zh_info = #{zhInfo,jdbcType=LONGVARCHAR},
+		en_info = #{enInfo,jdbcType=LONGVARCHAR},
+		ext_info = #{extInfo,jdbcType=LONGVARCHAR}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
 	
@@ -169,11 +173,11 @@
 		g.*,
 		gc.category_code
 		from goods g ,goods_category gc where g.category_id = gc.id 
-		<if test="page.c.category!=null and page.c.category.categoryCodeRadical!=null">
+		<if test="page.c!=null and page.c.category!=null and page.c.category.categoryCodeRadical!=null">
 			and gc.category_code like
 			concat(#{page.c.category.categoryCodeRadical,jdbcType=VARCHAR},'%')
 		</if>
-		<if test="page.c.shortName!=null">
+		<if test="page.c!=null and page.c.shortName!=null">
 			and short_name like
 			concat(#{page.c.shortName,jdbcType=VARCHAR},'%')
 		</if>

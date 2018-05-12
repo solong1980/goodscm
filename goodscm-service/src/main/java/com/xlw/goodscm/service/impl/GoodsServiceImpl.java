@@ -56,7 +56,7 @@ public class GoodsServiceImpl implements GoodsService {
 		List<SupplierRecord> supplierRecords = supplierRecordService.batchQuery(goodsIds);
 		if (supplierRecords == null || supplierRecords.isEmpty())
 			return pageQuery;
-		
+
 		// group by goods id
 		Multimap<Long, SupplierRecord> supplierRecordMap = ArrayListMultimap.create();
 
@@ -103,7 +103,7 @@ public class GoodsServiceImpl implements GoodsService {
 			goodsPic.setGoodsId(id);
 
 			List<SupplierRecord> supplierRecords = supplierRecordService.selectByGoodsId(id);
-			
+
 			if (supplierRecords.size() > 0) {
 				// order lowest price to index 1(first is 0)
 				List<SupplierRecord> subList = supplierRecords.subList(1, supplierRecords.size());
@@ -128,8 +128,7 @@ public class GoodsServiceImpl implements GoodsService {
 					}
 				});
 			}
-			
-			
+
 			goods.setSupplierRecords(supplierRecords);
 
 			List<GoodsPic> goodsPics = goodsPicService.selectGoodsPics(id);
@@ -183,27 +182,30 @@ public class GoodsServiceImpl implements GoodsService {
 		goodsMapper.updateByPrimaryKey(goods);
 
 		List<SupplierRecord> supplierRecords = goods.getSupplierRecords();
-		for (SupplierRecord supplierRecord : supplierRecords) {
-			Long id = supplierRecord.getId();
-			if (id == null) {
-				// do add
-				supplierRecord.setGoodsId(goods.getId());
-				supplierRecord.setCreateTime(new Date());
-				supplierRecordService.add(supplierRecord);
-			} else {
-				supplierRecordService.update(supplierRecord);
+		if (supplierRecords != null) {
+			for (SupplierRecord supplierRecord : supplierRecords) {
+				Long id = supplierRecord.getId();
+				if (id == null || id == 0) {
+					// do add
+					supplierRecord.setGoodsId(goods.getId());
+					supplierRecord.setCreateTime(new Date());
+					supplierRecordService.add(supplierRecord);
+				} else {
+					supplierRecordService.update(supplierRecord);
+				}
 			}
 		}
-
 		// no matter goods id ,update all record
 		List<GoodsPic> goodsPics = goods.getGoodsPics();
-		for (GoodsPic goodsPic : goodsPics) {
-			if (goodsPic.getIsThumbnail()) {
-				goodsPicService.createThumbnail(goodsPic);
+		if (goodsPics != null) {
+			for (GoodsPic goodsPic : goodsPics) {
+				if (goodsPic.getIsThumbnail()) {
+					goodsPicService.createThumbnail(goodsPic);
+				}
+				goodsPic.setGoodsId(goods.getId());
 			}
-			goodsPic.setGoodsId(goods.getId());
+			goodsPicService.updateGoodsId(goodsPics);
 		}
-		goodsPicService.updateGoodsId(goodsPics);
 	}
 
 	@Override

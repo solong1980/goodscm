@@ -68,4 +68,8 @@
   <select id="checkCategoryGoodsCount" resultType="java.lang.Integer" parameterType="java.lang.Long">
     select count(*) from goods where category_id = #{id,jdbcType=BIGINT}
   </select>
+  
+   <select id="checkCategorySubCount" resultType="java.lang.Integer" parameterType="java.lang.Long">
+    select count(*) from goods_category where parent_id = #{id,jdbcType=BIGINT}
+  </select>
 </mapper>

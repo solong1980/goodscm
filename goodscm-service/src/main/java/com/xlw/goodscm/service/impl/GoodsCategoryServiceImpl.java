@@ -4,9 +4,13 @@ import java.security.InvalidParameterException;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xlw.goodscm.GoodsCMException;
+import com.xlw.goodscm.ReturnCode;
 import com.xlw.goodscm.dao.GoodsCategoryMapper;
 import com.xlw.goodscm.model.GoodsCategory;
 import com.xlw.goodscm.service.GoodsCategoryService;
@@ -17,7 +21,7 @@ import com.xlw.goodscm.utils.GoodsCategoryCodeGenUtil;
  */
 @Service
 public class GoodsCategoryServiceImpl implements GoodsCategoryService {
-
+	private static final Logger logger = LoggerFactory.getLogger(GoodsCategoryServiceImpl.class);
 	@Autowired
 	private GoodsCategoryMapper goodsCategoryMapper;
 
@@ -51,7 +55,7 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 		Long id = goodsCategory.getId();
 		Long parentId = goodsCategory.getParentId();
 		if (id == null || parentId == null)
-			throw new InvalidParameterException("need primary key / parent key");
+			throw new GoodsCMException(ReturnCode.Codes.FAILURE, "need primary key / parent key");
 
 		GoodsCategory dbCategory = goodsCategoryMapper.selectByPrimaryKey(id);
 		Long dbParentId = dbCategory.getParentId();
@@ -94,7 +98,13 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 	public void delete(Long id) {
 		Integer relGoodsCount = goodsCategoryMapper.checkCategoryGoodsCount(id);
 		if (relGoodsCount > 0) {
-			throw new IllegalStateException("category id=" + id + " has related goods");
+			logger.error("category id=" + id + " has related goods");
+			throw new GoodsCMException(ReturnCode.Codes.RELATED_GOODS);
+		}
+		Integer subCategoryCount = goodsCategoryMapper.checkCategorySubCount(id);
+		if (subCategoryCount > 0) {
+			logger.error("category id=" + id + " has sub categorys");
+			throw new GoodsCMException(ReturnCode.Codes.SUB_CATEGORIES);
 		}
 		goodsCategoryMapper.deleteByPrimaryKey(id);
 	}

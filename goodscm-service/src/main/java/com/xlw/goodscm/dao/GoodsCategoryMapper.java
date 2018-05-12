@@ -21,4 +21,6 @@ public interface GoodsCategoryMapper {
 	void updateChildrenCodeRadical(Long parentId, String oldCodeRadical, String newCodeRadical);
 
 	Integer checkCategoryGoodsCount(Long id);
+	
+	Integer checkCategorySubCount(Long id);
 }

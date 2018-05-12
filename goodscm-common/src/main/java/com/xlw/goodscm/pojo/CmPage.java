@@ -1,6 +1,8 @@
 package com.xlw.goodscm.pojo;
 
-public class CmPage<C, R> extends CmResult {
+import java.io.Serializable;
+
+public class CmPage<C, R> implements Serializable {
 	private static final long serialVersionUID = -2709969219830031835L;
 	private Integer start = 0;
 	private Integer pageNum = 1;

@@ -38,11 +38,11 @@ public class GoodsTest extends BaseTest {
 	@Test
 	public void testGoodsQuery() {
 		Goods goods = new Goods();
-		goods.setShortName("compan");
-		goods.setCategoryId(10L);
+//		goods.setShortName("compan");
+//		goods.setCategoryId(10L);
 		GoodsCategory category = new GoodsCategory();
 		//category.setCategoryCode("007000000");
-		goods.setCategory(category);
+//		goods.setCategory(category);
 
 		CmPage<Goods, List<Goods>> page = new CmPage<>();
 		page.setC(goods);

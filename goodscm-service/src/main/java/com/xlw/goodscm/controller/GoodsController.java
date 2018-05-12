@@ -48,10 +48,11 @@ public class GoodsController {
 	// @RequiresPermissions(value = { "user:view", "user:create" }, logical =
 	// Logical.AND)
 	@RequestMapping("/query")
-	public CmResult query(@RequestBody CmPage<Goods, List<?>> goodsPageQuery) throws Exception {
-		logger.info("query " + goodsPageQuery);
-		List<Goods> goodsList = goodsService.pageQuery(goodsPageQuery);
-		CmResult cmResult = CmResult.build(Codes.SUCCESS, goodsList);
+	public CmResult query(@RequestBody CmPage<Goods, List<?>> goodsCmPage) throws Exception {
+		logger.info("query " + goodsCmPage);
+		List<Goods> goodsList = goodsService.pageQuery(goodsCmPage);
+		goodsCmPage.setT(goodsList);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS, goodsCmPage);
 		return cmResult;
 	}
 
