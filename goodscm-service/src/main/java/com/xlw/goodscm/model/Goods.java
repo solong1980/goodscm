@@ -15,6 +15,8 @@ public class Goods {
 
 	private String categoryCode;
 
+	private Long thumbnailPicId;
+
 	@Deprecated
 	private String vendorGoodsCode;
 
@@ -108,6 +110,14 @@ public class Goods {
 
 	public void setCategoryCode(String categoryCode) {
 		this.categoryCode = categoryCode;
+	}
+
+	public Long getThumbnailPicId() {
+		return thumbnailPicId;
+	}
+
+	public void setThumbnailPicId(Long thumbnailPicId) {
+		this.thumbnailPicId = thumbnailPicId;
 	}
 
 	public String getVendorGoodsCode() {

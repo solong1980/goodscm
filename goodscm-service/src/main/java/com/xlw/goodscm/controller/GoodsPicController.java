@@ -66,11 +66,11 @@ public class GoodsPicController {
 		return cmResult;
 	}
 
-	@RequestMapping("/getthumbnail/{goodsId}")
-	public void getThumbnail(@PathVariable("goodsId") Long goodsId, HttpServletRequest request,
+	@RequestMapping("/getthumbnail/{id}")
+	public void getThumbnail(@PathVariable("id") Long id, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		logger.info("query goods thrumbnail picture by goodsid=" + goodsId);
-		GoodsPic goodsPic = goodsPicService.getThrumbnail(goodsId);
+		logger.info("query goods thrumbnail picture by id=" + id);
+		GoodsPic goodsPic = goodsPicService.getById(id);
 
 		if (goodsPic != null) {
 			String fileName = goodsPic.getName();
@@ -98,7 +98,7 @@ public class GoodsPicController {
 					os.write(FileUtils.readFileToByteArray(f));
 					os.flush();
 				} catch (IOException e) {
-					logger.error("download file for goodsId=" + goodsId + " fail", e);
+					logger.error("download file for id=" + id + " fail", e);
 					e.printStackTrace();
 				} finally {
 					if (os != null) {
@@ -106,11 +106,11 @@ public class GoodsPicController {
 					}
 				}
 			} else {
-				logger.error("download file for goodsId=" + goodsId + " fail,file not exists");
+				logger.error("download file for id=" + id + " fail,file not exists");
 				throw new RuntimeException("File not exists");
 			}
 		}else {
-			logger.error("download file for goodsId=" + goodsId + " fail,goods has no thrumbnail picture");
+			logger.error("download file for id=" + id + " fail,goods has no thrumbnail picture");
 			throw new RuntimeException("Goods has no thumbnail picture");
 		}
 	}

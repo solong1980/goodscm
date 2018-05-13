@@ -7,6 +7,7 @@
 		<result column="short_name" jdbcType="VARCHAR" property="shortName" />
 		<result column="category_id" jdbcType="BIGINT" property="categoryId" />
 		<result column="category_code" jdbcType="BIGINT" property="categoryCode" />
+		<result column="thumbnail_pic_id" jdbcType="BIGINT" property="thumbnailPicId" />
 		<result column="vendor_goods_code" jdbcType="VARCHAR" property="vendorGoodsCode" />
 		<result column="name_zh" jdbcType="VARCHAR" property="nameZh" />
 		<result column="name_en" jdbcType="VARCHAR" property="nameEn" />
@@ -181,8 +182,18 @@
 		parameterType="com.xlw.goodscm.pojo.CmPage">
 		select
 		g.*,
+		gp.thumbnail_pic_id,
 		gc.category_code
-		from goods g ,goods_category gc where g.category_id = gc.id 
+		from goods g 
+		left join 
+		(SELECT goods_pic.id as thumbnailPicId,goods_id
+		FROM (
+		SELECT MAX(id) id
+		FROM goods_pic
+		WHERE is_thumbnail=1
+		GROUP BY goods_id) t
+		LEFT JOIN goods_pic ON t.id = goods_pic.id)  gp on g.id = gp.goods_id
+		,goods_category gc where g.category_id = gc.id 
 		<if test="page.c!=null and page.c.category!=null and page.c.category.categoryCodeRadical!=null">
 			and gc.category_code like
 			concat(#{page.c.category.categoryCodeRadical,jdbcType=VARCHAR},'%')
