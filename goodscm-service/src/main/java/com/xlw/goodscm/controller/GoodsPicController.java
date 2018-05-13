@@ -109,6 +109,9 @@ public class GoodsPicController {
 				logger.error("download file for goodsId=" + goodsId + " fail,file not exists");
 				throw new RuntimeException("File not exists");
 			}
+		}else {
+			logger.error("download file for goodsId=" + goodsId + " fail,goods has no thrumbnail picture");
+			throw new RuntimeException("Goods has no thumbnail picture");
 		}
 	}
 

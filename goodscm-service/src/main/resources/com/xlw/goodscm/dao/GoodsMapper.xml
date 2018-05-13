@@ -127,10 +127,8 @@
 	<update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.Goods">
 		update goods
 		set 
-		<if test="#{code != null}">
-			code = #{code,jdbcType=VARCHAR},
-		</if>
-		vendor_goods_code = #{vendorGoodsCode,jdbcType=VARCHAR},
+		code = #{code,jdbcType=VARCHAR},
+		short_name = #{shortName,jdbcType=VARCHAR},
 		category_id = #{categoryId,jdbcType=BIGINT},
 		name_zh = #{nameZh,jdbcType=VARCHAR},
 		name_en = #{nameEn,jdbcType=VARCHAR},
@@ -147,13 +145,25 @@
 		trade_price = #{tradePrice,jdbcType=DECIMAL},
 		stock = #{stock,jdbcType=DECIMAL},
 		stock_unit = #{stockUnit,jdbcType=SMALLINT},
-		status = #{status,jdbcType=SMALLINT},
-		create_time = #{createTime,jdbcType=TIMESTAMP},
-		update_time = #{updateTime,jdbcType=TIMESTAMP},
 		memo = #{memo,jdbcType=LONGVARCHAR},
 		zh_info = #{zhInfo,jdbcType=LONGVARCHAR},
 		en_info = #{enInfo,jdbcType=LONGVARCHAR},
 		ext_info = #{extInfo,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<update id="fastUpdateByPrimaryKey" parameterType="com.xlw.goodscm.model.Goods">
+		update goods
+		set 
+		code = #{code,jdbcType=VARCHAR},
+		short_name = #{shortName,jdbcType=VARCHAR},
+		name_zh = #{nameZh,jdbcType=VARCHAR},
+		name_en = #{nameEn,jdbcType=VARCHAR},
+		retail_price = #{retailPrice,jdbcType=DECIMAL},
+		trade_price = #{tradePrice,jdbcType=DECIMAL},
+		stock = #{stock,jdbcType=DECIMAL},
+		stock_unit = #{stockUnit,jdbcType=SMALLINT},
+		memo = #{memo,jdbcType=LONGVARCHAR}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
 	

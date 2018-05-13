@@ -339,6 +339,37 @@ public class GoodsTest extends BaseTest {
 	}
 
 	@Test
+	public void testFastUpdateGoods() throws URISyntaxException {
+
+		URI url = new URI(localhost + "/goods/fastupdate");
+
+		HttpHeaders headers = createJsonHeader();
+		Goods goods = new Goods();
+		goods.setId(21L);
+		goods.setShortName("酷比科技");
+
+		goods.setNameZh("中国酷比科技有限公司");
+
+		goods.setNameEn("chinese koobi tec 'ltd");
+ 
+
+		goods.setRetailPrice(new BigDecimal("2200"));
+
+		goods.setTradePrice(new BigDecimal("200"));
+
+		goods.setStock(new BigDecimal("33"));
+
+		goods.setStockUnit((short) 2);
+		goods.setMemo("中国最酷逼的科技公司");
+
+		System.out.println(JsonUtilTool.toJson(goods));
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(goods), headers);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+		System.out.println("-----------------------------------After");
+		System.out.println(responseEntity.getBody());
+	}
+	
+	@Test
 	public void test() {
 		List<SupplierRecord> records = new ArrayList<>();
 		for (int i = 0; i < 4; i++) {

@@ -231,4 +231,12 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 	}
 
+	@Override
+	public void fastUpdate(Goods goods) {
+		if (goods.getId() == null) {
+			throw new InvalidParameterException("goods id is null");
+		}
+		goodsMapper.fastUpdateByPrimaryKey(goods);
+	}
+
 }

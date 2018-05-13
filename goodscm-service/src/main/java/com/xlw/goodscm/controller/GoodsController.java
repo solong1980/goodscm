@@ -139,6 +139,19 @@ public class GoodsController {
 		CmResult cmResult = CmResult.build(Codes.SUCCESS);
 		return cmResult;
 	}
+	
+	@ResponseBody
+	@RequestMapping("/fastupdate")
+	public CmResult fastUpdate(@RequestBody Goods goods) throws Exception {
+		logger.info("fast update goods " + goods);
+
+		/**
+		 * 修改goods基本信息 
+		 */
+		goodsService.fastUpdate(goods);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS);
+		return cmResult;
+	}
 
 	/**
 	 * Do audit by admin
