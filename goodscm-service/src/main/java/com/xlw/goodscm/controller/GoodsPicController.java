@@ -66,51 +66,70 @@ public class GoodsPicController {
 		return cmResult;
 	}
 
-	@RequestMapping("/getthumbnail/{id}")
-	public void getThumbnail(@PathVariable("id") Long id, HttpServletRequest request,
+	private void sendPic(GoodsPic goodsPic, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		String fileName = goodsPic.getName();
+		String path = goodsPic.getRelativePath();
+		File f = new File(path);
+		String characterEncoding = request.getCharacterEncoding();
+		if (f.exists()) {
+			// 读取文件
+			OutputStream os = new BufferedOutputStream(response.getOutputStream());
+			try {
+				response.setContentType("application/octet-stream");
+				String header = request.getHeader("User-Agent");
+				if (header != null && header.toUpperCase().indexOf("MSIE") > 0) { // IE浏览器
+					fileName = URLEncoder.encode(fileName, "UTF-8");
+				} else {
+					fileName = URLDecoder.decode(fileName, characterEncoding);// 其他浏览器
+				}
+				response.setContentLengthLong(f.length());
+				response.setHeader("Content-disposition",
+						"attachment; filename=" + new String(fileName.getBytes("utf-8"), "ISO8859-1")); // 指定下载的文件名
+				os.write(FileUtils.readFileToByteArray(f));
+				os.flush();
+			} catch (IOException e) {
+				logger.error("download file for id=" + goodsPic.getId() + " fail", e);
+				e.printStackTrace();
+			} finally {
+				if (os != null) {
+					os.close();
+				}
+			}
+		} else {
+			logger.error("download file for id=" + goodsPic.getId() + " fail,file not exists");
+			throw new RuntimeException("File not exists");
+		}
+	}
+
+	@RequestMapping("/getthumbnail/picid/{id}")
+	public void getThumbnailByPicId(@PathVariable("id") Long picId, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		logger.info("query goods thrumbnail picture by id=" + id);
-		GoodsPic goodsPic = goodsPicService.getById(id);
+		logger.info("query goods thrumbnail picture by id=" + picId);
+		GoodsPic goodsPic = goodsPicService.getById(picId);
 
 		if (goodsPic != null) {
-			String fileName = goodsPic.getName();
-			String path = goodsPic.getRelativePath();
+			goodsPic.setRelativePath(goodsPic.getRelativePath() + "_thumbnail");
+			goodsPic.setName("thumbnail_" + goodsPic.getName());
+			sendPic(goodsPic, request, response);
+		} else {
+			logger.error("download thumbnail for id=" + picId + " fail,goods has no thrumbnail picture");
+			throw new RuntimeException("Goods has no thumbnail picture");
+		}
+	}
 
-			String thumbnailPath = path + "_thumbnail";
-			fileName = "thumbnail_" + fileName;
+	@RequestMapping("/getthumbnail/goodsid/{goodsId}")
+	public void getThumbnailByGoodsId(@PathVariable("goodsId") Long goodsId, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		logger.info("query goods thrumbnail picture by id=" + goodsId);
+		GoodsPic goodsPic = goodsPicService.getThrumbnail(goodsId);
 
-			File f = new File(thumbnailPath);
-			String characterEncoding = request.getCharacterEncoding();
-			if (f.exists()) {
-				// 读取文件
-				OutputStream os = new BufferedOutputStream(response.getOutputStream());
-				try {
-					response.setContentType("application/octet-stream");
-					String header = request.getHeader("User-Agent");
-					if (header != null && header.toUpperCase().indexOf("MSIE") > 0) { // IE浏览器
-						fileName = URLEncoder.encode(fileName, "UTF-8");
-					} else {
-						fileName = URLDecoder.decode(fileName, characterEncoding);// 其他浏览器
-					}
-					response.setContentLengthLong(f.length());
-					response.setHeader("Content-disposition",
-							"attachment; filename=" + new String(fileName.getBytes("utf-8"), "ISO8859-1")); // 指定下载的文件名
-					os.write(FileUtils.readFileToByteArray(f));
-					os.flush();
-				} catch (IOException e) {
-					logger.error("download file for id=" + id + " fail", e);
-					e.printStackTrace();
-				} finally {
-					if (os != null) {
-						os.close();
-					}
-				}
-			} else {
-				logger.error("download file for id=" + id + " fail,file not exists");
-				throw new RuntimeException("File not exists");
-			}
-		}else {
-			logger.error("download file for id=" + id + " fail,goods has no thrumbnail picture");
+		if (goodsPic != null) {
+			goodsPic.setRelativePath(goodsPic.getRelativePath() + "_thumbnail");
+			goodsPic.setName("thumbnail_" + goodsPic.getName());
+			sendPic(goodsPic, request, response);
+		} else {
+			logger.error("download thumbnail for goodsid=" + goodsId + " fail,goods has no thrumbnail picture");
 			throw new RuntimeException("Goods has no thumbnail picture");
 		}
 	}
@@ -122,40 +141,7 @@ public class GoodsPicController {
 		GoodsPic goodsPic = goodsPicService.getById(picId);
 
 		if (goodsPic != null) {
-			String fileName = goodsPic.getName();
-			String path = goodsPic.getRelativePath();
-			File f = new File(path);
-			String characterEncoding = request.getCharacterEncoding();
-			if (f.exists()) {
-				// 读取文件
-				OutputStream os = new BufferedOutputStream(response.getOutputStream());
-				try {
-					response.setContentType("application/octet-stream");
-					String header = request.getHeader("User-Agent");
-					if (header != null && header.toUpperCase().indexOf("MSIE") > 0) { // IE浏览器
-						fileName = URLEncoder.encode(fileName, "UTF-8");
-					} else {
-						fileName = URLDecoder.decode(fileName, characterEncoding);// 其他浏览器
-					}
-					response.setContentLengthLong(f.length());
-					response.setHeader("Content-disposition",
-							"attachment; filename=" + new String(fileName.getBytes("utf-8"), "ISO8859-1")); // 指定下载的文件名
-					response.setHeader("filename", new String(fileName.getBytes("utf-8"), "ISO8859-1"));// 方便rest
-																										// template使用
-					os.write(FileUtils.readFileToByteArray(f));
-					os.flush();
-				} catch (IOException e) {
-					logger.error("download file for picture id=" + picId + " fail", e);
-					e.printStackTrace();
-				} finally {
-					if (os != null) {
-						os.close();
-					}
-				}
-			} else {
-				logger.error("download file for picture id=" + picId + " fail,file not exists");
-				throw new RuntimeException("File not exists");
-			}
+			sendPic(goodsPic, request, response);
 		}
 	}
 

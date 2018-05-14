@@ -24,20 +24,20 @@ public class GoodsPicsTest extends BaseTest {
 
 	@Test
 	public void testGetGoodsThumbnail() throws URISyntaxException, IOException {
-		URI url = new URI(localhost + "/goodspic/getthumbnail/21");
-
+		URI url = new URI(localhost + "/goodspic/getthumbnail/picid/61");
+		url = new URI(localhost + "/goodspic/getthumbnail/goodsid/22");
 		ResponseEntity<byte[]> responseEntity = restTemplate.exchange(url, HttpMethod.POST, null, byte[].class);
 		int statusCodeValue = responseEntity.getStatusCodeValue();
 		if (statusCodeValue != 200) {
 			System.out.println(responseEntity.toString());
 			return;
 		}
-//		String type = responseEntity.getHeaders().getContentType().getSubtype();
-//		if (!type.contains("octet-stream")) {
-//			System.out.println(new String(responseEntity.getBody()));
-//			return;
-//		}
-		if (MediaType.APPLICATION_OCTET_STREAM.compareTo(responseEntity.getHeaders().getContentType()) >= 0) {
+		// String type = responseEntity.getHeaders().getContentType().getSubtype();
+		// if (!type.contains("octet-stream")) {
+		// System.out.println(new String(responseEntity.getBody()));
+		// return;
+		// }
+		if (MediaType.APPLICATION_OCTET_STREAM.compareTo(responseEntity.getHeaders().getContentType()) == 0) {
 			HttpHeaders headers = responseEntity.getHeaders();
 			List<String> list = headers.get("filename");
 			String filename = "thumbnail_21.jpg";

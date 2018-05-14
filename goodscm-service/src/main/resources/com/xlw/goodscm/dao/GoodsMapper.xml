@@ -186,7 +186,7 @@
 		gc.category_code
 		from goods g 
 		left join 
-		(SELECT goods_pic.id as thumbnailPicId,goods_id
+		(SELECT goods_pic.id as thumbnail_pic_id,goods_id
 		FROM (
 		SELECT MAX(id) id
 		FROM goods_pic
