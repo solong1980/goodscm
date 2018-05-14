@@ -118,6 +118,48 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>env</name>
+					<value>dev</value>
+				</property>
+			</activation>
+			<properties>
+				<env.profile>dev</env.profile>
+			</properties>
+		</profile>
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>env</name>
+					<value>local</value>
+				</property>
+			</activation>
+			<properties>
+				<profileActive>local</profileActive>
+				<env.profile>local</env.profile>
+			</properties>
+		</profile>
+		<profile>
+			<id>pro</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>pro</value>
+				</property>
+			</activation>
+			<properties>
+				<env.profile>pro</env.profile>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -133,9 +175,7 @@
 						<bootclasspath>${java.home}\jre\lib\rt.jar;${java.home}\jre\lib\jce.jar</bootclasspath>
 						<bootclasspath>${JAVA_HOME}\jre\lib\rt.jar;${JAVA_HOME}\jre\lib\jce.jar</bootclasspath>
 					</compilerArguments>
-
 				</configuration>
-
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -153,7 +193,34 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</build>
 
+		<resources>
+			<!-- remove props**/** when package -->
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>application-local.properties</exclude>
+					<exclude>application-pro.properties</exclude>
+					<exclude>application.properties</exclude>
+				</excludes>
+				<filtering>false</filtering>
+			</resource>
+			<!-- add props to props/ -->
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+				<!-- <targetPath>props/dev/</targetPath> -->
+				<includes>
+					<include>application-${env.profile}.properties</include>
+					<include>application.properties</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+	<!-- 
+	mvn clean package -Denv=local -DskipTests=true	
+	mvn clean package -Denv=dev -DskipTests=true	
+	mvn clean package -Denv=pro -DskipTests=true
+	-->
 
 </project>
