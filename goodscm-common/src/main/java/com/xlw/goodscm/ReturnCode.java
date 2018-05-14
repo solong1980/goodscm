@@ -25,6 +25,7 @@ public class ReturnCode {
 		
 		RELATED_GOODS(521, "此类别有商品关联"), 
 		SUB_CATEGORIES(522, "此类别有子类别"), 
+		REL_SUPPLIER(523, "此类别有子类别"), 
 		;
 		private Integer code;
 		private String message;

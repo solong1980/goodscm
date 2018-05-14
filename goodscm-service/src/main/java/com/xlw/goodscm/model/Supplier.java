@@ -3,43 +3,63 @@ package com.xlw.goodscm.model;
 import java.util.Date;
 
 public class Supplier {
-	private Long id;
+    private Long id;
 
-	private String name;
+    private Long groupId;
 
-	private String code;
+    private String name;
 
-	private Date createTime;
+    private String code;
 
-	public Long getId() {
-		return id;
-	}
+    private Date createTime;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private Date updateTime;
 
-	public String getName() {
-		return name;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name == null ? null : name.trim();
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public Long getGroupId() {
+        return groupId;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
 
-	public Date getCreateTime() {
-		return createTime;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code == null ? null : code.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 }

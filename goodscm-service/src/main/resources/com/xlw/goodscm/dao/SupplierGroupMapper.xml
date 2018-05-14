@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xlw.goodscm.dao.SupplierGroupMapper">
+  <resultMap id="BaseResultMap" type="com.xlw.goodscm.model.SupplierGroup">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from supplier_group
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.xlw.goodscm.model.SupplierGroup">
+    insert into supplier_group (name, create_time)
+    values (
+     #{name,jdbcType=VARCHAR}, 
+     #{createTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.SupplierGroup">
+    update supplier_group
+    set 
+    name = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, name, create_time
+    from supplier_group
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, create_time
+    from supplier_group
+  </select>
+  
+  <select id="supplierCount" resultType="java.lang.Long" parameterType="java.lang.Long">
+    select count(*) from supplier where group_id = #{id,jdbcType=BIGINT}
+  </select>
+</mapper>
