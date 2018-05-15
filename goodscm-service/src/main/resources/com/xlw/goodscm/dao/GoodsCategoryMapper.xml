@@ -15,7 +15,7 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   
-  <insert id="insert" parameterType="com.xlw.goodscm.model.GoodsCategory" >
+  <insert id="insert" parameterType="com.xlw.goodscm.model.GoodsCategory" useGeneratedKeys="true" keyProperty="id">
     insert into goods_category (
     	parent_id, 
     	category_code, 

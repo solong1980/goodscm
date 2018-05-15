@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -20,6 +21,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+
+import com.xlw.sys.shiro.UserRealm;
 
 /**
  * Created by Administrator on 2017/12/11.
@@ -70,14 +73,14 @@ public class ShiroConfig {
 	@Bean
 	public HashedCredentialsMatcher hashedCredentialsMatcher() {
 		HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-		hashedCredentialsMatcher.setHashAlgorithmName("md5");// 散列算法:这里使用MD5算法;
+		hashedCredentialsMatcher.setHashAlgorithmName("SHA-256");// 散列算法:这里使用MD5算法;
 		hashedCredentialsMatcher.setHashIterations(2);// 散列的次数，比如散列两次，相当于 md5(md5(""));
 		return hashedCredentialsMatcher;
 	}
 
 	@Bean
-	public MyShiroRealm myShiroRealm() {
-		MyShiroRealm myShiroRealm = new MyShiroRealm();
+	public AuthorizingRealm myShiroRealm() {
+		UserRealm myShiroRealm = new UserRealm();
 		myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
 		return myShiroRealm;
 	}

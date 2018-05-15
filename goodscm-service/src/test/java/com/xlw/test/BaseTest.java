@@ -73,7 +73,7 @@ public class BaseTest {
 	}
 
 	public HttpHeaders login() {
-		ResponseEntity<JSONObject> forEntity = restTemplate.getForEntity(localhost + "/login/dologin?account=admin&password=123456",
+		ResponseEntity<JSONObject> forEntity = restTemplate.getForEntity(localhost + "/login/dologin?username=admin&password=admin",
 				JSONObject.class);
 		JSONObject body = forEntity.getBody();
 		HttpHeaders headers = forEntity.getHeaders();

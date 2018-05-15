@@ -29,6 +29,7 @@ import com.xlw.goodscm.model.User;
 import com.xlw.goodscm.pojo.CmPage;
 import com.xlw.goodscm.pojo.CmResult;
 import com.xlw.goodscm.service.GoodsService;
+import com.xlw.sys.shiro.ShiroTag;
 
 @Controller
 @RequestMapping("/goods")
@@ -37,7 +38,9 @@ public class GoodsController {
 
 	@Autowired
 	private GoodsService goodsService;
-
+	@Autowired
+	private ShiroTag shiroTag;
+	
 	@RequestMapping("")
 	public String index() throws Exception {
 		return "goods";
@@ -69,12 +72,13 @@ public class GoodsController {
 	@RequestMapping(value = "/addupdatepics", method = RequestMethod.POST)
 	public CmResult addUpdatePicsGoodsId(@RequestBody Goods goods) throws Exception {
 		logger.info("addUpdatePicsGoodsId " + goods);
-		Subject subject = SecurityUtils.getSubject();
-		User principal = (User) subject.getPrincipal();
-		if (principal == null) {
-			goods.setStatus(Consts.GoodsAuditStatus.UNADUIT.getCode());
-		} else {
+		// Subject subject = SecurityUtils.getSubject();
+		// User principal = (User) subject.getPrincipal();
+		
+		if (shiroTag.hasRole("admin")) {
 			goods.setStatus(Consts.GoodsAuditStatus.AUDIT.getCode());
+		} else {
+			goods.setStatus(Consts.GoodsAuditStatus.UNADUIT.getCode());
 		}
 		goodsService.addUpdatePicsGoodsId(goods);
 		CmResult cmResult = CmResult.build(Codes.SUCCESS);

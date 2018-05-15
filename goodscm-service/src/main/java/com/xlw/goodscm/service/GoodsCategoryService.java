@@ -11,7 +11,7 @@ public interface GoodsCategoryService {
 
 	List<GoodsCategory> query(GoodsCategory goodsCategory);
 
-	void add(GoodsCategory goodsCategory);
+	Long add(GoodsCategory goodsCategory);
 
 	GoodsCategory getById(Long id);
 

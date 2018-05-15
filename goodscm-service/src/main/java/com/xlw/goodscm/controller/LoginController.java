@@ -17,6 +17,7 @@ import com.xlw.goodscm.ReturnCode;
 import com.xlw.goodscm.ReturnCode.Codes;
 import com.xlw.goodscm.model.User;
 import com.xlw.goodscm.pojo.CmResult;
+import com.xlw.sys.model.SysUser;
 
 @Controller
 @RequestMapping("/login")
@@ -33,7 +34,7 @@ public class LoginController {
 	public CmResult login(User user) throws Exception {
 		logger.info("dologin" + user);
 		CmResult cmResult = null;
-		if (user.getAccount() == null || user.getAccount().isEmpty()) {
+		if (user.getUsername() == null || user.getUsername().isEmpty()) {
 			cmResult = CmResult.build(ReturnCode.Codes.PARAM_ERROR, null);
 		}
 		if (user.getPassword() == null || user.getPassword().isEmpty()) {
@@ -41,10 +42,10 @@ public class LoginController {
 		}
 		try {
 			Subject subject = SecurityUtils.getSubject();
-			UsernamePasswordToken token = new UsernamePasswordToken(user.getAccount(), user.getPassword());
+			UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
 			subject.login(token);
 
-			User userInfo = (User) subject.getPrincipals().getPrimaryPrincipal();
+			SysUser userInfo = (SysUser) subject.getPrincipals().getPrimaryPrincipal();
 
 			userInfo.setSessionId(subject.getSession().getId());
 			subject.getSession().setAttribute(Consts.SESSION_USER, userInfo);

@@ -14,9 +14,9 @@ import com.xlw.goodscm.ReturnCode;
 import com.xlw.goodscm.pojo.CmResult;
 
 @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
-//@ConfigurationProperties(prefix = "spring")
-@MapperScan("com.xlw.goodscm.dao") // 将项目中对应的mapper类的路径加进来就可以了
-@ComponentScan(value = { "com.xlw.goodscm.controller", "com.xlw.goodscm.service" })
+// @ConfigurationProperties(prefix = "spring")
+@MapperScan(value = { "com.xlw.goodscm.dao", "com.xlw.sys.dao" }) // 将项目中对应的mapper类的路径加进来就可以了
+@ComponentScan(value = { "com.xlw.goodscm.controller", "com.xlw.goodscm.service", "com.xlw.sys.service" })
 @ComponentScan(value = { "springboot.shiro", "springboot.listener" })
 @RestController
 public class Application {

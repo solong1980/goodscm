@@ -31,7 +31,7 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 	}
 
 	@Override
-	public void add(GoodsCategory goodsCategory) {
+	public Long add(GoodsCategory goodsCategory) {
 		/**
 		 * for example parent 111 111 000 has sub code 111 111 001 , 111 111 002 then
 		 * this category code is 111 111 003
@@ -43,6 +43,7 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 		genCategoryCode(parentId, goodsCategory);
 		goodsCategory.setCreateTime(new Date());
 		goodsCategoryMapper.insert(goodsCategory);
+		return goodsCategory.getId();
 	}
 
 	@Override

@@ -56,8 +56,8 @@ public class GoodsCategoryController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public CmResult add(@RequestBody GoodsCategory goodsCategory) throws Exception {
 		logger.info("add goods category" + goodsCategory);
-		goodsCategoryService.add(goodsCategory);
-		CmResult cmResult = CmResult.build(Codes.SUCCESS);
+		Long id = goodsCategoryService.add(goodsCategory);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS, id);
 		return cmResult;
 	}
 
