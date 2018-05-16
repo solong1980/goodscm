@@ -17,6 +17,8 @@ public class GoodsCategory {
 
 	private Date updateTime;
 
+	private Integer goodsCount;
+
 	public Long getId() {
 		return id;
 	}
@@ -75,4 +77,13 @@ public class GoodsCategory {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
+
+	public Integer getGoodsCount() {
+		return goodsCount;
+	}
+
+	public void setGoodsCount(Integer goodsCount) {
+		this.goodsCount = goodsCount;
+	}
+
 }

@@ -8,6 +8,7 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="goods_count" property="goodsCount" jdbcType="INTEGER" />
   </resultMap>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
@@ -43,8 +44,13 @@
   </select>
   
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, parent_id, category_code, name, create_time, update_time
-    from goods_category
+    select gc.id, gc.parent_id, gc.category_code, gc.name, gc.create_time, gc.update_time, gs.goods_count 
+      FROM goods_category gc,(
+		SELECT gc.id, COUNT(gc.id) goods_count
+		FROM goods_category gc,goods g
+		WHERE gc.id=g.category_id
+		GROUP BY gc.id) gs 
+	WHERE gc.id=gs.id
   </select>
   
   <select id="selectByParentId" resultMap="BaseResultMap" >

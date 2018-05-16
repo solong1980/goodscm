@@ -16,6 +16,8 @@ public class GoodsCategoryCodeGenUtil {
 			return code.substring(3, 6);
 		case 3:
 			return code.substring(6, 9);
+		case 4:
+			return code.substring(9, 12);
 		default:
 			break;
 		}
@@ -26,11 +28,13 @@ public class GoodsCategoryCodeGenUtil {
 		String subCode = String.format("%03d", max + 1);
 		switch (level) {
 		case 1:
-			return subCode + "000000";
+			return subCode + "000000000";
 		case 2:
-			return parentCode.substring(0, 3) + subCode + "000";
+			return parentCode.substring(0, 3) + subCode + "000000";
 		case 3:
-			return parentCode.substring(0, 6) + subCode;
+			return parentCode.substring(0, 6) + subCode + "000";
+		case 4:
+			return parentCode.substring(0, 9) + subCode;
 		default:
 			break;
 		}
@@ -39,12 +43,14 @@ public class GoodsCategoryCodeGenUtil {
 
 	public static String genCode(String parentCode, List<String> allChildren) {
 		int level = 0;
-		if (parentCode.endsWith("000000000")) {
+		if (parentCode.endsWith("000000000000")) {
 			level = 1;
-		} else if (parentCode.endsWith("000000")) {
+		} else if (parentCode.endsWith("000000000")) {
 			level = 2;
-		} else if (parentCode.endsWith("000")) {
+		} else if (parentCode.endsWith("000000")) {
 			level = 3;
+		} else if (parentCode.endsWith("000")) {
+			level = 4;
 		} else {
 			throw new InvalidParameterException("last level can not add child");
 		}
