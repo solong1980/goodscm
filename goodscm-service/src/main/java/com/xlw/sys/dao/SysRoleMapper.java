@@ -15,4 +15,10 @@ public interface SysRoleMapper {
     int updateByPrimaryKey(SysRole record);
 
 	void deleteBatchIds(List<Long> asList);
+	
+	/**
+	 * 查询用户角色列表
+	 * @param userId
+	 */
+	List<SysRole> queryUserRoleList(Long userId);
 }

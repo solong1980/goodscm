@@ -26,4 +26,12 @@ public class ShiroTag {
 		Subject subject = SecurityUtils.getSubject();
 		return subject != null && subject.hasRole(roleIdentifier);
 	}
+	
+	/**
+	 * 是否具有审核的权限
+	 * @return
+	 */
+	public boolean isAuthority() {
+		return hasRole("admin") || hasRole("super");
+	}
 }

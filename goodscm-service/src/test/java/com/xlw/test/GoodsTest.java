@@ -67,7 +67,7 @@ public class GoodsTest extends BaseTest {
 
 		URI url = new URI(localhost + "/goods/addupdatepics");
 
-		HttpHeaders headers = createJsonHeader();
+		HttpHeaders headers = createJsonHeader("eac9ae90-9975-475e-9f44-2b0dcc5020f1");
 
 		Goods goods = new Goods();
 		goods.setCode("1111");

@@ -38,6 +38,7 @@ public class GoodsController {
 
 	@Autowired
 	private GoodsService goodsService;
+	
 	@Autowired
 	private ShiroTag shiroTag;
 	
@@ -72,16 +73,13 @@ public class GoodsController {
 	@RequestMapping(value = "/addupdatepics", method = RequestMethod.POST)
 	public CmResult addUpdatePicsGoodsId(@RequestBody Goods goods) throws Exception {
 		logger.info("addUpdatePicsGoodsId " + goods);
-		// Subject subject = SecurityUtils.getSubject();
-		// User principal = (User) subject.getPrincipal();
-		
-		if (shiroTag.hasRole("admin")) {
+		if (shiroTag.isAuthority()) {
 			goods.setStatus(Consts.GoodsAuditStatus.AUDIT.getCode());
 		} else {
 			goods.setStatus(Consts.GoodsAuditStatus.UNADUIT.getCode());
 		}
 		goodsService.addUpdatePicsGoodsId(goods);
-		CmResult cmResult = CmResult.build(Codes.SUCCESS);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS,goods.getId());
 		return cmResult;
 	}
 

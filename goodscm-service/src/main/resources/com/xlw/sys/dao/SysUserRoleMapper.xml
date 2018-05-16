@@ -50,5 +50,25 @@
 		#{roleId}
 	</foreach>
   </delete>
-	
+  
+  <insert id="insertBatch" parameterType="java.util.List">
+    <selectKey resultType ="java.lang.Long" keyProperty= "id" order= "AFTER">
+       SELECT LAST_INSERT_ID()
+    </selectKey >
+    insert into sys_user_role (user_id,role_id)
+    values
+  	<foreach item="userRole" collection ="list" separator=",">
+  	(
+      #{userRole.userId,jdbcType=BIGINT}, 
+      #{userRole.roleId,jdbcType=BIGINT}
+    )
+    </foreach>
+  </insert>
+  
+  <delete id="deleteByMap" parameterType="Map">
+     delete from sys_user_role where 1=1 and
+     <if test="user_id != null"> and user_id = #{user_id}</if>  
+  	 <if test="role_id != null"> and role_id = #{role_id}</if>  
+  </delete>
+  
 </mapper>

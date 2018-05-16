@@ -19,8 +19,9 @@ import com.xlw.sys.dao.SysUserMapper;
 import com.xlw.sys.model.SysUser;
 
 /**
- * Created by Administrator on 2017/12/11. 自定义权限匹配和账号密码匹配
+ * 自定义权限匹配和账号密码匹配
  */
+@Deprecated
 public class MyShiroRealm extends AuthorizingRealm {
 	private static final Logger logger = LoggerFactory.getLogger(MyShiroRealm.class);
 	@Autowired

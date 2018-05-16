@@ -53,4 +53,24 @@
      </foreach>
   </delete>
   
+  <insert id="insertBatch" parameterType="java.util.List">
+    <selectKey resultType ="java.lang.Integer" keyProperty= "id" order= "AFTER">
+       SELECT LAST_INSERT_ID()
+    </selectKey >
+    insert into sys_role_menu (role_id, menu_id)
+    values
+  	<foreach item="roleMenu" collection ="list" separator=",">
+  	(
+      #{roleMenu.roleId,jdbcType=BIGINT}, 
+      #{roleMenu.menuId,jdbcType=BIGINT}
+    )
+    </foreach>
+  </insert>
+  
+  <delete id="deleteByMap" parameterType="Map">
+     delete from sys_role_menu where 1=1 and
+  	 <if test="role_id != null"> and role_id = #{role_id}</if>  
+     <if test="menu_id != null"> and menu_id = #{menu_id}</if>  
+  </delete>
+  
 </mapper>

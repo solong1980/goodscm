@@ -27,8 +27,10 @@ import org.springframework.util.StringUtils;
 
 import com.xlw.sys.Constant;
 import com.xlw.sys.dao.SysMenuMapper;
+import com.xlw.sys.dao.SysRoleMapper;
 import com.xlw.sys.dao.SysUserMapper;
 import com.xlw.sys.model.SysMenu;
+import com.xlw.sys.model.SysRole;
 import com.xlw.sys.model.SysUser;
 
 /**
@@ -38,6 +40,10 @@ import com.xlw.sys.model.SysUser;
 public class UserRealm extends AuthorizingRealm {
     @Autowired
     private SysUserMapper sysUserMapper;
+ 
+    @Autowired
+    private SysRoleMapper sysRoleMapper;
+    
     @Autowired
     private SysMenuMapper sysMenuMapper;
     
@@ -70,9 +76,20 @@ public class UserRealm extends AuthorizingRealm {
 			}
 			permsSet.addAll(Arrays.asList(perms.trim().split(",")));
 		}
-		
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		info.setStringPermissions(permsSet);
+		
+		List<Long> userRoleIds = new ArrayList<>();
+		Set<String> userRoleIdentifiers = new HashSet<>();
+		List<SysRole> userRoles = sysRoleMapper.queryUserRoleList(userId);
+		if(userRoles!=null) {
+			for (SysRole sysRole : userRoles) {
+				userRoleIds.add(sysRole.getRoleId());
+				userRoleIdentifiers.add(sysRole.getRoleName());
+			}
+			user.setRoleIdList(userRoleIds);
+			info.setRoles(userRoleIdentifiers);
+		}
 		return info;
 	}
 

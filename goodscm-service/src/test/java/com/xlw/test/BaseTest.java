@@ -54,10 +54,16 @@ public class BaseTest {
 	}
 
 	public HttpHeaders createJsonHeader() {
+		return createJsonHeader(null);
+	}
+
+	public HttpHeaders createJsonHeader(String sessionId) {
 		HttpHeaders headers = new HttpHeaders();
 		MediaType type = MediaType.APPLICATION_JSON_UTF8;
 		headers.setContentType(type);
 		headers.add("Accept", MediaType.APPLICATION_JSON_UTF8.toString());
+		if (sessionId != null)
+			headers.add("Authorization", sessionId);
 		return headers;
 	}
 
@@ -73,8 +79,8 @@ public class BaseTest {
 	}
 
 	public HttpHeaders login() {
-		ResponseEntity<JSONObject> forEntity = restTemplate.getForEntity(localhost + "/login/dologin?username=admin&password=admin",
-				JSONObject.class);
+		ResponseEntity<JSONObject> forEntity = restTemplate
+				.getForEntity(localhost + "/login/dologin?username=admin&password=admin", JSONObject.class);
 		JSONObject body = forEntity.getBody();
 		HttpHeaders headers = forEntity.getHeaders();
 		// for (Entry<String, List<String>> entry : headers.entrySet()) {
@@ -102,7 +108,8 @@ public class BaseTest {
 		} else {
 			HttpEntity<String> formEntity = new HttpEntity<String>(jsonObj.toString(), headers);
 
-			ResponseEntity<String> postForEntity = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class, new HashMap<>());
+			ResponseEntity<String> postForEntity = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class,
+					new HashMap<>());
 
 			// String result = restTemplate.postForObject(url, formEntity, String.class);
 			// System.out.println(result);

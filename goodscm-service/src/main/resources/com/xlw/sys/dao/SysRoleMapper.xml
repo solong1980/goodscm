@@ -46,4 +46,16 @@
     from sys_role
   </select>
   
+  <delete id="deleteBatchIds">
+    delete from sys_role where role_id in
+     <foreach item="roleId" collection="array" open="(" separator="," close=")">
+      #{roleId}
+     </foreach>
+  </delete>
+  
+  <select id="queryUserRoleList" resultMap="BaseResultMap">
+	select sr.* from sys_role sr,sys_user_role sur 
+	where sr.role_id=sur.role_id and user_id = #{value}
+  </select>
+	
 </mapper>
