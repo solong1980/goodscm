@@ -27,6 +27,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.xlw.goodscm.pojo.CmResult;
 import com.xlw.goodscm.utils.JsonUtilTool;
+import com.xlw.sys.model.SysUser;
 
 public class BaseTest {
 	public static final String localhost = "http://localhost:9905";
@@ -79,16 +80,24 @@ public class BaseTest {
 	}
 
 	public HttpHeaders login() {
-		ResponseEntity<JSONObject> forEntity = restTemplate
-				.getForEntity(localhost + "/login/dologin?username=admin&password=admin", JSONObject.class);
-		JSONObject body = forEntity.getBody();
+		SysUser user = new SysUser();
+		user.setUsername("admin");
+		user.setPassword("admin");
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(user), createJsonHeader());
+		ResponseEntity<String> forEntity = restTemplate.exchange(localhost + "/login/dologin", HttpMethod.POST,
+				httpEntity, String.class);
+
+		// ResponseEntity<JSONObject> forEntity = restTemplate
+		// .getForEntity(localhost + "/login/dologin?username=admin&password=admin",
+		// JSONObject.class);
+		String body = forEntity.getBody();
 		HttpHeaders headers = forEntity.getHeaders();
 		// for (Entry<String, List<String>> entry : headers.entrySet()) {
 		// System.out.println(entry.getKey());
 		// System.out.println(entry.getValue());
 		// }
-		System.out.println(JsonUtilTool.toJson(body));
-		Integer status = body.getInteger("status");
+		System.out.println(body);
+		Integer status = JsonUtilTool.toJsonObj(body).getInteger("status");
 		if (status == 200) {
 			return headers;
 		} else {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.xlw.sys.model.SysUser;
 
+@Deprecated
 public class User extends SysUser {
 	private static final long serialVersionUID = 1L;
 	private Serializable sessionId;

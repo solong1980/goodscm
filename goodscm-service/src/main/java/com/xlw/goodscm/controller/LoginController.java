@@ -9,13 +9,13 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xlw.goodscm.Consts;
 import com.xlw.goodscm.ReturnCode;
 import com.xlw.goodscm.ReturnCode.Codes;
-import com.xlw.goodscm.model.User;
 import com.xlw.goodscm.pojo.CmResult;
 import com.xlw.sys.model.SysUser;
 
@@ -31,7 +31,7 @@ public class LoginController {
 	 */
 	@ResponseBody
 	@RequestMapping("/dologin")
-	public CmResult login(User user) throws Exception {
+	public CmResult login(@RequestBody SysUser user) throws Exception {
 		logger.info("dologin" + user);
 		CmResult cmResult = null;
 		if (user.getUsername() == null || user.getUsername().isEmpty()) {
