@@ -19,8 +19,8 @@ public class GoodsCategoryTest extends BaseTest {
 	@Test
 	public void testAddCategory() throws URISyntaxException {
 		GoodsCategory category = new GoodsCategory();
-		category.setParentId(10L);
-		category.setName("高级镜头-1");
+		category.setParentId(18L);
+		category.setName("高级镜头-3-2-2");
 
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
 		URI url = new URI(localhost + "/goodscategory/add");

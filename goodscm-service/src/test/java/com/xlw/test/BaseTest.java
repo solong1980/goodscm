@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -81,7 +82,7 @@ public class BaseTest {
 
 	public HttpHeaders login() {
 		SysUser user = new SysUser();
-		user.setUsername("admin");
+		user.setUsername("wangshengui");
 		user.setPassword("admin");
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(user), createJsonHeader());
 		ResponseEntity<String> forEntity = restTemplate.exchange(localhost + "/login/dologin", HttpMethod.POST,
@@ -92,10 +93,10 @@ public class BaseTest {
 		// JSONObject.class);
 		String body = forEntity.getBody();
 		HttpHeaders headers = forEntity.getHeaders();
-		// for (Entry<String, List<String>> entry : headers.entrySet()) {
-		// System.out.println(entry.getKey());
-		// System.out.println(entry.getValue());
-		// }
+		for (Entry<String, List<String>> entry : headers.entrySet()) {
+			System.out.println(entry.getKey());
+			System.out.println(entry.getValue());
+		}
 		System.out.println(body);
 		Integer status = JsonUtilTool.toJsonObj(body).getInteger("status");
 		if (status == 200) {

@@ -28,6 +28,8 @@ public class JsonUtilTool {
 		if (obj instanceof Array) {
 			String json = JSONArray.toJSONString(obj);
 			return JSONObject.parseObject(json);
+		} else if (obj instanceof String) {
+			return JSONObject.parseObject((String) obj);
 		} else {
 			String json = JSONObject.toJSONString(obj);
 			return JSONObject.parseObject(json);

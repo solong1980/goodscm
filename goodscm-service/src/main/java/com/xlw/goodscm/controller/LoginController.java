@@ -1,5 +1,7 @@
 package com.xlw.goodscm.controller;
 
+import java.util.List;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -8,6 +10,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +20,17 @@ import com.xlw.goodscm.Consts;
 import com.xlw.goodscm.ReturnCode;
 import com.xlw.goodscm.ReturnCode.Codes;
 import com.xlw.goodscm.pojo.CmResult;
+import com.xlw.sys.dao.SysRoleMapper;
+import com.xlw.sys.model.SysRole;
 import com.xlw.sys.model.SysUser;
 
 @Controller
 @RequestMapping("/login")
 public class LoginController {
 	private static Logger logger = LoggerFactory.getLogger(LoginController.class);
+	
+    @Autowired
+    private SysRoleMapper sysRoleMapper;
 	/**
 	 * login with account/password
 	 * @param user
@@ -50,6 +58,9 @@ public class LoginController {
 			userInfo.setSessionId(subject.getSession().getId());
 			subject.getSession().setAttribute(Consts.SESSION_USER, userInfo);
 
+			List<SysRole> userRoles = sysRoleMapper.queryUserRoleList(userInfo.getUserId());
+			userInfo.setRoleList(userRoles);
+			
 			cmResult = CmResult.build(ReturnCode.Codes.LOGIN_SUCCESS, userInfo);
 		} catch (IncorrectCredentialsException e) {
 			cmResult = CmResult.build(ReturnCode.Codes.PASSWORD_ERROR, null);

@@ -63,6 +63,11 @@ public class SysUser implements Serializable {
 	private List<Long> roleIdList;
 
 	/**
+	 * 角色列表
+	 */
+	private List<SysRole> roleList;
+	
+	/**
 	 * 创建时间
 	 */
 	private Date createTime;
@@ -216,6 +221,14 @@ public class SysUser implements Serializable {
 
 	public void setRoleIdList(List<Long> roleIdList) {
 		this.roleIdList = roleIdList;
+	}
+
+	public List<SysRole> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<SysRole> roleList) {
+		this.roleList = roleList;
 	}
 
 	public String getSalt() {
