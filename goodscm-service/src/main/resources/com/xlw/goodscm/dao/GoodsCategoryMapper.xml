@@ -44,13 +44,14 @@
   </select>
   
   <select id="selectAll" resultMap="BaseResultMap" >
-    select gc.id, gc.parent_id, gc.category_code, gc.name, gc.create_time, gc.update_time, gs.goods_count 
-      FROM goods_category gc,(
+    SELECT gc.id, gc.parent_id, gc.category_code, gc.name, gc.create_time, gc.update_time, 
+      IFNULL(gs.goods_count,0) AS goods_count
+    FROM goods_category gc LEFT JOIN (
 		SELECT gc.id, COUNT(gc.id) goods_count
 		FROM goods_category gc,goods g
 		WHERE gc.id=g.category_id
 		GROUP BY gc.id) gs 
-	WHERE gc.id=gs.id
+	ON gc.id=gs.id
   </select>
   
   <select id="selectByParentId" resultMap="BaseResultMap" >
