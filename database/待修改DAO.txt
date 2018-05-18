@@ -1,3 +1,0 @@
-SysRoleMenuMapper
-SysRoleMapper
-SysUserRoleMapper
