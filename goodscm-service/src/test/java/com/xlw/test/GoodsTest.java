@@ -73,13 +73,13 @@ public class GoodsTest extends BaseTest {
 		HttpHeaders headers = createJsonHeader("eac9ae90-9975-475e-9f44-2b0dcc5020f1");
 
 		Goods goods = new Goods();
-		goods.setCode("1111");
-		goods.setCategoryId(1000L);
-		goods.setShortName("company short name");
+		goods.setCode("JT0000007");
+		goods.setCategoryId(22L);
+		goods.setShortName("尼康");
 
-		goods.setNameZh("强强强");
+		goods.setNameZh("尼康金圈镜头R0007");
 
-		goods.setNameEn("strongstring");
+		goods.setNameEn("nikon");
 
 		goods.setNetWeight(new BigDecimal("10"));
 
