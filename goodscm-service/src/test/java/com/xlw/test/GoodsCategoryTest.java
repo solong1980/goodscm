@@ -39,7 +39,7 @@ public class GoodsCategoryTest extends BaseTest {
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}
-	
+
 	@Test
 	public void testUpdateCategory() throws URISyntaxException {
 		URI url = new URI(localhost + "/goodscategory/update");
@@ -47,7 +47,7 @@ public class GoodsCategoryTest extends BaseTest {
 		category.setId(10L);
 		category.setParentId(0L);
 		category.setName("高级镜头2");
-		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(category),createJsonHeader());
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(category), createJsonHeader());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}
@@ -55,10 +55,19 @@ public class GoodsCategoryTest extends BaseTest {
 	@Test
 	public void testDelete() throws URISyntaxException {
 		URI url = new URI(localhost + "/goodscategory/delete/11");
-		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<JSONObject>(new JSONObject()), String.class);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<JSONObject>(new JSONObject()),
+				String.class);
 		System.out.println(responseEntity.getBody());
 	}
-	
+
+	@Test
+	public void testQuery() throws URISyntaxException {
+		URI url = new URI(localhost + "/goodscategory/query");
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<JSONObject>(new JSONObject()),
+				String.class);
+		System.out.println(responseEntity.getBody());
+	}
+
 	@Test
 	public void test() {
 	}

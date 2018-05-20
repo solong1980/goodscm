@@ -202,6 +202,9 @@
 			and short_name like
 			concat(#{page.c.shortName,jdbcType=VARCHAR},'%')
 		</if>
+		<if test="page.c!=null and page.c.status!=null and page.c.status>0">
+			and status =#{page.c.status,jdbcType=SMALLINT}
+		</if>
 		limit #{page.start},#{page.count}
 	</select>
 	

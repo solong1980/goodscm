@@ -20,6 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xlw.goodscm.Consts;
 import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.GoodsCategory;
 import com.xlw.goodscm.model.GoodsPic;
@@ -38,6 +39,8 @@ public class GoodsTest extends BaseTest {
 	@Test
 	public void testGoodsQuery() {
 		Goods goods = new Goods();
+		goods.setStatus((short) 0);
+		//goods.setStatus(Consts.GoodsAuditStatus.AUDIT.getCode());
 //		goods.setShortName("compan");
 //		goods.setCategoryId(10L);
 		GoodsCategory category = new GoodsCategory();
