@@ -199,15 +199,15 @@
 			concat(#{page.c.category.categoryCodeRadical,jdbcType=VARCHAR},'%')
 		</if>
 		<!-- <if test="page.c!=null and page.c.shortName!=null">
-			and short_name like
+			and g.short_name like
 			concat(#{page.c.shortName,jdbcType=VARCHAR},'%')
 		</if> -->
 		<if test="page.c!=null and page.c.code!=null">
-			and code like
+			and g.code like
 			concat('%',#{page.c.code,jdbcType=VARCHAR},'%')
 		</if>
 		<if test="page.c!=null and page.c.shortName!=null">
-			and short_name like
+			and g.short_name like
 			concat('%',#{page.c.shortName,jdbcType=VARCHAR},'%')
 		</if>
 		limit #{page.start},#{page.count}
