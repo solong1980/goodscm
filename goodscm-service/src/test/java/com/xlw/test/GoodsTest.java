@@ -39,20 +39,19 @@ public class GoodsTest extends BaseTest {
 	@Test
 	public void testGoodsQuery() {
 		Goods goods = new Goods();
-		goods.setStatus((short) 0);
-		//goods.setStatus(Consts.GoodsAuditStatus.AUDIT.getCode());
-//		goods.setShortName("compan");
-//		goods.setCategoryId(10L);
+		//商品类型，货品名称（货品名称或货品代码，空格替换为%，like查询）
+		goods.setShortName("尼康   卡口");
+		goods.setCode("21  2   3");
 		GoodsCategory category = new GoodsCategory();
-		//category.setCategoryCode("007000000");
-//		goods.setCategory(category);
+		category.setCategoryCode("002001002000");
+ 		goods.setCategory(category);
 
 		CmPage<Goods, List<Goods>> page = new CmPage<>();
 		page.setC(goods);
 		page.setPageNum(1);
 		page.setCount(50);
 
-		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(page), createJsonHeader());
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(page), createJsonHeader("c8d0c2e0-f33e-4537-b263-96e9b2e29e97"));
 		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/query", HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}

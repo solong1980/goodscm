@@ -43,6 +43,16 @@ public class GoodsController {
 	@RequestMapping("/query")
 	public CmResult query(@RequestBody CmPage<Goods, List<?>> goodsCmPage) throws Exception {
 		logger.info("query " + goodsCmPage);
+		Goods c = goodsCmPage.getC();
+		if (c != null) {
+			String code = c.getCode();
+			if (code != null)
+				c.setCode(code.replaceAll("\\s+", "%"));
+			
+			String shortName = c.getShortName();
+			if (shortName != null)
+				c.setShortName(shortName.replaceAll("\\s+", "%"));
+		}
 		List<Goods> goodsList = goodsService.pageQuery(goodsCmPage);
 		goodsCmPage.setT(goodsList);
 		CmResult cmResult = CmResult.build(Codes.SUCCESS, goodsCmPage);
