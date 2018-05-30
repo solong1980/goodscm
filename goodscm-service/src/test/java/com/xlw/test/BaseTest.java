@@ -32,7 +32,8 @@ import com.xlw.sys.model.SysUser;
 
 public class BaseTest {
 	public static final String localhost = "http://localhost:9905";
-
+	public String sessionId="e2083d91-c9c0-4e17-9a01-0088ff34c50e";
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -55,11 +56,17 @@ public class BaseTest {
 	public void tearDown() throws Exception {
 	}
 
-	public HttpHeaders createJsonHeader() {
-		return createJsonHeader(null);
+	public HttpHeaders createMultiPartHeader() {
+		HttpHeaders headers = new HttpHeaders();
+		MediaType type = MediaType.MULTIPART_FORM_DATA;
+		headers.setContentType(type);
+		headers.add("Accept", MediaType.APPLICATION_JSON_UTF8.toString());
+		if (sessionId != null)
+			headers.add("Authorization", sessionId);
+		return headers;
 	}
-
-	public HttpHeaders createJsonHeader(String sessionId) {
+	
+	public HttpHeaders createJsonHeader() {
 		HttpHeaders headers = new HttpHeaders();
 		MediaType type = MediaType.APPLICATION_JSON_UTF8;
 		headers.setContentType(type);
@@ -148,7 +155,7 @@ public class BaseTest {
 		}
 	}
 
-	public List<Long> addGoodsPics(String sessionId) throws URISyntaxException {
+	public List<Long> addGoodsPics() throws URISyntaxException {
 		URI url = new URI(localhost + "/goodspic/upload");
 
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
@@ -165,8 +172,7 @@ public class BaseTest {
 		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.jpg"));
 		param.add("files", resource);
 		
-		HttpHeaders headers = createJsonHeader(sessionId);
-		headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+		HttpHeaders headers = createMultiPartHeader();
 		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param,headers);
 	 
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);

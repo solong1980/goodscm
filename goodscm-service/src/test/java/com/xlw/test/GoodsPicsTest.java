@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import org.junit.Test;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
@@ -16,9 +17,11 @@ import org.springframework.http.ResponseEntity;
 
 public class GoodsPicsTest extends BaseTest {
 
+
+
 	@Test
 	public void testAddGoodsPic() throws URISyntaxException {
-		List<Long> addGoodsPics = addGoodsPics(null);
+		List<Long> addGoodsPics = addGoodsPics();
 		assert (addGoodsPics.size() == 3);
 	}
 
@@ -26,7 +29,9 @@ public class GoodsPicsTest extends BaseTest {
 	public void testGetGoodsThumbnail() throws URISyntaxException, IOException {
 		URI url = new URI(localhost + "/goodspic/getthumbnail/picid/61");
 		url = new URI(localhost + "/goodspic/getthumbnail/goodsid/22");
-		ResponseEntity<byte[]> responseEntity = restTemplate.exchange(url, HttpMethod.POST, null, byte[].class);
+		
+		ResponseEntity<byte[]> responseEntity = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<>(createMultiPartHeader()), byte[].class);
+		
 		int statusCodeValue = responseEntity.getStatusCodeValue();
 		if (statusCodeValue != 200) {
 			System.out.println(responseEntity.toString());

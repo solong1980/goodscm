@@ -20,7 +20,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xlw.goodscm.Consts;
 import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.GoodsCategory;
 import com.xlw.goodscm.model.GoodsPic;
@@ -39,36 +38,37 @@ public class GoodsTest extends BaseTest {
 	@Test
 	public void testGoodsQuery() {
 		Goods goods = new Goods();
-		//商品类型，货品名称（货品名称或货品代码，空格替换为%，like查询）
+		// 商品类型，货品名称（货品名称或货品代码，空格替换为%，like查询）
 		goods.setShortName("Lens Hood For Nikon");
 		goods.setCode("21  2   3");
 		GoodsCategory category = new GoodsCategory();
 		category.setCategoryCode("002001002000");
- 		goods.setCategory(category);
+		goods.setCategory(category);
 
 		CmPage<Goods, List<Goods>> page = new CmPage<>();
 		page.setC(goods);
 		page.setPageNum(1);
 		page.setCount(50);
 
-		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(page), createJsonHeader("6819284b-73e4-440b-bd93-31258f0fd0b1"));
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/query", HttpMethod.POST, httpEntity, String.class);
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(page), createJsonHeader());
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/query", HttpMethod.POST,
+				httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}
 
 	@Test
 	public void testGoodsGet() {
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/21", HttpMethod.GET, null, String.class);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/137", HttpMethod.GET,
+				new HttpEntity<String>(createJsonHeader()), String.class);
 		System.out.println(responseEntity.getBody());
 	}
 
 	@Test
 	public void testGoodsAddUpdatePics() throws URISyntaxException {
-		List<Long> addGoodsPics = addGoodsPics("c78646a0-262a-4c0d-bfcc-300b802f5467");
+		List<Long> addGoodsPics = addGoodsPics();
 
-		HttpHeaders headers = createJsonHeader("c78646a0-262a-4c0d-bfcc-300b802f5467");
+		HttpHeaders headers = createJsonHeader();
 		URI url = new URI(localhost + "/goods/addupdatepics");
-
 
 		Goods goods = new Goods();
 		goods.setCode("JT0000007");
@@ -225,7 +225,8 @@ public class GoodsTest extends BaseTest {
 		JSONObject jsonObj = JsonUtilTool.toJsonObj(goods);
 		param.setAll(jsonObj);
 
-		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param,
+				createJsonHeader());
 		System.out.println(httpEntity.toString());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
@@ -237,11 +238,12 @@ public class GoodsTest extends BaseTest {
 
 		URI url = new URI(localhost + "/goods/update");
 
-		List<Long> addGoodsPics = addGoodsPics("082f33dc-4119-45eb-b7ab-be47cdb0768c");
+		List<Long> addGoodsPics = addGoodsPics();
 
-		HttpHeaders headers = createJsonHeader("082f33dc-4119-45eb-b7ab-be47cdb0768c");
-		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(headers);
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/149", HttpMethod.GET, httpEntity, String.class);
+		HttpHeaders headers = createJsonHeader();
+
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/149", HttpMethod.GET,
+				new HttpEntity<String>(headers), String.class);
 		System.out.println(responseEntity.getBody());
 		CmResult result = JsonUtilTool.fromJson(responseEntity.getBody(), CmResult.class);
 
@@ -333,8 +335,9 @@ public class GoodsTest extends BaseTest {
 		});
 		System.out.println("-----------------------------------Update By 2");
 		System.out.println(JsonUtilTool.toJson(goods));
-		HttpEntity<String> httpEntity2 = new HttpEntity<String>(JsonUtilTool.toJson(goods), headers);
-		responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity2, String.class);
+
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(goods), headers);
+		responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println("-----------------------------------After");
 		System.out.println(responseEntity.getBody());
 	}
@@ -344,7 +347,7 @@ public class GoodsTest extends BaseTest {
 
 		URI url = new URI(localhost + "/goods/fastupdate");
 
-		HttpHeaders headers = createJsonHeader("082f33dc-4119-45eb-b7ab-be47cdb0768c");
+		HttpHeaders headers = createJsonHeader();
 		Goods goods = new Goods();
 		goods.setId(149L);
 		goods.setShortName("酷比科技");
@@ -352,7 +355,6 @@ public class GoodsTest extends BaseTest {
 		goods.setNameZh("中国酷比科技有限公司");
 
 		goods.setNameEn("chinese koobi tec 'ltd");
- 
 
 		goods.setRetailPrice(new BigDecimal("2200"));
 
@@ -369,7 +371,7 @@ public class GoodsTest extends BaseTest {
 		System.out.println("-----------------------------------After");
 		System.out.println(responseEntity.getBody());
 	}
-	
+
 	@Test
 	public void test() {
 		List<SupplierRecord> records = new ArrayList<>();

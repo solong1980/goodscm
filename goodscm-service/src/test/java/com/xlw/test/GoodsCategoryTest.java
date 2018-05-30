@@ -22,10 +22,10 @@ public class GoodsCategoryTest extends BaseTest {
 		category.setParentId(0L);
 		category.setName("高级镜头-3-2-2");
 
-		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
 		URI url = new URI(localhost + "/goodscategory/add");
 		System.out.println(JsonUtilTool.toJson(category));
-		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(category), createJsonHeader());
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(category),
+				createJsonHeader());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}
@@ -35,7 +35,8 @@ public class GoodsCategoryTest extends BaseTest {
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
 		URI url = new URI(localhost + "/goodscategory/querysubcategory/0");
 		param.setAll(new JSONObject());
-		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param,
+				createJsonHeader());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}
@@ -47,7 +48,8 @@ public class GoodsCategoryTest extends BaseTest {
 		category.setId(10L);
 		category.setParentId(0L);
 		category.setName("高级镜头2");
-		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(category), createJsonHeader());
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(category),
+				createJsonHeader());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}
@@ -55,16 +57,16 @@ public class GoodsCategoryTest extends BaseTest {
 	@Test
 	public void testDelete() throws URISyntaxException {
 		URI url = new URI(localhost + "/goodscategory/delete/11");
-		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<JSONObject>(new JSONObject()),
-				String.class);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST,
+				new HttpEntity<JSONObject>(new JSONObject(), createJsonHeader()), String.class);
 		System.out.println(responseEntity.getBody());
 	}
 
 	@Test
 	public void testQuery() throws URISyntaxException {
 		URI url = new URI(localhost + "/goodscategory/query");
-		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<JSONObject>(new JSONObject()),
-				String.class);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST,
+				new HttpEntity<JSONObject>(new JSONObject(), createJsonHeader()), String.class);
 		System.out.println(responseEntity.getBody());
 	}
 
