@@ -40,7 +40,7 @@ public class GoodsTest extends BaseTest {
 	public void testGoodsQuery() {
 		Goods goods = new Goods();
 		//商品类型，货品名称（货品名称或货品代码，空格替换为%，like查询）
-		goods.setShortName("尼康   卡口");
+		goods.setShortName("Lens Hood For Nikon");
 		goods.setCode("21  2   3");
 		GoodsCategory category = new GoodsCategory();
 		category.setCategoryCode("002001002000");
@@ -51,7 +51,7 @@ public class GoodsTest extends BaseTest {
 		page.setPageNum(1);
 		page.setCount(50);
 
-		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(page), createJsonHeader("c8d0c2e0-f33e-4537-b263-96e9b2e29e97"));
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(page), createJsonHeader("6819284b-73e4-440b-bd93-31258f0fd0b1"));
 		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/query", HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}
@@ -64,12 +64,11 @@ public class GoodsTest extends BaseTest {
 
 	@Test
 	public void testGoodsAddUpdatePics() throws URISyntaxException {
+		List<Long> addGoodsPics = addGoodsPics("c78646a0-262a-4c0d-bfcc-300b802f5467");
 
-		List<Long> addGoodsPics = addGoodsPics();
-
+		HttpHeaders headers = createJsonHeader("c78646a0-262a-4c0d-bfcc-300b802f5467");
 		URI url = new URI(localhost + "/goods/addupdatepics");
 
-		HttpHeaders headers = createJsonHeader("eac9ae90-9975-475e-9f44-2b0dcc5020f1");
 
 		Goods goods = new Goods();
 		goods.setCode("JT0000007");
@@ -238,11 +237,11 @@ public class GoodsTest extends BaseTest {
 
 		URI url = new URI(localhost + "/goods/update");
 
-		List<Long> addGoodsPics = addGoodsPics();
+		List<Long> addGoodsPics = addGoodsPics("082f33dc-4119-45eb-b7ab-be47cdb0768c");
 
-		HttpHeaders headers = createJsonHeader();
-
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/21", HttpMethod.GET, null, String.class);
+		HttpHeaders headers = createJsonHeader("082f33dc-4119-45eb-b7ab-be47cdb0768c");
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(headers);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/149", HttpMethod.GET, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 		CmResult result = JsonUtilTool.fromJson(responseEntity.getBody(), CmResult.class);
 
@@ -334,8 +333,8 @@ public class GoodsTest extends BaseTest {
 		});
 		System.out.println("-----------------------------------Update By 2");
 		System.out.println(JsonUtilTool.toJson(goods));
-		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(goods), headers);
-		responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+		HttpEntity<String> httpEntity2 = new HttpEntity<String>(JsonUtilTool.toJson(goods), headers);
+		responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity2, String.class);
 		System.out.println("-----------------------------------After");
 		System.out.println(responseEntity.getBody());
 	}
@@ -345,9 +344,9 @@ public class GoodsTest extends BaseTest {
 
 		URI url = new URI(localhost + "/goods/fastupdate");
 
-		HttpHeaders headers = createJsonHeader();
+		HttpHeaders headers = createJsonHeader("082f33dc-4119-45eb-b7ab-be47cdb0768c");
 		Goods goods = new Goods();
-		goods.setId(21L);
+		goods.setId(149L);
 		goods.setShortName("酷比科技");
 
 		goods.setNameZh("中国酷比科技有限公司");

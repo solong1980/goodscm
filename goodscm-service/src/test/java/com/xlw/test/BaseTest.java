@@ -148,7 +148,7 @@ public class BaseTest {
 		}
 	}
 
-	public List<Long> addGoodsPics() throws URISyntaxException {
+	public List<Long> addGoodsPics(String sessionId) throws URISyntaxException {
 		URI url = new URI(localhost + "/goodspic/upload");
 
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
@@ -164,9 +164,11 @@ public class BaseTest {
 		param.add("fileName", "2016-11-01 2016-11-01 001 001.jpg");
 		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.jpg"));
 		param.add("files", resource);
-
-		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param);
-
+		
+		HttpHeaders headers = createJsonHeader(sessionId);
+		headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param,headers);
+	 
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 		CmResult cmResult = JsonUtilTool.fromJson(responseEntity.getBody(), CmResult.class);
