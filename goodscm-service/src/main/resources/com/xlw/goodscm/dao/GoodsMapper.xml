@@ -165,7 +165,8 @@
 		trade_price = #{tradePrice,jdbcType=DECIMAL},
 		stock = #{stock,jdbcType=DECIMAL},
 		stock_unit = #{stockUnit,jdbcType=SMALLINT},
-		memo = #{memo,jdbcType=LONGVARCHAR}
+		memo = #{memo,jdbcType=LONGVARCHAR},
+		status = #{status,jdbcType=SMALLINT}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
 	
