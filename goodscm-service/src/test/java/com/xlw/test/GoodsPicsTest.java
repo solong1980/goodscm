@@ -18,7 +18,7 @@ public class GoodsPicsTest extends BaseTest {
 
 	@Test
 	public void testAddGoodsPic() throws URISyntaxException {
-		List<Long> addGoodsPics = addGoodsPics();
+		List<Long> addGoodsPics = addGoodsPics(null);
 		assert (addGoodsPics.size() == 3);
 	}
 

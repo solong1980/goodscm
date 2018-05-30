@@ -149,7 +149,8 @@
 		memo = #{memo,jdbcType=LONGVARCHAR},
 		zh_info = #{zhInfo,jdbcType=LONGVARCHAR},
 		en_info = #{enInfo,jdbcType=LONGVARCHAR},
-		ext_info = #{extInfo,jdbcType=LONGVARCHAR}
+		ext_info = #{extInfo,jdbcType=LONGVARCHAR},
+		status = #{status,jdbcType=SMALLINT}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
 	
@@ -210,8 +211,15 @@
 			concat('%',#{page.c.code,jdbcType=VARCHAR},'%')
 		</if>
 		<if test="page.c!=null and page.c.shortName!=null">
-			and g.short_name like
-			concat('%',#{page.c.shortName,jdbcType=VARCHAR},'%')
+			and (
+				g.code like concat('%',#{page.c.shortName,jdbcType=VARCHAR},'%')
+				or 
+				g.short_name like concat('%',#{page.c.shortName,jdbcType=VARCHAR},'%')
+				or 
+				g.name_zh like concat('%',#{page.c.shortName,jdbcType=VARCHAR},'%')
+				or 
+				g.name_en like concat('%',#{page.c.shortName,jdbcType=VARCHAR},'%')
+			)
 		</if>
 		limit #{page.start},#{page.count}
 	</select>
