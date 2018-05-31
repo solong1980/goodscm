@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xlw.goodscm.Consts;
 import com.xlw.goodscm.ReturnCode.Codes;
 import com.xlw.goodscm.model.Goods;
+import com.xlw.goodscm.model.GoodsCategory;
 import com.xlw.goodscm.pojo.CmPage;
 import com.xlw.goodscm.pojo.CmResult;
 import com.xlw.goodscm.service.GoodsService;
@@ -45,10 +46,17 @@ public class GoodsController {
 		logger.info("query " + goodsCmPage);
 		Goods c = goodsCmPage.getC();
 		if (c != null) {
+			String categoryCode = c.getCategoryCode();
+			if (categoryCode != null && !categoryCode.isEmpty())
+				c.setCategory(new GoodsCategory() {
+					{
+						setCategoryCode(categoryCode);
+					}
+				});
 			String code = c.getCode();
 			if (code != null)
 				c.setCode(code.replaceAll("\\s+", "%"));
-			
+
 			String shortName = c.getShortName();
 			if (shortName != null)
 				c.setShortName(shortName.replaceAll("\\s+", "%"));
