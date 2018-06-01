@@ -22,7 +22,7 @@ public class SupplierGroupController {
 	@RequestMapping("/add")
 	public CmResult add(@RequestBody SupplierGroup supplierGroup) {
 		supplierGroupService.add(supplierGroup);
-		CmResult cmResult = CmResult.build(Codes.SUCCESS, null);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS, supplierGroup.getId());
 		return cmResult;
 	}
 

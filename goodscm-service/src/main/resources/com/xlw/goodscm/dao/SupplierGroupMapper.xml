@@ -12,7 +12,7 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   
-  <insert id="insert" parameterType="com.xlw.goodscm.model.SupplierGroup">
+  <insert id="insert" parameterType="com.xlw.goodscm.model.SupplierGroup" useGeneratedKeys="true" keyProperty="id">
     insert into supplier_group (name, create_time)
     values (
      #{name,jdbcType=VARCHAR}, 
