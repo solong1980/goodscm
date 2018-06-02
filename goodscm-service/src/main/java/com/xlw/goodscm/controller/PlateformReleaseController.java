@@ -27,11 +27,18 @@ public class PlateformReleaseController {
 	@Autowired
 	private PlateformReleaseService plateformReleaseService;
 
+	/**
+	 * 列表 ：
+	 *      商品 & （伴随）商品平台发布记录聚集
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
 	@ResponseBody
-	@RequestMapping("/querygoodsreleaserecord")
-	public CmResult queryGoodsAllReleaseRecord(@RequestBody CmPage<Goods, List<Map<String, Object>>> page) throws Exception {
+	@RequestMapping("/querygoodsadjoint")
+	public CmResult queryGoodsAdjointAllReleaseRecord(@RequestBody CmPage<Goods, List<Map<String, Object>>> page) throws Exception {
 		logger.info("queryGoodsAllReleaseRecord " + page);
-		List<Map<String, Object>> goodsAllReleaseRecord = plateformReleaseService.queryGoodsAllReleaseRecord(page);
+		List<Map<String, Object>> goodsAllReleaseRecord = plateformReleaseService.queryGoodsAdjointAllReleaseRecord(page);
 		CmResult cmResult = CmResult.build(ReturnCode.Codes.SUCCESS, goodsAllReleaseRecord);
 		return cmResult;
 	}

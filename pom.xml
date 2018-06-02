@@ -280,4 +280,8 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	<modules>
+		<module>goodscm-common</module>
+		<module>goodscm-service</module>
+	</modules>
 </project>

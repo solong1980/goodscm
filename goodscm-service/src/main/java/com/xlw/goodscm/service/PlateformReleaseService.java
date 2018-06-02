@@ -15,7 +15,7 @@ public interface PlateformReleaseService {
 
 	void addReleaseRecord(PlateformReleaseRecord record);
 
-	List<Map<String, Object>> queryGoodsAllReleaseRecord(CmPage<Goods, List<Map<String, Object>>> page);
+	List<Map<String, Object>> queryGoodsAdjointAllReleaseRecord(CmPage<Goods, List<Map<String, Object>>> page);
 
 	void delete(Long id);
 

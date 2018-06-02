@@ -14,7 +14,8 @@
     delete from supplier
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.xlw.goodscm.model.Supplier" >
+  
+  <insert id="insert" parameterType="com.xlw.goodscm.model.Supplier" useGeneratedKeys="true" keyProperty="id">
     insert into supplier (
       group_id, 
       name, 

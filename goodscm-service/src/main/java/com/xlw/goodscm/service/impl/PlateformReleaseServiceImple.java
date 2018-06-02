@@ -25,7 +25,7 @@ public class PlateformReleaseServiceImple implements PlateformReleaseService {
 
 	@Override
 	public void batchReleaseRecord(Map<String, PlateformReleaseRecord> batchRecordMap) {
-
+		
 	}
 
 	@Override
@@ -40,10 +40,10 @@ public class PlateformReleaseServiceImple implements PlateformReleaseService {
 	}
 
 	@Override
-	public List<Map<String, Object>> queryGoodsAllReleaseRecord(CmPage<Goods, List<Map<String, Object>>> page) {
+	public List<Map<String, Object>> queryGoodsAdjointAllReleaseRecord(CmPage<Goods, List<Map<String, Object>>> page) {
 
 		List<Plateform> plateforms = plateformService.selectAll();
-		return plateformReleaseRecordMapper.queryGoodsAllReleaseRecord(page, plateforms);
+		return plateformReleaseRecordMapper.queryGoodsAdjointAllReleaseRecord(page, plateforms);
 	}
 
 	@Override

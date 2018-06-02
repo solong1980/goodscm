@@ -71,7 +71,7 @@
 		from plateform_release_record
 	</select>
 
-	<select id="queryGoodsAllReleaseRecord" resultType="java.util.Map">
+	<select id="queryGoodsAdjointAllReleaseRecord" resultType="java.util.Map">
 		select
 		gs.id AS id,
 		gs.code AS code,

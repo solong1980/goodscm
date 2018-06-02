@@ -21,6 +21,6 @@ public interface PlateformReleaseRecordMapper {
 
 	int updateByPrimaryKey(PlateformReleaseRecord record);
 
-	List<Map<String, Object>> queryGoodsAllReleaseRecord(@Param("page") CmPage<Goods, List<Map<String, Object>>> page,
+	List<Map<String, Object>> queryGoodsAdjointAllReleaseRecord(@Param("page") CmPage<Goods, List<Map<String, Object>>> page,
 			@Param("plateforms") List<Plateform> plateforms);
 }

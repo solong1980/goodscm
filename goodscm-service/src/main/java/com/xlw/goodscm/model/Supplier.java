@@ -1,7 +1,11 @@
 package com.xlw.goodscm.model;
 
 import java.util.Date;
-
+/**
+ * 供应商
+ * @author solon
+ *
+ */
 public class Supplier {
     private Long id;
 
