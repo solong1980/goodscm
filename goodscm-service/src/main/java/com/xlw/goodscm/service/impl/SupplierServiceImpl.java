@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.xlw.goodscm.dao.SupplierMapper;
 import com.xlw.goodscm.model.Supplier;
+import com.xlw.goodscm.pojo.CmPage;
 import com.xlw.goodscm.service.SupplierService;
 
 /**
@@ -43,6 +44,11 @@ public class SupplierServiceImpl implements SupplierService {
 	@Override
 	public void delete(Long id) {
 		supplierMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public List<Supplier> query(CmPage<Supplier, List<?>> page) {
+		return supplierMapper.pageQuery(page);
 	}
 
 }

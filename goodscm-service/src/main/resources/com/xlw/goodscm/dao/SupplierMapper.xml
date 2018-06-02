@@ -48,4 +48,20 @@
     select id, group_id, name, code, create_time, update_time
     from supplier
   </select>
+  
+  <select id="pageQuery" resultMap="BaseResultMap"
+		parameterType="com.xlw.goodscm.pojo.CmPage">
+	select s.* from supplier s where 1=1
+	<if test="page.c!=null and page.c.code!=null">
+		and s.code like concat(#{page.c.code,jdbcType=VARCHAR},'%')
+	</if>
+	<if test="page.c!=null and page.c.groupId!=null and page.c.groupId>0">
+		and s.group_id = #{page.c.groupId,jdbcType=BIGINT}
+	</if>
+	<if test="page.c!=null and page.c.name!=null">
+		and s.name like concat('%',#{page.c.name,jdbcType=VARCHAR},'%')
+	</if>
+	limit #{page.start},#{page.count}
+  </select>
+  
 </mapper>

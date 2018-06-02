@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.xlw.goodscm.ReturnCode.Codes;
 import com.xlw.goodscm.model.Supplier;
+import com.xlw.goodscm.pojo.CmPage;
 import com.xlw.goodscm.pojo.CmResult;
 import com.xlw.goodscm.service.SupplierService;
 
@@ -51,6 +52,14 @@ public class SupplierController {
 	public CmResult selectAll() {
 		List<Supplier> suppliers = supplierService.selectAll();
 		CmResult cmResult = CmResult.build(Codes.SUCCESS, suppliers);
+		return cmResult;
+	}
+	
+	@RequestMapping("/query")
+	public CmResult query(@RequestBody CmPage<Supplier, List<?>> page) {
+		List<Supplier> suppliers = supplierService.query(page);
+		page.setT(suppliers);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS, page);
 		return cmResult;
 	}
 }

@@ -3,6 +3,7 @@ package com.xlw.goodscm.service;
 import java.util.List;
 
 import com.xlw.goodscm.model.Supplier;
+import com.xlw.goodscm.pojo.CmPage;
 
 /**
  * @author longlianghua
@@ -17,4 +18,6 @@ public interface SupplierService {
 	List<Supplier> selectAll();
 	
 	void delete(Long id);
+
+	List<Supplier> query(CmPage<Supplier, List<?>> goodsCmPage);
 }

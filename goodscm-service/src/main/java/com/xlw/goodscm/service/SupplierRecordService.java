@@ -17,4 +17,5 @@ public interface SupplierRecordService {
 
 	List<SupplierRecord> batchQuery(List<Long> goodsIds);
 	
+	void batch(List<SupplierRecord> supplierRecords);
 }
