@@ -33,6 +33,10 @@
 		<result column="ext_info" jdbcType="LONGVARCHAR" property="extInfo" />
 	</resultMap>
 	
+	<resultMap id="SupplierResultMap" type="com.xlw.goodscm.model.SupplyGoods" extends="BaseResultMap">
+	 	 <result column="unit_price" jdbcType="DECIMAL" property="unitPrice" />
+	</resultMap>
+	
 	<sql id="Columns">
 		id,
 		code,
@@ -223,6 +227,11 @@
 			)
 		</if>
 		limit #{page.start},#{page.count}
+	</select>
+	
+	<select id="selectSupplyGoods" resultMap="SupplierResultMap" parameterType="java.lang.Long">
+		select g.*, s.unit_price from goods g, supplier_record s where g.id = s.goods_id 
+		and s.supplier_id = #{id,jdbcType=BIGINT}
 	</select>
 	
 	<update id="updateStatus" parameterType="com.xlw.goodscm.model.Goods">

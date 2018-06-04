@@ -1,69 +1,83 @@
 package com.xlw.goodscm.model;
 
 import java.util.Date;
+import java.util.List;
+
 /**
  * 供应商
+ * 
  * @author solon
  *
  */
 public class Supplier {
-    private Long id;
+	private Long id;
 
-    private Long groupId;
+	private Long groupId;
 
-    private String name;
+	private String name;
 
-    private String code;
+	private String code;
 
-    private Date createTime;
+	private Date createTime;
 
-    private Date updateTime;
+	private Date updateTime;
 
-    public Long getId() {
-        return id;
-    }
+	private List<Goods> supplierGoods;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Long getGroupId() {
-        return groupId;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
-    }
+	public Long getGroupId() {
+		return groupId;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setCode(String code) {
+		this.code = code == null ? null : code.trim();
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public List<Goods> getSupplierGoods() {
+		return supplierGoods;
+	}
+
+	public void setSupplierGoods(List<Goods> supplierGoods) {
+		this.supplierGoods = supplierGoods;
+	}
+
 }

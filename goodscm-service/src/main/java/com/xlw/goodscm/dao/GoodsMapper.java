@@ -16,6 +16,8 @@ public interface GoodsMapper {
 
     List<Goods> selectAll();
 
+    List<Goods> selectSupplyGoods(Long supplierId);
+    
     int updateByPrimaryKey(Goods record);
 
 	void updateStatus(Goods goods);

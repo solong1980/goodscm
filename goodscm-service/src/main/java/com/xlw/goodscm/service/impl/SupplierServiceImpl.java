@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xlw.goodscm.dao.GoodsMapper;
 import com.xlw.goodscm.dao.SupplierMapper;
+import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.Supplier;
 import com.xlw.goodscm.pojo.CmPage;
 import com.xlw.goodscm.service.SupplierService;
@@ -19,6 +21,8 @@ public class SupplierServiceImpl implements SupplierService {
 
 	@Autowired
 	private SupplierMapper supplierMapper;
+	@Autowired
+	private GoodsMapper goodsMapper;
 
 	@Override
 	public void add(Supplier supplier) {
@@ -28,7 +32,12 @@ public class SupplierServiceImpl implements SupplierService {
 
 	@Override
 	public Supplier get(Long id) {
-		return supplierMapper.selectByPrimaryKey(id);
+		Supplier supplier = supplierMapper.selectByPrimaryKey(id);
+		if (supplier != null) {
+			List<Goods> supplyGoods = goodsMapper.selectSupplyGoods(id);
+			supplier.setSupplierGoods(supplyGoods);
+		}
+		return supplier;
 	}
 
 	@Override
