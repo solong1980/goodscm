@@ -5,6 +5,8 @@ import java.util.Date;
 public class Customer {
 	private Long id;
 
+	private Long groupId;
+
 	private String type;
 
 	private String code;
@@ -31,6 +33,14 @@ public class Customer {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
 	}
 
 	public String getType() {

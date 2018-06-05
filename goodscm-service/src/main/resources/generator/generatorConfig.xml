@@ -14,34 +14,35 @@
 
 		<!--数据库链接地址账号密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/goodscm" userId="longlh"
-			password="solong1980">
+			password="SolonG">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="true" />
 		</javaTypeResolver>
 		<!--生成Model类存放位置 -->
-		<javaModelGenerator targetPackage="com.xlw.sys.model" targetProject="src/main/java">
+		<javaModelGenerator targetPackage="com.xlw.goodscm.model" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 		<!--生成映射文件存放位置 -->
-		<sqlMapGenerator targetPackage="com.xlw.sys.dao" targetProject="src/main/java">
+		<sqlMapGenerator targetPackage="com.xlw.goodscm.dao" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 		<!--生成Dao类存放位置 -->
-		<javaClientGenerator type="XMLMAPPER" targetPackage="com.xlw.sys.dao" targetProject="src/main/java">
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.xlw.goodscm.dao" targetProject="src/main/java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
 		<!--生成对应表及类名 -->
 		<!-- mybatis-generator:generate -->
-		<table tableName="sys_menu" domainObjectName="SysMenu" enableSelectByExample="true"></table>
+		<table tableName="customer_group" domainObjectName="CustomerGroup" enableSelectByExample="true"></table>
+		<!--<table tableName="sys_menu" domainObjectName="SysMenu" enableSelectByExample="true"></table>
 		<table tableName="sys_role" domainObjectName="SysRole" enableSelectByExample="true"></table>
 		<table tableName="sys_role_menu" domainObjectName="SysRoleMenu" enableSelectByExample="true"></table>
 		<table tableName="sys_user" domainObjectName="SysUser" enableSelectByExample="true"></table>
 		<table tableName="sys_user_role" domainObjectName="SysUserRole" enableSelectByExample="true"></table>
 		
-		<!-- <table tableName="supplier" domainObjectName="Supplier" enableSelectByExample="true"></table> <table tableName="supplier_group" domainObjectName="SupplierGroup" 
+		 <table tableName="supplier" domainObjectName="Supplier" enableSelectByExample="true"></table> <table tableName="supplier_group" domainObjectName="SupplierGroup" 
 			enableSelectByExample="true"></table> <table tableName="customer" domainObjectName="Customer"></table> <table tableName="plateform" domainObjectName="Plateform"></table> 
 			<table tableName="plateform_release_record" domainObjectName="PlateformReleaseRecord"></table> <table tableName="goods_post_record" domainObjectName="GoodsPostRecord"></table> 
 			<table tableName="goods_pic" domainObjectName="GoodsPic"></table><table tableName="goods" domainObjectName="Goods"></table> <table tableName="goods" domainObjectName="Goods" 

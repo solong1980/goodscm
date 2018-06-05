@@ -3,6 +3,7 @@
 <mapper namespace="com.xlw.goodscm.dao.CustomerMapper">
 	<resultMap id="BaseResultMap" type="com.xlw.goodscm.model.Customer">
 		<id column="id" jdbcType="BIGINT" property="id" />
+		<id column="group_id" jdbcType="BIGINT" property="groupId" />
 		<result column="type" jdbcType="VARCHAR" property="type" />
 		<result column="code" jdbcType="VARCHAR" property="code" />
 		<result column="name" jdbcType="VARCHAR" property="name" />
@@ -14,8 +15,10 @@
 		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
 		<result column="memo" jdbcType="LONGVARCHAR" property="memo" />
 	</resultMap>
+	
 	<sql id="Columns">
 		id,
+		group_id,
 		type,
 		code,
 		name,
@@ -35,6 +38,7 @@
 
 	<insert id="insert" parameterType="com.xlw.goodscm.model.Customer" useGeneratedKeys="true" keyProperty="id">
 		insert into customer (
+		group_id,
 		type,
 		code,
 		name,
@@ -45,6 +49,7 @@
 		memo,
 		create_time
 		) values (
+		#{groupId,jdbcType=BIGINT},
 		#{type,jdbcType=VARCHAR},
 		#{code,jdbcType=VARCHAR},
 		#{name,jdbcType=VARCHAR},
@@ -60,6 +65,7 @@
 	<update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.Customer">
 		update customer
 		set
+		group_id = #{groupId,jdbcType=VARCHAR},
 		type = #{code,jdbcType=VARCHAR},
 		code = #{code,jdbcType=VARCHAR},
 		name =
@@ -91,14 +97,17 @@
 		<include refid="Columns"></include>
 		from customer
 		where 1=1
-		<if test="page.c.type!=null">
-			and type = #{type,jdbcType=VARCHAR}
+		<if test="page.c != null and page.c.groupId != null and page.c.groupId > 0">
+			and group_id = #{page.c.groupId,jdbcType=VARCHAR}
 		</if>
-		<if test="page.c.name!=null">
+		<if test="page.c != null and page.c.type != null">
+			and type = #{page.c.type,jdbcType=VARCHAR}
+		</if>
+		<if test="page.c != null and page.c.name != null">
 			and name like
 			concat(#{page.c.name,jdbcType=VARCHAR},'%')
 		</if>
-		<if test="page.c.code!=null">
+		<if test="page.c!=null and page.c.code!=null">
 			and code like
 			concat(#{page.c.code,jdbcType=VARCHAR},'%')
 		</if>
