@@ -25,8 +25,13 @@ public class ReturnCode {
 		
 		RELATED_GOODS(521, "此类别有商品关联"), 
 		SUB_CATEGORIES(522, "此类别有子类别"), 
+		
 		REL_SUPPLIER(523, "此分组含有对应供应商"), 
 		REL_CUSTOMER(523, "此分组含有对应客户"), 
+		
+		DUPLICATE_SHORTNAME(524, "简称重复"), 
+		DUPLICATE_NAME(524, "名字重复"), 
+		DUPLICATE_CODE(524, "编码重复"), 
 		;
 		private Integer code;
 		private String message;
