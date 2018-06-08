@@ -6,8 +6,20 @@
     <result column="group_id" property="groupId" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="contacts" property="contacts" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="fax" property="fax" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="wechat" property="wechat" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="website" property="website" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+    <result column="memo" property="memo" jdbcType="LONGVARCHAR" />
   </resultMap>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
@@ -17,15 +29,39 @@
   
   <insert id="insert" parameterType="com.xlw.goodscm.model.Supplier" useGeneratedKeys="true" keyProperty="id">
     insert into supplier (
-      group_id, 
+      group_id,
       name, 
       code, 
-      create_time
+      contacts, 
+      mobile, 
+      phone, 
+      fax, 
+      qq, 
+      wechat, 
+      email, 
+      website, 
+      address, 
+      status, 
+      create_time, 
+      description, 
+      memo
     ) values (
-      #{groupId,jdbcType=BIGINT}, 
+      #{groupId,jdbcType=BIGINT},
       #{name,jdbcType=VARCHAR}, 
       #{code,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}
+      #{contacts,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, 
+      #{fax,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, 
+      #{wechat,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, 
+      #{website,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, 
+      #{description,jdbcType=LONGVARCHAR}, 
+      #{memo,jdbcType=LONGVARCHAR}
     )
   </insert>
   
@@ -34,18 +70,32 @@
     set 
       group_id = #{groupId,jdbcType=BIGINT},
       name = #{name,jdbcType=VARCHAR},
-      code = #{code,jdbcType=VARCHAR}
+      code = #{code,jdbcType=VARCHAR},
+      contacts = #{contacts,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      wechat = #{wechat,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      description = #{description,jdbcType=LONGVARCHAR},
+      memo = #{memo,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select id, group_id, name, code, create_time, update_time
+    select id, group_id, name, code, contacts, mobile, phone, fax, qq, wechat, email, 
+    website, address, status, create_time, update_time, description, memo
     from supplier
     where id = #{id,jdbcType=BIGINT}
   </select>
   
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, group_id, name, code, create_time, update_time
+    select id, group_id, name, code, contacts, mobile, phone, fax, qq, wechat, email, 
+    website, address, status, create_time, update_time, description, memo
     from supplier
   </select>
   
