@@ -8,7 +8,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -139,6 +141,9 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Override
 	public Long add(Goods goods) {
+		goods.setId(null);
+		checkGoodsCodeDuplicate(goods);
+
 		goods.setCreateTime(new Date());
 		goodsMapper.insert(goods);
 		Long goodsId = goods.getId();
@@ -179,6 +184,9 @@ public class GoodsServiceImpl implements GoodsService {
 		if (goods.getId() == null) {
 			throw new InvalidParameterException("goods id is null");
 		}
+		
+		checkGoodsCodeDuplicate(goods);
+		
 		goodsMapper.updateByPrimaryKey(goods);
 
 		List<SupplierRecord> supplierRecords = goods.getSupplierRecords();
@@ -236,7 +244,22 @@ public class GoodsServiceImpl implements GoodsService {
 		if (goods.getId() == null) {
 			throw new InvalidParameterException("goods id is null");
 		}
+		checkGoodsCodeDuplicate(goods);
 		goodsMapper.fastUpdateByPrimaryKey(goods);
+	}
+
+	/**
+	 * 如果code为空则通过 ，否则判断是否重复
+	 * 
+	 * @param goods
+	 */
+	private synchronized void checkGoodsCodeDuplicate(Goods goods) {
+		String code = goods.getCode();
+		if (StringUtils.isNotEmpty(code)) {
+			int count = goodsMapper.selectCount(goods);
+			if (count > 0)
+				throw new DuplicateKeyException("Add\\Update  Goods Exception: Duplicate entry '"+code+"' for key 'code'");
+		}
 	}
 
 }

@@ -19,4 +19,6 @@ public interface SupplierMapper {
     int updateByPrimaryKey(Supplier record);
 
 	List<Supplier> pageQuery(@Param("page") CmPage<Supplier, List<?>> page);
+
+	int selectCount(Supplier supplier);
 }

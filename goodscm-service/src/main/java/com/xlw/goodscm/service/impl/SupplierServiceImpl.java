@@ -3,7 +3,9 @@ package com.xlw.goodscm.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import com.xlw.goodscm.dao.GoodsMapper;
@@ -26,6 +28,9 @@ public class SupplierServiceImpl implements SupplierService {
 
 	@Override
 	public void add(Supplier supplier) {
+		supplier.setId(null);
+		checkSupplierCodeDuplicate(supplier);
+		
 		supplier.setCreateTime(new Date());
 		supplierMapper.insert(supplier);
 	}
@@ -42,6 +47,9 @@ public class SupplierServiceImpl implements SupplierService {
 
 	@Override
 	public void update(Supplier supplier) {
+		
+		checkSupplierCodeDuplicate(supplier);
+		
 		supplierMapper.updateByPrimaryKey(supplier);
 	}
 
@@ -60,4 +68,17 @@ public class SupplierServiceImpl implements SupplierService {
 		return supplierMapper.pageQuery(page);
 	}
 
+	/**
+	 * 如果code为空则通过 ，否则判断是否重复
+	 * 
+	 * @param supplier
+	 */
+	private synchronized void checkSupplierCodeDuplicate(Supplier supplier) {
+		String code = supplier.getCode();
+		if (StringUtils.isNotEmpty(code)) {
+			int count = supplierMapper.selectCount(supplier);
+			if (count > 0)
+				throw new DuplicateKeyException("Add\\Update Supplier Exception: Duplicate entry '"+code+"' for key 'code'");
+		}
+	}
 }

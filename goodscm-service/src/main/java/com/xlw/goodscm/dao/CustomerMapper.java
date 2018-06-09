@@ -19,4 +19,6 @@ public interface CustomerMapper {
 	int updateByPrimaryKey(Customer record);
 
 	List<Customer> pageQuery(@Param("page") CmPage<Customer, List<Customer>> page);
+
+	int selectCount(Customer customer);
 }

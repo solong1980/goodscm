@@ -113,4 +113,14 @@
 		</if>
 		limit #{page.start},#{page.count}
 	</select>
+	
+	<select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select count(*) from customer where code = #{code,jdbcType=VARCHAR}
+		<!-- 如果ID不为空，排除该记录  -->
+		<if test="id!=null and id>0">
+			and id 
+			<![CDATA[<>]]>
+			#{id,jdbcType=BIGINT}
+		</if>
+	</select>
 </mapper>

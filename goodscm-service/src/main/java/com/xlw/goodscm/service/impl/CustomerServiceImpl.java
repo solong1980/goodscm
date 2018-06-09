@@ -3,7 +3,9 @@ package com.xlw.goodscm.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import com.xlw.goodscm.dao.CustomerMapper;
@@ -18,6 +20,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public void add(Customer customer) {
+		customer.setId(null);
+		checkCustomerCodeDuplicate(customer);
+		
 		customer.setCreateTime(new Date());
 		customerMapper.insert(customer);
 	}
@@ -29,6 +34,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public void update(Customer customer) {
+
+		checkCustomerCodeDuplicate(customer);
+		
 		customerMapper.updateByPrimaryKey(customer);
 	}
 
@@ -40,6 +48,20 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public List<Customer> query(CmPage<Customer, List<Customer>> page) {
 		return customerMapper.pageQuery(page);
+	}
+	
+	/**
+	 * 如果code为空则通过 ，否则判断是否重复
+	 * 
+	 * @param customer
+	 */
+	private synchronized void checkCustomerCodeDuplicate(Customer customer) {
+		String code = customer.getCode();
+		if (StringUtils.isNotEmpty(code)) {
+			int count = customerMapper.selectCount(customer);
+			if (count > 0)
+				throw new DuplicateKeyException("Add\\Update Customer Exception: Duplicate entry '"+code+"' for key 'code'");
+		}
 	}
 
 }
