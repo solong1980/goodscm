@@ -35,8 +35,10 @@
 
 		<!--生成对应表及类名 -->
 		<!-- mybatis-generator:generate -->
+		<table tableName="goods_post_cart" domainObjectName="GoodsPostCart" enableSelectByExample="true"></table>
+		<!--
 		<table tableName="customer_group" domainObjectName="CustomerGroup" enableSelectByExample="true"></table>
-		<!--<table tableName="sys_menu" domainObjectName="SysMenu" enableSelectByExample="true"></table>
+	    <table tableName="sys_menu" domainObjectName="SysMenu" enableSelectByExample="true"></table>
 		<table tableName="sys_role" domainObjectName="SysRole" enableSelectByExample="true"></table>
 		<table tableName="sys_role_menu" domainObjectName="SysRoleMenu" enableSelectByExample="true"></table>
 		<table tableName="sys_user" domainObjectName="SysUser" enableSelectByExample="true"></table>

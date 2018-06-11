@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xlw.goodscm.dao.GoodsPostCartMapper" >
+  <resultMap id="BaseResultMap" type="com.xlw.goodscm.model.GoodsPostCart" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="short_name" property="shortName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="SMALLINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="operator_id" property="operatorId" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from goods_post_cart
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.xlw.goodscm.model.GoodsPostCart" >
+    insert into goods_post_cart (
+      id, 
+      goods_id, 
+      code, 
+      short_name, 
+      status, 
+      create_time, 
+      update_time, 
+      operator_id
+      )
+    values (
+	  #{goodsId,jdbcType=BIGINT}, 
+	  #{code,jdbcType=VARCHAR}, 
+      #{shortName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=SMALLINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, 
+      #{operatorId,jdbcType=BIGINT}
+     )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.GoodsPostCart" >
+    update goods_post_cart
+    set goods_id = #{goodsId,jdbcType=BIGINT},
+      code = #{code,jdbcType=VARCHAR},
+      short_name = #{shortName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=SMALLINT},
+      operator_id = #{operatorId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    id, 
+    goods_id, 
+    code, 
+    short_name, 
+    status, 
+    create_time, 
+    update_time, 
+    operator_id
+    from goods_post_cart
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, goods_id, code, short_name, status, create_time, update_time, operator_id
+    from goods_post_cart
+  </select>
+  
+  <select id="pageQuery" resultMap="BaseResultMap"
+		parameterType="com.xlw.goodscm.pojo.CmPage">
+	select s.* from goods_post_cart gpc where 1=1
+	<if test="page.c!=null and page.c.operatorId!=null and page.c.operatorId>0">
+		and gpc.operator_id = #{page.c.operatorId,jdbcType=BIGINT}
+	</if>
+	<if test="page.c!=null and page.c.code!=null">
+		and gpc.code like concat(#{page.c.code,jdbcType=VARCHAR},'%')
+	</if>
+	<if test="page.c!=null and page.c.shortName!=null">
+		and gpc.short_name like concat('%',#{page.c.shortName,jdbcType=VARCHAR},'%')
+	</if>
+	limit #{page.start},#{page.count}
+  </select>
+  
+</mapper>
