@@ -39,11 +39,11 @@ public class GoodsTest extends BaseTest {
 	public void testGoodsQuery() {
 		Goods goods = new Goods();
 		// 商品类型，货品名称（货品名称或货品代码，空格替换为%，like查询）
-		goods.setShortName("Lens Hood For Nikon");
-		goods.setCode("21  2   3");
+		//goods.setShortName("Lens Hood For Nikon");
+		//goods.setCode("21  2   3");
 		GoodsCategory category = new GoodsCategory();
-		category.setCategoryCode("002001002000");
 		goods.setCategory(category);
+		goods.setCategoryCode("002001002000");
 
 		CmPage<Goods, List<Goods>> page = new CmPage<>();
 		page.setC(goods);
@@ -71,7 +71,7 @@ public class GoodsTest extends BaseTest {
 		URI url = new URI(localhost + "/goods/addupdatepics");
 
 		Goods goods = new Goods();
-		goods.setCode("JT0000007");
+		//goods.setCode("");
 		goods.setCategoryId(22L);
 		goods.setShortName("尼康");
 
@@ -242,7 +242,7 @@ public class GoodsTest extends BaseTest {
 
 		HttpHeaders headers = createJsonHeader();
 
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/149", HttpMethod.GET,
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/22", HttpMethod.GET,
 				new HttpEntity<String>(headers), String.class);
 		System.out.println(responseEntity.getBody());
 		CmResult result = JsonUtilTool.fromJson(responseEntity.getBody(), CmResult.class);
@@ -252,48 +252,7 @@ public class GoodsTest extends BaseTest {
 		System.out.println("-----------------------------------Get By 21");
 		System.out.println(goods);
 
-		goods.setCategoryId(11L);
-		goods.setShortName("Company Long name");
-
-		goods.setNameZh("太强了");
-
-		goods.setNameEn("toostromg");
-
-		goods.setNetWeight(new BigDecimal("140"));
-
-		goods.setWeightAfterPacking(new BigDecimal("180"));
-
-		goods.setLength(new BigDecimal("210"));
-
-		goods.setWidth(new BigDecimal("120"));
-
-		goods.setHeight(new BigDecimal("120"));
-
-		goods.setPackingLength(new BigDecimal("120"));
-
-		goods.setPackingWidth(new BigDecimal("120"));
-
-		goods.setPackingHeight(new BigDecimal("120"));
-
-		goods.setPurchasePrice(new BigDecimal("120"));
-
-		goods.setRetailPrice(new BigDecimal("120"));
-
-		goods.setTradePrice(new BigDecimal("120"));
-
-		goods.setStock(new BigDecimal("120"));
-
-		goods.setStockUnit((short) 2);
-
-		goods.setStatus((short) 2);
-
-		goods.setMemo("MenoMeno");
-
-		goods.setZhInfo("zh_infozh_info");
-
-		goods.setEnInfo("en_infoen_info");
-
-		goods.setExtInfo("ext_infoext_info");
+		goods.setCode("JT0000008");
 
 		List<SupplierRecord> supplierRecords = goods.getSupplierRecords();
 		if (supplierRecords == null) {

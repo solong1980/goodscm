@@ -18,7 +18,7 @@ public class CustomerTest extends BaseTest {
 		Customer customer = new Customer();
 		customer.setGroupId(1L);
 		customer.setType("1");
-		customer.setCode("00000");
+		customer.setCode("01000");
 		customer.setName("abcdefg");
 		customer.setEmail("afasfd");
 
@@ -45,9 +45,9 @@ public class CustomerTest extends BaseTest {
 	public void testUpdate() {
 		Customer customer = new Customer();
 
-		customer.setId(2L);
+		customer.setId(8L);
 		customer.setType("1");
-		customer.setCode("2222");
+		customer.setCode("01000");
 		customer.setName("223sadfasf");
 		customer.setEmail("3asdfas33");
 

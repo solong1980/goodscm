@@ -17,8 +17,8 @@ public class SupplierTest extends BaseTest {
 	public void testAdd() {
 		Supplier supplier = new Supplier();
 		supplier.setGroupId(3L);
-		supplier.setCode("00003");
-		supplier.setName("广东量子器件供应部");
+		supplier.setCode("0002");
+		supplier.setName("量子器件供应部");
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(supplier), createJsonHeader());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/supplier/add", HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
@@ -27,7 +27,7 @@ public class SupplierTest extends BaseTest {
 	@Test
 	public void testDel() {
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(new Object()), createJsonHeader());
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/supplier/delete/6", HttpMethod.GET, httpEntity,
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/supplier/delete/9", HttpMethod.GET, httpEntity,
 				String.class);
 		System.out.println(responseEntity.getBody());
 	}
@@ -35,7 +35,7 @@ public class SupplierTest extends BaseTest {
 	@Test
 	public void testGet() {
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(new Object()), createJsonHeader());
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/supplier/get/6", HttpMethod.GET, httpEntity,
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/supplier/get/9", HttpMethod.GET, httpEntity,
 				String.class);
 		System.out.println(responseEntity.getBody());
 	}
@@ -45,12 +45,23 @@ public class SupplierTest extends BaseTest {
 		Supplier supplier = new Supplier();
 		supplier.setId(6L);
 		supplier.setGroupId(2L);
-		supplier.setCode("00003");
-		supplier.setName("广西电子器件供应部");
+		supplier.setCode("00004");
+		supplier.setName("广西电子");
 		
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(supplier), createJsonHeader());
 
 		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/supplier/update", HttpMethod.POST, httpEntity,
+				String.class);
+		System.out.println(responseEntity.getBody());
+	}
+	
+	@Test
+	public void testUpdateStatus() {
+		Supplier supplier = new Supplier();
+		supplier.setId(6L);
+		supplier.setStatus((short) 1);
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(supplier), createJsonHeader());
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/supplier/updatestatus", HttpMethod.POST, httpEntity,
 				String.class);
 		System.out.println(responseEntity.getBody());
 	}
