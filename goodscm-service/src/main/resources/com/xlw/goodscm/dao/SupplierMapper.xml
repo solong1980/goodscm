@@ -41,7 +41,6 @@
       email, 
       website, 
       address, 
-      status, 
       create_time, 
       description, 
       memo
@@ -58,12 +57,18 @@
       #{email,jdbcType=VARCHAR}, 
       #{website,jdbcType=VARCHAR}, 
       #{address,jdbcType=VARCHAR}, 
-      #{status,jdbcType=BIT}, 
       #{createTime,jdbcType=TIMESTAMP}, 
       #{description,jdbcType=LONGVARCHAR}, 
       #{memo,jdbcType=LONGVARCHAR}
     )
   </insert>
+  
+  <update id="updateStatus">
+  	update supplier
+    set
+      status = #{status,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
   
   <update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.Supplier" >
     update supplier
@@ -101,7 +106,7 @@
   
   <select id="pageQuery" resultMap="BaseResultMap"
 		parameterType="com.xlw.goodscm.pojo.CmPage">
-	select s.* from supplier s where 1=1
+	select s.* from supplier s where 1=1 and status=0
 	<if test="page.c!=null and page.c.code!=null">
 		and s.code like concat(#{page.c.code,jdbcType=VARCHAR},'%')
 	</if>

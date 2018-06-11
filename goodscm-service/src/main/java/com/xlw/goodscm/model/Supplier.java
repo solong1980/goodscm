@@ -30,7 +30,7 @@ public class Supplier {
 
     private String address;
 
-    private Boolean status;
+    private Short status;
 
     private Date createTime;
 
@@ -146,11 +146,11 @@ public class Supplier {
         this.address = address == null ? null : address.trim();
     }
 
-    public Boolean getStatus() {
+    public Short getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Short status) {
         this.status = status;
     }
 

@@ -30,7 +30,7 @@ public class SupplierServiceImpl implements SupplierService {
 	public void add(Supplier supplier) {
 		supplier.setId(null);
 		checkSupplierCodeDuplicate(supplier);
-		
+
 		supplier.setCreateTime(new Date());
 		supplierMapper.insert(supplier);
 	}
@@ -47,9 +47,9 @@ public class SupplierServiceImpl implements SupplierService {
 
 	@Override
 	public void update(Supplier supplier) {
-		
+
 		checkSupplierCodeDuplicate(supplier);
-		
+
 		supplierMapper.updateByPrimaryKey(supplier);
 	}
 
@@ -78,7 +78,12 @@ public class SupplierServiceImpl implements SupplierService {
 		if (StringUtils.isNotEmpty(code)) {
 			int count = supplierMapper.selectCount(supplier);
 			if (count > 0)
-				throw new DuplicateKeyException("Add\\Update Supplier Exception: Duplicate entry '"+code+"' for key 'code'");
+				throw new DuplicateKeyException("Add\\Update Supplier Exception: Duplicate entry '" + code + "' for key 'code'");
 		}
+	}
+
+	@Override
+	public void updateStatus(Long id, Short status) {
+		supplierMapper.updateStatus(id, status);
 	}
 }

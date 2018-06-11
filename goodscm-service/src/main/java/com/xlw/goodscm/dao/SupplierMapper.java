@@ -21,4 +21,6 @@ public interface SupplierMapper {
 	List<Supplier> pageQuery(@Param("page") CmPage<Supplier, List<?>> page);
 
 	int selectCount(Supplier supplier);
+
+	int updateStatus(@Param("id") Long id, @Param("status") Short status);
 }

@@ -62,4 +62,11 @@ public class SupplierController {
 		CmResult cmResult = CmResult.build(Codes.SUCCESS, page);
 		return cmResult;
 	}
+	
+	@RequestMapping("/updatestatus")
+	public CmResult updateStatus(@RequestBody Supplier supplier) {
+		supplierService.updateStatus(supplier.getId(),supplier.getStatus());
+		CmResult cmResult = CmResult.build(Codes.SUCCESS, null);
+		return cmResult;
+	}
 }

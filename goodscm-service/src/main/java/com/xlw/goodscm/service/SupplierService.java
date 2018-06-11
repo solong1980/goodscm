@@ -20,4 +20,6 @@ public interface SupplierService {
 	void delete(Long id);
 
 	List<Supplier> query(CmPage<Supplier, List<?>> goodsCmPage);
+
+	void updateStatus(Long id, Short status);
 }

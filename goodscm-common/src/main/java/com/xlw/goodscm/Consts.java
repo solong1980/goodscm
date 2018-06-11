@@ -11,7 +11,7 @@ public class Consts {
 
 	public static final String FILE_STORE_DIRECTORY_KEY = "FILE_STORE_DIRECTORY";
 	public static final String FILE_DIR = "D:\\NewArt";
-	
+
 	public static final String SUB_DIRECTORY_KEY = "SUB_DIRECTORY_KEY";
 	public static final String SUB_DIR = "datas";
 
@@ -22,6 +22,23 @@ public class Consts {
 		private short code;
 
 		private GoodsAuditStatus(int code) {
+			this.code = (short) code;
+		}
+
+		public short getCode() {
+			return this.code;
+		}
+	}
+
+	public static enum SupplierStatus {
+		/** 可用  */
+		AVAILABLE(0),
+		
+		/** 不可用 */
+		INAVAILABLE(1);
+		private short code;
+
+		private SupplierStatus(int code) {
 			this.code = (short) code;
 		}
 
