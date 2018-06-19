@@ -138,7 +138,23 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 		return goods;
 	}
-
+	
+	/*
+	 * Query goods info include pictures
+	 * @see com.xlw.goodscm.service.GoodsService#getGoodsInfoById(java.lang.Long)
+	 */
+	@Override
+	public Goods getGoodsInfoById(Long id) {
+		Goods goods = goodsMapper.selectByPrimaryKey(id);
+		if (goods != null) {
+			GoodsPic goodsPic = new GoodsPic();
+			goodsPic.setGoodsId(id);
+			List<GoodsPic> goodsPics = goodsPicService.selectGoodsPics(id);
+			goods.setGoodsPics(goodsPics);
+		}
+		return goods;
+	}
+	
 	@Override
 	public Long add(Goods goods) {
 		goods.setId(null);

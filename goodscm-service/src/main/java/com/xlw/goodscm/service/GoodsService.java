@@ -30,4 +30,6 @@ public interface GoodsService {
 	List<Goods> pageQuery(CmPage<Goods, List<?>> goodsPageQuery);
 
 	void fastUpdate(Goods goods);
+
+	Goods getGoodsInfoById(Long id);
 }

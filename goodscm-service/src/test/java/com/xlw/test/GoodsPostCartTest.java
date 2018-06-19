@@ -85,4 +85,12 @@ public class GoodsPostCartTest extends BaseTest {
 		System.out.println(responseEntity.getBody());
 	}
 
+	@Test
+	public void testExport() {
+
+		HttpEntity<String> httpEntity = new HttpEntity<String>(createJsonHeader());
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goodspostcart/export/1",
+				HttpMethod.POST, httpEntity, String.class);
+		System.out.println(responseEntity.getBody());
+	}
 }

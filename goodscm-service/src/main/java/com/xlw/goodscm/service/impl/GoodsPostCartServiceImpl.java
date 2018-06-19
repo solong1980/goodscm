@@ -1,20 +1,27 @@
 package com.xlw.goodscm.service.impl;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.xlw.FreemarkTool;
 import com.xlw.goodscm.dao.GoodsPostCartMapper;
+import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.GoodsPostCart;
 import com.xlw.goodscm.pojo.CmPage;
 import com.xlw.goodscm.service.GoodsPostCartService;
+import com.xlw.goodscm.service.GoodsService;
 
 @Service
 public class GoodsPostCartServiceImpl implements GoodsPostCartService {
 	@Autowired
 	private GoodsPostCartMapper goodsPostCartMapper;
+
+	@Autowired
+	private GoodsService goodsService;
 
 	@Override
 	public void add(GoodsPostCart goodsPostCart) {
@@ -45,6 +52,27 @@ public class GoodsPostCartServiceImpl implements GoodsPostCartService {
 	@Override
 	public List<GoodsPostCart> selectAll() {
 		return goodsPostCartMapper.selectAll();
+	}
+
+	@Override
+	public List<String> export(CmPage<GoodsPostCart, List<GoodsPostCart>> page) {
+		List<GoodsPostCart> userPostGoods = goodsPostCartMapper.pageQuery(page);
+
+		// query all goods detail
+		for (GoodsPostCart goodsPostCart : userPostGoods) {
+			Goods goods = goodsService.getGoodsInfoById(goodsPostCart.getGoodsId());
+			// generate introduce page
+			String pageContent = FreemarkTool.exportGoodsPage(goods);
+			if (pageContent == null) {
+				throw new RuntimeException("export page for goods id=" + goods.getId() + " error");
+			} else {
+				// create file
+				File file = new File(goodsPostCart.getOperatorId() + "_" + goodsPostCart.getCustomerId() + "_"
+						+ goodsPostCart.getGoodsId() + ".html");
+				
+			}
+		}
+		return null;
 	}
 
 }
