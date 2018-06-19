@@ -18,7 +18,6 @@ public class GoodsPostCartServiceImpl implements GoodsPostCartService {
 
 	@Override
 	public void add(GoodsPostCart goodsPostCart) {
-		goodsPostCart.setId(null);
 		goodsPostCart.setCreateTime(new Date());
 		goodsPostCartMapper.insert(goodsPostCart);
 	}
@@ -41,6 +40,11 @@ public class GoodsPostCartServiceImpl implements GoodsPostCartService {
 	@Override
 	public List<GoodsPostCart> query(CmPage<GoodsPostCart, List<GoodsPostCart>> page) {
 		return goodsPostCartMapper.pageQuery(page);
+	}
+
+	@Override
+	public List<GoodsPostCart> selectAll() {
+		return goodsPostCartMapper.selectAll();
 	}
 
 }

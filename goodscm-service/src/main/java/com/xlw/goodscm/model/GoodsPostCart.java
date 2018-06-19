@@ -3,83 +3,99 @@ package com.xlw.goodscm.model;
 import java.util.Date;
 
 public class GoodsPostCart {
-    private Long id;
+	private Long id;
 
-    private Long goodsId;
+	private Long goodsId;
 
-    private String code;
+	private Long customerId;
 
-    private String shortName;
+	private Short status;
 
-    private Short status;
+	private Date createTime;
 
-    private Date createTime;
+	private Date updateTime;
 
-    private Date updateTime;
+	private Long operatorId;
 
-    private Long operatorId;
+	/**
+	 * 商品编码
+	 */
+	private String code;
+	/**
+	 * 商品简称
+	 */
+	private String shortName;
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Long getGoodsId() {
-        return goodsId;
-    }
+	public Long getGoodsId() {
+		return goodsId;
+	}
 
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
-    }
+	public void setGoodsId(Long goodsId) {
+		this.goodsId = goodsId;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public Long getCustomerId() {
+		return customerId;
+	}
 
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
-    }
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
+	}
 
-    public String getShortName() {
-        return shortName;
-    }
+	public Short getStatus() {
+		return status;
+	}
 
-    public void setShortName(String shortName) {
-        this.shortName = shortName == null ? null : shortName.trim();
-    }
+	public void setStatus(Short status) {
+		this.status = status;
+	}
 
-    public Short getStatus() {
-        return status;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public void setStatus(Short status) {
-        this.status = status;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public Long getOperatorId() {
+		return operatorId;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public void setOperatorId(Long operatorId) {
+		this.operatorId = operatorId;
+	}
 
-    public Long getOperatorId() {
-        return operatorId;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setOperatorId(Long operatorId) {
-        this.operatorId = operatorId;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getShortName() {
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
+
 }

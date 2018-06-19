@@ -13,6 +13,7 @@ import com.xlw.goodscm.model.GoodsPostCart;
 import com.xlw.goodscm.pojo.CmPage;
 import com.xlw.goodscm.pojo.CmResult;
 import com.xlw.goodscm.service.GoodsPostCartService;
+import com.xlw.sys.shiro.ShiroUtils;
 
 @RestController
 @RequestMapping("/goodspostcart")
@@ -22,8 +23,10 @@ public class GoodsPostCartController {
 
 	@RequestMapping("/add")
 	public CmResult add(@RequestBody GoodsPostCart goodsPostCart) {
+		Long userId = ShiroUtils.getUserId();
+		goodsPostCart.setOperatorId(userId);
 		goodsPostCartService.add(goodsPostCart);
-		CmResult cmResult = CmResult.build(Codes.SUCCESS, null);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS, goodsPostCart.getId());
 		return cmResult;
 	}
 
@@ -35,7 +38,7 @@ public class GoodsPostCartController {
 	}
 
 	@RequestMapping("/update")
-	public CmResult delete(@RequestBody GoodsPostCart goodsPostCart) {
+	public CmResult update(@RequestBody GoodsPostCart goodsPostCart) {
 		goodsPostCartService.update(goodsPostCart);
 		CmResult cmResult = CmResult.build(Codes.SUCCESS, null);
 		return cmResult;
@@ -48,6 +51,13 @@ public class GoodsPostCartController {
 		return cmResult;
 	}
 
+	@RequestMapping("/all")
+	public CmResult all() {
+		List<GoodsPostCart> goodsPostCarts = goodsPostCartService.selectAll();
+		CmResult cmResult = CmResult.build(Codes.SUCCESS, goodsPostCarts);
+		return cmResult;
+	}
+	
 	@RequestMapping("/query")
 	public CmResult query(@RequestBody CmPage<GoodsPostCart, List<GoodsPostCart>> page) {
 		List<GoodsPostCart> goodsPostCarts = goodsPostCartService.query(page);

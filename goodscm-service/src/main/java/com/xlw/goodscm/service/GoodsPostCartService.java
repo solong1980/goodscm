@@ -17,7 +17,9 @@ public interface GoodsPostCartService {
 	void update(GoodsPostCart goodsPostCart);
 
 	GoodsPostCart get(Long id);
-
+	
+	List<GoodsPostCart> selectAll();
+	
 	List<GoodsPostCart> query(CmPage<GoodsPostCart, List<GoodsPostCart>> page);
 	
 }
