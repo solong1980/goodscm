@@ -21,5 +21,7 @@ public interface GoodsPostCartService {
 	List<GoodsPostCart> selectAll();
 	
 	List<GoodsPostCart> query(CmPage<GoodsPostCart, List<GoodsPostCart>> page);
+
+	List<String> export(CmPage<GoodsPostCart, List<GoodsPostCart>> page);
 	
 }

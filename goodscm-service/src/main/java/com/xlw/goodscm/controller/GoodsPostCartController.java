@@ -64,4 +64,19 @@ public class GoodsPostCartController {
 		CmResult cmResult = CmResult.build(Codes.SUCCESS, goodsPostCarts);
 		return cmResult;
 	}
+	
+	@RequestMapping("/export/{customerId}")
+	public CmResult export(@PathVariable("customerId") Long customerId) {
+		CmPage<GoodsPostCart, List<GoodsPostCart>> page = new CmPage<>();
+		GoodsPostCart cart = new GoodsPostCart();
+		Long userId = ShiroUtils.getUserId();
+		cart.setOperatorId(userId);
+		cart.setCustomerId(customerId);
+		page.setC(cart);
+		page.setCount(Integer.MAX_VALUE);
+		List<String> exportURL = goodsPostCartService.export(page);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS, exportURL);
+		return cmResult;
+	}
+	
 }
