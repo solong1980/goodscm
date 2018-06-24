@@ -1,6 +1,7 @@
 package springboot;
 
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xlw.goodscm.ReturnCode;
 import com.xlw.goodscm.pojo.CmResult;
 
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class, MybatisAutoConfiguration.class })
 // @ConfigurationProperties(prefix = "spring")
 @MapperScan(value = { "com.xlw.goodscm.dao", "com.xlw.sys.dao" }) // 将项目中对应的mapper类的路径加进来就可以了
 @ComponentScan(value = { "com.xlw.goodscm.controller", "com.xlw.goodscm.service", "com.xlw.sys.service" })

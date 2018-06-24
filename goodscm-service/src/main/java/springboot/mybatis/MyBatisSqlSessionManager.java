@@ -61,7 +61,6 @@ public class MyBatisSqlSessionManager {
 	}
 
 	public void refresh() throws Exception {
-
 		try {
 			this.scanMapperXml();
 		} catch (IOException e) {
