@@ -23,7 +23,7 @@ public class CustomerController {
 	@RequestMapping("/add")
 	public CmResult add(@RequestBody Customer customer) {
 		customerService.add(customer);
-		CmResult cmResult = CmResult.build(Codes.SUCCESS, null);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS, customer.getId());
 		return cmResult;
 	}
 
