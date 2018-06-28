@@ -28,6 +28,10 @@ public class MyBatisSqlSessionManager {
 	Configuration configuration;
 	private HashMap<String, Long> fileMapping = new HashMap<String, Long>();// 记录文件是否变化
 
+	public Resource[] getMapperLocations() {
+		return mapperLocations;
+	}
+
 	/** * 清空Configuration中几个重要的缓存 * @param configuration * @throws Exception */
 	private void removeConfig(Configuration configuration) throws Exception {
 		Class<?> classConfig = configuration.getClass();
@@ -69,22 +73,26 @@ public class MyBatisSqlSessionManager {
 		}
 		// 判断是否有文件发生了变化
 		if (isChanged()) {
-			// 清理
-			this.removeConfig(configuration);
-			// 重新加载
-			for (Resource configLocation : mapperLocations) {
-				try {
-					XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(configLocation.getInputStream(), configuration,
-							configLocation.toString(), configuration.getSqlFragments());
-					xmlMapperBuilder.parse();
-					log.info("mapper文件[" + configLocation.getFilename() + "]加载成功");
-				} catch (IOException e) {
-					log.error("mapper文件[" + configLocation.getFilename() + "]不存在或内容格式不对");
-					continue;
-				}
-			}
+			cleanLoad();
 		}
 
+	}
+
+	protected void cleanLoad() throws Exception {
+		// 清理
+		this.removeConfig(configuration);
+		// 重新加载
+		for (Resource configLocation : mapperLocations) {
+			try {
+				XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(configLocation.getInputStream(), configuration,
+						configLocation.toString(), configuration.getSqlFragments());
+				xmlMapperBuilder.parse();
+				log.info("mapper文件[" + configLocation.getFilename() + "]加载成功");
+			} catch (IOException e) {
+				log.error("mapper文件[" + configLocation.getFilename() + "]不存在或内容格式不对");
+				continue;
+			}
+		}
 	}
 
 	public void refreshMapper() throws Exception {
@@ -136,7 +144,7 @@ public class MyBatisSqlSessionManager {
 	}
 
 	/** * 扫描xml文件所在的路径 * @throws IOException */
-	private void scanMapperXml() throws IOException {
+	protected void scanMapperXml() throws IOException {
 		this.mapperLocations = new PathMatchingResourcePatternResolver().getResources(packageSearchPath);
 	}
 
