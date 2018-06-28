@@ -1,11 +1,13 @@
 package springboot.mybatis;
 
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@ConditionalOnProperty(name = "spring.profiles.active", havingValue = "local")
 public class ServletConfigure {
 
 	/**
@@ -20,7 +22,7 @@ public class ServletConfigure {
 
 	@Bean
 	public MyBatisSqlSessionManager mybatisSessionCache(SqlSessionFactory sessionFactory) throws Exception {
-		MyBatisSqlSessionManager batisSqlSessionManager = new MyBatisSqlSessionManager(sessionFactory);
+		MyBatisSqlSessionWatcher batisSqlSessionManager = new MyBatisSqlSessionWatcher(sessionFactory);
 		batisSqlSessionManager.refreshMapper();
 		return batisSqlSessionManager;
 	}
