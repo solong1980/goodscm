@@ -3,6 +3,11 @@ package com.xlw.goodscm.model;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.xlw.util.FastXmlDateDeserializer;
+import com.xlw.util.FastXmlDateSerializer;
+
 public class SupplierRecord {
 	private Long id;
 
@@ -88,10 +93,12 @@ public class SupplierRecord {
 		this.totalPrice = totalPrice;
 	}
 
+	@JsonSerialize(using = FastXmlDateSerializer.class)
 	public Date getPurchaseTime() {
 		return purchaseTime;
 	}
 
+	@JsonDeserialize(using = FastXmlDateDeserializer.class)
 	public void setPurchaseTime(Date purchaseTime) {
 		this.purchaseTime = purchaseTime;
 	}

@@ -68,6 +68,33 @@ public class GoodsController {
 	}
 
 	@ResponseBody
+	@RequestMapping("/querynewgoods")
+	public CmResult queryNewGoods(@RequestBody CmPage<Goods, List<?>> goodsCmPage) throws Exception {
+		logger.info("query " + goodsCmPage);
+		Goods c = goodsCmPage.getC();
+		if (c != null) {
+			String categoryCode = c.getCategoryCode();
+			if (categoryCode != null && !categoryCode.isEmpty())
+				c.setCategory(new GoodsCategory() {
+					{
+						setCategoryCode(categoryCode);
+					}
+				});
+			String code = c.getCode();
+			if (code != null)
+				c.setCode(code.replaceAll("\\s+", "%"));
+
+			String shortName = c.getShortName();
+			if (shortName != null)
+				c.setShortName(shortName.replaceAll("\\s+", "%"));
+		}
+		List<Goods> goodsList = goodsService.queryNewGoods(goodsCmPage);
+		goodsCmPage.setT(goodsList);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS, goodsCmPage);
+		return cmResult;
+	}
+	
+	@ResponseBody
 	@RequestMapping("/get/{id}")
 	public CmResult get(@PathVariable("id") Long id) throws Exception {
 		logger.info("query goods id=" + id);

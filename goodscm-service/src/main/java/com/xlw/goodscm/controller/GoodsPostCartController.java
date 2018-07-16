@@ -30,6 +30,26 @@ public class GoodsPostCartController {
 		return cmResult;
 	}
 
+	@RequestMapping("/madd")
+	public CmResult mAdd(@RequestBody List<GoodsPostCart> goodsPostCarts) {
+		Long userId = ShiroUtils.getUserId();
+		for (GoodsPostCart goodsPostCart : goodsPostCarts) {
+			goodsPostCart.setOperatorId(userId);
+		}
+		goodsPostCartService.mAdd(goodsPostCarts);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS, null);
+		return cmResult;
+	}
+	
+	@RequestMapping("/clean")
+	public CmResult clean(@RequestBody GoodsPostCart goodsPostCart) {
+		Long userId = ShiroUtils.getUserId();
+		goodsPostCart.setOperatorId(userId);
+		goodsPostCartService.clean(goodsPostCart);
+		CmResult cmResult = CmResult.build(Codes.SUCCESS, null);
+		return cmResult;
+	}
+	
 	@RequestMapping("/delete/{id}")
 	public CmResult delete(@PathVariable("id") Long id) {
 		goodsPostCartService.delete(id);

@@ -77,7 +77,7 @@ public class GoodsServiceImpl implements GoodsService {
 						if (o1 == null || o1.getUnitPrice() == null)
 							return 1;
 						if (o2 == null || o2.getUnitPrice() == null)
-							return 1;
+							return -1;
 						if (o1.getUnitPrice().equals(o2.getUnitPrice()))
 							return 0;
 						return o1.getUnitPrice().compareTo(o2.getUnitPrice());
@@ -276,6 +276,12 @@ public class GoodsServiceImpl implements GoodsService {
 			if (count > 0)
 				throw new DuplicateKeyException("Add\\Update  Goods Exception: Duplicate entry '"+code+"' for key 'code'");
 		}
+	}
+
+	@Override
+	public List<Goods> queryNewGoods(CmPage<Goods, List<?>> goodsPageQuery) {
+		List<Goods> pageQuery = goodsMapper.queryNewGoods(goodsPageQuery);
+		return pageQuery;
 	}
 
 }

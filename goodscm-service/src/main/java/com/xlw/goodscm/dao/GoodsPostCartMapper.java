@@ -21,4 +21,6 @@ public interface GoodsPostCartMapper {
     int updateByPrimaryKey(GoodsPostCart record);
 
 	List<GoodsPostCart> pageQuery(@Param("page") CmPage<GoodsPostCart, List<GoodsPostCart>> page);
+
+	void clean(GoodsPostCart record);
 }

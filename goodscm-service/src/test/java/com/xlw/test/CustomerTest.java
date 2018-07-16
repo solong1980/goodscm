@@ -17,11 +17,24 @@ public class CustomerTest extends BaseTest {
 	public void testAdd() {
 		Customer customer = new Customer();
 		customer.setGroupId(1L);
-		customer.setType("1");
-		customer.setCode("01000");
-		customer.setName("abcdefg");
-		customer.setEmail("afasfd");
+		customer.setPriceLevelId(1L);
+		customer.setCode("010201");
+		customer.setName("客户名称2");
+		customer.setFullName("客户完整公司名");
 
+		customer.setContact("联系人");
+		customer.setMobile("手机");
+		customer.setPhone("电话");
+		customer.setFax("传真");
+		customer.setQq("QQ");
+		customer.setWechat("微信");
+		customer.setWangwangNo("旺旺号");
+		customer.setOtherContact("其它联系方式");
+		customer.setEmail("邮箱");
+		customer.setWebsite("网站");
+		customer.setAddress("经营地址");
+		customer.setMemo("备注");
+		
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(customer), createJsonHeader());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/customer/add", HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
@@ -30,14 +43,14 @@ public class CustomerTest extends BaseTest {
 	@Test
 	public void testDel() {
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(new Object()), createJsonHeader());
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/customer/delete/1", HttpMethod.GET, httpEntity, String.class);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/customer/delete/8", HttpMethod.GET, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}
 
 	@Test
 	public void testGet() {
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(new Object()), createJsonHeader());
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/customer/get/2", HttpMethod.GET, httpEntity, String.class);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/customer/get/10", HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}
 
@@ -45,11 +58,24 @@ public class CustomerTest extends BaseTest {
 	public void testUpdate() {
 		Customer customer = new Customer();
 
-		customer.setId(8L);
-		customer.setType("1");
-		customer.setCode("01000");
-		customer.setName("223sadfasf");
-		customer.setEmail("3asdfas33");
+		customer.setGroupId(1L);
+		customer.setPriceLevelId(1L);
+		customer.setCode("01020");
+		customer.setName("客户名称");
+		customer.setFullName("客户完整公司名");
+
+		customer.setContact("联系人");
+		customer.setMobile("手机");
+		customer.setPhone("电话");
+		customer.setFax("传真");
+		customer.setQq("QQ");
+		customer.setWechat("微信");
+		customer.setWangwangNo("旺旺号");
+		customer.setOtherContact("其它联系方式");
+		customer.setEmail("邮箱");
+		customer.setWebsite("网站");
+		customer.setAddress("经营地址");
+		customer.setMemo("备注");
 
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(customer), createJsonHeader());
 

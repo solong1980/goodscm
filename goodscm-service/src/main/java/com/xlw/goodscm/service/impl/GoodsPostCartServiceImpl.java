@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.xlw.FreemarkTool;
 import com.xlw.goodscm.dao.GoodsPostCartMapper;
@@ -73,6 +74,20 @@ public class GoodsPostCartServiceImpl implements GoodsPostCartService {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	@Transactional
+	public void mAdd(List<GoodsPostCart> goodsPostCarts) {
+		for (GoodsPostCart goodsPostCart : goodsPostCarts) {
+			add(goodsPostCart);
+		}
+	}
+
+	@Override
+	@Transactional
+	public void clean(GoodsPostCart goodsPostCart) {
+		goodsPostCartMapper.clean(goodsPostCart);
 	}
 
 }

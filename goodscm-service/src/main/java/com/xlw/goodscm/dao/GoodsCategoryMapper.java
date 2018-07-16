@@ -1,7 +1,8 @@
 package com.xlw.goodscm.dao;
 
-import com.xlw.goodscm.model.GoodsCategory;
 import java.util.List;
+
+import com.xlw.goodscm.model.GoodsCategory;
 
 public interface GoodsCategoryMapper {
     int deleteByPrimaryKey(Long id);
@@ -11,7 +12,9 @@ public interface GoodsCategoryMapper {
     GoodsCategory selectByPrimaryKey(Long id);
 
     List<GoodsCategory> selectAll();
-
+    
+    List<GoodsCategory> selectAllWithCount();
+    
     int updateByPrimaryKey(GoodsCategory record);
 
 	List<String> selectSubCategoryCode(Long parentId);

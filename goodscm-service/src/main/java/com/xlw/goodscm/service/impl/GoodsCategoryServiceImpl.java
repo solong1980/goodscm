@@ -27,7 +27,8 @@ public class GoodsCategoryServiceImpl implements GoodsCategoryService {
 
 	@Override
 	public List<GoodsCategory> query(GoodsCategory goodsCategory) {
-		return goodsCategoryMapper.selectAll();
+		//return goodsCategoryMapper.selectAll();
+		return goodsCategoryMapper.selectAllWithCount();
 	}
 
 	@Override

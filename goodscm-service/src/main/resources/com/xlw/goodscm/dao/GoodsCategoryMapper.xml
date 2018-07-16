@@ -54,6 +54,21 @@
 	ON gc.id=gs.id
   </select>
   
+  <select id="selectAllWithCount" resultMap="BaseResultMap" >
+    SELECT gc.*, IFNULL(gs.goods_count,0) AS goods_count FROM goods_category gc LEFT JOIN (SELECT -1 as category_id,COUNT(*) AS goods_count FROM goods
+     WHERE code is NULL OR code = '') gs
+     ON gc.id = gs.category_id
+	 WHERE id=-1
+	   UNION ALL
+    SELECT gc.*, IFNULL(gs.goods_count,0) AS goods_count FROM goods_category gc LEFT JOIN (SELECT '000000000000' category_code,COUNT(*) AS goods_count FROM goods) gs
+     ON gc.category_code = gs.category_code
+	 WHERE id=0
+	   UNION ALL
+    SELECT gc.*, IFNULL(gcc.goods_count,0) AS goods_count FROM goods_category gc LEFT JOIN (
+	 SELECT CONCAT(SUBSTR(category_code,1,3) ,'000000000') category_code,COUNT(gs.id) AS goods_count FROM GOODS_CATEGORY gc LEFT JOIN goods gs ON gc.id = gs.category_id
+	 WHERE gs.id IS NOT NULL GROUP BY SUBSTR(category_code,1,3)) gcc ON gc.category_code = gcc.category_code WHERE gc.id>0
+  </select>
+  
   <select id="selectByParentId" resultMap="BaseResultMap" >
     select id, parent_id, category_code, name, create_time, update_time
     from goods_category 

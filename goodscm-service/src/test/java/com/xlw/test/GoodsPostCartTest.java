@@ -1,5 +1,6 @@
 package com.xlw.test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -27,6 +28,23 @@ public class GoodsPostCartTest extends BaseTest {
 	}
 
 	@Test
+	public void testmAdd() {
+		List<GoodsPostCart> goodsPostCarts = new ArrayList<>();
+		for (int i = 0; i < 3; i++) {
+			GoodsPostCart goodsPostCart = new GoodsPostCart();
+			goodsPostCart.setCustomerId(0L);
+			goodsPostCart.setGoodsId(i+1L);
+			goodsPostCart.setStatus((short) 1);
+			goodsPostCarts.add(goodsPostCart);
+		}
+		
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(goodsPostCarts), createJsonHeader());
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goodspostcart/madd", HttpMethod.POST,
+				httpEntity, String.class);
+		System.out.println(responseEntity.getBody());
+	}
+	
+	@Test
 	public void testDel() {
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(new Object()), createJsonHeader());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goodspostcart/delete/1",
@@ -34,6 +52,16 @@ public class GoodsPostCartTest extends BaseTest {
 		System.out.println(responseEntity.getBody());
 	}
 
+	@Test
+	public void testClean() {
+		GoodsPostCart goodsPostCart = new GoodsPostCart();
+		goodsPostCart.setCustomerId(0L);
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(goodsPostCart), createJsonHeader());
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goodspostcart/clean",
+				HttpMethod.POST, httpEntity, String.class);
+		System.out.println(responseEntity.getBody());
+	}
+	
 	@Test
 	public void testGet() {
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(new Object()), createJsonHeader());
@@ -52,7 +80,7 @@ public class GoodsPostCartTest extends BaseTest {
 		JSONObject jsonObj = JsonUtilTool.toJsonObj(body);
 		GoodsPostCart goodsPostCart = JsonUtilTool.fromJson(jsonObj.getString("data"), GoodsPostCart.class);
 
-		goodsPostCart.setStatus((short) 4);
+		goodsPostCart.setStatus((short) 0);
 		httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(goodsPostCart), createJsonHeader());
 		responseEntity = restTemplate.exchange(localhost + "/goodspostcart/update", HttpMethod.POST, httpEntity,
 				String.class);
@@ -72,7 +100,7 @@ public class GoodsPostCartTest extends BaseTest {
 	public void testQuery() {
 
 		GoodsPostCart goodsPostCart = new GoodsPostCart();
-		goodsPostCart.setCustomerId(1L);
+		goodsPostCart.setCustomerId(0L);
 		goodsPostCart.setOperatorId(1L);
 		CmPage<GoodsPostCart, List<GoodsPostCart>> page = new CmPage<>();
 		page.setC(goodsPostCart);

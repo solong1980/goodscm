@@ -184,6 +184,25 @@
 		select <include refid="Columns"></include> from goods
 	</select>
 	
+	<select id="queryNewGoods" resultMap="BaseResultMap"
+		parameterType="com.xlw.goodscm.pojo.CmPage">
+		select
+		g.*,
+		gp.thumbnail_pic_id,
+		gc.category_code
+		from goods g 
+		left join 
+		(SELECT goods_pic.id as thumbnail_pic_id,goods_id
+		FROM (
+		SELECT MAX(id) id
+		FROM goods_pic
+		WHERE is_thumbnail=1
+		GROUP BY goods_id) t
+		LEFT JOIN goods_pic ON t.id = goods_pic.id)  gp on g.id = gp.goods_id
+		,goods_category gc where g.category_id = gc.id and (g.code is null or g.code='')
+		limit #{page.start},#{page.count}
+	</select>
+	
 	<select id="pageQuery" resultMap="BaseResultMap"
 		parameterType="com.xlw.goodscm.pojo.CmPage">
 		select

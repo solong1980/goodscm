@@ -1,126 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xlw.goodscm.dao.CustomerMapper">
-	<resultMap id="BaseResultMap" type="com.xlw.goodscm.model.Customer">
-		<id column="id" jdbcType="BIGINT" property="id" />
-		<id column="group_id" jdbcType="BIGINT" property="groupId" />
-		<result column="type" jdbcType="VARCHAR" property="type" />
-		<result column="code" jdbcType="VARCHAR" property="code" />
-		<result column="name" jdbcType="VARCHAR" property="name" />
-		<result column="address" jdbcType="VARCHAR" property="address" />
-		<result column="phone" jdbcType="VARCHAR" property="phone" />
-		<result column="qq" jdbcType="VARCHAR" property="qq" />
-		<result column="email" jdbcType="VARCHAR" property="email" />
-		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-		<result column="memo" jdbcType="LONGVARCHAR" property="memo" />
-	</resultMap>
-	
-	<sql id="Columns">
-		id,
-		group_id,
-		type,
-		code,
-		name,
-		address,
-		phone,
-		qq,
-		email,
-		memo,
-		create_time,
-		update_time
-	</sql>
+  <resultMap id="BaseResultMap" type="com.xlw.goodscm.model.Customer">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="group_id" jdbcType="BIGINT" property="groupId" />
+    <result column="price_level_id" jdbcType="BIGINT" property="priceLevelId" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="full_name" jdbcType="VARCHAR" property="fullName" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="wechat" jdbcType="VARCHAR" property="wechat" />
+    <result column="wangwang_no" jdbcType="VARCHAR" property="wangwangNo" />
+    <result column="other_contact" jdbcType="VARCHAR" property="otherContact" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="website" jdbcType="VARCHAR" property="website" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="memo" jdbcType="LONGVARCHAR" property="memo" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from customer
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <sql id="Columns">
+    id,
+    group_id,
+    price_level_id,
+    code,
+    name,
+    full_name,
+    contact,
+    mobile,
+    phone,
+    fax,
+    qq,
+    wechat,
+    wangwang_no,
+    other_contact,
+    email,
+    website,
+    address,
+    create_time,
+    update_time,
+    memo
+  </sql>
+  
+  <insert id="insert" parameterType="com.xlw.goodscm.model.Customer" useGeneratedKeys="true" keyProperty="id">
+    insert into customer (
+	    group_id,
+	    price_level_id,
+	    code,
+	    name,
+	    full_name,
+	    contact,
+	    mobile,
+	    phone,
+	    fax,
+	    qq,
+	    wechat,
+	    wangwang_no,
+	    other_contact,
+	    email,
+	    website,
+	    address,
+	    create_time,
+	    memo
+	)
+    values (
+      #{groupId,jdbcType=BIGINT},
+      #{priceLevelId,jdbcType=BIGINT},
+      #{code,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR},
+      #{fullName,jdbcType=VARCHAR},
+      #{contact,jdbcType=VARCHAR},
+      #{mobile,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR},
+      #{fax,jdbcType=VARCHAR},
+      #{qq,jdbcType=VARCHAR},
+      #{wechat,jdbcType=VARCHAR},
+      #{wangwangNo,jdbcType=VARCHAR},
+      #{otherContact,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR},
+      #{website,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{memo,jdbcType=LONGVARCHAR}
+     )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.Customer">
+    update customer
+    set group_id = #{groupId,jdbcType=BIGINT},
+      price_level_id = #{priceLevelId,jdbcType=BIGINT},
+      code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      full_name = #{fullName,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      wechat = #{wechat,jdbcType=VARCHAR},
+      wangwang_no = #{wangwangNo,jdbcType=VARCHAR},
+      other_contact = #{otherContact,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      website = #{website,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      memo = #{memo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select <include refid="Columns"></include>
+    from customer
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+    select <include refid="Columns"></include>
+    from customer
+  </select>
 
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-		delete from customer
-		where id = #{id,jdbcType=BIGINT}
-	</delete>
+  <select id="pageQuery" resultMap="BaseResultMap" parameterType="com.xlw.goodscm.pojo.CmPage">
+	select
+	<include refid="Columns"></include>
+	from customer
+	where 1=1
+	<if test="page.c != null and page.c.groupId != null and page.c.groupId > 0">
+		and group_id = #{page.c.groupId,jdbcType=VARCHAR}
+	</if>
+	<if test="page.c != null and page.c.priceLevelId != null">
+		and price_level_id = #{page.c.priceLevelId,jdbcType=VARCHAR}
+	</if>
+	<if test="page.c != null and page.c.name != null">
+		and name like
+		concat(#{page.c.name,jdbcType=VARCHAR},'%')
+	</if>
+	<if test="page.c!=null and page.c.code!=null">
+		and code like
+		concat(#{page.c.code,jdbcType=VARCHAR},'%')
+	</if>
+	limit #{page.start},#{page.count}
+  </select>
 
-	<insert id="insert" parameterType="com.xlw.goodscm.model.Customer" useGeneratedKeys="true" keyProperty="id">
-		insert into customer (
-		group_id,
-		type,
-		code,
-		name,
-		address,
-		phone,
-		qq,
-		email,
-		memo,
-		create_time
-		) values (
-		#{groupId,jdbcType=BIGINT},
-		#{type,jdbcType=VARCHAR},
-		#{code,jdbcType=VARCHAR},
-		#{name,jdbcType=VARCHAR},
-		#{address,jdbcType=VARCHAR},
-		#{phone,jdbcType=VARCHAR},
-		#{qq,jdbcType=VARCHAR},
-		#{email,jdbcType=VARCHAR},
-		#{memo,jdbcType=LONGVARCHAR},
-		#{createTime,jdbcType=TIMESTAMP}
-		)
-	</insert>
-
-	<update id="updateByPrimaryKey" parameterType="com.xlw.goodscm.model.Customer">
-		update customer
-		set
-		group_id = #{groupId,jdbcType=VARCHAR},
-		type = #{code,jdbcType=VARCHAR},
-		code = #{code,jdbcType=VARCHAR},
-		name =
-		#{name,jdbcType=VARCHAR},
-		address = #{address,jdbcType=VARCHAR},
-		phone = #{phone,jdbcType=VARCHAR},
-		qq = #{qq,jdbcType=VARCHAR},
-		email =
-		#{email,jdbcType=VARCHAR},
-		memo = #{memo,jdbcType=LONGVARCHAR}
-		where id = #{id,jdbcType=BIGINT}
-	</update>
-
-	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-		select
-		<include refid="Columns"></include>
-		from customer
-		where id = #{id,jdbcType=BIGINT}
-	</select>
-
-	<select id="selectAll" resultMap="BaseResultMap">
-		select
-		<include refid="Columns"></include>
-		from customer
-	</select>
-
-	<select id="pageQuery" resultMap="BaseResultMap" parameterType="com.xlw.goodscm.pojo.CmPage">
-		select
-		<include refid="Columns"></include>
-		from customer
-		where 1=1
-		<if test="page.c != null and page.c.groupId != null and page.c.groupId > 0">
-			and group_id = #{page.c.groupId,jdbcType=VARCHAR}
-		</if>
-		<if test="page.c != null and page.c.type != null">
-			and type = #{page.c.type,jdbcType=VARCHAR}
-		</if>
-		<if test="page.c != null and page.c.name != null">
-			and name like
-			concat(#{page.c.name,jdbcType=VARCHAR},'%')
-		</if>
-		<if test="page.c!=null and page.c.code!=null">
-			and code like
-			concat(#{page.c.code,jdbcType=VARCHAR},'%')
-		</if>
-		limit #{page.start},#{page.count}
-	</select>
-	
-	<select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String">
-		select count(*) from customer where code = #{code,jdbcType=VARCHAR}
-		<!-- 如果ID不为空，排除该记录  -->
-		<if test="id!=null and id>0">
-			and id 
-			<![CDATA[<>]]>
-			#{id,jdbcType=BIGINT}
-		</if>
-	</select>
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(*) from customer where code = #{code,jdbcType=VARCHAR}
+    <!-- 如果ID不为空，排除该记录 -->
+    <if test="id!=null and id>0">
+     and id 
+      <![CDATA[<>]]>
+       #{id,jdbcType=BIGINT}
+      </if>
+  </select> 
 </mapper>

@@ -28,6 +28,8 @@ public interface GoodsService {
 	void addSavePics(Goods goods) throws IOException;
 
 	List<Goods> pageQuery(CmPage<Goods, List<?>> goodsPageQuery);
+	
+	List<Goods> queryNewGoods(CmPage<Goods, List<?>> goodsPageQuery);
 
 	void fastUpdate(Goods goods);
 

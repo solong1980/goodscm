@@ -23,5 +23,9 @@ public interface GoodsPostCartService {
 	List<GoodsPostCart> query(CmPage<GoodsPostCart, List<GoodsPostCart>> page);
 
 	List<String> export(CmPage<GoodsPostCart, List<GoodsPostCart>> page);
+
+	void mAdd(List<GoodsPostCart> goodsPostCarts);
+
+	void clean(GoodsPostCart goodsPostCart);
 	
 }

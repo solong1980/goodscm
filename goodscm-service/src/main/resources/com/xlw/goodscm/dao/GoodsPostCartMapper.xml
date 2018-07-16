@@ -18,6 +18,11 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   
+  <delete id="clean" parameterType="com.xlw.goodscm.model.GoodsPostCart" >
+    delete from goods_post_cart where operator_id = #{operatorId,jdbcType=BIGINT}
+    and customer_id = #{customerId,jdbcType=BIGINT}
+  </delete>
+  
   <insert id="insert" parameterType="com.xlw.goodscm.model.GoodsPostCart"
 	keyProperty="id" useGeneratedKeys="true">
 	insert into goods_post_cart (

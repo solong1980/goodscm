@@ -57,6 +57,27 @@ public class GoodsTest extends BaseTest {
 	}
 
 	@Test
+	public void testNewGoodsQuery() {
+		Goods goods = new Goods();
+		// 商品类型，货品名称（货品名称或货品代码，空格替换为%，like查询）
+		//goods.setShortName("Lens Hood For Nikon");
+		//goods.setCode("21  2   3");
+		GoodsCategory category = new GoodsCategory();
+		goods.setCategory(category);
+		goods.setCategoryCode("002001002000");
+
+		CmPage<Goods, List<Goods>> page = new CmPage<>();
+		page.setC(goods);
+		page.setPageNum(1);
+		page.setCount(50);
+
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(page), createJsonHeader());
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/querynewgoods", HttpMethod.POST,
+				httpEntity, String.class);
+		System.out.println(responseEntity.getBody());
+	}
+	
+	@Test
 	public void testGoodsGet() {
 		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/137", HttpMethod.GET,
 				new HttpEntity<String>(createJsonHeader()), String.class);

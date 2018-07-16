@@ -1,6 +1,7 @@
 package com.xlw.test;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -31,9 +33,11 @@ import com.xlw.goodscm.utils.JsonUtilTool;
 import com.xlw.sys.model.SysUser;
 
 public class BaseTest {
+	// 39.107.24.81
+	// 120.55.189.150
 	public static final String localhost = "http://localhost:9905";
-	public String sessionId="e2083d91-c9c0-4e17-9a01-0088ff34c50e";
-	
+	public String sessionId = "5c162a48-f26f-49c3-b1bd-b44819ce1d45";
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -50,6 +54,13 @@ public class BaseTest {
 		factory.setReadTimeout(50000);// 单位为ms
 		factory.setConnectTimeout(50000);// 单位为ms
 		restTemplate = new RestTemplate(factory);
+
+		File sessionFile = new File("session.dat");
+		if (sessionFile.exists()) {
+			String sessionId = FileUtils.readFileToString(new File("session.dat"));
+			if (sessionId != null)
+				this.sessionId = sessionId;
+		}
 	}
 
 	@After
@@ -65,7 +76,7 @@ public class BaseTest {
 			headers.add("Authorization", sessionId);
 		return headers;
 	}
-	
+
 	public HttpHeaders createJsonHeader() {
 		HttpHeaders headers = new HttpHeaders();
 		MediaType type = MediaType.APPLICATION_JSON_UTF8;
@@ -92,8 +103,7 @@ public class BaseTest {
 		user.setUsername("wangshengui");
 		user.setPassword("admin");
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(user), createJsonHeader());
-		ResponseEntity<String> forEntity = restTemplate.exchange(localhost + "/login/dologin", HttpMethod.POST,
-				httpEntity, String.class);
+		ResponseEntity<String> forEntity = restTemplate.exchange(localhost + "/login/dologin", HttpMethod.POST, httpEntity, String.class);
 
 		// ResponseEntity<JSONObject> forEntity = restTemplate
 		// .getForEntity(localhost + "/login/dologin?username=admin&password=admin",
@@ -107,6 +117,12 @@ public class BaseTest {
 		System.out.println(body);
 		Integer status = JsonUtilTool.toJsonObj(body).getInteger("status");
 		if (status == 200) {
+			String sessionId = JsonUtilTool.toJsonObj(body).getJSONObject("data").getString("sessionId");
+			try {
+				FileUtils.write(new File("session.dat"), sessionId);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			return headers;
 		} else {
 			return null;
@@ -125,8 +141,7 @@ public class BaseTest {
 		} else {
 			HttpEntity<String> formEntity = new HttpEntity<String>(jsonObj.toString(), headers);
 
-			ResponseEntity<String> postForEntity = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class,
-					new HashMap<>());
+			ResponseEntity<String> postForEntity = restTemplate.exchange(url, HttpMethod.POST, formEntity, String.class, new HashMap<>());
 
 			// String result = restTemplate.postForObject(url, formEntity, String.class);
 			// System.out.println(result);
@@ -171,10 +186,10 @@ public class BaseTest {
 		param.add("fileName", "2016-11-01 2016-11-01 001 001.jpg");
 		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.jpg"));
 		param.add("files", resource);
-		
+
 		HttpHeaders headers = createMultiPartHeader();
-		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param,headers);
-	 
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param, headers);
+
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 		CmResult cmResult = JsonUtilTool.fromJson(responseEntity.getBody(), CmResult.class);
