@@ -39,4 +39,11 @@ public interface SysUserService {
 	 *            新密码
 	 */
 	boolean updatePassword(Long userId, String password, String newPassword);
+	
+	/**
+	 * 管理员重置密码
+	 * @param sysUser
+	 * @return
+	 */
+	boolean resetPassword(SysUser sysUser);
 }

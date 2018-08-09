@@ -69,8 +69,11 @@ public class GoodsController {
 
 	@ResponseBody
 	@RequestMapping("/querynewgoods")
-	public CmResult queryNewGoods(@RequestBody CmPage<Goods, List<?>> goodsCmPage) throws Exception {
+	public CmResult queryNewGoods(@RequestBody(required=false) CmPage<Goods, List<?>> goodsCmPage) throws Exception {
 		logger.info("query " + goodsCmPage);
+		if(goodsCmPage==null) {
+			goodsCmPage = new CmPage<>();
+		}
 		Goods c = goodsCmPage.getC();
 		if (c != null) {
 			String categoryCode = c.getCategoryCode();

@@ -36,6 +36,12 @@ public class SysUser implements Serializable {
 	private String password;
 
 	/**
+	 * 原密码
+	 */
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private String originPassword;
+	
+	/**
 	 * 盐
 	 */
 	private String salt;
@@ -137,6 +143,14 @@ public class SysUser implements Serializable {
 	 */
 	public String getPassword() {
 		return password;
+	}
+
+	public String getOriginPassword() {
+		return originPassword;
+	}
+
+	public void setOriginPassword(String originPassword) {
+		this.originPassword = originPassword;
 	}
 
 	/**
@@ -264,4 +278,11 @@ public class SysUser implements Serializable {
 	public void setSessionId(Serializable sessionId) {
 		this.sessionId = sessionId;
 	}
+
+	@Override
+	public String toString() {
+		return "SysUser [userId=" + userId + ", username=" + username + "]";
+	}
+	
+	
 }

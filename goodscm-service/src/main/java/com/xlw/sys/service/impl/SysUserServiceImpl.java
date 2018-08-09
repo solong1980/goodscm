@@ -1,10 +1,11 @@
 package com.xlw.sys.service.impl;
 
-
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,57 +18,53 @@ import com.xlw.sys.service.SysUserRoleService;
 import com.xlw.sys.service.SysUserService;
 import com.xlw.sys.shiro.ShiroUtils;
 
-
 /**
  * 系统用户
  */
 @Service("sysUserService")
-public class SysUserServiceImpl  implements SysUserService {
-	
+public class SysUserServiceImpl implements SysUserService {
+	private static Logger logger = LoggerFactory.getLogger(SysUserServiceImpl.class);
 	@Autowired
 	private SysUserMapper sysUserMapper;
-	
+
 	@Autowired
 	private SysUserRoleService sysUserRoleService;
-
 
 	@Override
 	public CmPage<SysUser, List<SysUser>> queryPage(CmPage<SysUser, List<SysUser>> page) {
 		return null;
 	}
-	
+
 	@Override
 	public List<Long> queryAllMenuId(Long userId) {
 		return sysUserMapper.queryAllMenuId(userId);
 	}
 
-	 
-
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void save(SysUser user) {
 		user.setCreateTime(new Date());
-		//sha256加密
+		// sha256加密
 		String salt = RandomStringUtils.randomAlphanumeric(20);
 		user.setSalt(salt);
 		user.setPassword(ShiroUtils.sha256(user.getPassword(), user.getSalt()));
 		sysUserMapper.insert(user);
-		
-		//保存用户与角色关系
+
+		// 保存用户与角色关系
 		sysUserRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
 	}
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void update(SysUser user) {
-		if(StringUtils.isEmpty(user.getPassword())){
+		if (StringUtils.isEmpty(user.getPassword())) {
 			user.setPassword(null);
-		}else{
+		} else {
 			user.setPassword(ShiroUtils.sha256(user.getPassword(), user.getSalt()));
 		}
 		sysUserMapper.updateByPrimaryKey(user);
-		
-		//保存用户与角色关系
+
+		// 保存用户与角色关系
 		sysUserRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
 	}
 
@@ -76,7 +73,21 @@ public class SysUserServiceImpl  implements SysUserService {
 	 */
 	@Override
 	public boolean updatePassword(Long userId, String password, String newPassword) {
-        return sysUserMapper.updatePassword(userId,password,newPassword);
-    }
+		return sysUserMapper.updatePassword(userId, password, newPassword);
+	}
+
+	@Override
+	@Transactional
+	public boolean resetPassword(SysUser sysUser) {
+		Long userId = sysUser.getUserId();
+		SysUser oldUser = sysUserMapper.selectByPrimaryKey(userId);
+		if (oldUser == null) {
+			logger.error("can not find user by userid="+userId);
+			return false;
+		}
+		String password = ShiroUtils.sha256(sysUser.getPassword(), oldUser.getSalt());
+
+		return sysUserMapper.updatePassword(userId, oldUser.getPassword(), password);
+	}
 
 }

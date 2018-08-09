@@ -20,6 +20,7 @@ public class ReturnCode {
 		LOGIN_FAILURE(503, "登录失败，该用户已被冻结"), 
 		
 		PASSWORD_ERROR(503, "密码错误"), 
+		ORIGIN_PASSWORD_ERROR(504, "原密码错误"), 
 		
 		USER_NOEXIST(503, "该用户不存在"),
 		
