@@ -117,6 +117,14 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
+<!-- 		<dependency>
+			<groupId>xssFilter</groupId>
+			<artifactId>xssFilter</artifactId>
+			<version>0.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/xssFilter-0.2.jar</systemPath>
+		</dependency>
+ -->
 		<dependency>
 			<groupId>org.mybatis.generator</groupId>
 			<artifactId>mybatis-generator-core</artifactId>
@@ -150,6 +158,18 @@
 			<properties>
 				<profileActive>local</profileActive>
 				<env.profile>local</env.profile>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>test</value>
+				</property>
+			</activation>
+			<properties>
+				<env.profile>test</env.profile>
 			</properties>
 		</profile>
 		<profile>

@@ -10,7 +10,7 @@ public class Consts {
 	public static final String FAILURE = "Failure";
 
 	public static final String FILE_STORE_DIRECTORY_KEY = "FILE_STORE_DIRECTORY";
-	public static final String FILE_DIR = "D:\\NewArt";
+	public static final String DEFAULT_FILE_DIR = "D:\\NewArt";
 
 	public static final String SUB_DIRECTORY_KEY = "SUB_DIRECTORY_KEY";
 	public static final String SUB_DIR = "datas";

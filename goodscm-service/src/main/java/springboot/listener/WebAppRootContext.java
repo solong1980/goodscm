@@ -16,15 +16,14 @@ import com.xlw.goodscm.Consts;
 @ComponentScan
 @EnableAutoConfiguration
 public class WebAppRootContext implements ServletContextInitializer {
-	
+
 	@Value("${file.save.directory}")
 	private String fileSaveDiretory;
-	
-	
+
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		servletContext.addListener(WebAppRootListener.class);
-		String saveDir = fileSaveDiretory==null?Consts.FILE_DIR:fileSaveDiretory;
+		String saveDir = fileSaveDiretory == null ? Consts.DEFAULT_FILE_DIR : fileSaveDiretory;
 		servletContext.setInitParameter(Consts.FILE_STORE_DIRECTORY_KEY, saveDir);
 		servletContext.setInitParameter(Consts.SUB_DIRECTORY_KEY, Consts.SUB_DIR);
 	}
