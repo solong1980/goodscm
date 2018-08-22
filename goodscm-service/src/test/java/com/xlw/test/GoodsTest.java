@@ -20,6 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.GoodsCategory;
 import com.xlw.goodscm.model.GoodsPic;
@@ -39,8 +40,8 @@ public class GoodsTest extends BaseTest {
 	public void testGoodsQuery() {
 		Goods goods = new Goods();
 		// 商品类型，货品名称（货品名称或货品代码，空格替换为%，like查询）
-		//goods.setShortName("Lens Hood For Nikon");
-		//goods.setCode("21  2   3");
+		// goods.setShortName("Lens Hood For Nikon");
+		// goods.setCode("21 2 3");
 		GoodsCategory category = new GoodsCategory();
 		goods.setCategory(category);
 		goods.setCategoryCode("002001002000");
@@ -51,17 +52,21 @@ public class GoodsTest extends BaseTest {
 		page.setCount(50);
 
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(page), createJsonHeader());
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/query", HttpMethod.POST,
-				httpEntity, String.class);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/query", HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
+		CmResult cmResult = JsonUtilTool.fromJson(responseEntity.getBody(), CmResult.class);
+		CmPage<Goods, List<Goods>> cmPage = JsonUtilTool.fromJson(cmResult.getData().toString(), new TypeReference<CmPage<Goods, List<Goods>>>() {
+		});
+		List<Goods> t = cmPage.getT();
+		System.out.println(t.toString());
 	}
 
 	@Test
 	public void testNewGoodsQuery() {
 		Goods goods = new Goods();
 		// 商品类型，货品名称（货品名称或货品代码，空格替换为%，like查询）
-		//goods.setShortName("Lens Hood For Nikon");
-		//goods.setCode("21  2   3");
+		// goods.setShortName("Lens Hood For Nikon");
+		// goods.setCode("21 2 3");
 		GoodsCategory category = new GoodsCategory();
 		goods.setCategory(category);
 		goods.setCategoryCode("002001002000");
@@ -72,11 +77,10 @@ public class GoodsTest extends BaseTest {
 		page.setCount(50);
 
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(page), createJsonHeader());
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/querynewgoods", HttpMethod.POST,
-				httpEntity, String.class);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/querynewgoods", HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
 	}
-	
+
 	@Test
 	public void testGoodsGet() {
 		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/137", HttpMethod.GET,
@@ -87,12 +91,11 @@ public class GoodsTest extends BaseTest {
 	@Test
 	public void testGoodsAddUpdatePics() throws URISyntaxException {
 		List<Long> addGoodsPics = addGoodsPics();
-
 		HttpHeaders headers = createJsonHeader();
 		URI url = new URI(localhost + "/goods/addupdatepics");
 
 		Goods goods = new Goods();
-		//goods.setCode("");
+		// goods.setCode("");
 		goods.setCategoryId(22L);
 		goods.setShortName("尼康");
 
@@ -246,8 +249,7 @@ public class GoodsTest extends BaseTest {
 		JSONObject jsonObj = JsonUtilTool.toJsonObj(goods);
 		param.setAll(jsonObj);
 
-		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param,
-				createJsonHeader());
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param, createJsonHeader());
 		System.out.println(httpEntity.toString());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
@@ -263,8 +265,8 @@ public class GoodsTest extends BaseTest {
 
 		HttpHeaders headers = createJsonHeader();
 
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/22", HttpMethod.GET,
-				new HttpEntity<String>(headers), String.class);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/22", HttpMethod.GET, new HttpEntity<String>(headers),
+				String.class);
 		System.out.println(responseEntity.getBody());
 		CmResult result = JsonUtilTool.fromJson(responseEntity.getBody(), CmResult.class);
 

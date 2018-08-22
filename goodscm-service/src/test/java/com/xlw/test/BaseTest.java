@@ -40,6 +40,7 @@ public class BaseTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+	
 	}
 
 	@AfterClass
@@ -100,7 +101,7 @@ public class BaseTest {
 
 	public HttpHeaders login() {
 		SysUser user = new SysUser();
-		user.setUsername("wangshengui");
+		user.setUsername("longlianghua");
 		user.setPassword("admin");
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(user), createJsonHeader());
 		ResponseEntity<String> forEntity = restTemplate.exchange(localhost + "/login/dologin", HttpMethod.POST, httpEntity, String.class);

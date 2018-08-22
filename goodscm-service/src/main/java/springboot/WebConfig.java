@@ -2,8 +2,10 @@ package springboot;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import com.xlw.security.filter.xss.XssAlertFilter;
 import com.xlw.util.StringToDateConverter;
 
 @Configuration
@@ -59,4 +62,18 @@ public class WebConfig implements WebMvcConfigurer {
 		}
 
 	}
+
+	@Bean
+	public FilterRegistrationBean<?> caresXssFilter() throws ServletException {
+		XssAlertFilter xssAlertFilter = new XssAlertFilter();
+		FilterRegistrationBean<XssAlertFilter> registration = new FilterRegistrationBean<>();
+		registration.setFilter(xssAlertFilter);
+		registration.addUrlPatterns("/*");
+		registration.addInitParameter("filterMode", "tag");
+		registration.addInitParameter("urlExclude", "servlet");
+		registration.setName("goodsCmXssFilter");
+		registration.setOrder(1);
+		return registration;
+	}
+
 }

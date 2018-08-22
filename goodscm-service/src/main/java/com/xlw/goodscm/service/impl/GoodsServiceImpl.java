@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import com.xlw.broker.service.ActiveMQService;
 import com.xlw.goodscm.dao.GoodsMapper;
 import com.xlw.goodscm.model.Goods;
 import com.xlw.goodscm.model.GoodsPic;
@@ -39,6 +40,9 @@ public class GoodsServiceImpl implements GoodsService {
 
 	@Autowired
 	private GoodsPicService goodsPicService;
+
+	@Autowired
+	private ActiveMQService activeMQService;
 
 	@Override
 	public List<Goods> query(Goods goods) {
@@ -138,9 +142,10 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 		return goods;
 	}
-	
+
 	/*
 	 * Query goods info include pictures
+	 * 
 	 * @see com.xlw.goodscm.service.GoodsService#getGoodsInfoById(java.lang.Long)
 	 */
 	@Override
@@ -154,7 +159,7 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 		return goods;
 	}
-	
+
 	@Override
 	public Long add(Goods goods) {
 		goods.setId(null);
@@ -192,6 +197,8 @@ public class GoodsServiceImpl implements GoodsService {
 				}
 			}
 		}
+		//发送消息，不应在事务内调用
+		activeMQService.sendGoodAddMsg(goods);
 	}
 
 	@Override
@@ -200,9 +207,9 @@ public class GoodsServiceImpl implements GoodsService {
 		if (goods.getId() == null) {
 			throw new InvalidParameterException("goods id is null");
 		}
-		
+
 		checkGoodsCodeDuplicate(goods);
-		
+
 		goodsMapper.updateByPrimaryKey(goods);
 
 		List<SupplierRecord> supplierRecords = goods.getSupplierRecords();
@@ -274,7 +281,7 @@ public class GoodsServiceImpl implements GoodsService {
 		if (StringUtils.isNotEmpty(code)) {
 			int count = goodsMapper.selectCount(goods);
 			if (count > 0)
-				throw new DuplicateKeyException("Add\\Update  Goods Exception: Duplicate entry '"+code+"' for key 'code'");
+				throw new DuplicateKeyException("Add\\Update  Goods Exception: Duplicate entry '" + code + "' for key 'code'");
 		}
 	}
 

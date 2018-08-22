@@ -70,6 +70,53 @@
 	padding-top: 5px;
 	text-indent: 2em;
 }
+
+table.data {
+	border: 1px #6298bd solid;
+	border-collapse: collapse;
+	width: auto;
+	text-align: left;
+	margin-bottom: 5px;
+}
+
+table.data thead tr th, table thead tr td {
+	background-image: url(images/tableTH.jpg);
+	background-repeat: repeat-x;
+	font-weight: bold;
+	padding: 0;
+	border: solid 1px #6298bd;
+	text-align: center;
+	height: 22px;
+	padding: 4px;
+	color: #062a5e;
+	font-family: "simhei";
+	font-size: 14px;
+}
+
+table.data tbody td {
+	border: solid 1px #6298bd;
+	padding-left: 4px;
+	padding-right: 4px;
+	height: 32px;
+	vertical-align: middle;
+}
+
+table.data  td {
+	width: 100px;
+}
+
+table, tr, td, th, body, div {
+	font-size: 12px;
+	FONT-FAMILY: "Arial", "Helvetica", "sans-serif", "SimSun";
+}
+
+.odd {
+	background-color: #e1e9ee;
+}
+
+.even {
+	background-color: #ededed;
+}
 </style>
 </head>
 <body>
@@ -101,40 +148,56 @@
 				<label>包装后重量:</label><span>45.00000</span>
 			</div>
 			<div>
-				<label>包装前体积(Cm) - 长:</label><span>6.00</span>
+				<table class="data">
+					<thead>
+						<tr class="">
+							<td>体积</td>
+							<td>长</td>
+							<td>宽</td>
+							<td>高</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="odd">
+							<td>包装前体积(Cm)</td>
+							<td>6.00</td>
+							<td>8.00</td>
+							<td>0.05</td>
+						</tr>
+						<tr class="even">
+							<td>包装后体积(Cm)</td>
+							<td>12.00</td>
+							<td>19.00</td>
+							<td>3.00</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 			<div>
-				<label>包装前体积(Cm) - 宽:</label><span>8.00</span>
+				<table class="data">
+					<thead>
+						<tr class="">
+							<td>最新采购价</td>
+							<td>零售价</td>
+							<td>批发价</td>
+							<td>库存数</td>
+							<td>数量单位</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="odd">
+							<td>0.00</td>
+							<td>0.00</td>
+							<td>10.00</td>
+							<td>0.00</td>
+							<td>0</td>
+							
+						</tr>
+					</tbody>
+				</table>
 			</div>
 			<div>
-				<label>包装前体积(Cm) - 高:</label><span>0.05</span>
-			</div>
-			<div>
-				<label>包装后体积(Cm) - 长:</label><span>12.00</span>
-			</div>
-			<div>
-				<label>包装后体积(Cm) - 宽:</label><span>19.00</span>
-			</div>
-			<div>
-				<label>包装后体积(Cm) - 高:</label><span>3.00</span>
-			</div>
-			<div>
-				<label>最新采购价:</label><span>0.00</span>
-			</div>
-			<div>
-				<label>零售价:</label><span>0.00</span>
-			</div>
-			<div>
-				<label>批发价:</label><span>10.00</span>
-			</div>
-			<div>
-				<label>库存数:</label><span>0.00</span>
-			</div>
-			<div>
-				<label>数量单位:</label><span>0</span>
-			</div>
-			<div>
-				<label>备注:</label><span>aaaaaaaaaaaaaaaaaaaaaaaa</span>
+				<label>备注:</label><span></span>
 			</div>
 			<div>
 				<label>中文信息:</label><span></span>
