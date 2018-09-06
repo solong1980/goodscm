@@ -1,5 +1,7 @@
 package springboot;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.annotation.PostConstruct;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletException;
@@ -10,11 +12,12 @@ import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.support.GenericConversionService;
+import org.springframework.http.CacheControl;
 import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
-import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.util.Captcha;
 
 import com.xlw.security.filter.xss.XssAlertFilter;
 import com.xlw.util.StringToDateConverter;
@@ -22,15 +25,31 @@ import com.xlw.util.StringToDateConverter;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-	// 配置JSP视图解析器
-	@Bean
-	public ViewResolver viewResolver() {
-		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-		resolver.setPrefix("/static/");
-		resolver.setSuffix(".html");
-		resolver.setExposeContextBeansAsAttributes(true);
-		return resolver;
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/altcms/**").addResourceLocations("classpath:/altcms/")
+				.setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic());
 	}
+
+	// 配置JSP视图解析器
+	// @Bean
+	// public ViewResolver viewResolver() {
+	// InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+	// resolver.setPrefix("/static/");
+	// resolver.setSuffix(".html");
+	// resolver.setExposeContextBeansAsAttributes(true);
+	// return resolver;
+	// }
+
+	//
+	// @Bean
+	// public ViewResolver altcmsViewResolver() {
+	// InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+	// resolver.setPrefix("/altcms/");
+	// resolver.setSuffix(".html");
+	// resolver.setExposeContextBeansAsAttributes(true);
+	// return resolver;
+	// }
 
 	/**
 	 * 文件上传配置
@@ -74,6 +93,11 @@ public class WebConfig implements WebMvcConfigurer {
 		registration.setName("goodsCmXssFilter");
 		registration.setOrder(1);
 		return registration;
+	}
+
+	@Bean
+	public Captcha createCaptcha() {
+		return new Captcha();
 	}
 
 }

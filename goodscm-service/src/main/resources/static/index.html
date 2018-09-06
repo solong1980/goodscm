@@ -1,47 +1,171 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<title>管理系统</title>
-	<meta
-		content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-		name="viewport" />
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
-	<link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css"/>
-	<style>
-		label, input { display:block; }
-		input.text { margin-bottom:12px; width:95%; padding: .4em; }
-		fieldset { padding:0; border:0; margin-top:25px; }
-		h1 { font-size: 1.2em; margin: .6em 0; }
-		div#users-contain { width: 350px; margin: 20px 0; }
-		div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
-		div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
-		.ui-dialog .ui-state-error { padding: .3em; }
-		.validateTips { border: 1px solid transparent; padding: 0.3em; }
-	</style>
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-</head>
+<!-- saved from url=(0037)https://www.qudingshui.com/index.html -->
+<html lang="zh-CN" class="js canvas canvastext touch cssanimations csstransforms csstransforms3d csstransitions webkit chrome win js sticky-header-enabled sticky-header-active"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>趣订水|微信订水小程序|微信送水小程序|桶装水配送管理软件|电子水票|水桶管理软件|马上到|吉客道|吉客到|青云软件|启盟软件|邦仁软件
+  </title>
 
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<title></title>
+<meta name="keywords" content="趣订水">
+<meta name="keywords" content="桶装水订水送水小程序">
+<meta name="keywords" content="微信小程序订水送水系统软件">
+<meta name="keywords" content="水店水站送水管理软件、电子水票、水桶管理软件、马上到、吉客道、青云软件">
+
+  <link rel="shortcut icon" href="https://www.qudingshui.com/image/llq.png" tppabs="http://www.qudingshui.com/" type="image/x-icon">
+<link href="./css/ubase.css" rel="stylesheet">
+<link href="./css/animation.css" rel="stylesheet">
+<link href="./css/index.css" rel="stylesheet">
+  <meta name="description" content="">
+  <link rel="stylesheet" type="text/css" href="./css/amazeui.min.css">
+  <link rel="stylesheet" type="text/css" href="./css/common.css">
+  <link rel="stylesheet" type="text/css" href="./css/app.css">
+  <link rel="stylesheet" type="text/css" href="./css/iconfont.css">
+  <script type="text/javascript" src="./js/jquery.min.js"></script>
+  <script type="text/javascript" src="./js/amazeui.min.js"></script>
+  <script type="text/javascript" src="./js/script.js"></script>
+</head>
 <body>
-	<div id="dialog-form" title="登录" style="width: 350px;margin:0 auto">
-		<p class="validateTips">登录</p>
-		<form>
-			<fieldset>
-				<label for="name">账号</label>
-				<input placeholder="账号" type="text" name="username" id="username" value="" class="text ui-widget-content ui-corner-all"/>
-				<label for="password">密码</label>
-				<input placeholder="密码" type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all"/>
-				<label for="password">验证码</label>
-				<p class=" ui-corner-all">
-					<span><input placeholder="验证码" type="text" name="captcha" class="text ui-widget-content"/>
-					<img alt="如果看不清楚，请单击图片刷新！" src="/images/logo.png"/><a href="javascript:;">点击刷新</a></span>
-				</p>
-				<button type="button" style="float: right;">登录</button>
-			</fieldset>
-		</form>
-	</div>
-	<script src="../js/login.js"></script>
-</body>
-</html>
+
+<div class="first-screen">
+  <div class="first-bg" style="height: 100%; width: 1564.8px; left: -40.9px; top: 0px; opacity: 1;">
+    <div id="indexBanner">
+      <div id="indexBannerimage">
+      <a style=" background-image: url(./images/banner-index1.jpg);"></a>
+      </div>
+      <div id="indexBannerNav">
+        <ul>
+          <li class="on">1</li>
+          <li class="">2</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--banner-->
+  <div class="banner">
+    <div class="slogan appear-animation fadeInDown"><img src="./images/slogan.png"></div>
+    <div class="btn-banner"><a href="#" target="_blank">立即体验</a></div>
+  </div>
+</div>
+<div id="screenHover" style="height: 815px;"></div>
+
+
+<!--header-top-->
+<div class="header header-top"> <a href="./static/index.html" class="logo"><img src="./images/20.png" tppabs="./image/logo.png"></a>
+  <ul>
+    <li><a href="/static/index.html">首页</a></li>
+    <li><a href="/static/product.html">功能产介</a></li>
+    <li><a href="/static/teamwork.html">渠道合作</a></li>
+    <li><a href="/static/about.html">关于我们</a></li>
+  </ul>
+  <p>
+    <a href="#" target="_blank" class="btn-login" id="login">试用</a>
+    <a href="/static/login.html" target="_blank" class="btn-login" id="login">登录</a>
+  </p>
+</div>
+
+<!--header-drop-->
+<div class="header header-drop" style="display:none"> <a href="https://www.qudingshui.com/index.html" class="logo">
+  <img src="./images/21.png" title="趣订水--您的订水管理助手" alt="趣订水--您的订水管理助手" id="logo"></a>
+  <ul>
+    <li><a href="./static/index.html">首页</a></li>
+    <li><a href="./static/product.html">功能产介</a></li>
+    <li><a href="./static/teamwork.html">渠道合作</a></li>
+    <li><a href="./static/about.html">关于我们</a></li>
+  </ul>
+  <p>
+    <a href="#" target="_blank" class="btn-login" id="login">试用</a>
+    <a href="./login" target="_blank" class="btn-login" id="login">登录</a>
+  </p>
+</div>
+
+
+<!--tab function-->
+<div class="index-title">
+  <h3>趣订水™能帮到您什么？</h3>
+</div>
+
+
+<div class="function-tab">
+  <img src="./images/g1.png" tppabs="./images/logo-drop.png" title="趣订水" alt="趣订水">
+</div>
+
+<div class="ani-view fade-in-down">
+  <div class="features-tit1" style="font-size:48px;font-weight:500;text-align: center;margin: 80px auto 10px;">ERP门店管理</div>
+  <div class="features-tit2" style="font-size:28px;font-weight:500;text-align: center;color:#666">客户+水桶+水票+押金+工人等核心资产实现数据化+系统化管理，让水店经营更规范、更轻松简单、快速实现规模化发展</div>
+  <div class="block-img">
+    <img style="display: block ;margin: 30px auto 80px" src="./images/g3.png">
+  </div>
+</div>
+<footer class="mz-footer">
+  <div class="am-wrap">
+
+    <ul class="am-avg-sm-4 mz-footer-content">
+      <li>
+        <div class="mz-footer-logo" style="background-image:url(./images/22.png)"></div>
+      </li><li class="am-margin-bottom-sm">
+        <div class="mz-wrap-line"></div>
+        <div class="am-margin-left">
+          <h2 class="am-margin-bottom-lg">关于</h2>
+          <p><a href="javascript:avoid(0)">关于我们</a></p>
+          <p><a href="javascript:avoid(0)">联系我们</a></p>
+          <p><a href="javascript:avoid(0)">加入我们</a></p>
+        </div>
+      </li>
+      <li class="am-margin-bottom-sm">
+        <div class="mz-wrap-line"></div>
+        <div class="am-margin-left">
+          <h2 class="am-margin-bottom-lg">商务合作</h2>
+          <p>接洽：佘经理</p>
+          <p>电话：132 9797 5395</p>
+          <p>邮箱：snake@qudingshui.com</p>
+        </div>
+      </li>
+      <li class="am-margin-bottom-sm">
+        <div class="mz-wrap-line"></div>
+        <div class="mz-footer-wrap">
+          <h2 class="am-margin-bottom-lg">关注我们</h2>
+          <div>
+            <img class="am-block" src="./images/qrcode.jpg" tppabs="http://www.qudingshui.com/css/qrcode.jpg" alt="">
+            <p>微信扫一扫</p>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class="am-text-center mz-footer-copyright">Coryright ©2018 武汉趣订水科技有限公司
+        <img src="./images/beiang.png" tppabs="http://www.qudingshui.com/css/beiang.png">  鄂ICP备18007165号
+      <br>
+      地址：武汉市华工科技园SOHO B座1609
+   </div>
+
+  </div>
+</footer>
+
+
+
+
+<!--banner-->
+<script src="./js/banner.js" tppabs="http://www.qudingshui.com/js/banner.js"></script>
+
+<script src="./js/bxslider.js" tppabs="http://www.qudingshui.com/js/bxslider.js"></script>
+<script src="./js/jquery.sky.carousel-1.0.min.js" tppabs="http://www.qudingshui.com/js/jquery.sky.carousel-1.0.min.js"></script>
+<!--tab-->
+<script src="./js/jquery.tab.js" tppabs="http://www.qudingshui.com/js/jquery.tab.js"></script>
+<!--flexslider-->
+<script src="./js/jquery.flexslider-min.js" tppabs="http://www.qudingshui.com/js/jquery.flexslider-min.js"></script>
+<!--counters-->
+<script src="./js/jquery.appear.js" tppabs="http://www.qudingshui.com/js/jquery.appear.js"></script>
+<script src="./js/theme.js" tppabs="http://www.qudingshui.com/js/theme.js"></script>
+<script src="./js/custom.js" tppabs="http://www.qudingshui.com/js/custom.js"></script>
+<script type="javascript" src="./js/base64.js"></script>
+
+<script src="./js/theme.init.js" tppabs="http://www.qudingshui.com/js/theme.init.js"></script><a class="scroll-to-top hidden-mobile" href="https://www.qudingshui.com/index.html#"><i class="fa fa-chevron-up"></i></a>
+<!--public-->
+<script src="./js/public.js" tppabs="http://www.qudingshui.com/js/public.js"></script>
+<script>
+  (function(b,a,e,h,f,c,g,s){b[h]=b[h]||function(){(b[h].c=b[h].c||[]).push(arguments)};
+    b[h].s=!!c;g=a.getElementsByTagName(e)[0];s=a.createElement(e);
+    s.src="//s.union.360.cn/"+f+".js";s.defer=!0;s.async=!0;g.parentNode.insertBefore(s,g)
+  })(window,document,"script","_qha",270795,false);
+</script>
+</body></html>

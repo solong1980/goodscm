@@ -41,7 +41,7 @@ public class GoodsServiceImpl implements GoodsService {
 	@Autowired
 	private GoodsPicService goodsPicService;
 
-	@Autowired
+	@Autowired(required=false)
 	private ActiveMQService activeMQService;
 
 	@Override

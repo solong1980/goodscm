@@ -1,6 +1,10 @@
 package com.xlw.goodscm.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.util.Captcha;
 
 import com.xlw.goodscm.Consts;
 import com.xlw.goodscm.ReturnCode;
@@ -28,11 +33,31 @@ import com.xlw.sys.model.SysUser;
 @RequestMapping("/login")
 public class LoginController {
 	private static Logger logger = LoggerFactory.getLogger(LoginController.class);
-	
-    @Autowired
-    private SysRoleMapper sysRoleMapper;
+
+	@Autowired
+	private SysRoleMapper sysRoleMapper;
+
+	@RequestMapping("captcha.jpg")
+	public void captcha(HttpServletResponse response, HttpServletRequest request) throws IOException {
+		response.setContentType("image/jpeg");// 设置相应类型,告诉浏览器输出的内容为图片
+		response.setHeader("Pragma", "No-cache");// 设置响应头信息，告诉浏览器不要缓存此内容
+		response.setHeader("Cache-Control", "no-cache");
+		response.setDateHeader("Expire", 0);
+		// 保存到shiro session
+		// ShiroUtils.setSessionAttribute(Constants.KAPTCHA_SESSION_KEY, text);
+
+		try {
+			Captcha randomValidateCode = new Captcha();
+			randomValidateCode.getRandcode(request, response);// 输出图片方法
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	/**
 	 * login with account/password
+	 * 
 	 * @param user
 	 * @return
 	 * @throws Exception
@@ -60,7 +85,7 @@ public class LoginController {
 
 			List<SysRole> userRoles = sysRoleMapper.queryUserRoleList(userInfo.getUserId());
 			userInfo.setRoleList(userRoles);
-			
+
 			cmResult = CmResult.build(ReturnCode.Codes.LOGIN_SUCCESS, userInfo);
 		} catch (IncorrectCredentialsException e) {
 			cmResult = CmResult.build(ReturnCode.Codes.PASSWORD_ERROR, null);
@@ -75,9 +100,10 @@ public class LoginController {
 		return cmResult;
 
 	}
-	
+
 	/**
 	 * logout
+	 * 
 	 * @return
 	 */
 	@RequestMapping("/dologout")

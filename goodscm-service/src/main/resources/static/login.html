@@ -1,47 +1,153 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<title>管理系统</title>
-	<meta
-		content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-		name="viewport" />
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
-	<link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css"/>
-	<style>
-		label, input { display:block; }
-		input.text { margin-bottom:12px; width:95%; padding: .4em; }
-		fieldset { padding:0; border:0; margin-top:25px; }
-		h1 { font-size: 1.2em; margin: .6em 0; }
-		div#users-contain { width: 350px; margin: 20px 0; }
-		div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
-		div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
-		.ui-dialog .ui-state-error { padding: .3em; }
-		.validateTips { border: 1px solid transparent; padding: 0.3em; }
-	</style>
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="csrf-token" content="KJwQk853GVRgUcMGEwi4T4JPZkH2PUYkUVE7ducq">
+	<title>xxxxx</title>
+	<link rel="stylesheet" type="text/css" href="./css/login.css" media="all">
+	<link rel="stylesheet" type="text/css" href="./css/default_color.css" media="all">
 </head>
+    <body id="login-page" style="">
+        <div id="main-content">
+            <!-- 主体 -->
+            <div class="login-body">
+                <div class="login-main pr">
+                    <form action="../login" method="post" class="login-form">
+                        <h3 class="welcome">
+                          <i class="login-logo"></i>xxxxx管理平台</h3>
+                          <div id="itemBox" class="item-box">
+                            <div class="item">
+                                <i class="icon-login-user"></i>
+                                <input type="text" id="username" name="username" placeholder="请填写用户名" autocomplete="off">
+                            </div>
+                            <span class="placeholder_copy placeholder_un">请填写用户名</span>
+                            <div class="item b0">
+                                <i class="icon-login-pwd"></i>
+                                <input type="password" id="password" name="password" placeholder="请填写密码" autocomplete="off">
+                            </div>
+                            <span class="placeholder_copy placeholder_pwd">请填写密码</span>
+                            <div class="item verifycode">
+                                <i class="icon-login-verifycode"></i>
+                                <input type="text" name="verify" placeholder="请填写验证码" autocomplete="off">
+                                <a class="reloadverify" title="换一张" href="javascript:void(0)">换一张？</a>
+                            </div>
+                            <span class="placeholder_copy placeholder_check">请填写验证码</span>
+                            <div>
+                                <img class="verifyimg reloadverify" alt="点击切换" src="../login/captcha.jpg">
+                            </div>
+                        </div>
+                        <div class="login_btn_panel">
+                            <button class="login-btn" type="submit">
+                                <span class="in"><i class="icon-loading"></i>登 录 中 ...</span>
+                                <span class="on">登 录</span>
+                            </button>
+                            <div class="check-tips"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+	<!--[if lt IE 9]>
+    <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script type="text/javascript" src="./js/jquery-2.0.3.min.js"></script>
+    <!--<![endif]-->
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
-<body>
-	<div id="dialog-form" title="登录" style="width: 350px;margin:0 auto">
-		<p class="validateTips">登录</p>
-		<form>
-			<fieldset>
-				<label for="name">账号</label>
-				<input placeholder="账号" type="text" name="username" id="username" value="" class="text ui-widget-content ui-corner-all"/>
-				<label for="password">密码</label>
-				<input placeholder="密码" type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all"/>
-				<label for="password">验证码</label>
-				<p class=" ui-corner-all">
-					<span><input placeholder="验证码" type="text" name="captcha" class="text ui-widget-content"/>
-					<img alt="如果看不清楚，请单击图片刷新！" src="/static/logo.png"/><a href="javascript:;">点击刷新</a></span>
-				</p>
-				<button type="button" style="float: right;">登录</button>
-			</fieldset>
-		</form>
-	</div>
-	<script src="/static/js/login.js"></script>
-</body>
-</html>
+        /* 登陆表单获取焦点变色 */
+    	$(".login-form").on("focus", "input", function(){
+            $(this).closest('.item').addClass('focus');
+        }).on("blur","input",function(){
+            $(this).closest('.item').removeClass('focus');
+        });
+
+    	//表单提交
+    	$(document)
+	    	.ajaxStart(function(){
+	    		$("button:submit").addClass("log-in").attr("disabled", true);
+	    	})
+	    	.ajaxStop(function(){
+	    		$("button:submit").removeClass("log-in").attr("disabled", false);
+	    	});
+
+    	$("form").submit(function(){
+    		var self = $(this);
+    		console.log(self.attr("action"));
+    		$.post(self.attr("action"), self.serialize(), success, "json");
+    		return false;
+
+    		function success(data){
+    			if(data.status){
+    				window.location.href = data.url;
+    			} else {
+    				self.find(".check-tips").text(data.info);
+    				//刷新验证码
+    				$(".reloadverify").click();
+    			}
+    		}
+    	});
+
+		$(function(){
+			//初始化选中用户名输入框
+			$("#itemBox").find("input[name=username]").focus();
+			//刷新验证码
+			var verifyimg = $(".verifyimg").attr("src");
+            $(".reloadverify").click(function(){
+                if( verifyimg.indexOf('?')>0){
+                    $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+                }else{
+                    $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                }
+            });
+
+            //placeholder兼容性
+                //如果支持 
+            function isPlaceholer(){
+                var input = document.createElement('input');
+                return "placeholder" in input;
+            }
+                //如果不支持
+            if(!isPlaceholer()){
+                $(".placeholder_copy").css({
+                    display:'block'
+                })
+                $("#itemBox input").keydown(function(){
+                    $(this).parents(".item").next(".placeholder_copy").css({
+                        display:'none'
+                    })                    
+                })
+                $("#itemBox input").blur(function(){
+                    if($(this).val()==""){
+                        $(this).parents(".item").next(".placeholder_copy").css({
+                            display:'block'
+                        })                      
+                    }
+                })
+                
+                
+            }
+		});
+
+        $('.tab_left').bind('click',function () {
+            $('.tab_left').addClass('tab_active');
+            $('.tab_right').removeClass('tab_active');
+            var url = "https://www.qudingshui.com/login";
+            $(".login-form").attr('action',url);
+        })
+
+        $('.tab_right').bind('click',function () {
+            $('.tab_right').addClass('tab_active');
+            $('.tab_left').removeClass('tab_active');
+            var url = "https://www.qudingshui.com/accountLogin";
+            $(".login-form").attr('action',url);
+        })
+    </script>
+
+
+</body></html>
