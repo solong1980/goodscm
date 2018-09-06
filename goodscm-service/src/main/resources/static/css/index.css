@@ -1,0 +1,752 @@
+.first-screen {
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+#indexBannerimage a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-position: center top;
+	background-repeat: no-repeat;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+#indexBannerNav {
+	display: none
+}
+.first-screen .first-bg img {
+	position: absolute;
+	width: 100%;
+	top:0;
+}
+.banner {
+	margin: 0 auto;
+	width: 700px;
+	text-align: center;
+	overflow: hidden;
+	position: absolute;
+	top: 16%;
+	left: 50%;
+	margin: -250px 0 30px -350px;
+	padding-top: 80px;
+	color: #fff;
+	text-align: center;
+	z-index: 997;
+	z-index: 1001
+}
+.btn-banner {
+	margin-top: 60px;
+}
+.btn-banner a {
+	display: block;
+	width: 434px;
+	height: 64px;
+	line-height: 64px;
+	text-align: center;
+	font-size: 30px;
+	color: #fff;
+	background-color: rgba(255,159,35,1);
+	border-radius: 10px;
+	margin: 0 auto;
+}
+.btn-banner a:hover {
+	background-color: rgba(254,148,64,1);
+}
+.scroll-down {
+	margin-left: -40px;
+	position: absolute;
+	left: 50%;
+	bottom: 10px;
+	margin-left: -40px;
+	text-align: center;
+	z-index: 1001
+}
+.scroll-down a.next-step-arrow {
+	display: block;
+	position: relative;
+	margin: 0 auto;
+	width: 80px;
+	height: 80px;
+	background: url(../image/sprite-1x.png)/*tpa=http://www.yixiaofang.com/image/sprite-1x.png*/ center center no-repeat
+}
+.next-step-arrow .circle {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	border: 1px solid #fff;
+	border-radius: 9999px;
+	transition: all .7s cubic-bezier(.23, 1, .32, 1);
+	-webkit-transition: all .7s cubic-bezier(.23, 1, .32, 1);
+	-moz-transition: all .7s cubic-bezier(.23, 1, .32, 1);
+	-ms-transition: all .7s cubic-bezier(.23, 1, .32, 1);
+	-o-transition: all .7s cubic-bezier(.23, 1, .32, 1);
+	-webkit-transform: scale(.95);
+	-moz-transform: scale(.95);
+	-ms-transform: scale(.95);
+	-o-transform: scale(.95);
+	transform: scale(.95);
+	filter: alpha(opacity=100);
+	-moz-opacity: 1;
+	opacity: 1;
+}
+/*
+.next-step-arrow:hover .circle {
+	-webkit-transform: scale(1);
+	-moz-transform: scale(1);
+	-ms-transform: scale(1);
+	-o-transform: scale(1);
+	transform: scale(1);
+	filter: alpha(opacity=100);
+	-moz-opacity: 1;
+	opacity: 1;
+}
+*/
+ @keyframes xguide_down {
+ 0%, 100% {
+ transform:scale(0.9);
+ -moz-transform:scale(0.9);
+ -o-transform:scale(0.9);
+ -webkit-transform:scale(0.9);
+ -ms-transform:scale(0.9);
+ opacity:0
+}
+ 50% {
+ transform:scale(1.0);
+ -moz-transform:scale(1.0);
+ -o-transform:scale(1.0);
+ -webkit-transform:scale(1.0);
+ -ms-transform:scale(1.0);
+ opacity:1
+}
+}
+ @-webkit-keyframes xguide_down {
+ 0%, 100% {
+ transform:scale(0.9);
+ -moz-transform:scale(0.9);
+ -o-transform:scale(0.9);
+ -webkit-transform:scale(0.9);
+ -ms-transform:scale(0.9);
+ opacity:0
+}
+ 50% {
+ -webkit-transform:scale(1.0);
+ -moz-transform:scale(1.0);
+ -o-transform:scale(1.0);
+ -ms-transform:scale(1.0);
+ transform:scale(1.0);
+ opacity:1
+}
+}
+ @-moz-keyframes xguide_down {
+ 0%, 100% {
+ transform:scale(0.9);
+ -moz-transform:scale(0.9);
+ -o-transform:scale(0.9);
+ -webkit-transform:scale(0.9);
+ -ms-transform:scale(0.9);
+ opacity:0
+}
+ 50% {
+ -moz-transform:scale(1.0);
+ -o-transform:scale(1.0);
+ -webkit-transform:scale(1.0);
+ -ms-transform:scale(1.0);
+ transform:scale(1.0);
+ opacity:1
+}
+}
+ @-o-keyframes xguide_down {
+ 0%, 100% {
+ transform:scale(0.9);
+ -moz-transform:scale(0.9);
+ -o-transform:scale(0.9);
+ -webkit-transform:scale(0.9);
+ -ms-transform:scale(0.9);
+ opacity:0
+}
+ 50% {
+ -o-transform:scale(1.0);
+ -moz-transform:scale(1.0);
+ -webkit-transform:scale(1.0);
+ -ms-transform:scale(1.0);
+ transform:scale(1.0);
+ opacity:1
+}
+}
+.next-step-arrow .circle {
+	-webkit-animation: xguide_down 2.0s infinite ease-in-out;
+	-moz-animation: xguide_down 2.0s infinite ease-in-out;
+	-o-animation: xguide_down 2.0s infinite ease-in-out;
+	animation: xguide_down 2.0s infinite ease-in-out
+}
+.bodyslider {
+	height: 700px;
+	overflow: hidden;
+	position: relative;
+	z-index: 1;
+}
+.bodyslider .slides li {
+	height: 700px;
+}
+.flex-control-nav, .flex-direction-nav {
+	display: none;
+}
+.index-title {
+	text-align: center;
+	margin-top: 80px;
+	line-height: 5.5
+}
+.index-title h3 {
+	font-size: 36px;
+	font-weight: 500
+}
+.index-title h4 {
+	font-size: 24px;
+	font-weight: 500;
+	color: #666666
+}
+/*手风琴切换*/
+.index-accordion .youboyun {
+	width: 1279px;
+	height: 340px;
+	margin: 0px auto;
+	position: relative;
+	margin-top: 50px;
+	border: 1px solid #eee;
+	border-left: 0;
+	overflow: hidden
+}
+.index-accordion .youboyun ul li {
+	width: 247px;
+	height: 340px;
+	position: relative;
+	overflow: hidden;
+	float: left;
+	background:#fff
+}
+.index-accordion .youboyun ul li.fast {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+.index-accordion .youboyun ul li .imgfl {
+	width: 250px;
+	height: 340px;
+	text-align: center;
+	border-right: 1px solid #eee;
+}
+.index-accordion .youboyun ul li .imgfr {
+	display: none;
+}
+.index-accordion .imgfl h2 {
+	font-size: 24px;
+	padding-top: 40px;
+	font-weight: normal;
+}
+.index-accordion .imgfl h3 {
+	font-size: 16px;
+	margin-top: 5px;
+	font-weight: normal;
+	color: #a6a6a6
+}
+.index-accordion .imgfl .icon-img {
+	width: 88px;
+	height: 88px;
+	margin: 40px auto;
+}
+.index-accordion .imgfl p {
+	color: #777777;
+	line-height: 1.6;
+	margin: 0 20px;
+	font-size: 14px;
+}
+.index-accordion .imgfl div.icon-img1 {
+	background: url(../image/youboyun-icon1.jpg)/*tpa=http://www.yixiaofang.com/image/youboyun-icon1.jpg*/ no-repeat center center;
+}
+.index-accordion .imgfl div.icon-img2 {
+	background: url(../image/youboyun-icon2.jpg)/*tpa=http://www.yixiaofang.com/image/youboyun-icon2.jpg*/ no-repeat center center;
+}
+.index-accordion .imgfl div.icon-img3 {
+	background: url(../image/youboyun-icon3.jpg)/*tpa=http://www.yixiaofang.com/image/youboyun-icon3.jpg*/ no-repeat center center;
+}
+.index-accordion .imgfl div.icon-img4 {
+	background: url(../image/youboyun-icon4.jpg)/*tpa=http://www.yixiaofang.com/image/youboyun-icon4.jpg*/ no-repeat center center;
+}
+.index-accordion .bor-red {
+	border: 1px solid #f8b600;
+	border-bottom: 0;
+	border-top: 0;
+}
+.index-accordion .bor-g {
+	border-left: 1px solid #eee;
+}
+.index-accordion .youboyun ul li .imgfr {
+	width: 282px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+.index-accordion .imgfr span {
+	display: block;
+	width: 72px;
+	height: 26px;
+	line-height: 26px;
+	text-align: center;
+	font-size: 14px;
+	color: #666666;
+	border: 1px solid #e6e6e6;
+	margin: 20px;
+	margin-bottom: 10px;
+}
+.index-accordion .imgfr p {
+	color: #666666;
+	border-bottom: 1px solid #e6e6e6;
+	padding: 0px 20px 20px;
+}
+.index-accordion .imgfr p:last-child {
+	border-bottom: none;
+}
+.accordion-more {
+	padding: 50px 0px;
+	border-bottom: 1px solid #e9eaec
+}
+.accordion-more a {
+	display: block;
+	width: 224px;
+	height: 58px;
+	text-align: center;
+	line-height: 58px;
+	border: 1px solid #ff9f23;
+	color: #ff9f23;
+	font-size: 18px;
+	margin: 0 auto;
+	border-radius: 5px;
+}
+.accordion-more a:hover {
+	background: #ff9f23;
+	color: #fff
+}
+/*功能tab*/
+.function-header {
+	width: 668px;
+	height: 100px;
+	margin: 0 auto;
+	margin-top: 30px;
+}
+.function-header-left {
+	width: 88px;
+	text-align: center;
+	float: left;
+}
+.function-header-right {
+	width: 88px;
+	text-align: center;
+	float: right
+}
+.function-header span {
+	font-weight: bold;
+	font-size: 18px;
+	display: block
+}
+.function-header-left span {
+	color: #4e9543;
+}
+.function-header-right span {
+	color: #5ec9f6;
+}
+.function-tab {
+	width: 1100px;
+	height: 400px;
+	margin:200px auto;
+	margin-top: 400px;
+
+}
+.function-tab img{
+	width: 1100px;
+	height: 400px;
+}
+.function-cont {
+	width: 350px;
+	height: 570px;
+	margin: 0 auto;
+	background: url(../image/function-cont-bg.jpg)/*tpa=http://www.yixiaofang.com/image/function-cont-bg.jpg*/ 0 0 no-repeat;
+	overflow: hidden
+}
+.function-slider {
+	width: 230px;
+	height: 404px;
+	position: relative;
+	top: 68px;
+	left: 63px;
+}
+.function-slider .slides li {
+	height: 700px;
+}
+#fadetab li {
+	position: absolute;
+	width: 220px;
+	height: 68px;
+}
+#fadetab li a {
+	display: block;
+	height: 68px;
+}
+#fadetab li h3 {
+	font-size: 16px;
+	margin-bottom: 5px;
+	line-height:52px;
+}
+#fadetab li p {
+	color: #666;
+}
+#fadetab li.fadetab-nav1 a, #fadetab li.fadetab-nav2 a, #fadetab li.fadetab-nav3 a, #fadetab li.fadetab-nav4 a, #fadetab li.fadetab-nav5 a {
+	text-align: right;
+	padding-right: 80px;
+	line-height: 80px;
+}
+#fadetab li.fadetab-nav6 a, #fadetab li.fadetab-nav7 a, #fadetab li.fadetab-nav8 a, #fadetab li.fadetab-nav9 a, #fadetab li.fadetab-nav10 a {
+	text-align: left;
+	padding-left: 80px;
+}
+#fadetab li.fadetab-nav1 {
+	left: 0;
+	top: 50px;
+}
+#fadetab li.fadetab-nav2 {
+	left: 0;
+	top: 147px;
+}
+#fadetab li.fadetab-nav3 {
+	left: 0;
+	top: 244px;
+}
+#fadetab li.fadetab-nav4 {
+	left: 0;
+	top: 341px;
+}
+#fadetab li.fadetab-nav5 {
+	left: 0;
+	top: 438px;
+}
+#fadetab li.fadetab-nav6 {
+	right: 0;
+	top: 50px;
+}
+#fadetab li.fadetab-nav7 {
+	right: 0;
+	top: 147px;
+}
+#fadetab li.fadetab-nav8 {
+	right: 0;
+	top: 244px;
+}
+#fadetab li.fadetab-nav9 {
+	right: 0;
+	top: 341px;
+}
+#fadetab li.fadetab-nav10 {
+	right: 0;
+	top: 438px;
+}
+#fadetab li.fadetab-nav1 a {
+	background: url(../image/d1.png)/*tpa=http://www.yixiaofang.com/image/function-ico1.jpg*/ right 0px no-repeat;
+}
+#fadetab li.fadetab-nav2 a {
+	background: url(../image/d2.png)/*tpa=http://www.yixiaofang.com/image/function-ico2.jpg*/ right 0px no-repeat;
+}
+#fadetab li.fadetab-nav3 a {
+	background: url(../image/d3.png)/*tpa=http://www.yixiaofang.com/image/function-ico3.jpg*/ right 0px no-repeat;
+}
+#fadetab li.fadetab-nav4 a {
+	background: url(../image/d4.png)/*tpa=http://www.yixiaofang.com/image/function-ico4.jpg*/ right 0px no-repeat;
+}
+#fadetab li.fadetab-nav5 a {
+	background: url(../image/d5.png)/*tpa=http://www.yixiaofang.com/image/function-ico5.jpg*/ right 0px no-repeat;
+}
+#fadetab li.fadetab-nav6 a {
+	background: url(../image/s1.png)/*tpa=http://www.yixiaofang.com/image/function-ico6.jpg*/ left 0px no-repeat;
+}
+#fadetab li.fadetab-nav7 a {
+	background: url(../image/s2.png)/*tpa=http://www.yixiaofang.com/image/function-ico7.jpg*/ left 0px no-repeat;
+}
+#fadetab li.fadetab-nav8 a {
+	background: url(../image/s3.png)/*tpa=http://www.yixiaofang.com/image/function-ico8.jpg*/ left 0px no-repeat;
+}
+#fadetab li.fadetab-nav9 a {
+	background: url(../image/s4.png)/*tpa=http://www.yixiaofang.com/image/function-ico9.jpg*/ left 0px no-repeat;
+}
+#fadetab li.fadetab-nav10 a {
+	background: url(../image/s5.png )/*tpa=http://www.yixiaofang.com/image/function-ico10.jpg*/ left 0px no-repeat;
+}
+#fadetab li.current a {
+	background-position-y: -8px;
+}
+.quantity-bg {
+	height: 500px;
+	position: relative;
+	background: url(../image/quantity-bg.jpg)/*tpa=http://www.yixiaofang.com/image/quantity-bg.jpg*/ center 0 no-repeat;
+	z-index: 998
+}
+.quantity-hover {
+	width: 100%;
+	height: 500px;
+	position: absolute;
+	z-index: 998;
+	top: 0px;
+	left: 0px;
+	display: none;
+	background-color: rgba(255,255,255,0.16);
+}
+.quantity-in {
+	padding-top: 400px;
+	width: 1163px;
+	margin: 0 auto;
+	position: relative;
+	z-index: 999
+}
+.quantity-in ul li {
+	float: left;
+	height: 52px;
+	text-align: center;
+	width: 200px;
+	padding-left: 30px;
+	border-right: 1px solid #fff;
+}
+.quantity-in ul li:last-child {
+	border-right: none;
+}
+.quantity-in ul li span {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 48px;
+	color: #ff9f23;
+	font-weight: bold;
+	float: left;
+	margin-right: 20px;
+}
+.quantity-in ul li p {
+	font-size: 20px;
+	color: #fff;
+	text-align: left;
+	float: left
+}
+.partner {
+	width: 1210px;
+	height: 390px;
+	margin: 75px auto 0px;
+}
+.bottom-btn {
+	width: 485px;
+	height: 60px;
+	margin: 60px auto 100px
+}
+.bottom-btn a {
+	display: block;
+	width: 210px;
+	text-align: center;
+	height: 60px;
+	line-height: 60px;
+	font-size: 24px;
+	color: #fff;
+	border-radius: 5px;
+	position: relative;
+}
+.bottom-btn a.btn-left {
+	background: #ff9f23;
+	float: left
+}
+.bottom-btn a.btn-left:hover {
+	background-color: #fe8522;
+}
+.bottom-btn a.btn-right {
+	border: 1px solid #4e9543;
+	float: right;
+	color: #4e9543;
+}
+.bottom-btn a.btn-right:hover {
+	background-color: #4e9543;
+	color: #fff
+}
+.bottom-links {
+	height: 41px;
+	padding: 20px 0px;
+	border-top: 1px solid #e9eaec
+}
+.links-scroll {
+	width: 1200px;
+	margin: 0 auto;
+	position: relative
+}
+.list-links {
+	width: 868px;
+	height: 41px;
+	margin: 0 auto;
+	position: relative;
+	overflow: hidden
+}
+.ul-wrap {
+	width: 6650px;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+.bottom-links ul li {
+	float: left;
+	width: 112px;
+	height: 41px;
+	overflow: hidden;
+	margin: 0 6px;
+}
+/*.bottom-links ul li:first-child img, .bottom-links ul li:hover img {
+	position: relative;
+	top: -41px;
+}
+*/
+.bottom-links ul li img {
+	position: relative;
+	top: -41px;
+}
+.scroll-left {
+	position: absolute;
+	left: 0px;
+	top: 8px;
+}
+.scroll-right {
+	position: absolute;
+	right: 0px;
+	top: 8px;
+}
+.mz-footer{
+	background:#313334;
+	width:100%;
+	text-align:left;
+	padding:20px;
+}
+.mz-footer-content{
+	position:relative;
+	overflow:hidden;
+	width:100%;
+	margin:20px auto 40px;
+}
+.mz-footer-content li:nth-child(1){
+	padding-right:5%;
+}
+.mz-footer-content li>div>p{
+	line-height:28px;
+	color:#a9b0b4;
+	font-size:14px;
+}
+.mz-footer-content li>div>p a{
+	line-height:28px;
+	color:#a9b0b4;
+	font-size:14px;
+}
+
+.mz-footer-content h2{
+	font-size:18px;
+	color:#fff;
+
+}
+.mz-footer-logo{
+	background:rgba(0, 0, 0, 0) url("../image/logo2.png")no-repeat scroll bottom center;
+	display:block;
+	background-size:auto 100px;
+	/*width:110px;*/
+	height:100px;
+	margin-top: 50px;
+}
+
+.mz-footer-tel{
+	font-size:30px;
+	text-align:center;
+	font-weight:600;
+}
+.mz-wrap-line{
+	display:inline-block;
+	border-left:1px dashed #5d6060;
+	width:2px;
+	overflow:hidden;
+	position:absolute;
+	height:80%;
+	margin-top:5px;
+}
+.mz-footer-wrap{
+	text-align:center;
+}
+.mz-footer-wrap img{
+	width:30%;
+	margin:0px auto 10px;
+}
+.mz-footer-wrap>div>p{
+	margin-left:0px;
+	color:#a9b0b4;
+	font-size:14px;
+}
+.mz-footer-code{
+	background:url(icon_21.png)/*tpa=http://www.dianchaoren.com/default/static/image/icon_21.png*/ no-repeat top left;
+	background-size:contain;
+	text-indent:30px;
+	margin-bottom:10px;
+}
+.mz-footer-data a{
+	color:#a9b0b4;
+	font-size:14px;
+	margin-left:5px;
+}
+.mz-footer-copyright{
+	margin:60px auto 20px;
+	color:#a9b0b4;
+	font-size:14px;
+}
+.mz-hz-ul{
+	padding:10px;
+}
+.mz-hz-ul li{
+	padding:10px 5px;
+}
+.mz-hz-img{
+	width:100%;
+}
+
+/*******************å…³äºŽæˆ‘ä»¬#about.html****************************/
+
+.am-about-banner{padding:61px 0 60px;}
+.am-about-banner img{width:100%;display:block;}
+.am-about-nav-list{
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+	margin-bottom:40px;
+}
+.am-about-nav-list li{
+	background: #b9b9b9 none repeat scroll 0 0;
+	float: left;
+	height: 50px;
+	margin-right: 10px;
+	width: 230px;
+	text-align:center;
+}
+.am-about-nav-list li>a{
+	color: white;
+	display: block;
+	float: left;
+	font-size: 18px;
+	height: 50px;
+	line-height: 50px;
+	text-decoration: none;
+	text-align:center;
+	width: 230px;
+}
+.am-about-nav-list li>a:hover{
+	background: #343235 none repeat scroll 0 0;
+}
+.hover{background: #343235 none repeat scroll 0 0;}
+.am-about-content{font-size:14px;margin-bottom:40px;}

@@ -1,0 +1,2420 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link rel="stylesheet" href="/js/layui-v2.2.5/css/layui.css">
+<link rel="stylesheet" href="/z/system/application/views/css/bootstrap/css/bootstrap.min.css" >
+<link rel="stylesheet" href="/z/system/application/views/css/bootstrap/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="/z/system/application/views/css/bootstrap/css/bootstrap-dialog.min.css" >
+<link rel="stylesheet" type="text/css" href="/z/system/application/views/main.css" />
+<link rel="stylesheet" type="text/css" href="/z/system/application/views/main_admin.css" />
+<link rel="stylesheet" href="/z/system/application/views/css/font-awesome/css/font-awesome.min.css">
+
+<script type="text/javascript" src="/z/system/application/views/js/jquery.2.1.3.min.js"></script>
+<script type="text/javascript" src="/z/system/application/views/css/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/z/system/application/views/css/bootstrap/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="/z/system/application/views/css/bootstrap/js/bootstrap-dialog.min.js"></script>
+
+<script type="text/javascript" src="/z/system/application/views/js/jquery.json.js"/>
+
+<script type="text/javascript" src="/z/system/application/views/js/js.cookie.js"/>
+
+<script charset="utf-8" src="/js/layui-v2.2.5/layui.js"/>
+
+<script charset="utf-8" src="/js/tippy/tippy.all.min.js"/>
+
+<style type="text/css">
+    .tippy{cursor: default;}
+    .tippy-tooltip.loadtip-theme {
+        background-color: #fff;
+        color:#333;
+        box-shadow:0 1px 4px rgba(0, 0, 0, 0.5);
+        border:1px solid #999;
+        text-align:left;
+    }
+    .tippy-tooltip.loadtip-theme .tippy-backdrop { background-color: #666; }
+    .tippy-tooltip.loadtip-theme .tippy-roundarrow { fill:#666; }
+    .tippy-tooltip.loadtip-theme .tippy-content { background-color: #fff; overflow:hidden; }
+
+    .open_url_ed{color:#6D0000;}
+
+    .darkred{color:darkred;}
+</style>
+<script type="text/javascript">
+var layer,form;//全局layer
+
+function sendPost(url,data,func,type){
+    layer.load();
+    $.post(url,
+        data,function(json){
+            layer.closeAll('loading');
+            func(json);
+        },type);
+}
+
+$(function(){
+    layui.use(['layer','form'], function(){
+        layer = layui.layer;
+        form = layui.form;
+    });
+    $(document).on('click', '.open_url', function(){
+
+        $('.open_url').removeClass('open_url_ed');
+        $(this).addClass('open_url_ed');
+
+        var url = $(this).attr('data-url');
+        var title = $(this).attr('title');
+        var size_w = $(this).attr('size_w');
+        var size_h = $(this).attr('size_h');
+        layer.open({
+            type: 2,
+            title: title,
+            area: [size_w || '60%',  size_h || '60%'],
+            shade: 0.8,
+            closeBtn: 1,
+            shadeClose: true,
+            content: url,
+            scrollbar: false
+        });
+    });
+
+    $(".bt_normal").hover(function(){
+        $(this).removeClass("btn-default").addClass("btn-primary");
+    }, function(){
+        $(this).removeClass("btn-primary").addClass("btn-default");
+    });
+    $(".bt_danger").hover(function(){
+        $(this).removeClass("btn-default").addClass("btn-danger");
+    }, function(){
+        $(this).removeClass("btn-danger").addClass("btn-default");
+    });
+
+    tippy('[loadtip]',{
+        theme: 'loadtip',
+        arrow:true,
+        arrowType:'round',
+        animateFill:true,
+        animation:'shift-away',
+        maxWidth:'500px',
+        interactive:true,
+        placement:'right',
+        sticky:true,
+        onShow(a){
+            //console.log(this);
+            var url = $(a.reference).attr('loadtip');
+            //console.log();
+            const content = this.querySelector('.tippy-content');
+            content.innerHTML = '<i class="fa fa-circle-o-notch fa-spin" style="padding:30px; font-size:24px;"></i>';
+            fetch(url).then(function(response) {
+                //console.log(response);
+                return response.text();
+            }).then(function(data) {
+                //console.log(data);
+                content.innerHTML = data;
+            }).catch(function(e) {
+                //console.log("Oops, error");
+            });
+        }
+    });
+
+    tippy('[loadimgtip]',{
+        theme: 'loadtip',
+        arrow:true,
+        arrowType:'round',
+        animateFill:true,
+        animation:'shift-away',
+        maxWidth:'500px',
+        interactive:true,
+        placement:'right',
+        sticky:true,
+        onShow(a){
+            var url = $(a.reference).attr('loadimgtip');
+            var title = $(a.reference).attr('data-original-title');
+            const content = this.querySelector('.tippy-content');
+            content.innerHTML = '<img src="'+url+'" style="width:100%;" alt="'+title+'" />';
+        }
+    });
+
+    tippy('.tippy',{
+        theme: 'loadtip',
+        arrow:true,
+        arrowType:'round',
+        animateFill:true,
+        animation:'shift-away',
+        maxWidth:'500px',
+        interactive:true,
+        placement:'right',
+        sticky:true,
+        onShow(a){ }
+    });
+
+    $('[loadimgtip]').click(function(){
+        console.log('loadimgtip')
+    });
+
+
+});
+</script>
+</head>
+<body>
+<h1>
+<span style="float:right;">
+  <a class="btn btn-sm btn-primary" href="/z/index.php/m/goods/edit/1307206">上一个</a>
+      <a class="btn btn-sm btn-primary" href="/z/index.php/m/goods/edit/1085365">下一个</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a class="btn btn-sm btn-danger" href="/z/index.php/m/goods/delete/1085366"><i class="fa fa-hand-o-up"></i>&nbsp;&nbsp;&nbsp;删除</a>
+  <a class="btn btn-sm btn-primary" href="/z/index.php/m/goods/page"><i class="fa fa-hand-o-up"></i>&nbsp;&nbsp;&nbsp;返回</a>
+</span>
+<span class="action-span1">
+<a href="/z/index.php/m/main/right"><i class="fa fa-home fa-fw"></i>&nbsp;管理中心</a>
+ - 编辑</span>
+<div class="clea"></div>
+</h1>
+<link rel="stylesheet" href="/libs/editor/themes/default/default.css" />
+<link rel="stylesheet" href="/libs/editor/plugins/code/prettify.css" />
+<script charset="utf-8" src="/libs/editor/kindeditor.js"></script>
+<script charset="utf-8" src="/libs/editor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="/libs/editor/plugins/code/prettify.js"></script>
+<script type="text/javascript" src="/z/system/application/views/js/jquery.dragsort.min.js"></script>
+
+<script>
+    var current_goods_id = 1085366;
+    var msg_code = 0;
+    if(msg_code == 1){
+        alert('保存成功');
+    }
+    KindEditor.ready(function(K) {
+        var editor1 = K.create('textarea[name="content"]', {
+            themeType : 'simple',
+            cssPath : '/libs/editor/plugins/code/prettify.css',
+            uploadJson : '/libs/editor/upload_json.php?goods_id=1085366&ctime=1525739261',
+            fileManagerJson : '/libs/editor/file_manager_json.php?goods_id=1085366&ctime=1525739261',
+            allowFileManager : true
+        });
+        K('#image_file2').click(function() {
+            editor1.loadPlugin('image', function() {
+                editor1.plugin.imageDialog({
+                    showRemote : false,
+                    imageUrl : '',
+                    clickFn : function(url, title, width, height, border, align) {
+                        $("#img").attr('src',url);
+                        url = url.replace(/http:\/\/img\.1ju\.cc\//, "");
+                        editor1.hideDialog();
+
+                        window.location = window.location;
+                    }
+                });
+            });
+        });
+        K('#image_file').click(function() {
+            editor1.loadPlugin('multiimage', function() {
+                editor1.plugin.multiImageDialog({
+                    clickFn : function(urlList) {
+                        window.location = window.location;
+                    }
+                });
+            });
+        });
+        prettyPrint();
+    });
+    function saveGalleryOrder(){
+        //alert($(this).html());
+        var img_ids = $(".goods_gallery li").map(function(){
+            return $(this).attr('img-id');
+        }).get();
+
+        $.post("/z/index.php/m/goods/img_action", { goods_id:current_goods_id, img_ids: img_ids, action: 'img_sort' },
+            function(json){
+                if(json.code == 1){
+
+                }else{
+                    alert(json.msg);
+                }
+            },'json');
+    }
+    $(function(){
+        $('.img_del').click(function(event){
+            event.stopPropagation();
+            var img_id = $(this).attr('img-id');
+            $.post("/z/index.php/m/goods/img_action", { img_id: img_id, action: 'img_del' },
+                function(json){
+                    if(json.code == 1){
+                        $('#img_box_'+json.data.img_id).remove();
+                    }else{
+                        alert(json.msg);
+                    }
+                },'json');
+
+        });
+        $('.img_hide').click(function(event){
+            event.stopPropagation();
+            var img_id = $(this).attr('img-id');
+            $('#hide_mark_'+img_id).removeClass('fa-eye').removeClass('fa-eye-slash').addClass('fa-refresh fa-spin');
+            $.post("/z/index.php/m/goods/img_action", { img_id: img_id, action: 'img_hide' },
+                function(json){
+                    $('#hide_mark_'+json.data.img_id).removeClass('fa-spin').removeClass('fa-refresh');
+                    if(json.code == 1){
+                        if(json.data.status == 1){
+                            $('#hide_mark_'+json.data.img_id).parent('.img_hide').removeClass('red');
+                            $('#hide_mark_'+json.data.img_id).removeClass('fa-eye-slash').addClass('fa-eye');
+                        }else{
+                            $('#hide_mark_'+json.data.img_id).parent('.img_hide').addClass('red');
+                            $('#hide_mark_'+json.data.img_id).removeClass('fa-eye').addClass('fa-eye-slash');
+                        }
+                    }else{
+                        alert(json.msg);
+                    }
+                },'json');
+        });
+
+        $(".goods_gallery").dragsort({
+            dragSelector: "img",
+            dragBetween: false,
+            dragEnd: saveGalleryOrder,
+            placeHolderTemplate: "<li class='galleryPlaceHolder'></li>",
+            scrollSpeed: 5
+        });
+    });
+</script>
+
+<style type="text/css">
+    #myTab{ padding-right: 80px;}
+    #myTab > li{ float: right; }
+    #myTabContent{ background-color: #fff;}
+    #general-table{border: 1px solid #ccc;}
+    .button-div{ background-color: #fff; padding: 8px 0 20px;}
+    html,body,p,td,div{font-size:14px;}
+    .attr-group .input-group,.attr-group .checkbox-inline{margin-bottom:10px; margin-right:10px;}
+
+    td.narrow-label{width:100px;}
+
+    .red{color:red !important;}
+
+
+
+    .goods_gallery{padding:10px; list-style-type:none;}
+    .goods_gallery li{float:left; padding:4px; border-radius:4px; position:relative; border:1px solid #ddd; margin:10px;}
+    .goods_gallery li img{height:200px;}
+    .goods_gallery li .img_del{
+        position: absolute; right:-10px; top:-3px; width:40px; height:40px; line-height: 40px;
+        color:white; background: #CE4444; border-radius: 4px;
+        text-align: center; cursor: pointer; opacity:0.6;font-size:24px;
+    }
+    .goods_gallery li .img_view{
+        position: absolute; right:35px; top:-3px; width:40px; height:40px; line-height: 40px;
+        color:white; background: #337ab7; border-radius: 4px; padding-top:8px;
+        text-align: center; cursor: pointer; opacity:0.4;font-size:24px;
+    }
+    .goods_gallery li .img_download{
+        position: absolute; right:80px; top:-3px; width:40px; height:40px; line-height: 40px;
+        color:white; background: #337ab7; border-radius: 4px; padding-top:8px;
+        text-align: center; cursor: pointer; opacity:0.4;font-size:24px;
+    }
+    .goods_gallery li .img_hide{
+        position: absolute; right:125px; top:-3px; width:40px; height:40px; line-height: 40px;
+        color:white; background: #337ab7; border-radius: 4px; padding-top:8px;
+        text-align: center; cursor: pointer; opacity:0.8; font-size:24px;
+    }
+    .goods_gallery li .img_del:hover,.goods_gallery li .img_view:hover,.goods_gallery li .img_download:hover,.goods_gallery li .img_hide:hover{opacity:1;}
+
+    .goods_gallery li.galleryPlaceHolder{height:208px; width:150px; border:dashed 1px gray !important;}
+</style>
+
+<style type="text/css">
+    #cat_box{
+        position: absolute; top:30px; display: none; left:330px; max-height:500px;
+        border:1px solid #ccc; border-radius: 3px; background: #fff;
+        padding:5px; z-index:100;
+    }
+    #cat_box #cat_container{height: 100%;}
+    #cat_box ul{height:100%;overflow-x: hidden; overflow-y: auto; float:left; padding:0; margin:0; list-style-type: none;  }
+    #cat_box ul li{padding:3px 10px 3px 3px; margin:2px 5px; cursor: pointer; white-space:nowrap;}
+    #cat_box ul li:hover{color: #c45500;}
+    #cat_box ul li.on{color: #c45500; background: #eee; border-radius: 3px;}
+</style>
+
+<link rel="stylesheet" type="text/css" href="/libs/imgupload/style.css"/>
+
+<ul role="tablist" class="nav nav-tabs" id="myTab">
+    <li role="presentation" class="active"><a aria-expanded="true" aria-controls="basic" data-toggle="tab" role="tab" id="basic-tab" href="#basic">基本信息</a></li>
+</ul>
+
+<form  action="/z/index.php/m/goods/update/1085366" method="post" enctype="multipart/form-data" name="theForm" onsubmit="return checkSubmit()" class="form-inline">
+    <div class="tab-content" id="myTabContent" style="padding:10px 20px;">
+        <div aria-labelledby="basic-tab" id="basic" class="tab-pane fade active in" role="tabpanel">
+            <!-- ****************************************** -->
+            <!-- 基本信息tab开始 -->
+            <!-- ****************************************** -->
+            <table width="90%" id="general-table" align="center" class="table">
+                <tr>
+                    <td class="narrow-label">产品编号</td>
+                    <td>1085366</td>
+                </tr>
+                <tr>
+                    <td class="narrow-label">产品相册</td>
+                    <td>
+                        <ul class="goods_gallery">
+                                <li id="img_box_10437530" img-id="10437530" >
+                                    <a class="img_download" href="http://img.kershop.com/2017/1122/842151/5507842.jpg?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-download fa-fw"></i></a>
+                                    <a class="img_view" href="http://img.kershop.com/2017/1122/842151/5507842.jpg?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-search fa-fw"></i></a>
+                                    <span class="img_del" img-id="10437530">X</span>
+                                    <img id="img" src="http://img.kershop.com/2017/1122/842151/5507842.jpg?x-oss-process=style/thumb_200" alt="无图片">
+                                </li>
+                                <li id="img_box_10437528" img-id="10437528" >
+                                    <a class="img_download" href="http://img.kershop.com/2017/1122/842151/5507840.jpg?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-download fa-fw"></i></a>
+                                    <a class="img_view" href="http://img.kershop.com/2017/1122/842151/5507840.jpg?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-search fa-fw"></i></a>
+                                    <span class="img_del" img-id="10437528">X</span>
+                                    <img id="img" src="http://img.kershop.com/2017/1122/842151/5507840.jpg?x-oss-process=style/thumb_200" alt="无图片">
+                                </li>
+                                <li id="img_box_10437527" img-id="10437527" >
+                                    <a class="img_download" href="http://img.kershop.com/2017/1122/842151/5507839.jpg?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-download fa-fw"></i></a>
+                                    <a class="img_view" href="http://img.kershop.com/2017/1122/842151/5507839.jpg?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-search fa-fw"></i></a>
+                                    <span class="img_del" img-id="10437527">X</span>
+                                    <img id="img" src="http://img.kershop.com/2017/1122/842151/5507839.jpg?x-oss-process=style/thumb_200" alt="无图片">
+                                </li>
+                                <li id="img_box_10437526" img-id="10437526" >
+                                    <a class="img_download" href="http://img.kershop.com/2017/1122/842151/5507838.jpg?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-download fa-fw"></i></a>
+                                    <a class="img_view" href="http://img.kershop.com/2017/1122/842151/5507838.jpg?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-search fa-fw"></i></a>
+                                    <span class="img_del" img-id="10437526">X</span>
+                                    <img id="img" src="http://img.kershop.com/2017/1122/842151/5507838.jpg?x-oss-process=style/thumb_200" alt="无图片">
+                                </li>
+                                    <li id="img_box_10437525" img-id="10437525" >
+                                    <a class="img_download" href="http://img.kershop.com/2017/1122/842151/5507837.jpg?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-download fa-fw"></i></a>
+                                    <a class="img_view" href="http://img.kershop.com/2017/1122/842151/5507837.jpg?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-search fa-fw"></i></a>
+                                    <span class="img_del" img-id="10437525">X</span>
+                                    <img id="img" src="http://img.kershop.com/2017/1122/842151/5507837.jpg?x-oss-process=style/thumb_200" alt="无图片">
+                                </li>
+                                <li id="img_box_10437545" img-id="10437545" >
+                                    <a class="img_download" href="http://img.kershop.com/2017/1122/842151/1511763206_13995.jpg?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-download fa-fw"></i></a>
+                                    <a class="img_view" href="http://img.kershop.com/2017/1122/842151/1511763206_13995.jpg?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-search fa-fw"></i></a>
+                                    <span class="img_del" img-id="10437545">X</span>
+                                    <img id="img" src="http://img.kershop.com/2017/1122/842151/1511763206_13995.jpg?x-oss-process=style/thumb_200" alt="无图片">
+                                </li>
+                                <li id="img_box_10437537" img-id="10437537" >
+                                    <a class="img_download" href="http://img.kershop.com/2017/1122/842151/1511763000_34222.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-download fa-fw"></i></a>
+                                    <a class="img_view" href="http://img.kershop.com/2017/1122/842151/1511763000_34222.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-search fa-fw"></i></a>
+                                    <span class="img_del" img-id="10437537">X</span>
+                                    <img id="img" src="http://img.kershop.com/2017/1122/842151/1511763000_34222.png?x-oss-process=style/thumb_200" alt="无图片">
+                                </li>
+                                <li id="img_box_10437534" img-id="10437534" >
+                                    <a class="img_download" href="http://img.kershop.com/2017/1122/842151/1511762997_16947.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-download fa-fw"></i></a>
+                                    <a class="img_view" href="http://img.kershop.com/2017/1122/842151/1511762997_16947.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-search fa-fw"></i></a>
+                                    <span class="img_del" img-id="10437534">X</span>
+                                    <img id="img" src="http://img.kershop.com/2017/1122/842151/1511762997_16947.png?x-oss-process=style/thumb_200" alt="无图片">
+                                </li>
+                                <li id="img_box_10437536" img-id="10437536" >
+                                    <a class="img_download" href="http://img.kershop.com/2017/1122/842151/1511762999_61758.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-download fa-fw"></i></a>
+                                    <a class="img_view" href="http://img.kershop.com/2017/1122/842151/1511762999_61758.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-search fa-fw"></i></a>
+                                    <span class="img_del" img-id="10437536">X</span>
+                                    <img id="img" src="http://img.kershop.com/2017/1122/842151/1511762999_61758.png?x-oss-process=style/thumb_200" alt="无图片">
+                                </li>
+                                <li id="img_box_10437533" img-id="10437533" >
+                                    <a class="img_download" href="http://img.kershop.com/2017/1122/842151/1511762996_64307.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-download fa-fw"></i></a>
+                                    <a class="img_view" href="http://img.kershop.com/2017/1122/842151/1511762996_64307.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-search fa-fw"></i></a>
+                                    <span class="img_del" img-id="10437533">X</span>
+                                    <img id="img" src="http://img.kershop.com/2017/1122/842151/1511762996_64307.png?x-oss-process=style/thumb_200" alt="无图片">
+                                </li>
+                                                            <li id="img_box_10437531" img-id="10437531" >
+                                                                        <a class="img_download" href="http://img.kershop.com/2017/1122/842151/1511762995_46708.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-download fa-fw"></i></a>
+                                    <a class="img_view" href="http://img.kershop.com/2017/1122/842151/1511762995_46708.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-search fa-fw"></i></a>
+                                    <span class="img_del" img-id="10437531">X</span>
+                                    <img id="img" src="http://img.kershop.com/2017/1122/842151/1511762995_46708.png?x-oss-process=style/thumb_200" alt="无图片">
+                                </li>
+                                <li id="img_box_10437532" img-id="10437532" >
+                                    <a class="img_download" href="http://img.kershop.com/2017/1122/842151/1511762995_14880.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-download fa-fw"></i></a>
+                                    <a class="img_view" href="http://img.kershop.com/2017/1122/842151/1511762995_14880.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-search fa-fw"></i></a>
+                                    <span class="img_del" img-id="10437532">X</span>
+                                    <img id="img" src="http://img.kershop.com/2017/1122/842151/1511762995_14880.png?x-oss-process=style/thumb_200" alt="无图片">
+                                </li>
+                                                            <li id="img_box_10437538" img-id="10437538" >
+                                                                        <a class="img_download" href="http://img.kershop.com/2017/1122/842151/1511763001_18276.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-download fa-fw"></i></a>
+                                    <a class="img_view" href="http://img.kershop.com/2017/1122/842151/1511763001_18276.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-search fa-fw"></i></a>
+                                    <span class="img_del" img-id="10437538">X</span>
+                                    <img id="img" src="http://img.kershop.com/2017/1122/842151/1511763001_18276.png?x-oss-process=style/thumb_200" alt="无图片">
+                                </li>
+                                <li id="img_box_10437540" img-id="10437540" >
+                                    <a class="img_download" href="http://img.kershop.com/2017/1122/842151/1511763003_15485.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-download fa-fw"></i></a>
+                                    <a class="img_view" href="http://img.kershop.com/2017/1122/842151/1511763003_15485.png?x-oss-process=style/thumb_1000" target="_blank"><i class="fa fa-search fa-fw"></i></a>
+                                    <span class="img_del" img-id="10437540">X</span>
+                                    <img id="img" src="http://img.kershop.com/2017/1122/842151/1511763003_15485.png?x-oss-process=style/thumb_200" alt="无图片">
+                                </li>
+                                <div class="clear"></div>
+                        </ul>
+                        <input class="hide" type="button" class="form-control" id="image_file" value="上传图片" />
+                        <div style="padding-top:10px;">
+                            <div id="ossfile">你的浏览器不支持flash,Silverlight或者HTML5！</div>
+                            <div id="container">
+                                <a id="selectfiles" href="javascript:void(0);" class='btn btn-default'>选择文件</a>
+                                <a id="postfiles" href="javascript:void(0);" class='btn btn-primary'>开始上传</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="narrow-label">产品分类</td>
+                    <td class="attr-group">
+                        <input type="text" class="form-control" name="cat_path" id="cat_path" size="35" value="服装,鞋靴,箱包/皮具箱包/女包" placeholder="产品分类" autocomplete="off">
+                        <input type="hidden" name="cat_id" id="cat_id" value="1187" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="narrow-label">审核状态</td>
+                    <td>
+                        <label class="radio-inline">
+                            <input type="radio" name="status"  value="1">通过
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="status" checked value="2">待审核
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="status"  value="3">失效
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="narrow-label">上下架</td>
+                    <td>
+                        <label class="radio-inline">
+                            <input type="radio" name="online" checked value="1">上架
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="online"  value="2">下架
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="online"  value="3">过滤
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="online"  value="4">侵权
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="online"  value="5">屏蔽
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="narrow-label">产品类型</td>
+                    <td>
+                        <label class="radio-inline">
+                            <input type="radio" name="type"  value="1">重点
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="type"  value="2">原创
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="type"  value="3">海外
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="type"  value="4">抓取
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="type"  value="5">其它
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="type" checked value="6">产品库
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="narrow-label">商家信息</td>
+                    <td>
+                        <a class="btn btn-default" href="https://detail.1688.com/offer/559984742542.html?spm=a2615.7691456.0.0.28a30e06OON9Xl" target="_blank" role="button">产品页</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="narrow-label">产品信息</td>
+                    <td class="attr-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">厂商名称:</div>
+                            <input type="text" class="form-control" name="manufactuer" value="" placeholder="建议填写">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-addon">品牌名称:</div>
+                            <input type="text" class="form-control" name="brand" value="FFRFFD" placeholder="建议填写">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <div class="input-group-addon">厂商编号:</div>
+                            <input type="text" class="form-control" name="manufactuer_id" value="" placeholder="建议填写">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-addon">内部SKU:</div>
+                            <input type="text" class="form-control" name="sku_id" value="" placeholder="sku">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-addon">-</div>
+                            <input type="text" class="form-control" name="sku_id_ext" value="" placeholder="sku修正">
+                            <div class="input-group-addon">可不填(建议两位英文字母)</div>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <div class="input-group-addon">产品来源:</div>
+                            <input type="text" class="form-control" name="source_site" value="1688" placeholder="1688">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <div class="input-group-addon">来源网址:</div>
+                            <textarea class="form-control" rows="2" cols="52" name="source_url" placeholder="来源网址">https://detail.1688.com/offer/559984742542.html?spm=a2615.7691456.0.0.28a30e06OON9Xl</textarea>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <div class="input-group-addon">附加备注:</div>
+                            <input type="text" class="form-control" size="54" name="mark" value="" placeholder="附加备注">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="narrow-label">产品码</td>
+                    <td class="attr-group">
+                        <select name="upc_type" class="form-control">
+                            <option value="EAN" selected>EAN</option>
+                            <option value="UPC" >UPC</option>
+                        </select>
+                        <input type="text" class="form-control" name="upc_value" value="9112555821236" placeholder="UPC/EAN">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="narrow-label">成本运费</td>
+                    <td class="attr-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">采购价格:</div>
+                            <input type="text" class="form-control" size="10" name="price_base" value="81.00" placeholder="采购价格">
+                            <div class="input-group-addon">人民币(¥)</div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-addon">产品重量:</div>
+                            <input type="text" class="form-control" size="5" name="weight" value="0.90">
+                            <div class="input-group-addon">千克(kg)</div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-addon">尺寸:长</div>
+                            <input type="text" class="form-control" size ="4" name="size_l" value="31" placeholder="长">
+                            <div class="input-group-addon">宽</div>
+                            <input type="text" class="form-control" size ="4" name="size_w" value="12" placeholder="宽">
+                            <div class="input-group-addon">高</div>
+                            <input type="text" class="form-control" size ="4" name="size_h" value="20" placeholder="高">
+                            <div class="input-group-addon">厘米(cm)</div>
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <div class="input-group-addon">国内运费:</div>
+                            <input type="text" class="form-control" size="12" name="postage_local" value="15.00" placeholder="国内运费">
+                            <div class="input-group-addon">¥</div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-addon">折扣:</div>
+                            <input type="text" class="form-control" size="10" name="discount" value="1.00" placeholder="折扣系数">
+                            <div class="input-group-addon">系数</div>
+                            <input type="hidden" name="exchange_day" value="2018-08-17" />
+                        </div>
+                        <br>
+                        <table class="table table-bordered hide" style="width:80%;margin:0 5px;">
+                            <thead>
+                            <tr>
+                                <th style="text-align: right;width:70px;">#</th>
+                                <th>美国</th><th>加拿大</th><th>墨西哥</th><th>英国</th><th>法国</th><th>德国</th><th>意大利</th><th>西班牙</th><th>日本</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="multi_postage">
+                                <td style="text-align: right;font-weight:bold;">运费(¥)</td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr class="multi_price">
+                                <td style="text-align: right;font-weight:bold;">售价(¥)</td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr class="multi_price2">
+                                <td style="text-align: right;font-weight:bold;">当地价</td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr class="multi_price3" style="color:#449d44;">
+                                <td style="text-align: right;font-weight:bold;">优化</td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-bordered" style="width:80%;margin:0 5px;">
+                            <thead>
+                            <tr>
+                                <th style="text-align: right;width:70px;">#</th>
+                                <th>美国<label style="color:#f60;">[价格未保存]</label></th>
+                                <th>加拿大<label style="color:#f60;">[价格未保存]</label></th>
+                                <th>墨西哥<label style="color:#f60;">[价格未保存]</label></th>
+                                <th>英国<label style="color:#f60;">[价格未保存]</label></th>
+                                <th>法国<label style="color:#f60;">[价格未保存]</label></th>
+                                <th>德国<label style="color:#f60;">[价格未保存]</label></th>
+                                <th>意大利<label style="color:#f60;">[价格未保存]</label></th>
+                                <th>西班牙<label style="color:#f60;">[价格未保存]</label></th>
+                                <th>日本<label style="color:#f60;">[价格未保存]</label></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="multi_postage_new">
+                                <td style="text-align: right;font-weight:bold;">运费(¥)</td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr class="multi_price_new">
+                                <td style="text-align: right;font-weight:bold;">售价(¥)</td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr class="multi_price2_new">
+                                <td style="text-align: right;font-weight:bold;">外币(<i class="fa fa-question tippy" title="汇率日期：2018-08-17<br>USD : 0.1452<br>MXN : 2.7370<br>JPY : 16.1100<br>GBP : 0.1143<br>EUR : 0.1277<br>CAD : 0.1908<br>AUD : 0.1950<br>" style="color:#f60;"></i>)</td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr class="multi_price3_new" style="color:#449d44;">
+                                <td style="text-align: right;font-weight:bold;">优化</td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            <tr class="multi_price4_new" style="color:#449d44;">
+                                <td style="text-align: right;font-weight:bold;">最终(<a href="javascript:" id="bt_price_refresh"><i class="fa fa-refresh"></i></a>)</td>
+                                <td><input type="text" class="form-control" size="8" value="0.00" name="price_us" /></td>
+                                <td><input type="text" class="form-control" size="8" value="0.00" name="price_ca" /></td>
+                                <td><input type="text" class="form-control" size="8" value="0.00" name="price_mx" /></td>
+                                <td><input type="text" class="form-control" size="8" value="0.00" name="price_uk" /></td>
+                                <td><input type="text" class="form-control" size="8" value="0.00" name="price_fr" /></td>
+                                <td><input type="text" class="form-control" size="8" value="0.00" name="price_de" /></td>
+                                <td><input type="text" class="form-control" size="8" value="0.00" name="price_it" /></td>
+                                <td><input type="text" class="form-control" size="8" value="0.00" name="price_es" /></td>
+                                <td><input type="text" class="form-control" size="8" value="0.00" name="price_ja" /></td>
+                            </tr>
+                            <tr class="multi_price5_new" style="color:#449d44;">
+                                <td style="text-align: right;font-weight:bold;">利润(<span class="tippy" title="最终售价换算人民币-采购成本-国际物流-国内快递" style="color:#f60;">¥</span>)</td>
+                                <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <div class="input-group hide">
+                            <div class="input-group-addon">美元销售价格:</div>
+                            <input type="text" class="form-control" size="18" name="price_market_usd" value="0" placeholder="美元销售价格">
+                            <div class="input-group-addon">$</div>
+                        </div>
+                        <div class="input-group hide">
+                            <div class="input-group-addon">国际运费:</div>
+                            <input type="text" class="form-control" size="18" name="postage_international" value="0.00" placeholder="国际运费">
+                            <div class="input-group-addon">¥</div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-addon">库存数量:</div>
+                            <input type="text" class="form-control" size="6" name="stock" value="36">
+                        </div>
+                        <div class="input-group">
+                            <div class="input-group-addon">预处理时间:</div>
+                            <input type="text" class="form-control" size="6" name="pretreatment" value="1">
+                            <div class="input-group-addon">天（现货填1）</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="narrow-label">产品简称</td>
+                    <td class="attr-group">
+                        <div class="input-group" style="margin-bottom:0;">
+                            <div class="input-group-addon">英文简称:</div>
+                            <input type="text" class="form-control" name="title_short" value="bag" placeholder="英文简称">
+                        </div>
+                        <div class="input-group" style="margin-bottom:0; display: none;">
+                            <div class="input-group-addon">Color:</div>
+                            <input type="text" class="form-control" name="goods_color" value="" placeholder="选填颜色">
+                        </div>
+                        <div class="input-group" style="margin-bottom:0; display: none;">
+                            <div class="input-group-addon">Size:</div>
+                            <input type="text" class="form-control" name="goods_size" value="" placeholder="选填尺寸">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="narrow-label">产品介绍</td>
+                    <td>
+                        <textarea name="goods_base_json" id="goods_base_json" class="hide">{"zh":{"title":"Women PU Leather Handbags Six-piece Sets Mother Package Large Capacity Weave Pattern Colored Ribbon Ladies Bag","keywords":"Women's Handbag, Shoulder Bag, Top Handle Bags, Satchels\nTote Bag, Cross Body Bags, PU Leather bag, Messenger Bag\nShoulder Pack, Daypack, men Sling Bag, Multiple Pockets, Long Strap\nLarge Capacity, Light Weight, room, compartment","keypoints":"Trendy fashion unique design\nIt has a detachable single shoulder strap that can be worn multiple ways\nCapacity: Can hold your wallet, umbrella, books, etc.\nHigh-quality PU material; smooth zipper; resistant to pollution; the perfect size for ladies\nApplications: Work, weekend getaways, occasional excursions, gyms, mountaineering etc. to provide personalized luggage.","description":"\u6b3e\u5f0f:\u5973\u5f0f\u5355\u80a9\u5305\n\u9762\u6599\u8d28\u5730:PU\n\u91cc\u6599\u8d28\u5730:PU\n\u7bb1\u5305\u6f6e\u6d41\u6b3e\u5f0f:\u5b50\u6bcd\u5305\n\u5f00\u76d6\u65b9\u5f0f:\u62c9\u94fe\n\u6d41\u884c\u5143\u7d20:\u7f16\u7ec7\n\u5305\u5185\u90e8\u7ed3\u6784:\u624b\u673a\u888b,\u62c9\u94fe\u6697\u888b\n\u80a9\u5e26\u6839\u6570:\u5355\u6839\n\u7bb1\u5305\u5927\u5c0f:\u4e2d\n\u56fe\u6848:\u7eaf\u8272\n\u98ce\u683c:\u6c11\u65cf\u98ce\n\u52a0\u5de5\u65b9\u5f0f:\u538b\u82b1\n\u786c\u5ea6:\u4e2d\u504f\u8f6f\n\u989c\u8272:\u7ea2\u8272,\u6d45\u7070\u8272,\u84dd\u8272,\u9ed1\u8272,\u7c89\u7ea2\u8272"},"en":{"title":"Women PU Leather Handbags Six-piece Sets Mother Package Large Capacity Weave Pattern Colored Ribbon Ladies Bag","keywords":"Women's Handbag Shoulder Bag Top Handle Bags Satchels\nTote Bag Cross Body Bags PU Leather Bag Messenger Bag\nShoulder Pack Daypack Men Sling Bag Multiple Pockets Long Strap\nLarge Capacity Light Weight Room Compartment","keypoints":"Trendy fashion unique design\nIt has a detachable single shoulder strap that can be worn multiple ways\nCapacity: Can hold your wallet, umbrella, books, etc.\nHigh-quality PU material; smooth zipper; resistant to pollution; the perfect size for ladies\nApplications: Work, weekend getaways, occasional excursions, gyms, mountaineering etc. to provide personalized luggage.","description":"Style: women's shoulder bag\nFabric texture: PU\nLining texture: PU\nBags trendy style: Nut package\nOpening way: zipper\nPopular elements: weaving\nPackage internal structure: cell phone pocket, zipper pocket\nStrap root number: single\nBag size: Medium\npattern: plain\nStyle: Ethnic style\nProcessing methods: embossing\nHardness: Medium soft\nColor: red, light gray, blue, black, pink"},"es":{"target":"es","title":"Bolsos De Cuero De La PU De Las Mujeres Conjuntos De Seis Piezas Paquete De La Madre De Gran Capacidad Armadura Patr\u00f3n Coloreado Se\u00f1oras De La Cinta Bolsa","keywords":"Bolso De La Mujer Bolso De Hombro Bolsos Superiores De La Manija Bolsos\nLa Bolsa De Asas Bolsas Cruzadas Del Cuerpo Bolso De Cuero De La PU Bolso Del Mensajero\nPaquete De Hombro Mochila Bolso Honda Para Hombres Bolsillos M\u00faltiples Correa Larga\nGran Capacidad Peso Ligero Habitaci\u00f3n Compartimento","keypoints":"Dise\u00f1o \u00fanico de moda\nTiene una correa de hombro individual desmontable que se puede usar de m\u00faltiples maneras\nCapacidad: puede contener su billetera, paraguas, libros, etc.\nMaterial PU de alta calidad, cremallera lisa, resistente a la contaminaci\u00f3n, el tama\u00f1o perfecto para damas\nAplicaciones: trabajo, escapadas de fin de semana, excursiones ocasionales, gimnasios, monta\u00f1ismo, etc. para proporcionar equipaje personalizado.","description":"Estilo: bolso de hombro de las mujeres\nTextura de la tela: PU\nTextura de la guarnici\u00f3n: PU\nBolsos estilo de moda: paquete de tuerca\nForma de apertura: cremallera\nElementos populares: tejido\nEstructura interna del paquete: bolsillo del tel\u00e9fono celular, bolsillo con cremallera\nN\u00famero de ra\u00edz de la correa: solo\nTama\u00f1o de la bolsa: medio\nPatr\u00f3n: color s\u00f3lido\nEstilo: estilo \u00e9tnico\nM\u00e9todos de procesamiento: relieve\nDureza: medio suave\nColor: rojo, gris claro, azul, negro, rosa"},"it":{"target":"it","title":"Borse In Pelle Da Donna In PU Set Da Sei Pezzi Borsa Da Donna Grande Capacit\u00e0 Tessere Modello Borsa Da Donna In Nastro Colorato","keywords":"Borsa Da Donna Borsa A Tracolla Borse Con Manico Superiore Cartelle\nTote Bag Cross Body Bags Borsa In Pelle PU Messenger Bag\nShoulder Pack Daypack Borsa A Tracolla Per Uomo Tasche Multiple Cinturino Lungo\nGrande Capacit\u00e0 Peso Leggero Stanza Compartimento","keypoints":"Design unico alla moda alla moda\nHa una tracolla singola staccabile che pu\u00f2 essere indossata in pi\u00f9 modi\nCapacit\u00e0: pu\u00f2 contenere portafoglio, ombrello, libri, ecc.\nMateriale in PU di alta qualit\u00e0, cerniera liscia, resistente all'inquinamento, la taglia perfetta per le donne\nApplicazioni: lavoro, fughe del fine settimana, escursioni occasionali, palestre, alpinismo ecc. Per fornire bagagli personalizzati.","description":"Stile: borsa a tracolla da donna\nTessitura del tessuto: PU\nFodera interna: PU\nBorse stile alla moda: pacchetto Nut\nModo di apertura: cerniera\nElementi popolari: tessitura\nStruttura interna del pacchetto: tasca per cellulare, tasca con cerniera\nNumero della radice della cinghia: singolo\nDimensione della borsa: media\nModello: tinta unita\nStile: stile etnico\nMetodi di elaborazione: goffratura\nDurezza: mediamente morbida\nColore: rosso, grigio chiaro, blu, nero, rosa"},"fr":{"target":"fr","title":"Femmes En Cuir PU Sacs \u00e0 Main Six-pi\u00e8ces Ens M\u00e8re Paquet De Grande Capacit\u00e9 Weave Motif Color\u00e9 Ruban Sac De Dames","keywords":"Sac \u00e0 Main Pour Femmes Sac \u00e0 Bandouli\u00e8re Sacs \u00e0 Poign\u00e9e Sup\u00e9rieure Sacoches\nSac Fourre-tout Sacs De Corps De Croix Sac En Cuir D'unit\u00e9 Centrale Sac De Messager\nSac \u00e0 Bandouli\u00e8re Sac \u00e0 Dos Sac \u00e0 Bandouli\u00e8re Pour Hommes Poches Multiples Longue Sangle\nGrande Capacit\u00e9 Poids L\u00e9ger Pi\u00e8ce Compartiment","keypoints":"Mode unique \u00e0 la mode\nIl a une bandouli\u00e8re unique d\u00e9tachable qui peut \u00eatre port\u00e9 de plusieurs fa\u00e7ons\nCapacit\u00e9: Peut contenir votre portefeuille, votre parapluie, vos livres, etc.\nMat\u00e9riau PU de haute qualit\u00e9, fermeture \u00e0 glissi\u00e8re lisse, r\u00e9sistant \u00e0 la pollution, la taille parfaite pour les dames\nApplications: Travail, escapades de week-end, excursions occasionnelles, gymnases, alpinisme etc. pour fournir des bagages personnalis\u00e9s.","description":"Style: sac \u00e0 bandouli\u00e8re pour femme\nTexture de tissu: PU\nTexture de doublure: PU\nSacs \u00e0 la mode style: paquet de noix\nMani\u00e8re d'ouverture: fermeture \u00e0 glissi\u00e8re\n\u00c9l\u00e9ments populaires: tissage\nStructure interne du paquet: poche pour t\u00e9l\u00e9phone portable, poche zipp\u00e9e\nStrap num\u00e9ro de la racine: single\nTaille du sac: moyen\nMotif: couleur unie\nStyle: Style ethnique\nM\u00e9thodes de traitement: gaufrage\nDuret\u00e9: moyen doux\nCouleur: rouge, gris clair, bleu, noir, rose"},"de":{"target":"de","title":"Frauen Pu-leder Handtaschen Sechsteilige S\u00e4tze Mutter Paket Gro\u00dfe Kapazit\u00e4t Weben Muster Farbige Band Damen Tasche","keywords":"Frauen-Handtasche Schultertasche Henkeltasche Schulranzen\nTragetasche Umh\u00e4ngetasche PU-Leder-Tasche Messenger Bag\nShoulder Pack Daypack Herren Sling Bag Mehrere Taschen Langer Riemen\nGro\u00dfe Kapazit\u00e4t Geringes Gewicht Raum Fach","keypoints":"Einzigartiger Entwurf der modischen Mode\nEs hat einen abnehmbaren einzelnen Schultergurt, der auf mehrere Arten getragen werden kann\nKapazit\u00e4t: Kann Ihre Brieftasche, Regenschirm, B\u00fccher, etc. halten\nHochwertige PU-Material, glatte Rei\u00dfverschluss, resistent gegen Verschmutzung, die perfekte Gr\u00f6\u00dfe f\u00fcr Damen\nAnwendungen: Arbeit, Wochenendausfl\u00fcge, gelegentliche Ausfl\u00fcge, Fitnessstudios, Bergsteigen usw., um personalisiertes Gep\u00e4ck zu liefern.","description":"Stil: Damen Schultertasche\nGewebebeschaffenheit: PU\nFutter Textur: PU\nTaschen trendy Stil: Nuss-Paket\n\u00d6ffnungsart: Rei\u00dfverschluss\nBeliebte Elemente: Weben\nPaket interne Struktur: Handytasche, Rei\u00dfverschlusstasche\nBandwurzelnummer: einzeln\nTaschengr\u00f6\u00dfe: Medium\nMuster: Einfarbig\nStil: Ethnischer Stil\nVerarbeitungsmethoden: Pr\u00e4gung\nH\u00e4rte: Mittelweich\nFarbe: rot, hellgrau, blau, schwarz, pink"},"ja":{"target":"ja","title":"\u30ec\u30c7\u30a3\u30fc\u30b9PU\u30ec\u30b6\u30fc\u30cf\u30f3\u30c9\u30d0\u30c3\u30b06\u30d4\u30fc\u30b9\u30bb\u30c3\u30c8\u30de\u30b6\u30fc\u30d1\u30c3\u30b1\u30fc\u30b8\u5927\u5bb9\u91cf\u7e54\u308a\u30d1\u30bf\u30fc\u30f3\u30ab\u30e9\u30fc\u30ea\u30dc\u30f3\u30ec\u30c7\u30a3\u30fc\u30b9\u30d0\u30c3\u30b0","keywords":"\u30ec\u30c7\u30a3\u30fc\u30b9\u30cf\u30f3\u30c9\u30d0\u30c3\u30b0\u3001\u30b7\u30e7\u30eb\u30c0\u30fc\u30d0\u30c3\u30b0\u3001\u30c8\u30c3\u30d7\u30cf\u30f3\u30c9\u30eb\u30d0\u30c3\u30b0\u3001\u30b5\u30c3\u30c1\u30a7\u30eb\n\u30c8\u30fc\u30c8\u30d0\u30c3\u30b0\u3001\u30af\u30ed\u30b9\u30dc\u30c7\u30a3\u30d0\u30c3\u30b0\u3001PU\u30ec\u30b6\u30fc\u30d0\u30c3\u30b0\u3001\u30e1\u30c3\u30bb\u30f3\u30b8\u30e3\u30fc\u30d0\u30c3\u30b0\n\u30b7\u30e7\u30eb\u30c0\u30fc\u30d1\u30c3\u30af\u3001\u30c7\u30a4\u30d1\u30c3\u30af\u3001\u7537\u6027\u30b9\u30ea\u30f3\u30b0\u30d0\u30c3\u30b0\u3001\u30de\u30eb\u30c1\u30dd\u30b1\u30c3\u30c8\u3001\u30ed\u30f3\u30b0\u30b9\u30c8\u30e9\u30c3\u30d7\n\u5927\u5bb9\u91cf\u3001\u8efd\u91cf\u3001\u90e8\u5c4b\u3001\u30b3\u30f3\u30d1\u30fc\u30c8\u30e1\u30f3\u30c8","keypoints":"\u30c8\u30ec\u30f3\u30c7\u30a3\u306a\u30d5\u30a1\u30c3\u30b7\u30e7\u30f3\u306e\u30e6\u30cb\u30fc\u30af\u306a\u30c7\u30b6\u30a4\u30f3\n\u305d\u308c\u306f\u8907\u6570\u306e\u65b9\u6cd5\u3067\u7740\u7528\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u308b\u53d6\u308a\u5916\u3057\u53ef\u80fd\u306a\u30b7\u30f3\u30b0\u30eb\u30b7\u30e7\u30eb\u30c0\u30fc\u30b9\u30c8\u30e9\u30c3\u30d7\u3092\u6301\u3063\u3066\u3044\u307e\u3059\n\u80fd\u529b\uff1a\u8ca1\u5e03\u3001\u5098\u3001\u66f8\u7c4d\u306a\u3069\u3092\u6301\u3061\u8fbc\u3080\u3053\u3068\u304c\u3067\u304d\u307e\u3059\u3002\n\u9ad8\u54c1\u8cea\u306ePU\u7d20\u6750\u3001\u6ed1\u3089\u304b\u306a\u30b8\u30c3\u30d1\u30fc\u3001\u6c5a\u67d3\u306b\u5f37\u3044\u3001\u5973\u6027\u306e\u305f\u3081\u306e\u5b8c\u74a7\u306a\u30b5\u30a4\u30ba\n\u30a2\u30d7\u30ea\u30b1\u30fc\u30b7\u30e7\u30f3\uff1a\u30d1\u30fc\u30bd\u30ca\u30e9\u30a4\u30ba\u3055\u308c\u305f\u8377\u7269\u3092\u63d0\u4f9b\u3059\u308b\u305f\u3081\u306b\u3001\u4ed5\u4e8b\u3001\u9031\u672b\u65c5\u884c\u3001\u6642\u6298\u306e\u9060\u8db3\u3001\u30b8\u30e0\u3001\u767b\u5c71\u306a\u3069\u3002","description":"\u30b9\u30bf\u30a4\u30eb\uff1a\u5973\u6027\u306e\u30b7\u30e7\u30eb\u30c0\u30fc\u30d0\u30c3\u30b0\n\u30d5\u30a1\u30d6\u30ea\u30c3\u30af\u30c6\u30af\u30b9\u30c1\u30e3\uff1aPU\n\u30e9\u30a4\u30cb\u30f3\u30b0\u30c6\u30af\u30b9\u30c1\u30e3\uff1aPU\n\u30d0\u30c3\u30b0\u30c8\u30ec\u30f3\u30c7\u30a3\u306a\u30b9\u30bf\u30a4\u30eb\uff1a\u30ca\u30c3\u30c8\u30d1\u30c3\u30b1\u30fc\u30b8\n\u30aa\u30fc\u30d7\u30cb\u30f3\u30b0\u30a6\u30a7\u30a4\uff1a\u30b8\u30c3\u30d1\u30fc\n\u4eba\u6c17\u306e\u8981\u7d20\uff1a\u88fd\u7e54\n\u30d1\u30c3\u30b1\u30fc\u30b8\u5185\u90e8\u69cb\u9020\uff1a\u643a\u5e2f\u96fb\u8a71\u30dd\u30b1\u30c3\u30c8\u3001\u30d5\u30a1\u30b9\u30ca\u30fc\u30dd\u30b1\u30c3\u30c8\n\u30b9\u30c8\u30e9\u30c3\u30d7\u30eb\u30fc\u30c8\u756a\u53f7\uff1a\u30b7\u30f3\u30b0\u30eb\n\u30d0\u30c3\u30b0\u30b5\u30a4\u30ba\uff1a\u4e2d\n\u30d1\u30bf\u30fc\u30f3\uff1a\u7121\u5730\n\u30b9\u30bf\u30a4\u30eb\uff1a\u30a8\u30b9\u30cb\u30c3\u30af\u30b9\u30bf\u30a4\u30eb\n\u52a0\u5de5\u65b9\u6cd5\uff1a\u30a8\u30f3\u30dc\u30b9\u52a0\u5de5\n\u786c\u5ea6\uff1a\u4e2d\u7a0b\u5ea6\u306e\u67d4\u3089\u304b\u3055\n\u30ab\u30e9\u30fc\uff1a\u30ec\u30c3\u30c9\u3001\u30e9\u30a4\u30c8\u30b0\u30ec\u30fc\u3001\u30d6\u30eb\u30fc\u3001\u30d6\u30e9\u30c3\u30af\u3001\u30d4\u30f3\u30af"}}</textarea>
+                        <ul class="nav nav-tabs">
+                            <li role="presentation" class="active"><a aria-expanded="true" aria-controls="tab_lang_zh" data-toggle="tab" role="tab" href="#tab_lang_zh" id="label_lang_zh">中文</a></li>
+                            <li role="presentation" class=""><a aria-expanded="false" aria-controls="tab_lang_en" data-toggle="tab" role="tab" href="#tab_lang_en" id="label_lang_en">英语</a></li>
+                            <li role="presentation" class=""><a aria-expanded="false" aria-controls="tab_lang_fr" data-toggle="tab" role="tab" href="#tab_lang_fr" id="label_lang_fr">法语</a></li>
+                            <li role="presentation" class=""><a aria-expanded="false" aria-controls="tab_lang_de" data-toggle="tab" role="tab" href="#tab_lang_de" id="label_lang_de">德语</a></li>
+                            <li role="presentation" class=""><a aria-expanded="false" aria-controls="tab_lang_it" data-toggle="tab" role="tab" href="#tab_lang_it" id="label_lang_it">意大利语</a></li>
+                            <li role="presentation" class=""><a aria-expanded="false" aria-controls="tab_lang_es" data-toggle="tab" role="tab" href="#tab_lang_es" id="label_lang_es">西班牙语</a></li>
+                            <li role="presentation" class=""><a aria-expanded="false" aria-controls="tab_lang_ja" data-toggle="tab" role="tab" href="#tab_lang_ja" id="label_lang_ja">日语</a></li>
+                        </ul>
+                        <style type="text/css">
+                            .lang-content .form-group{display: block; margin-bottom:10px;}
+                            .lang-content .form-group label{display: block;}
+                            .lang-content .form-group .form-control{display: block;}
+                        </style>
+                        <div class="tab-content lang-content" id="myTabContent" style="padding:10px 20px;">
+                            <div id="tab_lang_zh" class="tab-pane fade active in" role="tabpanel">
+                                <div class="form-group">
+                                    <label>产品标题：(中文)&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="btn btn-success hide" href="javascript:" id="btn_translate_all" role="button">一键翻译</a>
+                                                                            </label>
+                                    <textarea name="title_zh" id="title_zh" class="form-control" rows="2" cols="75" placeholder="产品标题">Women PU Leather Handbags Six-piece Sets Mother Package Large Capacity Weave Pattern Colored Ribbon Ladies Bag</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>关键字 不超过5行：(中文)</label>
+                                    <textarea name="keywords_zh" id="keywords_zh" class="form-control" rows="4" cols="75" placeholder="关键字 不超过5行">Women's Handbag, Shoulder Bag, Top Handle Bags, Satchels
+Tote Bag, Cross Body Bags, PU Leather bag, Messenger Bag
+Shoulder Pack, Daypack, men Sling Bag, Multiple Pockets, Long Strap
+Large Capacity, Light Weight, room, compartment</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>要点说明 不超过5行：(中文)</label>
+                                    <textarea name="keypoints_zh" id="keypoints_zh" class="form-control" rows="4" cols="80" placeholder="要点说明 不超过5行">Trendy fashion unique design
+It has a detachable single shoulder strap that can be worn multiple ways
+Capacity: Can hold your wallet, umbrella, books, etc.
+High-quality PU material; smooth zipper; resistant to pollution; the perfect size for ladies
+Applications: Work, weekend getaways, occasional excursions, gyms, mountaineering etc. to provide personalized luggage.</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>产品描述：(中文)</label>
+                            <textarea name="description_zh" id="description_zh" class="form-control" rows="6" cols="80" placeholder="产品描述">款式:女式单肩包
+面料质地:PU
+里料质地:PU
+箱包潮流款式:子母包
+开盖方式:拉链
+流行元素:编织
+包内部结构:手机袋,拉链暗袋
+肩带根数:单根
+箱包大小:中
+图案:纯色
+风格:民族风
+加工方式:压花
+硬度:中偏软
+颜色:红色,浅灰色,蓝色,黑色,粉红色</textarea>
+                                </div>
+                            </div>
+                            <div id="tab_lang_en" class="tab-pane fade " role="tabpanel">
+                                <div class="form-group">
+                                    <label>产品标题：(英语)&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="btn btn-success btn_translate" data-target="en" href="javascript:" role="button">翻译</a>
+                                        <a class="btn btn-success" href="javascript:" id="btn_translate_all_en" role="button">一键从英文翻译</a>
+                                    </label>
+                            <textarea name="title_en" id="title_en" class="form-control" rows="2" cols="75" placeholder="产品标题">Women PU Leather Handbags Six-piece Sets Mother Package Large Capacity Weave Pattern Colored Ribbon Ladies Bag</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>关键字 不超过5行：(英语)</label>
+                            <textarea name="keywords_en" id="keywords_en" class="form-control" rows="4" cols="75" placeholder="关键字 不超过5行">Women's Handbag Shoulder Bag Top Handle Bags Satchels
+Tote Bag Cross Body Bags PU Leather Bag Messenger Bag
+Shoulder Pack Daypack Men Sling Bag Multiple Pockets Long Strap
+Large Capacity Light Weight Room Compartment</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>要点说明 不超过5行：(英语)</label>
+                            <textarea name="keypoints_en" id="keypoints_en" class="form-control" rows="4" cols="80" placeholder="要点说明 不超过5行">Trendy fashion unique design
+It has a detachable single shoulder strap that can be worn multiple ways
+Capacity: Can hold your wallet, umbrella, books, etc.
+High-quality PU material; smooth zipper; resistant to pollution; the perfect size for ladies
+Applications: Work, weekend getaways, occasional excursions, gyms, mountaineering etc. to provide personalized luggage.</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>产品描述：(英语)</label>
+                            <textarea name="description_en" id="description_en"  class="form-control" rows="6" cols="80" placeholder="产品描述">Style: women's shoulder bag
+Fabric texture: PU
+Lining texture: PU
+Bags trendy style: Nut package
+Opening way: zipper
+Popular elements: weaving
+Package internal structure: cell phone pocket, zipper pocket
+Strap root number: single
+Bag size: Medium
+pattern: plain
+Style: Ethnic style
+Processing methods: embossing
+Hardness: Medium soft
+Color: red, light gray, blue, black, pink</textarea>
+                                </div>
+                            </div>
+                            <div id="tab_lang_fr" class="tab-pane fade" role="tabpanel">
+                                <div class="form-group">
+                                    <label>产品标题：(法语)&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="btn btn-success btn_translate" data-target="fr"  href="javascript:" role="button">翻译</a>&nbsp;&nbsp;
+                                        <a class="btn btn-success btn_translate_en" data-target="fr"  href="javascript:" role="button">从英文翻译</a>
+                                    </label>
+                            <textarea name="title_fr" id="title_fr" class="form-control" rows="2" cols="75" placeholder="产品标题">Femmes En Cuir PU Sacs à Main Six-pièces Ens Mère Paquet De Grande Capacité Weave Motif Coloré Ruban Sac De Dames</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>关键字 不超过5行：(法语)</label>
+                            <textarea name="keywords_fr" id="keywords_fr" class="form-control" rows="4" cols="75" placeholder="关键字 不超过5行">Sac à Main Pour Femmes Sac à Bandoulière Sacs à Poignée Supérieure Sacoches
+Sac Fourre-tout Sacs De Corps De Croix Sac En Cuir D'unité Centrale Sac De Messager
+Sac à Bandoulière Sac à Dos Sac à Bandoulière Pour Hommes Poches Multiples Longue Sangle
+Grande Capacité Poids Léger Pièce Compartiment</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>要点说明 不超过5行：(法语)</label>
+                            <textarea name="keypoints_fr" id="keypoints_fr" class="form-control" rows="4" cols="80" placeholder="要点说明 不超过5行">Mode unique à la mode
+Il a une bandoulière unique détachable qui peut être porté de plusieurs façons
+Capacité: Peut contenir votre portefeuille, votre parapluie, vos livres, etc.
+Matériau PU de haute qualité, fermeture à glissière lisse, résistant à la pollution, la taille parfaite pour les dames
+Applications: Travail, escapades de week-end, excursions occasionnelles, gymnases, alpinisme etc. pour fournir des bagages personnalisés.</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>产品描述：(法语)</label>
+                            <textarea name="description_fr" id="description_fr"  class="form-control" rows="5" cols="80" placeholder="产品描述">Style: sac à bandoulière pour femme
+Texture de tissu: PU
+Texture de doublure: PU
+Sacs à la mode style: paquet de noix
+Manière d'ouverture: fermeture à glissière
+Éléments populaires: tissage
+Structure interne du paquet: poche pour téléphone portable, poche zippée
+Strap numéro de la racine: single
+Taille du sac: moyen
+Motif: couleur unie
+Style: Style ethnique
+Méthodes de traitement: gaufrage
+Dureté: moyen doux
+Couleur: rouge, gris clair, bleu, noir, rose</textarea>
+                                </div>
+                            </div>
+                            <div id="tab_lang_de" class="tab-pane fade" role="tabpanel">
+                                <div class="form-group">
+                                    <label>产品标题：(德语)&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="btn btn-success btn_translate" data-target="de"  href="javascript:" role="button">翻译</a>&nbsp;&nbsp;
+                                        <a class="btn btn-success btn_translate_en" data-target="de"  href="javascript:" role="button">从英文翻译</a>
+                                    </label>
+                            <textarea name="title_de" id="title_de" class="form-control" rows="2" cols="75" placeholder="产品标题">Frauen Pu-leder Handtaschen Sechsteilige Sätze Mutter Paket Große Kapazität Weben Muster Farbige Band Damen Tasche</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>关键字 不超过5行：(德语)</label>
+                            <textarea name="keywords_de" id="keywords_de" class="form-control" rows="4" cols="75" placeholder="关键字 不超过5行">Frauen-Handtasche Schultertasche Henkeltasche Schulranzen
+Tragetasche Umhängetasche PU-Leder-Tasche Messenger Bag
+Shoulder Pack Daypack Herren Sling Bag Mehrere Taschen Langer Riemen
+Große Kapazität Geringes Gewicht Raum Fach</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>要点说明 不超过5行：(德语)</label>
+                            <textarea name="keypoints_de" id="keypoints_de" class="form-control" rows="4" cols="80" placeholder="要点说明 不超过5行">Einzigartiger Entwurf der modischen Mode
+Es hat einen abnehmbaren einzelnen Schultergurt, der auf mehrere Arten getragen werden kann
+Kapazität: Kann Ihre Brieftasche, Regenschirm, Bücher, etc. halten
+Hochwertige PU-Material, glatte Reißverschluss, resistent gegen Verschmutzung, die perfekte Größe für Damen
+Anwendungen: Arbeit, Wochenendausflüge, gelegentliche Ausflüge, Fitnessstudios, Bergsteigen usw., um personalisiertes Gepäck zu liefern.</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>产品描述：(德语)</label>
+                            <textarea name="description_de" id="description_de"  class="form-control" rows="6" cols="80" placeholder="产品描述">Stil: Damen Schultertasche
+Gewebebeschaffenheit: PU
+Futter Textur: PU
+Taschen trendy Stil: Nuss-Paket
+Öffnungsart: Reißverschluss
+Beliebte Elemente: Weben
+Paket interne Struktur: Handytasche, Reißverschlusstasche
+Bandwurzelnummer: einzeln
+Taschengröße: Medium
+Muster: Einfarbig
+Stil: Ethnischer Stil
+Verarbeitungsmethoden: Prägung
+Härte: Mittelweich
+Farbe: rot, hellgrau, blau, schwarz, pink</textarea>
+                                </div>
+                            </div>
+                            <div id="tab_lang_it" class="tab-pane fade" role="tabpanel">
+                                <div class="form-group">
+                                    <label>产品标题：(意大利语)&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="btn btn-success btn_translate" data-target="it"  href="javascript:" role="button">翻译</a>&nbsp;&nbsp;
+                                        <a class="btn btn-success btn_translate_en" data-target="it"  href="javascript:" role="button">从英文翻译</a>
+                                    </label>
+                            <textarea name="title_it" id="title_it" class="form-control" rows="2" cols="75" placeholder="产品标题">Borse In Pelle Da Donna In PU Set Da Sei Pezzi Borsa Da Donna Grande Capacità Tessere Modello Borsa Da Donna In Nastro Colorato</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>关键字 不超过5行：(意大利语)</label>
+                            <textarea name="keywords_it" id="keywords_it" class="form-control" rows="4" cols="75" placeholder="关键字 不超过5行">Borsa Da Donna Borsa A Tracolla Borse Con Manico Superiore Cartelle
+Tote Bag Cross Body Bags Borsa In Pelle PU Messenger Bag
+Shoulder Pack Daypack Borsa A Tracolla Per Uomo Tasche Multiple Cinturino Lungo
+Grande Capacità Peso Leggero Stanza Compartimento</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>要点说明 不超过5行：(意大利语)</label>
+                            <textarea name="keypoints_it" id="keypoints_it" class="form-control" rows="4" cols="80" placeholder="要点说明 不超过5行">Design unico alla moda alla moda
+Ha una tracolla singola staccabile che può essere indossata in più modi
+Capacità: può contenere portafoglio, ombrello, libri, ecc.
+Materiale in PU di alta qualità, cerniera liscia, resistente all'inquinamento, la taglia perfetta per le donne
+Applicazioni: lavoro, fughe del fine settimana, escursioni occasionali, palestre, alpinismo ecc. Per fornire bagagli personalizzati.</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>产品描述：(意大利语)</label>
+                            <textarea name="description_it" id="description_it"  class="form-control" rows="5" cols="80" placeholder="产品描述">Stile: borsa a tracolla da donna
+Tessitura del tessuto: PU
+Fodera interna: PU
+Borse stile alla moda: pacchetto Nut
+Modo di apertura: cerniera
+Elementi popolari: tessitura
+Struttura interna del pacchetto: tasca per cellulare, tasca con cerniera
+Numero della radice della cinghia: singolo
+Dimensione della borsa: media
+Modello: tinta unita
+Stile: stile etnico
+Metodi di elaborazione: goffratura
+Durezza: mediamente morbida
+Colore: rosso, grigio chiaro, blu, nero, rosa</textarea>
+                                </div>
+                            </div>
+                            <div id="tab_lang_es" class="tab-pane fade" role="tabpanel">
+                                <div class="form-group">
+                                    <label>产品标题：(西班牙语)&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="btn btn-success btn_translate" data-target="es"  href="javascript:" role="button">翻译</a>&nbsp;&nbsp;
+                                        <a class="btn btn-success btn_translate_en" data-target="es"  href="javascript:" role="button">从英文翻译</a>
+                                    </label>
+                            <textarea name="title_es" id="title_es" class="form-control" rows="2" cols="75" placeholder="产品标题">Bolsos De Cuero De La PU De Las Mujeres Conjuntos De Seis Piezas Paquete De La Madre De Gran Capacidad Armadura Patrón Coloreado Señoras De La Cinta Bolsa</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>关键字 不超过5行：(西班牙语)</label>
+                            <textarea name="keywords_es" id="keywords_es" class="form-control" rows="4" cols="75" placeholder="关键字 不超过5行">Bolso De La Mujer Bolso De Hombro Bolsos Superiores De La Manija Bolsos
+La Bolsa De Asas Bolsas Cruzadas Del Cuerpo Bolso De Cuero De La PU Bolso Del Mensajero
+Paquete De Hombro Mochila Bolso Honda Para Hombres Bolsillos Múltiples Correa Larga
+Gran Capacidad Peso Ligero Habitación Compartimento</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>要点说明 不超过5行：(西班牙语)</label>
+                            <textarea name="keypoints_es" id="keypoints_es" class="form-control" rows="4" cols="80" placeholder="要点说明 不超过5行">Diseño único de moda
+Tiene una correa de hombro individual desmontable que se puede usar de múltiples maneras
+Capacidad: puede contener su billetera, paraguas, libros, etc.
+Material PU de alta calidad, cremallera lisa, resistente a la contaminación, el tamaño perfecto para damas
+Aplicaciones: trabajo, escapadas de fin de semana, excursiones ocasionales, gimnasios, montañismo, etc. para proporcionar equipaje personalizado.</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>产品描述：(西班牙语)</label>
+                            <textarea name="description_es" id="description_es"  class="form-control" rows="5" cols="80" placeholder="产品描述">Estilo: bolso de hombro de las mujeres
+Textura de la tela: PU
+Textura de la guarnición: PU
+Bolsos estilo de moda: paquete de tuerca
+Forma de apertura: cremallera
+Elementos populares: tejido
+Estructura interna del paquete: bolsillo del teléfono celular, bolsillo con cremallera
+Número de raíz de la correa: solo
+Tamaño de la bolsa: medio
+Patrón: color sólido
+Estilo: estilo étnico
+Métodos de procesamiento: relieve
+Dureza: medio suave
+Color: rojo, gris claro, azul, negro, rosa</textarea>
+                                </div>
+                            </div>
+                            <div id="tab_lang_ja" class="tab-pane fade" role="tabpanel">
+                                <div class="form-group">
+                                    <label>产品标题：(日语)&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="btn btn-success btn_translate" data-target="ja"  href="javascript:" role="button">翻译</a>&nbsp;&nbsp;
+                                        <a class="btn btn-success btn_translate_en" data-target="ja"  href="javascript:" role="button">从英文翻译</a>
+                                    </label>
+                            <textarea name="title_ja" id="title_ja" class="form-control" rows="2" cols="75" placeholder="产品标题">レディースPUレザーハンドバッグ6ピースセットマザーパッケージ大容量織りパターンカラーリボンレディースバッグ</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>关键字 不超过5行：(日语)</label>
+                            <textarea name="keywords_ja" id="keywords_ja" class="form-control" rows="4" cols="75" placeholder="关键字 不超过5行">レディースハンドバッグ、ショルダーバッグ、トップハンドルバッグ、サッチェル
+トートバッグ、クロスボディバッグ、PUレザーバッグ、メッセンジャーバッグ
+ショルダーパック、デイパック、男性スリングバッグ、マルチポケット、ロングストラップ
+大容量、軽量、部屋、コンパートメント</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>要点说明 不超过5行：(日语)</label>
+                            <textarea name="keypoints_ja" id="keypoints_ja" class="form-control" rows="4" cols="80" placeholder="要点说明 不超过5行">トレンディなファッションのユニークなデザイン
+それは複数の方法で着用することができる取り外し可能なシングルショルダーストラップを持っています
+能力：財布、傘、書籍などを持ち込むことができます。
+高品質のPU素材、滑らかなジッパー、汚染に強い、女性のための完璧なサイズ
+アプリケーション：パーソナライズされた荷物を提供するために、仕事、週末旅行、時折の遠足、ジム、登山など。</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>产品描述：(日语)</label>
+                            <textarea name="description_ja" id="description_ja"  class="form-control" rows="5" cols="80" placeholder="产品描述">スタイル：女性のショルダーバッグ
+ファブリックテクスチャ：PU
+ライニングテクスチャ：PU
+バッグトレンディなスタイル：ナットパッケージ
+オープニングウェイ：ジッパー
+人気の要素：製織
+パッケージ内部構造：携帯電話ポケット、ファスナーポケット
+ストラップルート番号：シングル
+バッグサイズ：中
+パターン：無地
+スタイル：エスニックスタイル
+加工方法：エンボス加工
+硬度：中程度の柔らかさ
+カラー：レッド、ライトグレー、ブルー、ブラック、ピンク</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="narrow-label">原始规格</td>
+                    <td>
+                        <textarea name="goods_sku_json" id="goods_sku_json" class="hide">{"sku_map":{"Red-OneSize":{"title":"Red-OneSize","sku_id_ext":"","add_money":"","stock":"42","upc_value":"9112555821243","images":["2017\/1122\/842151\/5507840.jpg","2017\/1122\/842151\/1511763206_13995.jpg","2017\/1122\/842151\/1511763000_34222.png","2017\/1122\/842151\/1511762997_16947.png","2017\/1122\/842151\/1511762999_61758.png","2017\/1122\/842151\/1511762995_46708.png","2017\/1122\/842151\/1511762995_14880.png"]},"LightGray-OneSize":{"title":"LightGray-OneSize","sku_id_ext":"","add_money":"","stock":"37","upc_value":"9112555821250","images":["2017\/1122\/842151\/5507839.jpg","2017\/1122\/842151\/1511763206_13995.jpg","2017\/1122\/842151\/1511763000_34222.png","2017\/1122\/842151\/1511762997_16947.png","2017\/1122\/842151\/1511762996_64307.png","2017\/1122\/842151\/1511762995_46708.png","2017\/1122\/842151\/1511762995_14880.png"]},"Blue-OneSize":{"title":"Blue-OneSize","sku_id_ext":"","add_money":"","stock":"31","upc_value":"9112555821267","images":["2017\/1122\/842151\/5507838.jpg","2017\/1122\/842151\/1511763206_13995.jpg","2017\/1122\/842151\/1511763000_34222.png","2017\/1122\/842151\/1511762997_16947.png","2017\/1122\/842151\/1511762999_61758.png","2017\/1122\/842151\/1511762995_46708.png","2017\/1122\/842151\/1511762995_14880.png"]},"Black-OneSize":{"title":"Black-OneSize","sku_id_ext":"","add_money":"","stock":"25","upc_value":"9112555821274","images":["2017\/1122\/842151\/5507842.jpg","2017\/1122\/842151\/1511763206_13995.jpg","2017\/1122\/842151\/1511763000_34222.png","2017\/1122\/842151\/1511762997_16947.png","2017\/1122\/842151\/1511762996_64307.png","2017\/1122\/842151\/1511762995_46708.png","2017\/1122\/842151\/1511762995_14880.png"]},"Pink-OneSize":{"title":"Pink-OneSize","sku_id_ext":"","add_money":"","stock":"32","upc_value":"9112555821281","images":["2017\/1122\/842151\/5507837.jpg","2017\/1122\/842151\/1511763206_13995.jpg","2017\/1122\/842151\/1511763000_34222.png","2017\/1122\/842151\/1511762997_16947.png","2017\/1122\/842151\/1511762999_61758.png","2017\/1122\/842151\/1511762995_46708.png","2017\/1122\/842151\/1511762995_14880.png"]}},"sku_config":{"Color":"Red,LightGray,Blue,Black,Pink","SizeName":"OneSize"}}</textarea>
+
+                                                    价格方式：<strong></strong><br>
+                            价格：81.00                            <br>
+                            变体参数：<br>
+                            &nbsp;&nbsp;<strong>颜色</strong>:&nbsp;&nbsp;<a class="btn btn-default" style="margin:5px;">红色</a>&nbsp;&nbsp;<a class="btn btn-default" style="margin:5px;">浅灰色</a>&nbsp;&nbsp;<a class="btn btn-default" style="margin:5px;">蓝色</a>&nbsp;&nbsp;<a class="btn btn-default" style="margin:5px;">黑色</a>&nbsp;&nbsp;<a class="btn btn-default" style="margin:5px;">粉红色</a>&nbsp;&nbsp;<br>                            <div id="tab_sku_zh" class="tab-pane fade active in hide" role="tabpanel">
+                                所有变体：<br>
+                                <div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined index: skuMap</p>
+<p>Filename: admin/goods_info_new_price.php</p>
+<p>Line Number: 776</p>
+
+</div><div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Warning</p>
+<p>Message:  Invalid argument supplied for foreach()</p>
+<p>Filename: admin/goods_info_new_price.php</p>
+<p>Line Number: 776</p>
+
+</div>                            </div>
+                                                                        </td>
+                </tr>
+                <tr>
+                    <td class="narrow-label">规格变体</td>
+                    <td>
+                        <div id="sku_type" data-sku="">
+                            <span>变体参数(点击编辑)：</span>
+                            <ul>
+
+                            </ul>
+                            <button type="button" class="btn btn-primary" id="skuModalLabel">添加</button>
+                            <div class="clear"></div>
+                        </div>
+                        <div id="sku_type_detail">
+
+                        </div>
+                        <table class="table-condensed table-bordered" id="sku_map">
+                            <thead>
+                            <tr><th>序号</th><th>变体组合</th><th>SKU修正</th><th>加价(人民币)</th><th>库存</th><th>UPC/EAN</th><th>操作</th><th>选择图片</th><th>已选图片</th></tr>
+                            </thead>
+                            <tbody id="sku_body">
+
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+
+            <ul id="good_images" style="position:fixed;">
+                <li><img data-url="2017/1122/842151/5507842.jpg" src="http://img.kershop.com/2017/1122/842151/5507842.jpg?x-oss-process=style/thumb_200"></li><li><img data-url="2017/1122/842151/5507840.jpg" src="http://img.kershop.com/2017/1122/842151/5507840.jpg?x-oss-process=style/thumb_200"></li><li><img data-url="2017/1122/842151/5507839.jpg" src="http://img.kershop.com/2017/1122/842151/5507839.jpg?x-oss-process=style/thumb_200"></li><li><img data-url="2017/1122/842151/5507838.jpg" src="http://img.kershop.com/2017/1122/842151/5507838.jpg?x-oss-process=style/thumb_200"></li><li><img data-url="2017/1122/842151/5507837.jpg" src="http://img.kershop.com/2017/1122/842151/5507837.jpg?x-oss-process=style/thumb_200"></li><li><img data-url="2017/1122/842151/1511763206_13995.jpg" src="http://img.kershop.com/2017/1122/842151/1511763206_13995.jpg?x-oss-process=style/thumb_200"></li><li><img data-url="2017/1122/842151/1511763000_34222.png" src="http://img.kershop.com/2017/1122/842151/1511763000_34222.png?x-oss-process=style/thumb_200"></li><li><img data-url="2017/1122/842151/1511762997_16947.png" src="http://img.kershop.com/2017/1122/842151/1511762997_16947.png?x-oss-process=style/thumb_200"></li><li><img data-url="2017/1122/842151/1511762999_61758.png" src="http://img.kershop.com/2017/1122/842151/1511762999_61758.png?x-oss-process=style/thumb_200"></li><li><img data-url="2017/1122/842151/1511762996_64307.png" src="http://img.kershop.com/2017/1122/842151/1511762996_64307.png?x-oss-process=style/thumb_200"></li><li><img data-url="2017/1122/842151/1511762995_46708.png" src="http://img.kershop.com/2017/1122/842151/1511762995_46708.png?x-oss-process=style/thumb_200"></li><li><img data-url="2017/1122/842151/1511762995_14880.png" src="http://img.kershop.com/2017/1122/842151/1511762995_14880.png?x-oss-process=style/thumb_200"></li><li><img data-url="2017/1122/842151/1511763001_18276.png" src="http://img.kershop.com/2017/1122/842151/1511763001_18276.png?x-oss-process=style/thumb_200"></li><li><img data-url="2017/1122/842151/1511763003_15485.png" src="http://img.kershop.com/2017/1122/842151/1511763003_15485.png?x-oss-process=style/thumb_200"></li>                <div class="clear"></div>
+            </ul>
+            <div id="goods_images_preview">
+                <img src="" />
+            </div>
+
+            <style type="text/css">
+                #good_images{position:fixed;background: white; border:1px solid #ccc; max-width:726px; margin:0;}
+                #good_images li{ list-style-type: none; float:left; width:80px; height:80px; padding: 3px;}
+                #good_images li img{ width:100%; border:1px solid #ccc;}
+                #good_images li img:hover{ border:1px solid darkblue;}
+                #goods_images_preview{display:none; position:fixed;background: white; border:1px solid #ccc; padding:2px; width: 300px; height:300px; overflow:hidden;}
+                #goods_images_preview img{ width:100%; display:inline-block;}
+
+                .clear{clear:both;}
+                #sku_type{ border-bottom: 1px solid #ccc; padding:10px 0;}
+                #sku_type .btn{ line-height: normal;}
+                #sku_type span{ float:left; padding:10px 0;}
+                #sku_type ul{float:left; margin:0 0 0 10px; list-style-type: none;}
+                #sku_type ul li{float:left; padding:0; margin:0 10px 0 0; border:1px solid #ccc; border-radius: 3px; cursor:pointer;position: relative;}
+                #sku_type ul li .sku_text{padding:10px;}
+                #sku_type ul li .sku_text:hover{background: #ccc;}
+
+                #sku_type ul li .bt_del_skutype{
+                    position: absolute;
+                    top: -14px;
+                    right: -8px;
+                    width: 18px;
+                    height: 18px;
+                    padding: 0 !important;
+                    line-height: 15px;
+                    text-align: center;
+                    font-size: 14px;
+                    background: grey;
+                    color: white;
+                    opacity: .3;
+                    border-radius: 3px;
+                }
+                #sku_type ul li .bt_del_skutype:hover{background:red; color:white; opacity: 1;}
+
+                #sku_type_detail{ border-bottom: 1px solid #ccc; padding:10px 0; margin:0 0 20px 0;}
+                #sku_type_detail .detial_item{padding:5px 3px;}
+                #sku_type_detail .detial_item .detial_title{ float:left; display: inline-block;padding:5px;}
+                #sku_type_detail .detial_item .detial_values{ float:left; margin:0 0 0 10px; list-style-type: none;}
+                #sku_type_detail .detial_item .detial_values li{float:left; padding:5px;  margin:0 5px; border:1px solid #ccc; border-radius: 3px;}
+
+                #sku_map thead{ background: #F7F7F9; }
+
+
+                ul { margin:0px; padding:0px; margin-left:20px; }
+                .img_list1, .img_list2 { list-style-type:none; margin:0px; float:left; }
+                .img_list1 li, .img_list2 li {float: left; margin:2px; width:52px; height:53px;border:solid 1px black; background-color:#E0E0E0; }
+                .img_list2 li{ border:1px solid #DE364C; }
+                .img_list1 li img, .img_list2 li img{width:50px; height:50px;}
+
+                .placeHolder{ margin:2px !important; width:52px !important; height:52px !important; background-color:white !important; border:dashed 1px gray !important; }
+
+                .label_lang_success{ background-color:#4cae4c !important; }
+                .border_red{border:1px solid red;}
+
+            </style>
+            <script type="text/javascript">
+                var exchange_rate_usd = 0.1439;
+
+                var goods_base_json = {"zh":{"title":"Women PU Leather Handbags Six-piece Sets Mother Package Large Capacity Weave Pattern Colored Ribbon Ladies Bag","keywords":"Women's Handbag, Shoulder Bag, Top Handle Bags, Satchels\nTote Bag, Cross Body Bags, PU Leather bag, Messenger Bag\nShoulder Pack, Daypack, men Sling Bag, Multiple Pockets, Long Strap\nLarge Capacity, Light Weight, room, compartment","keypoints":"Trendy fashion unique design\nIt has a detachable single shoulder strap that can be worn multiple ways\nCapacity: Can hold your wallet, umbrella, books, etc.\nHigh-quality PU material; smooth zipper; resistant to pollution; the perfect size for ladies\nApplications: Work, weekend getaways, occasional excursions, gyms, mountaineering etc. to provide personalized luggage.","description":"\u6b3e\u5f0f:\u5973\u5f0f\u5355\u80a9\u5305\n\u9762\u6599\u8d28\u5730:PU\n\u91cc\u6599\u8d28\u5730:PU\n\u7bb1\u5305\u6f6e\u6d41\u6b3e\u5f0f:\u5b50\u6bcd\u5305\n\u5f00\u76d6\u65b9\u5f0f:\u62c9\u94fe\n\u6d41\u884c\u5143\u7d20:\u7f16\u7ec7\n\u5305\u5185\u90e8\u7ed3\u6784:\u624b\u673a\u888b,\u62c9\u94fe\u6697\u888b\n\u80a9\u5e26\u6839\u6570:\u5355\u6839\n\u7bb1\u5305\u5927\u5c0f:\u4e2d\n\u56fe\u6848:\u7eaf\u8272\n\u98ce\u683c:\u6c11\u65cf\u98ce\n\u52a0\u5de5\u65b9\u5f0f:\u538b\u82b1\n\u786c\u5ea6:\u4e2d\u504f\u8f6f\n\u989c\u8272:\u7ea2\u8272,\u6d45\u7070\u8272,\u84dd\u8272,\u9ed1\u8272,\u7c89\u7ea2\u8272"},"en":{"title":"Women PU Leather Handbags Six-piece Sets Mother Package Large Capacity Weave Pattern Colored Ribbon Ladies Bag","keywords":"Women's Handbag Shoulder Bag Top Handle Bags Satchels\nTote Bag Cross Body Bags PU Leather Bag Messenger Bag\nShoulder Pack Daypack Men Sling Bag Multiple Pockets Long Strap\nLarge Capacity Light Weight Room Compartment","keypoints":"Trendy fashion unique design\nIt has a detachable single shoulder strap that can be worn multiple ways\nCapacity: Can hold your wallet, umbrella, books, etc.\nHigh-quality PU material; smooth zipper; resistant to pollution; the perfect size for ladies\nApplications: Work, weekend getaways, occasional excursions, gyms, mountaineering etc. to provide personalized luggage.","description":"Style: women's shoulder bag\nFabric texture: PU\nLining texture: PU\nBags trendy style: Nut package\nOpening way: zipper\nPopular elements: weaving\nPackage internal structure: cell phone pocket, zipper pocket\nStrap root number: single\nBag size: Medium\npattern: plain\nStyle: Ethnic style\nProcessing methods: embossing\nHardness: Medium soft\nColor: red, light gray, blue, black, pink"},"es":{"target":"es","title":"Bolsos De Cuero De La PU De Las Mujeres Conjuntos De Seis Piezas Paquete De La Madre De Gran Capacidad Armadura Patr\u00f3n Coloreado Se\u00f1oras De La Cinta Bolsa","keywords":"Bolso De La Mujer Bolso De Hombro Bolsos Superiores De La Manija Bolsos\nLa Bolsa De Asas Bolsas Cruzadas Del Cuerpo Bolso De Cuero De La PU Bolso Del Mensajero\nPaquete De Hombro Mochila Bolso Honda Para Hombres Bolsillos M\u00faltiples Correa Larga\nGran Capacidad Peso Ligero Habitaci\u00f3n Compartimento","keypoints":"Dise\u00f1o \u00fanico de moda\nTiene una correa de hombro individual desmontable que se puede usar de m\u00faltiples maneras\nCapacidad: puede contener su billetera, paraguas, libros, etc.\nMaterial PU de alta calidad, cremallera lisa, resistente a la contaminaci\u00f3n, el tama\u00f1o perfecto para damas\nAplicaciones: trabajo, escapadas de fin de semana, excursiones ocasionales, gimnasios, monta\u00f1ismo, etc. para proporcionar equipaje personalizado.","description":"Estilo: bolso de hombro de las mujeres\nTextura de la tela: PU\nTextura de la guarnici\u00f3n: PU\nBolsos estilo de moda: paquete de tuerca\nForma de apertura: cremallera\nElementos populares: tejido\nEstructura interna del paquete: bolsillo del tel\u00e9fono celular, bolsillo con cremallera\nN\u00famero de ra\u00edz de la correa: solo\nTama\u00f1o de la bolsa: medio\nPatr\u00f3n: color s\u00f3lido\nEstilo: estilo \u00e9tnico\nM\u00e9todos de procesamiento: relieve\nDureza: medio suave\nColor: rojo, gris claro, azul, negro, rosa"},"it":{"target":"it","title":"Borse In Pelle Da Donna In PU Set Da Sei Pezzi Borsa Da Donna Grande Capacit\u00e0 Tessere Modello Borsa Da Donna In Nastro Colorato","keywords":"Borsa Da Donna Borsa A Tracolla Borse Con Manico Superiore Cartelle\nTote Bag Cross Body Bags Borsa In Pelle PU Messenger Bag\nShoulder Pack Daypack Borsa A Tracolla Per Uomo Tasche Multiple Cinturino Lungo\nGrande Capacit\u00e0 Peso Leggero Stanza Compartimento","keypoints":"Design unico alla moda alla moda\nHa una tracolla singola staccabile che pu\u00f2 essere indossata in pi\u00f9 modi\nCapacit\u00e0: pu\u00f2 contenere portafoglio, ombrello, libri, ecc.\nMateriale in PU di alta qualit\u00e0, cerniera liscia, resistente all'inquinamento, la taglia perfetta per le donne\nApplicazioni: lavoro, fughe del fine settimana, escursioni occasionali, palestre, alpinismo ecc. Per fornire bagagli personalizzati.","description":"Stile: borsa a tracolla da donna\nTessitura del tessuto: PU\nFodera interna: PU\nBorse stile alla moda: pacchetto Nut\nModo di apertura: cerniera\nElementi popolari: tessitura\nStruttura interna del pacchetto: tasca per cellulare, tasca con cerniera\nNumero della radice della cinghia: singolo\nDimensione della borsa: media\nModello: tinta unita\nStile: stile etnico\nMetodi di elaborazione: goffratura\nDurezza: mediamente morbida\nColore: rosso, grigio chiaro, blu, nero, rosa"},"fr":{"target":"fr","title":"Femmes En Cuir PU Sacs \u00e0 Main Six-pi\u00e8ces Ens M\u00e8re Paquet De Grande Capacit\u00e9 Weave Motif Color\u00e9 Ruban Sac De Dames","keywords":"Sac \u00e0 Main Pour Femmes Sac \u00e0 Bandouli\u00e8re Sacs \u00e0 Poign\u00e9e Sup\u00e9rieure Sacoches\nSac Fourre-tout Sacs De Corps De Croix Sac En Cuir D'unit\u00e9 Centrale Sac De Messager\nSac \u00e0 Bandouli\u00e8re Sac \u00e0 Dos Sac \u00e0 Bandouli\u00e8re Pour Hommes Poches Multiples Longue Sangle\nGrande Capacit\u00e9 Poids L\u00e9ger Pi\u00e8ce Compartiment","keypoints":"Mode unique \u00e0 la mode\nIl a une bandouli\u00e8re unique d\u00e9tachable qui peut \u00eatre port\u00e9 de plusieurs fa\u00e7ons\nCapacit\u00e9: Peut contenir votre portefeuille, votre parapluie, vos livres, etc.\nMat\u00e9riau PU de haute qualit\u00e9, fermeture \u00e0 glissi\u00e8re lisse, r\u00e9sistant \u00e0 la pollution, la taille parfaite pour les dames\nApplications: Travail, escapades de week-end, excursions occasionnelles, gymnases, alpinisme etc. pour fournir des bagages personnalis\u00e9s.","description":"Style: sac \u00e0 bandouli\u00e8re pour femme\nTexture de tissu: PU\nTexture de doublure: PU\nSacs \u00e0 la mode style: paquet de noix\nMani\u00e8re d'ouverture: fermeture \u00e0 glissi\u00e8re\n\u00c9l\u00e9ments populaires: tissage\nStructure interne du paquet: poche pour t\u00e9l\u00e9phone portable, poche zipp\u00e9e\nStrap num\u00e9ro de la racine: single\nTaille du sac: moyen\nMotif: couleur unie\nStyle: Style ethnique\nM\u00e9thodes de traitement: gaufrage\nDuret\u00e9: moyen doux\nCouleur: rouge, gris clair, bleu, noir, rose"},"de":{"target":"de","title":"Frauen Pu-leder Handtaschen Sechsteilige S\u00e4tze Mutter Paket Gro\u00dfe Kapazit\u00e4t Weben Muster Farbige Band Damen Tasche","keywords":"Frauen-Handtasche Schultertasche Henkeltasche Schulranzen\nTragetasche Umh\u00e4ngetasche PU-Leder-Tasche Messenger Bag\nShoulder Pack Daypack Herren Sling Bag Mehrere Taschen Langer Riemen\nGro\u00dfe Kapazit\u00e4t Geringes Gewicht Raum Fach","keypoints":"Einzigartiger Entwurf der modischen Mode\nEs hat einen abnehmbaren einzelnen Schultergurt, der auf mehrere Arten getragen werden kann\nKapazit\u00e4t: Kann Ihre Brieftasche, Regenschirm, B\u00fccher, etc. halten\nHochwertige PU-Material, glatte Rei\u00dfverschluss, resistent gegen Verschmutzung, die perfekte Gr\u00f6\u00dfe f\u00fcr Damen\nAnwendungen: Arbeit, Wochenendausfl\u00fcge, gelegentliche Ausfl\u00fcge, Fitnessstudios, Bergsteigen usw., um personalisiertes Gep\u00e4ck zu liefern.","description":"Stil: Damen Schultertasche\nGewebebeschaffenheit: PU\nFutter Textur: PU\nTaschen trendy Stil: Nuss-Paket\n\u00d6ffnungsart: Rei\u00dfverschluss\nBeliebte Elemente: Weben\nPaket interne Struktur: Handytasche, Rei\u00dfverschlusstasche\nBandwurzelnummer: einzeln\nTaschengr\u00f6\u00dfe: Medium\nMuster: Einfarbig\nStil: Ethnischer Stil\nVerarbeitungsmethoden: Pr\u00e4gung\nH\u00e4rte: Mittelweich\nFarbe: rot, hellgrau, blau, schwarz, pink"},"ja":{"target":"ja","title":"\u30ec\u30c7\u30a3\u30fc\u30b9PU\u30ec\u30b6\u30fc\u30cf\u30f3\u30c9\u30d0\u30c3\u30b06\u30d4\u30fc\u30b9\u30bb\u30c3\u30c8\u30de\u30b6\u30fc\u30d1\u30c3\u30b1\u30fc\u30b8\u5927\u5bb9\u91cf\u7e54\u308a\u30d1\u30bf\u30fc\u30f3\u30ab\u30e9\u30fc\u30ea\u30dc\u30f3\u30ec\u30c7\u30a3\u30fc\u30b9\u30d0\u30c3\u30b0","keywords":"\u30ec\u30c7\u30a3\u30fc\u30b9\u30cf\u30f3\u30c9\u30d0\u30c3\u30b0\u3001\u30b7\u30e7\u30eb\u30c0\u30fc\u30d0\u30c3\u30b0\u3001\u30c8\u30c3\u30d7\u30cf\u30f3\u30c9\u30eb\u30d0\u30c3\u30b0\u3001\u30b5\u30c3\u30c1\u30a7\u30eb\n\u30c8\u30fc\u30c8\u30d0\u30c3\u30b0\u3001\u30af\u30ed\u30b9\u30dc\u30c7\u30a3\u30d0\u30c3\u30b0\u3001PU\u30ec\u30b6\u30fc\u30d0\u30c3\u30b0\u3001\u30e1\u30c3\u30bb\u30f3\u30b8\u30e3\u30fc\u30d0\u30c3\u30b0\n\u30b7\u30e7\u30eb\u30c0\u30fc\u30d1\u30c3\u30af\u3001\u30c7\u30a4\u30d1\u30c3\u30af\u3001\u7537\u6027\u30b9\u30ea\u30f3\u30b0\u30d0\u30c3\u30b0\u3001\u30de\u30eb\u30c1\u30dd\u30b1\u30c3\u30c8\u3001\u30ed\u30f3\u30b0\u30b9\u30c8\u30e9\u30c3\u30d7\n\u5927\u5bb9\u91cf\u3001\u8efd\u91cf\u3001\u90e8\u5c4b\u3001\u30b3\u30f3\u30d1\u30fc\u30c8\u30e1\u30f3\u30c8","keypoints":"\u30c8\u30ec\u30f3\u30c7\u30a3\u306a\u30d5\u30a1\u30c3\u30b7\u30e7\u30f3\u306e\u30e6\u30cb\u30fc\u30af\u306a\u30c7\u30b6\u30a4\u30f3\n\u305d\u308c\u306f\u8907\u6570\u306e\u65b9\u6cd5\u3067\u7740\u7528\u3059\u308b\u3053\u3068\u304c\u3067\u304d\u308b\u53d6\u308a\u5916\u3057\u53ef\u80fd\u306a\u30b7\u30f3\u30b0\u30eb\u30b7\u30e7\u30eb\u30c0\u30fc\u30b9\u30c8\u30e9\u30c3\u30d7\u3092\u6301\u3063\u3066\u3044\u307e\u3059\n\u80fd\u529b\uff1a\u8ca1\u5e03\u3001\u5098\u3001\u66f8\u7c4d\u306a\u3069\u3092\u6301\u3061\u8fbc\u3080\u3053\u3068\u304c\u3067\u304d\u307e\u3059\u3002\n\u9ad8\u54c1\u8cea\u306ePU\u7d20\u6750\u3001\u6ed1\u3089\u304b\u306a\u30b8\u30c3\u30d1\u30fc\u3001\u6c5a\u67d3\u306b\u5f37\u3044\u3001\u5973\u6027\u306e\u305f\u3081\u306e\u5b8c\u74a7\u306a\u30b5\u30a4\u30ba\n\u30a2\u30d7\u30ea\u30b1\u30fc\u30b7\u30e7\u30f3\uff1a\u30d1\u30fc\u30bd\u30ca\u30e9\u30a4\u30ba\u3055\u308c\u305f\u8377\u7269\u3092\u63d0\u4f9b\u3059\u308b\u305f\u3081\u306b\u3001\u4ed5\u4e8b\u3001\u9031\u672b\u65c5\u884c\u3001\u6642\u6298\u306e\u9060\u8db3\u3001\u30b8\u30e0\u3001\u767b\u5c71\u306a\u3069\u3002","description":"\u30b9\u30bf\u30a4\u30eb\uff1a\u5973\u6027\u306e\u30b7\u30e7\u30eb\u30c0\u30fc\u30d0\u30c3\u30b0\n\u30d5\u30a1\u30d6\u30ea\u30c3\u30af\u30c6\u30af\u30b9\u30c1\u30e3\uff1aPU\n\u30e9\u30a4\u30cb\u30f3\u30b0\u30c6\u30af\u30b9\u30c1\u30e3\uff1aPU\n\u30d0\u30c3\u30b0\u30c8\u30ec\u30f3\u30c7\u30a3\u306a\u30b9\u30bf\u30a4\u30eb\uff1a\u30ca\u30c3\u30c8\u30d1\u30c3\u30b1\u30fc\u30b8\n\u30aa\u30fc\u30d7\u30cb\u30f3\u30b0\u30a6\u30a7\u30a4\uff1a\u30b8\u30c3\u30d1\u30fc\n\u4eba\u6c17\u306e\u8981\u7d20\uff1a\u88fd\u7e54\n\u30d1\u30c3\u30b1\u30fc\u30b8\u5185\u90e8\u69cb\u9020\uff1a\u643a\u5e2f\u96fb\u8a71\u30dd\u30b1\u30c3\u30c8\u3001\u30d5\u30a1\u30b9\u30ca\u30fc\u30dd\u30b1\u30c3\u30c8\n\u30b9\u30c8\u30e9\u30c3\u30d7\u30eb\u30fc\u30c8\u756a\u53f7\uff1a\u30b7\u30f3\u30b0\u30eb\n\u30d0\u30c3\u30b0\u30b5\u30a4\u30ba\uff1a\u4e2d\n\u30d1\u30bf\u30fc\u30f3\uff1a\u7121\u5730\n\u30b9\u30bf\u30a4\u30eb\uff1a\u30a8\u30b9\u30cb\u30c3\u30af\u30b9\u30bf\u30a4\u30eb\n\u52a0\u5de5\u65b9\u6cd5\uff1a\u30a8\u30f3\u30dc\u30b9\u52a0\u5de5\n\u786c\u5ea6\uff1a\u4e2d\u7a0b\u5ea6\u306e\u67d4\u3089\u304b\u3055\n\u30ab\u30e9\u30fc\uff1a\u30ec\u30c3\u30c9\u3001\u30e9\u30a4\u30c8\u30b0\u30ec\u30fc\u3001\u30d6\u30eb\u30fc\u3001\u30d6\u30e9\u30c3\u30af\u3001\u30d4\u30f3\u30af"}};
+                var goods_sku_json = {"sku_map":{"Red-OneSize":{"title":"Red-OneSize","sku_id_ext":"","add_money":"","stock":"42","upc_value":"9112555821243","images":["2017\/1122\/842151\/5507840.jpg","2017\/1122\/842151\/1511763206_13995.jpg","2017\/1122\/842151\/1511763000_34222.png","2017\/1122\/842151\/1511762997_16947.png","2017\/1122\/842151\/1511762999_61758.png","2017\/1122\/842151\/1511762995_46708.png","2017\/1122\/842151\/1511762995_14880.png"]},"LightGray-OneSize":{"title":"LightGray-OneSize","sku_id_ext":"","add_money":"","stock":"37","upc_value":"9112555821250","images":["2017\/1122\/842151\/5507839.jpg","2017\/1122\/842151\/1511763206_13995.jpg","2017\/1122\/842151\/1511763000_34222.png","2017\/1122\/842151\/1511762997_16947.png","2017\/1122\/842151\/1511762996_64307.png","2017\/1122\/842151\/1511762995_46708.png","2017\/1122\/842151\/1511762995_14880.png"]},"Blue-OneSize":{"title":"Blue-OneSize","sku_id_ext":"","add_money":"","stock":"31","upc_value":"9112555821267","images":["2017\/1122\/842151\/5507838.jpg","2017\/1122\/842151\/1511763206_13995.jpg","2017\/1122\/842151\/1511763000_34222.png","2017\/1122\/842151\/1511762997_16947.png","2017\/1122\/842151\/1511762999_61758.png","2017\/1122\/842151\/1511762995_46708.png","2017\/1122\/842151\/1511762995_14880.png"]},"Black-OneSize":{"title":"Black-OneSize","sku_id_ext":"","add_money":"","stock":"25","upc_value":"9112555821274","images":["2017\/1122\/842151\/5507842.jpg","2017\/1122\/842151\/1511763206_13995.jpg","2017\/1122\/842151\/1511763000_34222.png","2017\/1122\/842151\/1511762997_16947.png","2017\/1122\/842151\/1511762996_64307.png","2017\/1122\/842151\/1511762995_46708.png","2017\/1122\/842151\/1511762995_14880.png"]},"Pink-OneSize":{"title":"Pink-OneSize","sku_id_ext":"","add_money":"","stock":"32","upc_value":"9112555821281","images":["2017\/1122\/842151\/5507837.jpg","2017\/1122\/842151\/1511763206_13995.jpg","2017\/1122\/842151\/1511763000_34222.png","2017\/1122\/842151\/1511762997_16947.png","2017\/1122\/842151\/1511762999_61758.png","2017\/1122\/842151\/1511762995_46708.png","2017\/1122\/842151\/1511762995_14880.png"]}},"sku_config":{"Color":"Red,LightGray,Blue,Black,Pink","SizeName":"OneSize"}};
+
+                var sku_tr_str = '<tr><td class="map_index"></td><td class="map_title"></td>';
+                sku_tr_str += ('<td><input type="text" class="form-control input-sm sku_id_ext" size ="6" value=""></td>');
+                sku_tr_str += ('<td><input type="text" class="form-control input-sm add_money" size ="6" value=""></td>');
+                sku_tr_str += ('<td><input type="text" class="form-control input-sm stock" size ="6" value="" ></td>');
+                sku_tr_str += ('<td><input type="text" class="form-control input-sm upc_value" size ="12" value="" ></td>');
+                sku_tr_str += ('<td><a class="btn btn-default bt_sku_del">删除</a></td>');
+                sku_tr_str += ('<td><a class="img_list2 btn btn-default" href="javascript:">选择图片</a></td>');
+                sku_tr_str += ('<td><ul class="img_list1"></ul></td></tr>');
+
+                var sku_detail_item_str = '<div class="detial_item">';
+                sku_detail_item_str += '<span class="detial_title"></span>';
+                sku_detail_item_str += '<ul class="detial_values"></ul>';
+                sku_detail_item_str += '<div class="clear"></div></div>';
+
+                var sku_type = $('#sku_type');
+                var sku_type_detail = $('#sku_type_detail');
+                var sku_body = $('#sku_body');
+
+                //          $(".img_list1, .img_list2").dragsort({
+                //              dragSelector: "li",
+                //              dragBetween: true,
+                //              dragEnd: saveOrder,
+                //              placeHolderTemplate: "<li class='placeHolder'></li>",
+                //              scrollSpeed: 5
+                //          });
+
+                var current_image_button = '';
+
+
+                function saveOrder() {
+                    //alert($(this).html());
+                    //var data = $(".img_list1 li").map(function(){
+                    //    return $(this).children().html();
+                    //}).get();
+                    //$("input[name=list1SortOrder]").val(data.join("|"));
+                    //alert(data.join("|"));
+                };
+
+                function checkSubmit(){
+                    goods_sku_json['sku_map'] = {};
+
+                    sku_body.find('tr').each(function(){
+                        var sku_item = {};
+                        sku_item['title'] = $(this).find('.map_title').text();
+                        sku_item['sku_id_ext'] = $(this).find('.sku_id_ext').val();
+                        sku_item['add_money'] = $(this).find('.add_money').val();
+                        sku_item['stock'] = $(this).find('.stock').val();
+                        sku_item['upc_value'] = $(this).find('.upc_value').val();
+                        sku_item['images'] = [];
+                        $(this).find('.img_list1 img').each(function(key,item){
+                            sku_item['images'].push($(item).attr('data-url'));
+                        });
+
+                        goods_sku_json['sku_map'][sku_item['title']] = sku_item;
+                    });
+                    $('#goods_sku_json').val(JSON.stringify( goods_sku_json ));
+
+                    init_goods_base();
+
+                    save_goods_base();
+
+                    return true;
+                }
+
+                function edit_sku(obj){
+                    if(obj == undefined){
+                        alert('数据错误');
+                        return false;
+                    }
+                    var sku_name = obj.text();
+                    if(goods_sku_json['sku_config'][sku_name] == undefined){
+                        alert('刷新页面后再操作');
+                        return false;
+                    }
+                    $('#skuModal .modal-title').text('修改变体');
+                    $('#sku_name').val(sku_name);
+                    $('#sku_values').val(goods_sku_json['sku_config'][sku_name]);
+                    $('#skuModal').modal('show');
+                }
+
+                $(function(){
+                    $('#good_images').hover(function(){
+                        $(this).show();
+                    },function(){
+                        $(this).hide();
+                    });
+
+                    $('#good_images li').click(function(){
+                        $(current_image_button).parent('td').next('td').find('.img_list1').append($(this).clone());
+                    });
+
+                    $('#good_images li img').hover(function(){
+                        $('#goods_images_preview img').attr('src',$(this).attr('src'));
+                        var fixLeft = $(this).offset().left - 100;
+                        var fixTop = $('#good_images').offset().top-$(window).scrollTop()-310;
+                        $("#goods_images_preview").css('left',fixLeft);
+                        $("#goods_images_preview").css('top',fixTop);
+                        $('#goods_images_preview').show();
+                    },function(){
+                        $('#goods_images_preview').hide();
+                        $('#goods_images_preview img').attr('src','');
+                    });
+
+                    $(document).on('click','.img_list1 li',function(event){
+                        $(this).remove();
+                    });
+
+                    process_goods_sku('init');
+
+                    $('#skuModalLabel').click(function(){
+
+                        $('#skuModal').modal('show');
+                        $('#sku_name').val('Color');
+                        //$('#sku_values').val('OneColor');
+                        $('.suggest_color').show();
+                        $('#skuModal .modal-title').text('添加变体');
+                    });
+
+                    $('#bt_submit_sku').click(function(){
+                        var sku_name = $('#sku_name').val();
+                        sku_name = sku_name.replace(/(\s*)/g, "");
+                        var sku_values = $('#sku_values').val();
+                        sku_values = sku_values.replace(/，/ig,',');
+                        sku_values = sku_values.replace(/(\s*)/g, "");
+                        $('#sku_values').val(sku_values);
+
+                        if(sku_name=='' || sku_values==''){
+                            alert('变体名字或者变体值不能为空');
+                            return false;
+                        }
+                        $('#skuModal').modal('hide');
+
+                        if(goods_sku_json['sku_config'] == undefined){
+                            goods_sku_json['sku_config'] = {}
+                        }
+                        goods_sku_json['sku_config'][sku_name] = sku_values;
+
+                        process_goods_sku();
+                    });
+
+
+                });
+
+                function process_goods_sku(process_type){
+
+                    sku_type.find('ul').html('');
+                    sku_type_detail.html('');
+                    sku_body.html('');
+
+                    if(goods_sku_json['sku_config'] == undefined){
+                        if(goods_sku_json['sku_map'] != undefined){
+                            goods_sku_json['sku_map'] = {};
+                        }
+                        return false;
+                    }
+                    sku_type.find('ul').html('');
+                    var sku_map = [];
+                    var sku_index = 0;
+                    for(var sku_name in goods_sku_json['sku_config']){
+                        sku_map[sku_index] = [];
+                        sku_type.find('ul').append('<li><span class="sku_text">'+sku_name+'</span><span class="close bt_del_skutype">x</span></li>');
+
+                        var detail_item = $(sku_detail_item_str);
+                        detail_item.find('.detial_title').text(sku_name);
+                        var detail_values = goods_sku_json['sku_config'][sku_name].split(',');
+                        for(var val_key in detail_values){
+                            detail_item.find('.detial_values').append('<li>'+detail_values[val_key]+'</li>');
+                            sku_map[sku_index].push(detail_values[val_key]);
+                        }
+                        sku_index++;
+                        sku_type_detail.append(detail_item);
+                    }
+                    sku_type.find('ul li .sku_text').click(function(){
+                        edit_sku($(this));
+                    });
+                    sku_type.find('ul li .bt_del_skutype').click(function(){
+                        del_skutype($(this));
+                    });
+                    if(process_type == 'init'){
+                        if(goods_sku_json['sku_map'] != undefined){
+                            var sku_index = 0;
+                            for(var i in goods_sku_json['sku_map']){
+                                var sku_tr = $(sku_tr_str);
+                                var sku_item_info = goods_sku_json['sku_map'][i];
+                                sku_body.append(sku_tr);
+                                sku_index += 1;
+                                sku_tr.find(".map_index").text(sku_index);
+                                sku_tr.find(".map_title").text(sku_item_info['title']);
+                                sku_tr.find(".sku_id_ext").val(sku_item_info['sku_id_ext']);
+                                sku_tr.find(".add_money").val(sku_item_info['add_money']);
+                                sku_tr.find(".stock").val(sku_item_info['stock']);
+                                sku_tr.find(".upc_value").val(sku_item_info['upc_value']);
+                                var sku_images = [];
+                                for(var img in sku_item_info['images']){
+                                    sku_images[sku_item_info['images'][img]] = 'yes';
+                                    sku_tr.find(".img_list1").append('<li><img src="http://1ju.img-cn-hongkong.aliyuncs.com/'+sku_item_info['images'][img]+'@0o_0l_200w_90q.src" data-url="'+sku_item_info['images'][img]+'"></li>');
+                                }
+                                sku_tr.find('.bt_sku_del').click(function(){
+                                    $(this).parent('td').parent('tr').remove();
+                                });
+                                sku_tr.find('.img_list2').hover(function(){
+                                    current_image_button = $(this);
+                                    $("#good_images").show();
+                                    var fixLeft = $(this).offset().left-$('#good_images').width()/2+80;
+                                    var fixTop = $(this).offset().top-$(window).scrollTop();
+                                    var fixHeight = $('#good_images').height();
+                                    fixTop = fixTop-fixHeight;
+                                    $("#good_images").css('left',fixLeft);
+                                    $("#good_images").css('top',fixTop);
+                                },function(){
+                                    $("#good_images").hide();
+                                });
+                            }
+                        }
+                    }else{
+                        var sku_map_arr = combine(sku_map);
+                        var sku_index = 0;
+                        for(var i in sku_map_arr){
+                            sku_index += 1;
+                            var sku_tr = $(sku_tr_str);
+                            sku_body.append(sku_tr);
+                            var stock_num = 50+Math.floor(Math.random()*30);
+                            sku_tr.find(".stock").val(stock_num);
+                            sku_tr.find(".map_index").text(sku_index);
+                            sku_tr.find(".map_title").text(sku_map_arr[i]);
+                            sku_tr.find('.bt_sku_del').click(function(){
+                                $(this).parent('td').parent('tr').remove();
+                            });
+                            sku_tr.find('.img_list2').hover(function(){
+                                current_image_button = $(this);
+                                $("#good_images").show();
+                                var fixLeft = $(this).offset().left;
+                                var fixTop = $(this).offset().top-$(window).scrollTop();
+                                var fixHeight = $('#good_images').height();
+                                fixTop = fixTop-fixHeight;
+                                $("#good_images").css('left',fixLeft);
+                                $("#good_images").css('top',fixTop);
+                            },function(){
+                                $("#good_images").hide();
+                            });
+                        }
+                    }
+
+                }
+
+                function del_skutype(ele){
+
+                    var sku_text = ele.parent('li').find('.sku_text').text();
+                    if(sku_text == ''){
+                        alert('内容为空');
+                    }
+
+                    if(goods_sku_json['sku_config'] == undefined){
+                        goods_sku_json['sku_config'] = {}
+                    }
+                    if(goods_sku_json['sku_config'][sku_text] != undefined){
+                        delete goods_sku_json['sku_config'][sku_text];
+                    }
+
+                    process_goods_sku();
+                }
+
+                function combine(arr){
+                    if(arr.length>1){
+                        var len1=arr[0].length, len2=arr[1].length, newArr=arr.slice(0), temp=[];
+                        for(var i=0;i<len1;i++){
+                            for(var j=0;j<len2;j++){
+                                temp.push(arr[0][i]+'-'+arr[1][j])
+                            }
+                        }
+                        newArr.splice(0,2,temp);
+                        return arguments.callee(newArr)
+                    }
+                    return arr[0]
+                }
+
+                function process_price(){
+
+                    var price_base = $('input[name=price_base]').val().trim();
+                    var postage_local = $('input[name=postage_local]').val().trim();
+                    var discount = $('input[name=discount]').val().trim();
+                    var weight = $('input[name=weight]').val().trim();
+                    var size_l = parseInt($('input[name=size_l]').val().trim());
+                    var size_w = parseInt($('input[name=size_w]').val().trim());
+                    var size_h = parseInt($('input[name=size_h]').val().trim());
+                    var numReg = /^[0-9]+\.?[0-9]*$/g;
+                    if(!numReg.test(price_base))
+                    {
+                        $('input[name=price_base]').addClass("border_red");
+                        return false;
+                    }else{
+                        $('input[name=price_base]').removeClass("border_red");
+                    }
+                    numReg = /^[0-9]+\.?[0-9]*$/g;
+                    if(!numReg.test(weight))
+                    {
+                        $('input[name=weight]').addClass("border_red");
+                        return false;
+                    }else{
+                        $('input[name=weight]').removeClass("border_red");
+                    }
+                    if(!(/^[0-9]+$/g).test(size_l) || !(/^[0-9]+$/g).test(size_w) || !(/^[0-9]+$/g).test(size_h))
+                    {
+                        $('input[name=size_l]').addClass("border_red");
+                        $('input[name=size_w]').addClass("border_red");
+                        $('input[name=size_h]').addClass("border_red");
+                        return false;
+                    }else{
+                        $('input[name=size_l]').removeClass("border_red");
+                        $('input[name=size_w]').removeClass("border_red");
+                        $('input[name=size_h]').removeClass("border_red");
+                    }
+                    if(!(/^[0-9]+\.?[0-9]*$/g).test(postage_local))
+                    {
+                        $('input[name=postage_local]').addClass("border_red");
+                        return false;
+                    }else{
+                        $('input[name=postage_local]').removeClass("border_red");
+                    }
+                    if(!(/^[0-9]+\.?[0-9]*$/g).test(discount))
+                    {
+                        $('input[name=discount]').addClass("border_red");
+                        return false;
+                    }else{
+                        $('input[name=discount]').removeClass("border_red");
+                    }
+                    var price_country =
+                    {
+                        'us':
+                        {
+                            'xiaobao':[7.5,9],
+                            'ems':[112,33.75],
+                            'dhl':[74.8,13.2,10.75],
+                            'currency':'USD'   ,
+                            'rate':0.1439                        },
+                        'ca':
+                        {
+                            'xiaobao':[6.5,19],
+                            'ems':[135.6,35.25],
+                            'dhl':[79.9,13.2,10.75],
+                            'currency':'CAD',
+                            'rate':0.194                        },
+                        'mx':
+                        {
+                            'xiaobao':[12.5,1],
+                            'ems':[161.45,47],
+                            'dhl':[79.9,13.2,10.75],
+                            'currency':'MXN',
+                            'rate':2.9835                        },
+                        'uk':
+                        {
+                            'xiaobao':[4.5,16],
+                            'ems':[104.8,30],
+                            'dhl':[74.8,13.2,10.75],
+                            'currency':'GBP',
+                            'rate':0.1171                        },
+                        'fr':
+                        {
+                            'xiaobao':[5.4,24],
+                            'ems':[104.8,30],
+                            'dhl':[74.8,13.2,10.75],
+                            'currency':'EUR',
+                            'rate':0.1378                        },
+                        'de':
+                        {
+                            'xiaobao':[3.7,22],
+                            'ems':[135.6,35.25],
+                            'dhl':[74.8,13.2,10.75],
+                            'currency':'EUR',
+                            'rate':0.1378                        },
+                        'it':
+                        {
+                            'xiaobao':[6.2,22],
+                            'ems':[135.6,35.25],
+                            'dhl':[74.8,13.2,10.75],
+                            'currency':'EUR',
+                            'rate':0.1378                        },
+                        'es':
+                        {
+                            'xiaobao':[6.2,22],
+                            'ems':[135.6,35.25],
+                            'dhl':[74.8,13.2,10.75],
+                            'currency':'EUR',
+                            'rate':0.1378                        },
+                        'ja':
+                        {
+                            'xiaobao':[3.7,22],
+                            'ems':[135.6,35.25],
+                            'dhl':[74.8,13.2,10.75],
+                            'currency':'JPY',
+                            'rate':16.9188                        }
+                    };
+
+                    var country_index = 0;
+                    for(var country_code in price_country){
+                        var price_xiaobao = (Math.floor(weight * 1000 / 100) * price_country[country_code].xiaobao[0] + price_country[country_code].xiaobao[1]) * 1.2;
+                        var price_ems = (Math.floor(weight * 1000 / 500) * price_country[country_code].ems[1] + price_country[country_code].ems[0]) * 1.2;
+                        var price_dhl_weight = (Math.floor(weight * 1000 / 500) * price_country[country_code].dhl[1] + price_country[country_code].dhl[0]) * (1+price_country[country_code].dhl[2]/100) * 1.2;
+                        var price_dhl_size = (Math.floor(size_l * size_w * size_h / 5 / 500) * price_country[country_code].dhl[1] + price_country[country_code].dhl[0]) * (1+price_country[country_code].dhl[2]/100) * 1.2;
+
+                        price_xiaobao = Math.ceil(parseFloat(price_xiaobao)*100)/100;
+                        price_ems = Math.ceil(parseFloat(price_ems)*100)/100;
+                        price_dhl_weight = Math.ceil(parseFloat(price_dhl_weight)*100)/100;
+                        price_dhl_size = Math.ceil(parseFloat(price_dhl_size)*100)/100;
+
+                        var post_name = '';
+                        var price_ret = 0;
+                        var cut_weight = 2;
+                        var cut_size = 90;
+                        if(country_code == 'fr' || country_code == 'de'){
+                            cut_weight = 3;
+                            cut_size = 120;
+                        }
+
+                        if(weight < cut_weight && size_l < 60 && size_w < 60 && size_h < 60 && (size_l + size_w + size_h) < cut_size){
+                            price_ret = price_xiaobao;
+                            post_name = '(小包)';
+                        }else{
+                            if(price_dhl_weight > price_dhl_size){
+                                price_ret = price_dhl_weight;
+                                post_name = '(DHL重量)';
+                            }else{
+                                price_ret = price_dhl_size;
+                                post_name = '(DHL体积)';
+                            }
+                            if(price_ems < price_ret){
+                                price_ret = price_ems;
+                                post_name = '(EMS)';
+                            }
+                        }
+
+                        country_index++;
+
+                        $($(".multi_postage td").get(country_index)).html(post_name+'<br>'+price_ret);
+                        var price_total =  (1 * price_base + price_ret + 1 * postage_local) * 1.8 / 0.82 * parseFloat(discount);
+                        $($(".multi_price td").get(country_index)).text(Math.ceil(price_total*100)/100);
+                        var price_total2 = 1 * price_country[country_code].rate * price_total;
+                        $($(".multi_price2 td").get(country_index)).text(Math.ceil(price_total2*100)/100+'['+price_country[country_code].currency+']');
+                        $($(".multi_price3 td").get(country_index)).text(Math.floor(price_total2)+'.99['+price_country[country_code].currency+']');
+
+                    }
+                }
+
+                function process_price_new(refresh){
+                    if (refresh === undefined) {
+                        refresh = false;
+                    }
+
+                    var price_base = parseFloat($('input[name=price_base]').val().trim());
+                    var postage_local = parseFloat($('input[name=postage_local]').val().trim());
+                    var discount = parseFloat($('input[name=discount]').val().trim());
+                    var weight = parseFloat($('input[name=weight]').val().trim());
+                    var size_l = parseInt($('input[name=size_l]').val().trim());
+                    var size_w = parseInt($('input[name=size_w]').val().trim());
+                    var size_h = parseInt($('input[name=size_h]').val().trim());
+                    var numReg = /^[0-9]+\.?[0-9]*$/g;
+                    if(!numReg.test(price_base))
+                    {
+                        $('input[name=price_base]').addClass("border_red");
+                        return false;
+                    }else{
+                        $('input[name=price_base]').removeClass("border_red");
+                    }
+                    numReg = /^[0-9]+\.?[0-9]*$/g;
+                    if(!numReg.test(weight))
+                    {
+                        $('input[name=weight]').addClass("border_red");
+                        return false;
+                    }else{
+                        $('input[name=weight]').removeClass("border_red");
+                    }
+                    if(!(/^[0-9]+$/g).test(size_l) || !(/^[0-9]+$/g).test(size_w) || !(/^[0-9]+$/g).test(size_h))
+                    {
+                        $('input[name=size_l]').addClass("border_red");
+                        $('input[name=size_w]').addClass("border_red");
+                        $('input[name=size_h]').addClass("border_red");
+                        return false;
+                    }else{
+                        $('input[name=size_l]').removeClass("border_red");
+                        $('input[name=size_w]').removeClass("border_red");
+                        $('input[name=size_h]').removeClass("border_red");
+                    }
+                    if(!(/^[0-9]+\.?[0-9]*$/g).test(postage_local))
+                    {
+                        $('input[name=postage_local]').addClass("border_red");
+                        return false;
+                    }else{
+                        $('input[name=postage_local]').removeClass("border_red");
+                    }
+                    if(!(/^[0-9]+\.?[0-9]*$/g).test(discount))
+                    {
+                        $('input[name=discount]').addClass("border_red");
+                        return false;
+                    }else{
+                        $('input[name=discount]').removeClass("border_red");
+                    }
+
+                    var priceCal = {
+                        size_l : 0,
+                        size_w : 0,
+                        size_h : 0,
+                        weight : 0,
+                        length1 : 0,
+                        length2 : 0,
+                        length3 : 0,
+                        packageDes : '',
+                        calLength:function(){
+                            this.length1 = Math.max(this.size_l,this.size_w,this.size_h);
+                            if(this.length1 == this.size_l){
+                                this.length2 = Math.max(this.size_w,this.size_h);
+                                this.length3 = this.length2 == this.size_w ? this.size_h : this.size_w;
+                            }else if(this.length1 == this.size_w){
+                                this.length2 = Math.max(this.size_l,this.size_h);
+                                this.length3 = this.length2 == this.size_l ? this.size_h : this.size_l;
+                            }else if(this.length1 == this.size_h){
+                                this.length2 = Math.max(this.size_l,this.size_w);
+                                this.length3 = this.length2 == this.size_l ? this.size_w : this.size_l;
+                            }
+                        },
+                        //算是否大小包
+                        //运费是多少
+                        calType:function(country_code){
+                            var packageType = 1;//1云图，2三台
+                            switch (country_code) {
+                                case 'us':
+                                    if( this.length1 <= 60 && this.length2 <= 40 && this.length3 <= 40 ){
+                                        packageType = 1;
+                                    }else{
+                                        packageType = 2;
+                                    }
+                                    break;
+                                case 'ca':
+                                    if( this.length1 <= 200 && (this.length1 +  this.length2 * 2 + this.length3 * 2 ) <= 300 ){
+                                        packageType = 1;
+                                    }else{
+                                        packageType = 2;
+                                    }
+                                    break;
+                                case 'mx':
+                                    if( this.length1 <= 60 && (this.length1 +  this.length2 + this.length3 ) <= 180 ){
+                                        packageType = 1;
+                                    }else{
+                                        packageType = 2;
+                                    }
+                                    break;
+                                case 'uk':
+                                    if( this.length1 <= 120 && this.length2 <= 80 && this.length3 <= 60 ){
+                                        packageType = 1;
+                                    }else{
+                                        packageType = 2;
+                                    }
+                                    break;
+                                case 'fr':
+                                    if( this.length1 <= 60 && this.length2 <= 40 && this.length3 <= 40 ){
+                                        packageType = 1;
+                                    }else{
+                                        packageType = 2;
+                                    }
+                                    break;
+                                case 'de':
+                                    if( this.length1 <= 120 && this.length2 <= 60 ){
+                                        packageType = 1;
+                                    }else{
+                                        packageType = 2;
+                                    }
+                                    break;
+                                case 'it':
+                                    if( this.length1 <= 60 && this.length2 <= 40 && this.length3 <= 40 ){
+                                        packageType = 1;
+                                    }else{
+                                        packageType = 2;
+                                    }
+                                    break;
+                                case 'es':
+                                    if( this.length1 <= 120 && (this.length1 + this.length2 + this.length3) <= 210 ){
+                                        packageType = 1;
+                                    }else{
+                                        packageType = 2;
+                                    }
+                                    break;
+                                case 'ja':
+                                    packageType = 1;
+                                    break;
+                                default :
+                                    packageType = 0;
+                            }
+                            if(packageType == 1){
+                                this.packageDes = '小包';
+                            }else if(packageType == 2){
+                                this.packageDes = '大包';
+                            }else{
+                                this.packageDes = '计算错误';
+                            }
+                            return packageType;
+                        },
+                        calFee:function(country_code){
+                            var fee1,fee2,fee3,packageType;
+                            fee1 = 0;//小件不泡
+                            fee2 = 0;//小件泡
+                            fee3 = 0;//大件
+                            packageType = this.calType(country_code);
+                            switch (country_code) {
+                                case 'us':
+                                    fee1 = this.weight * 60;
+                                    fee2 = 60 * this.length1 * this.length2 * this.length3 / 8000;
+                                    fee3 = fee2;
+                                    break;
+                                case 'ca':
+                                    fee1 = this.weight * 50;
+                                    fee2 = 50 * this.length1 * this.length2 * this.length3 / 8000;
+                                    fee3 = fee2;
+                                    break;
+                                case 'mx':
+                                    fee1 = this.weight * 82 + 132;
+                                    fee2 = fee1;
+                                    fee3 = fee1;
+                                    break;
+                                case 'uk':
+                                    fee1 = this.weight * 35 + 18;
+                                    fee2 = 18 + 35 * this.length1 * this.length2 * this.length3 / 8000;
+                                    fee3 = 130 + ( ( ( this.length1 * this.length2 * this.length3 ) / 6000 - this.weight ) / 3 + this.weight ) * 39;
+                                    break;
+                                case 'fr':
+                                    fee1 = this.weight * 57 + 25;
+                                    fee2 = 25 + 57 * this.length1 * this.length2 * this.length3 / 8000;
+                                    fee3 = 100 + ( ( ( (this.length1 * this.length2 * this.length3) / 6000 - this.weight ) / 3 ) + this.weight ) * 39;
+                                    break;
+                                case 'de':
+                                    fee1 = this.weight * 45 + 20;
+                                    fee2 = 20 + 45 * this.length1 * this.length2 * this.length3 / 8000;
+                                    fee3 = 68 + ( ( ( (this.length1 * this.length2 * this.length3) / 6000 - this.weight ) / 3 ) + this.weight ) * 39;
+                                    break;
+                                case 'it':
+                                    fee1 = this.weight * 55 + 25;
+                                    fee2 = 25 + 55 * this.length1 * this.length2 * this.length3 / 8000;
+                                    fee3 = 142 + ( ( ( (this.length1 * this.length2 * this.length3) / 6000 - this.weight ) / 3 ) + this.weight ) * 39;
+                                    break;
+                                case 'es':
+                                    fee1 = this.weight * 40 + 20;
+                                    fee2 = 20 + 40 * this.length1 * this.length2 * this.length3 / 8000;
+                                    fee3 = 170 + ( ( ( (this.length1 * this.length2 * this.length3) / 6000 - this.weight ) / 3 ) + this.weight ) * 39;
+                                    break;
+                                case 'ja':
+                                    fee1 = this.weight * 40;
+                                    fee2 = fee1;
+                                    fee3 = fee1;
+                                    break;
+                                default :
+                                    fee1 = 0;
+                                    fee2 = 0;
+                                    fee3 = 0;
+                                    break;
+                            }
+                            if(packageType == 0){
+                                return 0;
+                            }
+                            if(packageType == 1){
+                                return Math.max(fee1,fee2);
+                            }else{
+                                return fee3;
+                            }
+                        }
+                    };
+                    priceCal.size_l = size_h;
+                    priceCal.size_w = size_w;
+                    priceCal.size_h = size_l;
+                    priceCal.weight = weight;
+                    priceCal.calLength();
+
+                    var price_country =
+                    {
+                        'us':
+                        {
+                            'xiaobao':[7.5,9],
+                            'ems':[112,33.75],
+                            'dhl':[74.8,13.2,10.75],
+                            'currency':'USD'   ,
+                            'rate':0.1452,
+                            'rate_day':2018-08-17                        },
+                        'ca':
+                        {
+                            'xiaobao':[6.5,19],
+                            'ems':[135.6,35.25],
+                            'dhl':[79.9,13.2,10.75],
+                            'currency':'CAD',
+                            'rate':0.1908,
+                            'rate_day':2018-08-17                        },
+                        'mx':
+                        {
+                            'xiaobao':[12.5,1],
+                            'ems':[161.45,47],
+                            'dhl':[79.9,13.2,10.75],
+                            'currency':'MXN',
+                            'rate':2.7370,
+                            'rate_day':2018-08-17                        },
+                        'uk':
+                        {
+                            'xiaobao':[4.5,16],
+                            'ems':[104.8,30],
+                            'dhl':[74.8,13.2,10.75],
+                            'currency':'GBP',
+                            'rate':0.1143,
+                            'rate_day':2018-08-17                        },
+                        'fr':
+                        {
+                            'xiaobao':[5.4,24],
+                            'ems':[104.8,30],
+                            'dhl':[74.8,13.2,10.75],
+                            'currency':'EUR',
+                            'rate':0.1277,
+                            'rate_day':2018-08-17                        },
+                        'de':
+                        {
+                            'xiaobao':[3.7,22],
+                            'ems':[135.6,35.25],
+                            'dhl':[74.8,13.2,10.75],
+                            'currency':'EUR',
+                            'rate':0.1277,
+                            'rate_day':2018-08-17                        },
+                        'it':
+                        {
+                            'xiaobao':[6.2,22],
+                            'ems':[135.6,35.25],
+                            'dhl':[74.8,13.2,10.75],
+                            'currency':'EUR',
+                            'rate':0.1277,
+                            'rate_day':2018-08-17                        },
+                        'es':
+                        {
+                            'xiaobao':[6.2,22],
+                            'ems':[135.6,35.25],
+                            'dhl':[74.8,13.2,10.75],
+                            'currency':'EUR',
+                            'rate':0.1277,
+                            'rate_day':2018-08-17                        },
+                        'ja':
+                        {
+                            'xiaobao':[3.7,22],
+                            'ems':[135.6,35.25],
+                            'dhl':[74.8,13.2,10.75],
+                            'currency':'JPY',
+                            'rate':16.1100,
+                            'rate_day':2018-08-17                        }
+                    };
+
+                    var country_index = 0;
+                    for(var country_code in price_country){
+                        if( (country_code == 'us' || country_code == 'ca' || country_code == 'mx' ) && priceCal.calType(country_code) == 2 ){
+                            var price_xiaobao = (Math.floor(weight * 1000 / 100) * price_country[country_code].xiaobao[0] + price_country[country_code].xiaobao[1]) * 1.2;
+                            var price_ems = (Math.floor(weight * 1000 / 500) * price_country[country_code].ems[1] + price_country[country_code].ems[0]) * 1.2;
+                            var price_dhl_weight = (Math.floor(weight * 1000 / 500) * price_country[country_code].dhl[1] + price_country[country_code].dhl[0]) * (1+price_country[country_code].dhl[2]/100) * 1.2;
+                            var price_dhl_size = (Math.floor(size_l * size_w * size_h / 5 / 500) * price_country[country_code].dhl[1] + price_country[country_code].dhl[0]) * (1+price_country[country_code].dhl[2]/100) * 1.2;
+
+                            price_xiaobao = Math.ceil(parseFloat(price_xiaobao)*100)/100;
+                            price_ems = Math.ceil(parseFloat(price_ems)*100)/100;
+                            price_dhl_weight = Math.ceil(parseFloat(price_dhl_weight)*100)/100;
+                            price_dhl_size = Math.ceil(parseFloat(price_dhl_size)*100)/100;
+
+                            var post_name = '';
+                            var price_ret = 0;
+                            var cut_weight = 2;
+                            var cut_size = 90;
+                            if(country_code == 'fr' || country_code == 'de'){
+                                cut_weight = 3;
+                                cut_size = 120;
+                            }
+
+                            if(weight < cut_weight && size_l < 60 && size_w < 60 && size_h < 60 && (size_l + size_w + size_h) < cut_size){
+                                price_ret = price_xiaobao;
+                                post_name = '(小包)';
+                            }else{
+                                if(price_dhl_weight > price_dhl_size){
+                                    price_ret = price_dhl_weight;
+                                    post_name = '(DHL重量)';
+                                }else{
+                                    price_ret = price_dhl_size;
+                                    post_name = '(DHL体积)';
+                                }
+                                if(price_ems < price_ret){
+                                    price_ret = price_ems;
+                                    post_name = '(EMS)';
+                                }
+                            }
+                        }else{
+                            var price_ret = priceCal.calFee(country_code);
+                            var post_name = priceCal.packageDes;
+                        }
+
+                        country_index++;
+
+                        price_ret = Math.ceil(price_ret*100)/100;
+
+                        $($(".multi_postage_new td").get(country_index)).html(post_name+'<br>'+price_ret);
+                        var price_total =  (1 * price_base + price_ret + 1 * postage_local) * 1.8 / 0.82 * parseFloat(discount);
+
+                        price_total = Math.ceil(price_total*100)/100;
+
+                        $($(".multi_price_new td").get(country_index)).text(Math.ceil(price_total*100)/100);
+                        var price_total2 = 1 * price_country[country_code].rate * price_total;
+                        $($(".multi_price2_new td").get(country_index)).text(Math.ceil(price_total2*100)/100+'['+price_country[country_code].currency+']');
+                        $($(".multi_price3_new td").get(country_index)).text(Math.floor(price_total2)+'.99['+price_country[country_code].currency+']');
+                        var price_final = Math.floor(price_total2)+'.99';
+
+                        var price_final_real = parseFloat($($(".multi_price4_new td").get(country_index)).find('input[name=price_'+country_code+']').val());
+
+                        if(refresh || price_final_real==0 || price_final_real == ''){
+                            $($(".multi_price4_new td").get(country_index)).find('input[name=price_'+country_code+']').val(price_final);
+                        }
+
+                        price_final_real = parseFloat($($(".multi_price4_new td").get(country_index)).find('input[name=price_'+country_code+']').val());
+                        var price_final_real_cny = price_final_real / parseFloat(price_country[country_code].rate);
+                        var profit = price_final_real_cny-price_base-price_ret-postage_local;
+                        profit = Math.ceil(profit*100)/100;
+                        var profit_rate = Math.ceil(profit / price_final_real_cny * 100 * 100)/100;
+                        $($(".multi_price5_new td").get(country_index)).text(profit+'('+profit_rate+'%)');
+                    }
+                }
+
+                $(function(){
+                    process_price_new();
+                    process_price();
+                    $('input[name=price_base]').keyup(function(){
+                        process_price();
+                        process_price_new();
+                    });
+                    $('input[name=weight]').keyup(function(){
+                        process_price();
+                        process_price_new();
+                    });
+                    $('input[name=size_l]').keyup(function(){
+                        process_price();
+                        process_price_new();
+                    });
+                    $('input[name=size_w]').keyup(function(){
+                        process_price();
+                        process_price_new();
+                    });
+                    $('input[name=size_h]').keyup(function(){
+                        process_price();
+                        process_price_new();
+                    });
+                    $('input[name=postage_local]').keyup(function(){
+                        process_price();
+                        process_price_new();
+                    });
+                    $('input[name=discount]').keyup(function(){
+                        process_price();
+                        process_price_new();
+                    });
+
+                    $('.multi_price4_new td input').keyup(function(){
+                        process_price_new();
+                    });
+
+                    $('#bt_price_refresh').click(function(){
+                        process_price_new(true);
+                    });
+
+//				$('input[name=postage_base]').keyup(function(){
+//					var price_base = $(this).val().trim();
+//					var numReg = /^([1-9]([0-9]{0,5})\.?[0-9]{0,2})$/g;
+//					if(!numReg.test(price_base))
+//					{
+//						alert('请输入正确的数字');
+//					}
+//					//price_base = parseInt(price_base);
+//					var price_base_usd =  ( price_base * 0.1507 ).toFixed(2);
+//					$('input[name=postage_base_usd]').val(price_base_usd);
+//				});
+
+                });
+            </script>
+            <!-- ****************************************** -->
+            <!-- 基本信息tab结束 -->
+            <!-- ****************************************** -->
+        </div>
+        <script type="text/javascript">
+
+            function fill_goods_base(lang,data){
+                goods_base_json[lang] = data;
+                $('#goods_base_json').val(JSON.stringify( goods_base_json ));
+
+                $('#label_lang_'+lang).removeClass("label_lang_success");
+            }
+
+            function fill_goods_sku2(lang){
+                var sku_json = {};
+                $('#tab_sku_'+lang+' .sku_item').each(function(){
+                    var sku_item = {};
+                    sku_item['sku_title'] = $(this).text();
+                    sku_item['sku_stock'] = $(this).attr('sku-stock');
+                    sku_item['sku_price'] = $(this).attr('sku-price');
+                    sku_json[$(this).attr('sku-id')] = sku_item;
+                });
+                goods_sku_json[lang] = sku_json;
+                $('#goods_sku_json').val(JSON.stringify( goods_sku_json ));
+            }
+
+            function init_goods_base(){
+                var zh_data = {};
+                zh_data['title'] = $('#title_zh').val();
+                zh_data['keywords'] = $('#keywords_zh').val();
+                zh_data['keypoints'] = $('#keypoints_zh').val();
+                zh_data['description'] = $('#description_zh').val();
+                fill_goods_base('zh', zh_data);
+                var en_data = {};
+                en_data['title'] = $('#title_en').val();
+                en_data['keywords'] = $('#keywords_en').val();
+                en_data['keypoints'] = $('#keypoints_en').val();
+                en_data['description'] = $('#description_en').val();
+                fill_goods_base('en', en_data);
+            }
+
+            //提交保存产品时保存一遍产品翻译数据
+            function save_goods_base(){
+                var langs = ['zh','en','fr','de','it','es','ja'];
+                for(var i in langs){
+                    var lang_data = {};
+                    lang_data['title'] = $('#title_'+langs[i]).val();
+                    lang_data['keywords'] = $('#keywords_'+langs[i]).val();
+                    lang_data['keypoints'] = $('#keypoints_'+langs[i]).val();
+                    lang_data['description'] = $('#description_'+langs[i]).val();
+                    fill_goods_base(langs[i], lang_data);
+                }
+            }
+
+            $(function(){
+                init_goods_base();
+                save_goods_base();
+
+                $('#btn_translate_all').click(function(){
+                    $('.btn_translate').click();
+                });
+                $('#btn_translate_all_en').click(function(){
+                    $('.btn_translate_en').click();
+                });
+
+
+                $('.btn_translate').click(function(){
+                    var target_lang = $(this).attr('data-target');//'fr';
+                    $('#label_lang_'+target_lang).addClass("label_lang_success");
+                    var title_zh = $('#title_zh').val();
+                    var keywords_zh = $('#keywords_zh').val();
+                    var keypoints_zh = $('#keypoints_zh').val();
+                    var description_zh = $('#description_zh').val();
+                    var source_lang = 'zh-CN';
+                    if($(this).attr('data-source') != undefined && $(this).attr('data-source') != ''){
+                        source_lang = $(this).attr('data-source');
+                        if(source_lang == 'en'){
+                            title_zh = $('#title_en').val();
+                            keywords_zh = $('#keywords_en').val();
+                            keypoints_zh = $('#keypoints_en').val();
+                            description_zh = $('#description_en').val();
+                        }
+                    }
+                    //http://47.75.162.121/trans/translate_goods.php
+                    //http://47.95.32.215/api/translate_goods.php   http://z.kershop.com/translate/translate_goods.php
+                    //$.post("http://z.kershop.com/z/index.php/m//api_translate/translate", { source: source_lang, target: target_lang, title: title_zh, keywords: keywords_zh, keypoints: keypoints_zh, description: description_zh },
+                    $.post("http://47.91.170.77/trans/translate_goods.php", {sl:source_lang,target: target_lang, title: title_zh, keywords: keywords_zh, keypoints: keypoints_zh, description: description_zh },
+                        function(json){
+                            if(json.code == 1){
+                                if(target_lang == 'zh-CN'){
+                                    target_lang = 'zh';
+                                }
+                                $('#title_'+target_lang).val(json.data.title);
+                                $('#keywords_'+target_lang).val(json.data.keywords);
+                                $('#keypoints_'+target_lang).val(json.data.keypoints);
+                                $('#description_'+target_lang).val(json.data.description);
+                                if(json.data.keypoints.length > 500){
+                                    //alert('要点说明超过了500个字符，请适当减少后再翻译');
+                                }
+                                fill_goods_base(target_lang, json.data);
+                            }else{
+                                layer.msg(json.msg);
+
+                            }
+                        },'json');
+                });
+                $('.btn_translate_en').click(function(){
+                    var target_lang = $(this).attr('data-target');
+                    $('#label_lang_'+target_lang).addClass("label_lang_success");
+                    var source_lang = 'en';
+                    var title_zh = $('#title_en').val();
+                    var keywords_zh = $('#keywords_en').val();
+                    var keypoints_zh = $('#keypoints_en').val();
+                    var description_zh = $('#description_en').val();
+                    //http://47.75.162.121/trans/translate_goods.php
+                    //$.post("http://z.kershop.com/z/index.php/m//api_translate/translate", { source: source_lang, target: target_lang, title: title_zh, keywords: keywords_zh, keypoints: keypoints_zh, description: description_zh },
+                    $.post("http://47.91.170.77/trans/translate_goods.php", {sl:source_lang, target: target_lang, title: title_zh, keywords: keywords_zh, keypoints: keypoints_zh, description: description_zh },
+                        function(json){
+                            if(json.code == 1){
+                                $('#title_'+target_lang).val(json.data.title);
+                                $('#keywords_'+target_lang).val(json.data.keywords);
+                                $('#keypoints_'+target_lang).val(json.data.keypoints);
+                                $('#description_'+target_lang).val(json.data.description);
+                                if(json.data.keypoints.length > 500){
+                                    //alert('要点说明超过了500个字符，请适当减少后再翻译');
+                                }
+                                fill_goods_base(target_lang, json.data);
+                            }else{
+                                layer.msg(json.msg);
+                            }
+                        },'json');
+                });
+
+                $('#bt_sku_translate').click(function(){
+                    var target_lang = 'en';
+                    var sku_values = $('#sku_values').val();
+                    sku_values = sku_values.replace(/，/ig,',');
+                    sku_values = sku_values.replace(/(\s*)/g, "");
+                    $('#sku_values').val(sku_values);
+                    $.post("http://47.52.74.176/trans/translate_goods.php", { target: target_lang, sku_values: sku_values },
+                        function(json){
+                            if(json.code == 1){
+                                var sku_values = json.data.sku_values;
+                                sku_values = sku_values.replace(/(\s*)/g, "");
+                                $('#sku_values').val(sku_values);
+                            }else{
+                                layer.msg(json.msg);
+                            }
+                        },'json');
+                });
+                $('.suggest label').click(function(){
+                    if($('#sku_values').val() == ''){
+                        $('#sku_values').val($(this).attr('value'));
+                    }else{
+                        $('#sku_values').val($('#sku_values').val()+','+$(this).attr('value'));
+                    }
+                });
+                $('#sku_name').change(function(){
+                    $('.suggest').hide();
+                    $('#sku_values').val('');
+                    if($(this).val() == 'Color'){
+                        $('.suggest_color').show();
+                        //$('#sku_values').val('OneColor');
+                    }
+                    if($(this).val() == 'SizeName'){
+                        $('.suggest_size').show();
+                        //$('#sku_values').val('OneSize');
+                    }
+                });
+            });
+        </script>
+
+    </div>
+
+    <div class="button-div">
+        <input type="submit" value="保存提交"  class="btn btn-primary"   />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn-primary" href="/z/index.php/m/goods/edit/1307206">上一个</a>
+                            <a class="btn btn-primary" href="/z/index.php/m/goods/edit/1085365">下一个</a>
+                    </div>
+</form>
+
+<script type="text/javascript">
+    var img_goods_id = 1085366;
+</script>
+<script type="text/javascript" src="/libs/imgupload/pplupload-2.3.6/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="/libs/imgupload/upload.js"></script>
+
+<div class="hide">
+    <textarea name="content" class="hide"></textarea>
+</div>
+<div class="modal fade" id="skuModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">变体</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="control-label">变体名称:</label>
+                        <select name="sku_name" class="form-control" id="sku_name">
+                            <option value="Color" selected="selected">Color(颜色)</option>
+                            <option value="SizeName">SizeName(尺寸)</option>
+                            <option value="ItemPackageQuantity">ItemPackageQuantity(容量)</option>
+                            <option value="Material">Material(材质)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">变体值:(多个值用逗号隔开如:red,white,black)</label>
+                        <textarea class="form-control" id="sku_values"></textarea>
+                    </div>
+                    <div class="form-group suggest suggest_color">
+                        推荐：
+                        <label value="Beige">米色</label>
+                        <label value="Black">黑色</label>
+                        <label value="Blue">蓝色</label>
+                        <label value="Bronze">青铜</label>
+                        <label value="Brown">棕色</label>
+                        <label value="Clear">明确</label>
+                        <label value="Copper">铜</label>
+                        <label value="Cream">奶油</label>
+                        <label value="Gold">金</label>
+                        <label value="Green">绿色</label>
+                        <label value="Grey">灰色</label>
+                        <label value="Metallic">金属</label>
+                        <label value="Multi-colored">多色</label>
+                        <label value="Orange">橙子</label>
+                        <label value="Pink">粉</label>
+                        <label value="Purple">紫色</label>
+                        <label value="Red">红</label>
+                        <label value="Silver">银</label>
+                        <label value="White">白色</label>
+                        <label value="Yellow">黄色</label>
+                        <br/>
+                        <label value="OneColor">单色</label>
+                        <label value="A,B,C">3(A-C)</label>
+                        <label value="A,B,C,D,E,F">6(A-F)</label>
+                        <label value="A,B,C,D,E,F,G,H,I">9(A-I)</label>
+                    </div>
+                    <div class="form-group suggest suggest_size">
+                        推荐：
+                        <label value="OneSize">均码</label>
+                        <label value="XS">XS</label>
+                        <label value="S">S</label>
+                        <label value="M">M</label>
+                        <label value="L">L</label>
+                        <label value="XL">XL</label>
+                        <label value="XXL">XXL</label>
+                        <label value="XXXL">XXXL</label>
+                        <label value="XXXXL">XXXXL</label>
+                        <label value="XXXXXL">XXXXXL</label>
+                    </div>
+                    <style type="text/css">
+                        .suggest{display:none;}
+                        .suggest label{
+                            border-radius: 3px;
+                            padding: 1px 3px;
+                            cursor:pointer;
+                            font-weight:normal;
+                        }
+                        .suggest label:hover{ background: #286090; color:white;}
+                    </style>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="bt_sku_translate" style="float:left;">翻译</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="bt_submit_sku">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="cat_box">
+    <div id="cat_container"></div>
+    <div class="clea"></div>
+</div>
+<script type="text/javascript">
+    var current_cat_path_ele = '#cat_path';
+    var current_cat_id_ele = '#cat_id';
+    $(function(){
+        $(document).on('click',function(event){
+            hideCat();
+        });
+        $(document).on('click','#cat_path',function(event){
+            current_cat_path_ele = '#cat_path';
+            current_cat_id_ele = '#cat_id';
+            event.stopPropagation();
+            showCat('#cat_path');
+        });
+        $(document).on('click','.cat_item',function(event){
+            event.stopPropagation();
+            $(this).siblings('.cat_item').removeClass('on');
+            $(this).addClass('on');
+            var parent_id = $(this).attr('data-id');
+            var cat_level = $(this).attr('data-level');
+            cat_level = parseInt(cat_level);
+            if(cat_level == 3){
+                var cat_path = $(this).attr('data-path');
+                $(current_cat_path_ele).val(cat_path);
+                $(current_cat_id_ele).val(parent_id);
+                hideCat();
+            }else{
+                getChild(parent_id,cat_level);
+            }
+        });
+    });
+    function showCat(id){
+        var cat_box = $('#cat_box');
+        $(id).after(cat_box);
+        var position_top = $(id).position().top+$(id).outerHeight();
+        var position_left = $(id).position().left;
+        cat_box.css('left',position_left);
+        cat_box.css('top',position_top);
+        $('#cat_container').html('');
+        $.get('/apicat/getcatlist',{parent_id:0,cat_level:1},function(data){
+            $('#cat_container').append(data);
+        });
+        $('#cat_box').show();
+    }
+    function hideCat(){
+        $('#cat_box').hide();
+    }
+    function getChild(parent_id,cat_level){
+        var get_level = parseInt(cat_level)+1;
+        $('.cat_level_'+get_level).remove();
+        if(get_level == 2){
+            $('.cat_level_'+3).remove();
+        }
+        $.get('/apicat/getcatlist',{parent_id:parent_id,cat_level:get_level},function(data){
+            $('#cat_container').append(data);
+        });
+    }
+</script>
+<div id="footer">
+XM
+</div>
+<style type="text/css">
+    .site_msg_box{
+        display: none;
+        position: fixed;bottom:40px;right:15px; z-index: 100;
+        width:300px; height:200px;
+        border:3px solid #337ab7;
+        background: white;
+    }
+    .site_msg_box .site_msg_title{padding:5px; background: #337ab7; color:white; font-size:14px; line-height: 14px;}
+    .site_msg_box .site_msg_close{float: right; font-size:13px; cursor: pointer;}
+    .site_msg_box .site_msg_body{padding:10px; color:black; font-size:12px; line-height: 20px;}
+
+    .site_nav_pro{position: fixed;bottom:5px;right:15px;}
+</style>
+<div class="btn-group site_nav_pro">
+    <a href="javascript:" class="btn btn-default hide" id="site_nav_bt_note">笔记本</a>
+    <a href="javascript:" class="btn btn-default hide" id="site_nav_bt_feedback">留言</a>
+    <a href="javascript:" class="btn btn-default" id="site_nav_bt_msg">消息</a>
+</div>
+<div class="site_msg_box">
+    <div class="site_msg_title"><span class="site_msg_title_text">消息</span><span class="site_msg_close glyphicon glyphicon-remove"></span></div>
+    <div class="site_msg_body">主体</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('#site_nav_bt_msg').click(function(){
+            $('.site_msg_title_text').text('消息');
+            $('.site_msg_body').html('');
+            $('.site_msg_body').append('<a href="http://z.kershop.com/z/index.php/m/task/plug">采集插件,开始内侧,点击查看</a>');
+            $('.site_msg_box').fadeIn();
+        });
+        $('#site_nav_bt_feedback').click(function(){
+            $('.site_msg_title_text').text('留言');
+            $('.site_msg_body').text('建设中');
+            $('.site_msg_box').fadeIn();
+        });
+        $('#site_nav_bt_note').click(function(){
+            $('.site_msg_title_text').text('笔记本');
+            $('.site_msg_body').text('暂无');
+            $('.site_msg_box').fadeIn();
+        });
+        $('.site_msg_close').click(function(){
+            $('.site_msg_box').fadeOut();
+        });
+    });
+</script>
+</body>
+</html>

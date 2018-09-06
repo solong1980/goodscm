@@ -1,0 +1,81 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="//res.layui.com/layui/dist/css/layui.css" media="all">
+    <link rel="stylesheet" href="./css/layer.css" id="layui_layer_skinlayercss" media="all">
+    <style>body{padding:10px;font-size:14px;background:#fff;width:95%;margin:0 auto;font-size:14px;line-height:20px;overflow:hidden;}p{margin-bottom:10px;}input{border:1px solid #999;padding:5px 10px;margin:0 10px 10px 0;}</style>
+    <style>
+        select {
+            border-color: #ccc;
+            color: #404040;
+            padding: 2px;
+            height: 27px;
+            line-height: 27px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-family: inherit;
+            font-size: 100%;
+            outline: 0;
+        }
+        }
+    </style>
+</head>
+<body>
+<div>
+    <strong><label>请选择派送人员：</label></strong>
+    <div class="layui-inline">
+        <select name="" id="worker">
+                                                <option value="1"> 郑师傅(6666) </option>
+                                    <option value="3"> 佘师傅(8888) </option>
+                                    <option value="4"> 曾师傅(9999) </option>
+                                    <option value="5"> 张三(123456) </option>
+                                    <option value="31"> 演示送水工(000000) </option>
+                                    <option value="48"> 范师傅(ys001) </option>
+                                    <option value="49"> 张意(zhangy) </option>
+                                    <option value="52"> 杜总(duzong) </option>
+                                    <option value="53"> 赵成璋(tq002) </option>
+                                    <option value="54"> 赵晓迎(tq001) </option>
+                                    <option value="61"> 宋师傅(song00) </option>
+                                    <option value="62"> 钱师傅(qianzo) </option>
+                                    <option value="63"> 张力(zhangl) </option>
+                                    <option value="67"> 王林聪(qds994) </option>
+                                    <option value="68"> 叶师傅(qds401) </option>
+                                    <option value="69"> 吕师傅(qds644) </option>
+                                    <option value="70"> 宋师傅(qds686) </option>
+                                    <option value="71"> 乐师傅(qds975) </option>
+                                    <option value="72"> 肖师傅(qds745) </option>
+                                    <option value="75"> 何师傅(he001) </option>
+                                    <option value="76"> 李总(li5858) </option>
+                                    <option value="77"> 马总(ma4678) </option>
+                                    <option value="78"> 魏总(wei001) </option>
+                                    <option value="81"> 高总(gao001) </option>
+                                    </select>
+        <button class="layui-btn" id="closeIframe" url="">确定</button>
+    </div>
+</div>
+<script src="//cdn.bootcss.com/jquery/1.12.3/jquery.min.js"></script>
+<script src="//res.layui.com/lay/lib/laycode/laycode.min.js"></script>
+<script>
+    var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+    $('#closeIframe').click(function(){
+        var worker_id = $('#worker').val();
+        if(worker_id === ''){
+            parent.layer.msg('请选择派送人员');
+            return;
+        }
+        var url = "https://www.qudingshui.com/center/single/order-send?id=5007&type=1&worker_id="+worker_id;
+        $.get(url).success(function(data){
+            parent.layer.msg(data.info);
+            if (data.status==1) {
+                parent.location.reload();
+                parent.layer.close(index);
+            }
+        });
+
+
+    });
+</script>
+</body>
+</html>

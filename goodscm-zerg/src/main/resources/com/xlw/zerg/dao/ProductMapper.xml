@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xlw.zerg.dao.ProductMapper">
+	<resultMap id="BaseResultMap" type="com.xlw.zerg.model.Product">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
+		<result column="stock" property="stock" jdbcType="INTEGER" />
+		<result column="delete_time" property="deleteTime" jdbcType="INTEGER" />
+		<result column="category_id" property="categoryId" jdbcType="INTEGER" />
+		<result column="main_img_url" property="mainImgUrl" jdbcType="VARCHAR" />
+		<result column="from" property="from" jdbcType="TINYINT" />
+		<result column="create_time" property="createTime" jdbcType="INTEGER" />
+		<result column="update_time" property="updateTime" jdbcType="INTEGER" />
+		<result column="summary" property="summary" jdbcType="VARCHAR" />
+		<result column="img_id" property="imgId" jdbcType="INTEGER" />
+
+		<association property="image" javaType="com.xlw.zerg.model.Image">
+			<id column="img_id" property="id" />
+			<result column="url" property="url" />
+			<result column="image_from" property="from" />
+			<result column="image_delete_time" property="deleteTime" />
+			<result column="image_update_time" property="updateTime" />
+		</association>
+
+	</resultMap>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from product
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="com.xlw.zerg.model.Product">
+		insert into product (id, name, price,
+		stock, delete_time, category_id,
+		main_img_url, from, create_time,
+		update_time, summary, img_id
+		)
+		values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
+		#{stock,jdbcType=INTEGER}, #{deleteTime,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER},
+		#{mainImgUrl,jdbcType=VARCHAR}, #{from,jdbcType=TINYINT}, #{createTime,jdbcType=INTEGER},
+		#{updateTime,jdbcType=INTEGER}, #{summary,jdbcType=VARCHAR}, #{imgId,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.xlw.zerg.model.Product">
+		update product
+		set name = #{name,jdbcType=VARCHAR},
+		price = #{price,jdbcType=DECIMAL},
+		stock = #{stock,jdbcType=INTEGER},
+		delete_time = #{deleteTime,jdbcType=INTEGER},
+		category_id = #{categoryId,jdbcType=INTEGER},
+		main_img_url = #{mainImgUrl,jdbcType=VARCHAR},
+		from = #{from,jdbcType=TINYINT},
+		create_time = #{createTime,jdbcType=INTEGER},
+		update_time = #{updateTime,jdbcType=INTEGER},
+		summary = #{summary,jdbcType=VARCHAR},
+		img_id = #{imgId,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<update id="updateStock" parameterType="com.xlw.zerg.model.Product">
+		update product
+			stock = stock - #{decCode, jdbcType=INTEGER},
+		where id = #{productId, jdbcType=INTEGER}
+			and stock - #{decCode, jdbcType=INTEGER} > 0
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select id, name, price, stock, delete_time, category_id, main_img_url, `from`, create_time,
+		update_time, summary, img_id
+		from product
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByCategoryIdPaginate" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select id, name, price, stock, delete_time, category_id, main_img_url, `from`, create_time,
+			update_time, summary, img_id
+		from product
+			where category_id = #{catId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="selectByProductIds" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select id, name, price, stock, delete_time, category_id, main_img_url, `from`, create_time,
+		update_time, summary, img_id
+		from product
+		where id in
+		 <foreach collection="products" open="(" close=")" separator="," item="product">
+		 	#{product.productId,jdbcType=INTEGER}
+		 </foreach>
+	</select>
+
+	<select id="selectAll" resultMap="BaseResultMap">
+		select 
+		p.id, 
+		name, 
+		price, 
+		stock, 
+		p.delete_time, 
+		category_id, 
+		concat('https://www.bdkaierliang.com/images',main_img_url) as main_img_url, 
+		p.`from`, 
+		p.create_time,
+		p.update_time, 
+		summary, 
+		img_id,
+		concat('https://www.bdkaierliang.com/images',url) as url, 
+        i.`from` as image_from, 
+        i.delete_time as image_delete_time,
+        i.update_time as image_update_time
+		from product p left join image i on p.img_id=i.id
+	</select>
+</mapper>

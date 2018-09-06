@@ -1,0 +1,139 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../js/layui-v2.2.5/css/layui.css" />
+<style type="text/css">
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th,
+	.table>thead>tr>td, .table>thead>tr>th {
+	vertical-align: middle;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th,
+	.table>thead>tr>td, .table>thead>tr>th {
+	vertical-align: middle;
+}
+
+.table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>th {
+	text-align: center;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th,
+	.table>thead>tr>td, .table>thead>tr>th {
+	padding: 8px;
+	line-height: 1.42857143;
+	vertical-align: top;
+	border-bottom: 1px solid #ddd;
+}
+
+p, td, div {
+	font: 12px "sans-serif", "Arial", "Verdana";
+}
+
+html, body, p, td, div {
+	font-size: 14px;
+}
+
+.grid-demo {
+	padding: 10px;
+	line-height: 10px;
+	text-align: center;
+	background-color: #79C48C;
+	color: #fff;
+}
+
+.table {
+	width: 100%;
+	max-width: 100%;
+	margin-bottom: 20px;
+}
+
+.layui-container>div.layui-row {
+	padding: 8px;
+	line-height: 1.42857143;
+	vertical-align: top;
+}
+
+.layui-container>div.layui-row>div.layui-col-md2 {
+	font: bold;
+	font-size: large;
+	border-top: 1px solid #ddd;
+}
+
+.layui-container>div.layui-row>div.layui-col-md9 {
+	vertical-align: middle;
+	padding-top: 9px;
+}
+</style>
+
+<script src="../js/layui-v2.2.5/layui.js"></script>
+
+<script>
+	layui.use([ 'layer', 'form' ], function() {
+		var layer = layui.layer, form = layui.form;
+		var device = layui.device();
+		layer.msg('Hello World');
+		console.log(device)
+	});
+</script>
+</head>
+
+<body class="layui-bg-blue">
+	<form action="/z/index.php/m/goods/update/1085366" method="post"
+		enctype="multipart/form-data" name="theForm"
+		onsubmit="return checkSubmit()" class="form-inline">
+		<div class="layui-container">
+			<div class="layui-row">
+				<div class="layui-col-md12 grid-demo">
+					<i class="layui-icon">&#xe678;</i>常规布局（以中型屏幕桌面为例）：
+				</div>
+			</div>
+			<div class="layui-row">
+				<div class="layui-col-md2">商品编码:</div>
+				<div class="layui-col-md9">321001</div>
+			</div>
+			<div class="layui-row">
+				<div class="layui-col-md2">简短产品型号名称:</div>
+				<div class="layui-col-md9">Fotga 金钢屏 2.7" 2.7寸屏相机用</div>
+			</div>
+			<div class="layui-row">
+				<div class="layui-col-md2">分类:</div>
+				<div class="layui-col-md9">服装,鞋靴,箱包/皮具箱包/拉杆箱</div>
+			</div>
+			<div class="layui-row">
+				<div class="layui-col-md2">包装:</div>
+				<div class="layui-col-md9">
+					<table class="table">
+						<thead>
+							<tr class="">
+								<td>体积</td>
+								<td>长</td>
+								<td>宽</td>
+								<td>高</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="odd">
+								<td>包装前体积(Cm)</td>
+								<td>6.00</td>
+								<td>8.00</td>
+								<td>0.05</td>
+							</tr>
+							<tr class="even">
+								<td>包装后体积(Cm)</td>
+								<td>12.00</td>
+								<td>19.00</td>
+								<td>3.00</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</form>
+
+</body>
+</html>

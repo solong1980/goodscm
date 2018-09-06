@@ -1,0 +1,167 @@
+<div id="main" class="main" style="min-height: 254px;">
+    <div class="main-title">
+        <h2>我的店铺</h2>
+    </div>
+    <div class="layui-tab" lay-filter="demo" lay-allowClose="true">
+     	<ul class="layui-tab-title">
+	        <a class="btn" href="#!shop-add">开 店</a>
+			<li class="layui-this" lay-id="shops">店铺列表</li>
+		</ul>
+	    <div class="layui-tab-content" >
+	    	<div class="layui-tab-item layui-show">
+			    <!-- 数据列表 -->
+			    <div class="data-table table-striped">
+			        <table class="">
+			            <thead>
+			            <tr>
+			                <th class="row-selected row-selected"><input class="check-all" type="checkbox"></th>
+			                <th class="">店铺名称</th>
+			                <th class="">状态</th>
+			                <th class="">店长姓名</th>
+			                <th class="">商品数量</th>
+			                <th class="">水票销量 (桶)</th>
+			                <th class="">押金总 (元)</th>
+			                <th class="">续费日期</th>
+			                <th class="">截止日期</th>
+			                <th class="">操作</th>
+			            </tr>
+			            </thead>
+			            <tbody>
+							<tr>
+			                        <td><input class="ids" type="checkbox" name="ids[]" value="6"></td>
+			                        <td>趣订水演示</td>
+			                        <td style="color:  blue ">开启</td>
+			                        <td>趣订水</td>
+			                        <td>14</td>
+			                        <td>416</td>
+			                        <td>420.00</td>
+			                        <td><span>2018-06-25</span></td>
+			                        <td><span style="color: red">2030-12-30</span></td>
+			                        <td>
+			                            <a href="javascript:;" onclick="showInfo(6)">详情</a>
+			                            <a href="javascript:;" data-type="sliders" data-id=6 class="site-demo-active" title="轮播图" href="https://www.qudingshui.com/center/single/shop-sliders?id=6&amp;admin_id=10">轮播图</a>
+			                            <a href="javascript:;" data-type="setting" data-id=6 class="site-demo-active" title="设置" href="https://www.qudingshui.com/center/single/shop-setting?id=6&amp;admin_id=10">设置</a>
+			                            <a href="javascript:;" data-type="notice" data-id=6 class="site-demo-active" title="广播" href="https://www.qudingshui.com/center/single/shop-notice?id=6&amp;admin_id=10">广播</a>
+			                            <a href="javascript:;" data-type="edit" data-id=6 class="site-demo-active" title="编辑" href="https://www.qudingshui.com/center/single/shop-edit?id=6&amp;admin_id=10">编辑</a>
+									</td>
+							</tr>
+						</tbody>
+			        </table>
+			    </div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="./js/layui.all.js"></script>
+<script type="text/javascript">
+    layui.use('element', function(){
+    	  var $ = layui.jquery
+    	  ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+    	  function addTab(that,url,tabId,id,title){
+	    	  $.get(url,function(responseData){
+	    		  element.tabAdd('demo', {
+		    	        title: title,
+		    	        content: responseData,
+		    	        id: tabId
+	              });
+				  element.tabChange('demo', tabId); //切换到：tabId
+				  $("li[lay-id='shops'] > i").remove();
+	    	  },'html')
+    	  }
+    	  var active = {
+	    		sliders: function(that,tabId,id,title){
+	    			debugger
+	    			//新增轮播设置
+	    			addTab(that,'/static/shop-sliders.html',tabId,id,title);
+	    	    },
+	    	    setting: function(id){
+	      	      //新增一个Tab项
+	      	      element.tabAdd('demo', {
+	      	        title: '新选项'+ (Math.random()*1000|0) //用于演示
+	      	        ,content: '内容'+ (Math.random()*1000|0)
+	      	        ,id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+	      	      })
+	      	    },
+	      	    notice: function(id){
+	      	      //新增一个Tab项
+	      	      element.tabAdd('demo', {
+	      	        title: '新选项'+ (Math.random()*1000|0) //用于演示
+	      	        ,content: '内容'+ (Math.random()*1000|0)
+	      	        ,id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+	      	      })
+	      	    },
+	      	    edit: function(id){
+	      	      //新增一个Tab项
+	      	      element.tabAdd('demo', {
+	      	        title: '新选项'+ (Math.random()*1000|0) //用于演示
+	      	        ,content: '内容'+ (Math.random()*1000|0)
+	      	        ,id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+	      	      })
+	      	    },
+	    	    tabDelete: function(othis){
+	    	      //删除指定Tab项
+	    	      element.tabDelete('demo', '44'); //删除：“商品管理”
+	    	      othis.addClass('layui-btn-disabled');
+	    	    }
+	    	    ,tabChange: function(){
+	    	      //切换到指定Tab项
+	    	      element.tabChange('demo', '22'); //切换到：用户管理
+	    	    }
+    	  };
+    	  
+    	  $('.site-demo-active').on('click', function(){
+    	    var othis = $(this), 
+    	    type = othis.data('type'),
+    		id = othis.data('id'),
+    		title = othis.prop('title');
+    	    active[type] ? active[type].call(this, othis,type,id,title) : '';
+    	  });
+    	  
+    	  //Hash地址的定位
+    	  var layid = location.hash.replace(/^#test=/, '');
+    	  element.tabChange('test', layid);
+    	  
+    	  element.on('tab(test)', function(elem){
+    	    location.hash = 'test='+ $(this).attr('lay-id');
+    	  });
+    	  
+    	  element.on('tabDelete(demo)', function(data){
+    		  console.log(this); //当前Tab标题所在的原始DOM元素
+    		  console.log(data.index); //得到当前Tab的所在下标
+    		  console.log(data.elem); //得到当前的Tab大容器
+    		  element.tabChange('demo', 'shops');
+    	  });
+    	  $("li[lay-id='shops'] > i").remove();
+    	});
+    
+        function showInfo(id) {
+            //iframe层
+            layer.open({
+                type: 2,
+                title:'店铺详情',
+                area: ['450px', '360px'],
+                fixed: false, //不固定
+                content: '/static/shop-info.html?id='+id
+            });
+        }
+        //搜索功能
+        $("#search").click(function () {
+            var url = $(this).attr('url');
+            var query = $('.search-form').find('input').serialize();
+            query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+            query = query.replace(/^&/g, '');
+            if (url.indexOf('?') > 0) {
+                url += '&' + query;
+            } else {
+                url += '?' + query;
+            }
+            window.location.href = url;
+        });
+        //回车搜索
+        $(".search-input").keyup(function (e) {
+            if (e.keyCode === 13) {
+                $("#search").click();
+                return false;
+            }
+        });
+</script>

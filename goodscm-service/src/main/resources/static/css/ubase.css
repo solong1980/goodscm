@@ -1,0 +1,515 @@
+/*-- CSS reset --*/
+html, body, div, span, applet, object, iframe, table, caption, tbody, tfoot, thead, tr, th, td, del, dfn, em, font, image, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, dl, dt, dd, ol, ul, li, fieldset, form, label, legend {
+	font-style: inherit;
+	outline: 0;
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+body {
+	background: white;
+	font-family: "微软雅黑";
+	font-size: 12px;
+	color: #333;
+	overflow-x:hidden;
+}
+ol, ul, dl {
+	list-style: none;
+}
+:focus {
+	outline: 0;
+}
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+blockquote:before, blockquote:after, q:before, q:after {
+	content: “”;
+}
+blockquote, q {
+	quotes: “” “”;
+}
+a {
+	color: #333;
+	text-decoration: none;
+}
+
+/**-- CSS 公用样式库 --**/
+
+/*-- 字体字号--*/
+.f0{font-size:0;} .f12{font-size:12px;} .f14{font-size:14px;} .f16{font-size:16px;} .f18{font-size:18px;} .fs {font-family:'宋体';}.fw {font-family:'微软雅黑';}
+
+/*-- 外补丁--*/
+.mg5{ margin:5px;} .mg10{ margin:10px;} .mg15{ margin:15px;} .mg20{ margin:20px;} .mg25{ margin:25px;} .mg30{ margin:30px;} .mg40{ margin:40px;} .mg50{ margin:50px;}
+.mgt1{ margin-top:1px;} .mgt2{ margin-top:2px;} .mgt3{ margin-top:3px;} .mgt4{ margin-top:4px;} .mgt5{ margin-top:5px;} .mgt10{ margin-top:10px;} .mgt15{ margin-top:15px;} .mgt20{ margin-top:20px;} .mgt30{ margin-top:30px;} .mgt40{ margin-top:40px;} .mgt50{ margin-top:50px;}
+.mgr1{ margin-right:1px;} .mgr2{ margin-right:2px;} .mgr3{ margin-right:3px;} .mgr4{ margin-right:4px;} .mgr5{ margin-right:5px;} .mgr10{ margin-right:10px;} .mgr15{ margin-right:15px;} .mgr20{ margin-right:20px;} .mgr30{ margin-right:30px;}.mgr40{ margin-right:40px;} .mgr50{ margin-right:50px;}
+.mgb1{ margin-bottom:1px;} .mgb2{ margin-bottom:2px;} .mgb3{ margin-bottom:3px;} .mgb4{ margin-bottom:4px;} .mgb5{ margin-bottom:5px;} .mgb10{ margin-bottom:10px;} .mgb15{ margin-bottom:15px;} .mgb20{ margin-bottom:20px;} .mgb30{ margin-bottom:30px;} .mgb40{ margin-bottom:40px;} .mgb50{ margin-bottom:50px;}
+.mgl1{ margin-left:1px;} .mgl2{ margin-left:2px;} .mgl3{ margin-left:3px;} .mgl4{ margin-left:4px;} .mgl5{ margin-left:5px;} .mgl10{ margin-left:10px;} .mgl15{ margin-left:15px;} .mgl20{ margin-left:20px;} .mgl30{ margin-left:30px;} .mgl40{ margin-left:40px;} .mgl50{ margin-left:50px;}
+
+/*-- 内补丁--*/
+.pd5{padding:5px;} .pd10{padding:10px;} .pd15{padding:15px;} .pd20{padding:20px;} .pd25{padding:25px;} .pd30{padding:30px;} .pd40{padding:40px;} .pd50{padding:50px;}
+.pdt1{ padding-top:1px;} .pdt2{ padding-top:2px;} .pdt3{ padding-top:3px;} .pdt4{ padding-top:4px;} .pdt5{ padding-top:5px;} .pdt10{ padding-top:10px;} .pdt15{ padding-top:15px;} .pdt20{ padding-top:20px;} .pdt30{ padding-top:30px;} .pdt40{ padding-top:40px;} .pdt50{ padding-top:50px;}
+.pdr1{ padding-right:1px;} .pdr2{ padding-right:2px;} .pdr3{ padding-right:3px;} .pdr4{ padding-right:4px;} .pdr5{ padding-right:5px;} .pdr10{ padding-right:10px;} .pdr15{ padding-right:15px;} .pdr20{ padding-right:20px;} .pdr30{ padding-right:30px;} .pdr40{ padding-right:40px;} .pdr50{ padding-right:50px;}
+.pdb1{ padding-bottom:1px;} .pdb2{ padding-bottom:2px;} .pdb3{ padding-bottom:3px;} .pdb4{ padding-bottom:4px;} .pdb5{ padding-bottom:5px;} .pdb10{ padding-bottom:10px;} .pdb15{ padding-bottom:15px;} .pdb20{ padding-bottom:20px;} .pdb30{ padding-bottom:30px;} .pdb40{ padding-bottom:40px;} .pdb50{ padding-bottom:50px;}
+.pdl1{ padding-left:1px;} .pdl2{ padding-left:2px;} .pdl3{ padding-left:3px;} .pdl4{ padding-left:4px;} .pdl5{ padding-left:5px;} .pdl10{ padding-left:10px;} .pdl15{ padding-left:15px;} .pdl20{ padding-left:20px;} .pdl30{ padding-left:30px;} .pdl40{ padding-left:40px;} .pdl50{ padding-left:50px;}
+
+/*-- 行间距 --*/
+.h20{height:20px;} .h22{height:22px;} .h24{height:24px;} .h26{height:26px;} .h28{height:28px;} .h30{height:30px;}
+.lh20{ line-height:20px;} .lh22{ line-height:22px;} .lh24{ line-height:24px;} .lh26{ line-height:26px;} .lh28{ line-height:28px;} .lh30{ line-height:30px;}
+
+/*-- 显示方式 --*/
+.auto{margin-left:auto;margin-right:auto;} .b{font-weight:bold;} .n{font-weight:normal;font-style:normal;}
+.dn{display:none;} .di{display:inline;} .db{display:block;} .dib{display:inline-block;} .vh{visibility:hidden;} .vv{visibility:visible;}
+
+/*-- 定位布局 --*/
+.fl{float:left;} .fr{float:right;} .ovh{overflow:hidden;} .rel{position:relative;} .abs{position:absolute;}
+.tc{text-align:center;} .tr{text-align:right;} .tl{text-align:left;} .tdl{text-decoration:underline;}
+.vm{vertical-align:middle;} .vb{vertical-align:bottom;} .vt{vertical-align:top;} .vtb{vertical-align:text-bottom;}
+
+/*-- 边框边线 --*/
+.bdd{border:1px solid #ddd;}  .bdc {border:1px solid #ccc} .bdbd{border-bottom:1px solid #ddd;}
+
+/*-- 颜色 --*/
+.red{color:#F00;} .yellow{color:#FF0} .green{color:#228B22;} .blue{ color:#00BFFF;} .black{color:#000} .white{color:#FFF;} .gray{color:#808080;} .silver{color:#C0C0C0;} .lightgray{color:#D3D3D3;}
+
+/*-- 清除浮动 --*/
+.fix{*zoom:1;}.fix:after{display:block; content:"clear"; height:0; clear:both; overflow:hidden; visibility:hidden;}
+
+/*-- 半透明 --*/
+.opa3{background: rgba(0, 0, 0,0.3);-ms-filter: "progid:DXimageTransform.Microsoft.gradient(GradientType=1,startColorstr=#4C000000,endColorstr=#4C000000)"; filter: progid:DXimageTransform.Microsoft.gradient(GradientType=1,startColorstr=#4C000000, endColorstr=#4C000000);}
+.opa6{background: rgba(0, 0, 0,0.6);-ms-filter: "progid:DXimageTransform.Microsoft.gradient(GradientType=1,startColorstr=#666666,endColorstr=#666666)"; filter: progid:DXimageTransform.Microsoft.gradient(GradientType=1,startColorstr=#666666, endColorstr=#666666);}
+
+
+.header {
+	height: 80px;
+	position:fixed;
+	top:0;
+	left:0;
+	right:0;
+	z-index:10001;
+	/*background-color: white;*/
+	/*opacity: 0.5;*/
+}
+.header-drop{
+	background-color:rgba(255,255,255,0.9); 
+	box-shadow: 0 1px 4px rgba(0,0,0,.1);
+}
+.header .logo {
+	position: absolute;
+	top: 30px;
+	left: 70px;
+}
+.header ul {
+	position: absolute;
+	right: 275px;
+	top: 22px;
+}
+.header ul li {
+	float: left;
+	margin: 0px 12px;
+}
+.header ul li a {
+	display: block;
+	float: left;
+	width: 65px;
+	height: 32px;
+	line-height: 32px;
+	text-align: center;
+	font-size: 16px;
+	color: #fff;
+	border-radius: 5px;
+	font-weight:500
+}
+
+.header ul li.focus a, .header ul li a:hover {
+	background-color: rgba(255,255,255,0.15);
+}
+
+.header p {
+	position: absolute;
+	right: 60px;
+	top: 20px;
+}
+.header p a {
+	font-size: 16px;
+	color: #fff;
+	display: block;
+	float: left;
+	width: 84px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	margin-left: 20px;
+	border-radius: 5px;
+	font-weight:500
+}
+
+.header p a.btn-experience {
+	border: 1px solid #fff;
+}
+.header p a.btn-login {
+	border: 1px solid #ff9f23;
+	color: #ff9f23;
+}
+
+
+
+
+.header-drop ul li a{
+	color:#333;
+}	
+.header-top p a:hover {
+	background-color: rgba(0,0,0,0.1);
+}
+.header-drop p a.btn-experience{
+	color:#333;
+	border: 1px solid #666;
+}
+.header-drop p a.btn-experience:hover{
+	background-color: rgba(0,0,0,0.1);
+}
+.header-drop p a.btn-login{
+	color:#fff;
+	background-color:#ff9f23;
+}
+.header-drop p a.btn-login:hover{
+	background-color:#fe8522;
+}
+.header-drop ul li.focus a, .header-drop ul li a:hover {
+	background-color: rgba(0,0,0,0.1);
+	color:#333
+}
+
+
+
+
+
+.bottom-wrap{
+	height:260px;
+	background:#4c5365
+}
+.bottom{
+	width:1200px;
+	margin:0 auto;
+	padding-top:30px;
+	background: url(../image/bottom-logo.png)/*tpa=http://www.yixiaofang.com/image/bottom-logo.png*/ 0 70px no-repeat;
+}
+.bottom-nav{
+	padding-left:460px;
+	padding-top:15px;
+}
+.bot-nav-item{
+	width:150px;
+	height:170px;
+	text-align:center;
+	float:left;
+}
+.bot-nav-item h5{
+	font-weight:lighter;
+	font-size:14px;
+	line-height:30px;
+	margin:18px 0px 2px 7px;
+}
+.bot-nav-item h5 a{
+	color:#fff;
+}
+.bot-nav-item ul li{
+	line-height:2.4;
+}
+.bot-nav-item ul li a{
+	color:#9da3b3;
+
+}
+.bot-nav-item ul li a:hover{
+	color:#fff
+}
+.erweima{
+	width:114px;
+	text-align:center;
+	float:right;
+	margin-top:20px;
+	font-size:14px;
+	color:#fff;
+	margin-right:10px;
+}
+
+.footer-wrap{
+	height:150px;
+	background:#444b5d
+}
+.footer{	
+    width:1200px;
+	margin:0 auto;
+	height:80px;
+	padding-top:50px;
+	color:#9da3b3;
+	background:url(../image/footer-logo.png)/*tpa=http://www.yixiaofang.com/image/footer-logo.png*/ right 50px no-repeat
+}
+.footer a{
+	color:#9da3b3;
+	margin-right:12px;
+}
+.footer a:hover{
+	color:#fff;
+}
+.footer image{
+	position:relative;
+	top:4px;
+	left:-4px;
+}
+
+
+
+
+
+#elevator_item {
+	width: 60px;
+	height: 140px;
+	position: fixed;
+	right: 15px;
+	bottom: 15px;
+	-webkit-transition: opacity .4s ease-in-out;
+	-moz-transition: opacity .4s ease-in-out;
+	-o-transition: opacity .4s ease-in-out;
+	opacity: 1;
+	z-index: 100020;
+	display: none;
+}
+#elevator_item.off {
+	opacity: 0;
+	visibility: hidden
+}
+#elevator {
+	display: block;
+	width: 60px;
+	height: 50px;
+	background: url(../image/icon_top.png)/*tpa=http://www.yixiaofang.com/image/icon_top.png*/ center center no-repeat;
+	background-color: #444;
+	background-color: rgba(85,160,55,.8);
+	border-radius: 2px;
+	box-shadow: 0 1px 3px rgba(0,0,0,.2);
+	cursor: pointer;
+	
+}
+#elevator:hover {
+	background-color: rgba(78,149,67,.95)
+}
+#elevator:active {
+	background-color: rgba(85,160,55,.95);
+}
+#elevator_item .qr {
+	display: block;
+	width: 60px;
+	height: 40px;
+	border-radius: 2px;
+	box-shadow: 0 1px 3px rgba(0,0,0,.2);
+	cursor: pointer;
+	background: url(../image/icon_code.png)/*tpa=http://www.yixiaofang.com/image/icon_code.png*/ center center no-repeat;
+	background-color: #444;
+	background-color: rgba(255,159,35,.8);
+	margin-bottom: 10px
+}
+#elevator_item .qr:hover {
+	background-color: rgba(255,159,35,.95);
+}
+#elevator_item .qr:active {
+	background-color: rgba(255,159,35,.95);
+}
+
+#elevator_item .qq {
+	display: block;
+	width: 60px;
+	height: 40px;
+	border-radius: 2px;
+	box-shadow: 0 1px 3px rgba(0,0,0,.2);
+	cursor: pointer;
+	background: url(../image/icon_qq.png)/*tpa=http://www.yixiaofang.com/image/icon_qq.png*/ center center no-repeat;
+	background-color: #444;
+	background-color: rgba(94,201,247,.8);
+	margin-bottom: 10px
+}
+#elevator_item .qq:hover {
+	background-color: rgba(94,201,247,.95);
+}
+#elevator_item .qq:active {
+	background-color: rgba(94,201,247,.95);
+}
+
+
+
+#elevator_item .qr-popup {
+	width: 220px;
+	height: 40px;
+	background: #fff;
+	box-shadow: 0 1px 8px rgba(0,0,0,.1);
+	position: absolute;
+	left: -230px;
+	top: 50px;
+	border-radius: 2px;
+	display: none;
+	text-align: center
+}
+#elevator_item .qr-popup span{
+	line-height:40px;
+	font-size:16px;
+	color:#ff9f23
+}
+#elevator_item .qr-popup .arr {
+	width: 6px;
+	height: 11px;
+	background: url(../image/code_arrow.png)/*tpa=http://www.yixiaofang.com/image/code_arrow.png*/ 0 0 no-repeat;
+	position: absolute;
+	right: -6px;
+	bottom: 14px
+}
+
+
+.mz-footer{
+	background:#313334;
+	width:100%;
+	text-align:left;
+	padding:20px;
+}
+.mz-footer-content{
+	position:relative;
+	overflow:hidden;
+	width:100%;
+	margin:20px auto 40px;
+}
+.mz-footer-content li:nth-child(1){
+	padding-right:5%;
+}
+.mz-footer-content li>div>p{
+	line-height:28px;
+	color:#a9b0b4;
+	font-size:14px;
+}
+.mz-footer-content li>div>p a{
+	line-height:28px;
+	color:#a9b0b4;
+	font-size:14px;
+}
+
+.mz-footer-content h2{
+	font-size:18px;
+	color:#fff;
+
+}
+.mz-footer-logo{
+	background:rgba(0, 0, 0, 0) url("logo2.png")/*tpa=http://www.dianchaoren.com/default/static/image/logo2.png*/ no-repeat scroll bottom center;
+	display:block;
+	background-size:auto 100px;
+	width:110x;
+	height:100px;
+}
+
+.mz-footer-tel{
+	font-size:30px;
+	text-align:center;
+	font-weight:600;
+}
+.mz-wrap-line{
+	display:inline-block;
+	border-left:1px dashed #5d6060;
+	width:2px;
+	overflow:hidden;
+	position:absolute;
+	height:80%;
+	margin-top:5px;
+}
+.mz-footer-wrap{
+	text-align:center;
+}
+.mz-footer-wrap image{
+	width:30%;
+	margin:0px auto 10px;
+}
+.mz-footer-wrap>div>p{
+	margin-left:0px;
+	color:#a9b0b4;
+	font-size:14px;
+}
+.mz-footer-code{
+	background:url(icon_21.png)/*tpa=http://www.dianchaoren.com/default/static/image/icon_21.png*/ no-repeat top left;
+	background-size:contain;
+	text-indent:30px;
+	margin-bottom:10px;
+}
+.mz-footer-data a{
+	color:#a9b0b4;
+	font-size:14px;
+	margin-left:5px;
+}
+.mz-footer-copyright{
+	margin:60px auto 20px;
+	color:#a9b0b4;
+	font-size:14px;
+}
+.mz-hz-ul{
+	padding:10px;
+}
+.mz-hz-ul li{
+	padding:10px 5px;
+}
+.mz-hz-image{
+	width:100%;
+}
+
+/*******************å…³äºŽæˆ‘ä»¬#about.html****************************/
+
+.am-about-banner{padding:61px 0 60px;}
+.am-about-banner image{width:100%;display:block;}
+.am-about-nav-list{
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+	margin-bottom:40px;
+}
+.am-about-nav-list li{
+	background: #b9b9b9 none repeat scroll 0 0;
+	float: left;
+	height: 50px;
+	margin-right: 10px;
+	width: 230px;
+	text-align:center;
+}
+.am-about-nav-list li>a{
+	color: white;
+	display: block;
+	float: left;
+	font-size: 18px;
+	height: 50px;
+	line-height: 50px;
+	text-decoration: none;
+	text-align:center;
+	width: 230px;
+}
+.am-about-nav-list li>a:hover{
+	background: #343235 none repeat scroll 0 0;
+}
+.hover{background: #343235 none repeat scroll 0 0;}
+.am-about-content{font-size:14px;margin-bottom:40px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

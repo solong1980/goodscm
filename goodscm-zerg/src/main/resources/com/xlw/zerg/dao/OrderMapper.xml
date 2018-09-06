@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xlw.zerg.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.xlw.zerg.model.Order" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="delete_time" property="deleteTime" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="INTEGER" />
+    <result column="total_price" property="totalPrice" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="snap_img" property="snapImg" jdbcType="VARCHAR" />
+    <result column="snap_name" property="snapName" jdbcType="VARCHAR" />
+    <result column="total_count" property="totalCount" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="INTEGER" />
+    <result column="snap_address" property="snapAddress" jdbcType="VARCHAR" />
+    <result column="prepay_id" property="prepayId" jdbcType="VARCHAR" />
+    <result column="snap_items" property="snapItems" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.xlw.zerg.model.Order" keyProperty="id" useGeneratedKeys="true" >
+    insert into `order` (
+      id, 
+      order_no, 
+      user_id, 
+      delete_time,
+      create_time, 
+      total_price, 
+      snap_img, 
+      snap_name, 
+      total_count, 
+      update_time, 
+      snap_address, 
+      prepay_id, 
+      snap_items
+    ) values (
+      #{id,jdbcType=INTEGER}, 
+      #{orderNo,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, 
+      #{deleteTime,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=INTEGER}, 
+      #{totalPrice,jdbcType=DECIMAL}, 
+      #{snapImg,jdbcType=VARCHAR}, 
+      #{snapName,jdbcType=VARCHAR}, 
+      #{totalCount,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=INTEGER},
+       #{snapAddress,jdbcType=VARCHAR}, 
+      #{prepayId,jdbcType=VARCHAR}, 
+      #{snapItems,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.xlw.zerg.model.Order" >
+    update `order`
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      delete_time = #{deleteTime,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=INTEGER},
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      status = #{status,jdbcType=TINYINT},
+      snap_img = #{snapImg,jdbcType=VARCHAR},
+      snap_name = #{snapName,jdbcType=VARCHAR},
+      total_count = #{totalCount,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=INTEGER},
+      snap_address = #{snapAddress,jdbcType=VARCHAR},
+      prepay_id = #{prepayId,jdbcType=VARCHAR},
+      snap_items = #{snapItems,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updatePrePayIdByPrimaryKey" parameterType="com.xlw.zerg.model.Order" >
+    update `order`
+    set prepay_id = #{prepayId,jdbcType=VARCHAR} 
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateStatus" parameterType="com.xlw.zerg.model.Order" >
+    update `order`
+    set status = #{status,jdbcType=TINYINT} 
+    where id = #{orderId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, order_no, user_id, delete_time, create_time, total_price, status, snap_img, 
+    snap_name, total_count, update_time, snap_address, prepay_id, snap_items
+    from `order`
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, order_no, user_id, delete_time, create_time, total_price, status, snap_img, 
+    snap_name, total_count, update_time, snap_address, prepay_id, snap_items
+    from `order`
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, order_no, user_id, delete_time, create_time, total_price, status, snap_img, 
+    snap_name, total_count, update_time, snap_address, prepay_id, snap_items
+    from order
+  </select>
+  
+</mapper>

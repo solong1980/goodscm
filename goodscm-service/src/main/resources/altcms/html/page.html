@@ -1,0 +1,1130 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="/js/layui-v2.2.5/css/layui.css">
+<link href="/z/system/application/views/css/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/z/system/application/views/css/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<link href="/z/system/application/views/css/bootstrap/css/bootstrap-dialog.min.css" rel="stylesheet">
+<link href="/z/system/application/views/main.css" rel="stylesheet" type="text/css" />
+<link href="/z/system/application/views/main_admin.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/z/system/application/views/css/font-awesome/css/font-awesome.min.css">
+<script type="text/javascript" src="/z/system/application/views/js/jquery.2.1.3.min.js"></script>
+<script type="text/javascript" src="/z/system/application/views/css/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/z/system/application/views/css/bootstrap/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="/z/system/application/views/css/bootstrap/js/bootstrap-dialog.min.js"></script>
+<script type="text/javascript" src="/z/system/application/views/js/jquery.json.js"></script>
+<script type="text/javascript" src="/z/system/application/views/js/js.cookie.js"></script>
+<script charset="utf-8" src="/js/layui-v2.2.5/layui.js"></script>
+<script charset="utf-8" src="/js/tippy/tippy.all.min.js"></script>
+
+<style type="text/css">
+    .tippy{cursor: default;}
+    .tippy-tooltip.loadtip-theme {
+        background-color: #fff;
+        color:#333;
+        box-shadow:0 1px 4px rgba(0, 0, 0, 0.5);
+        border:1px solid #999;
+        text-align:left;
+    }
+    .tippy-tooltip.loadtip-theme .tippy-backdrop { background-color: #666; }
+    .tippy-tooltip.loadtip-theme .tippy-roundarrow { fill:#666; }
+    .tippy-tooltip.loadtip-theme .tippy-content { background-color: #fff; overflow:hidden; }
+
+    .open_url_ed{color:#6D0000;}
+
+    .darkred{color:darkred;}
+</style>
+<script type="text/javascript">
+var layer,form;//全局layer
+
+function sendPost(url,data,func,type){
+    layer.load();
+    $.post(url,
+        data,function(json){
+            layer.closeAll('loading');
+            func(json);
+        },type);
+}
+
+$(function(){
+    layui.use(['layer','form'], function(){
+        layer = layui.layer;
+        form = layui.form;
+    });
+    $(document).on('click', '.open_url', function(){
+
+        $('.open_url').removeClass('open_url_ed');
+        $(this).addClass('open_url_ed');
+
+        var url = $(this).attr('data-url');
+        var title = $(this).attr('title');
+        var size_w = $(this).attr('size_w');
+        var size_h = $(this).attr('size_h');
+        layer.open({
+            type: 2,
+            title: title,
+            area: [size_w || '60%',  size_h || '60%'],
+            shade: 0.8,
+            closeBtn: 1,
+            shadeClose: true,
+            content: url,
+            scrollbar: false
+        });
+    });
+
+    $(".bt_normal").hover(function(){
+        $(this).removeClass("btn-default").addClass("btn-primary");
+    }, function(){
+        $(this).removeClass("btn-primary").addClass("btn-default");
+    });
+    $(".bt_danger").hover(function(){
+        $(this).removeClass("btn-default").addClass("btn-danger");
+    }, function(){
+        $(this).removeClass("btn-danger").addClass("btn-default");
+    });
+
+    tippy('[loadtip]',{
+        theme: 'loadtip',
+        arrow:true,
+        arrowType:'round',
+        animateFill:true,
+        animation:'shift-away',
+        maxWidth:'500px',
+        interactive:true,
+        placement:'right',
+        sticky:true,
+        onShow(a){
+            //console.log(this);
+            var url = $(a.reference).attr('loadtip');
+            //console.log();
+            const content = this.querySelector('.tippy-content');
+            content.innerHTML = '<i class="fa fa-circle-o-notch fa-spin" style="padding:30px; font-size:24px;"></i>';
+            fetch(url).then(function(response) {
+                //console.log(response);
+                return response.text();
+            }).then(function(data) {
+                //console.log(data);
+                content.innerHTML = data;
+            }).catch(function(e) {
+                //console.log("Oops, error");
+            });
+        }
+    });
+
+    tippy('[loadimgtip]',{
+        theme: 'loadtip',
+        arrow:true,
+        arrowType:'round',
+        animateFill:true,
+        animation:'shift-away',
+        maxWidth:'500px',
+        interactive:true,
+        placement:'right',
+        sticky:true,
+        onShow(a){
+            var url = $(a.reference).attr('loadimgtip');
+            var title = $(a.reference).attr('data-original-title');
+            const content = this.querySelector('.tippy-content');
+            content.innerHTML = '<img src="'+url+'" style="width:100%;" alt="'+title+'" />';
+        }
+    });
+
+    tippy('.tippy',{
+        theme: 'loadtip',
+        arrow:true,
+        arrowType:'round',
+        animateFill:true,
+        animation:'shift-away',
+        maxWidth:'500px',
+        interactive:true,
+        placement:'right',
+        sticky:true,
+        onShow(a){ }
+    });
+
+    $('[loadimgtip]').click(function(){
+        console.log('loadimgtip')
+    });
+
+
+});
+</script>
+</head>
+<body>
+<h1>
+<span style="float:right;">
+    </span>
+<span class="action-span1">
+<a href="http://z.kershop.com/z/index.php/m/main/right"><i class="fa fa-home fa-fw"></i>&nbsp;管理中心</a>
+ - 产品管理</span>
+<div class="clea"></div>
+</h1>
+<link href="/z/system/application/views/css/animate.min.css" rel="stylesheet">
+<style type="text/css">
+  .goods_list{padding:10px 20px;}
+  .bt_delete{    border: 1px solid rgb(255, 0, 0);
+    border-radius: 3px;
+    color: red;
+    height: 26px;
+    line-height: 24px;
+    padding: 0;
+    position: absolute;
+    right: 15px;
+    text-align: center;
+    top: 10px;
+    width: 26px;}
+  .bt_delete:hover{background: red !important; color:white !important; opacity: 1;}
+  .box_delete{background: #ccc; opacity: .1;}
+
+  .goods_thumb{width:60px;height:60px;}
+  .goods_title{font-size:14px; font-weight:bold;margin-bottom:5px;}
+  .goods_title a{color:#337ab7;}
+  .goods_title a span{color:#c7dbea;}
+  .goods_title a:hover,.goods_title a:hover span,.goods_title a:focus,.goods_title a:focus span{color:#23527c;}
+  .goods_info{margin-bottom:3px;}
+  .goods_info span{margin-right: 15px;}
+  .goods_info .goods_id{color:black;}
+  .goods_info .goods_sku{color:#7647FF;}
+  .goods_price span{margin-right: 15px;}
+  .goods_price .price_sale{color:red;}
+  .goods_price .price_base{color:green;}
+  .goods_price .price_postage{color:black;}
+  .goods_price .goods_source{color:#23009B;}
+  .goods_price .goods_status{color:black;}
+  .goods_price .goods_online{color:green;}
+  .text_center{text-align: center;}
+  .goods_editor{color: #ff9f57;}
+  .goods_utime{color: #999; margin-right:5px;}
+  .goods_action{margin-top:3px;}
+  .goods_action a{margin:0 10px 0 0;}
+  .checkbox_box{padding-bottom: 5px; border-bottom: 3px solid #ccc;}
+
+  #count-info{float:right;}
+  #count-info span{ display: inline-block; margin-right:8px;}
+
+  .search_line{margin-bottom:5px;}
+  .search_line button{background:#fff; color#333; border:1px solid #ccc; border-radius: 3px; padding:3px 8px;}
+  .search_line button:hover,.search_line button.on{color:#c45500;border:1px solid #c45500;}
+
+  .bt_actionall{
+    transition: all 0.3s ease 0s;
+    transform:translate3d(0,0,0);
+    padding:5px; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    background: #fcfcfc; color:#424242;}
+  .bt_actionall:active,.bt_actionall:hover{
+    transform:translate3d(0,-12px,0);
+    box-shadow:0 4px 4px rgba(1,67,163,.24),0 0 4px rgba(1,67,163,.12),0 6px 18px rgba(43,133,231,.12);
+  }
+  #bt_spider_cat{margin-right: 20px;}
+</style>
+<div class="goods_list">
+  <div class="form-inline">
+    <form action="http://z.kershop.com/z/index.php/m/goods/page/" method="get" name="searchForm" id="search_form">
+      <div class="search_line">
+        <label>产品类目：</label>
+        <input type="text" name="cat_path" id="cat_path" value="" class="form-control input-sm" size='30' placeholder="分类" />
+        <input type="hidden" name="cat_id" id="cat_id" value="" />
+
+        <input type="text" name="title" value="" class="form-control input-sm" size='13' placeholder="标题" />
+        <input type="text" name="sku_id" value="" class="form-control input-sm" size='13' placeholder="SKU" />
+        <input type="text" name="start_date" id="start_date" value="" class="form-control input-sm" size='13' placeholder="开始时间" />
+        <input type="text" name="end_date" id="end_date" value="" class="form-control input-sm" size='13' placeholder="结束时间" />
+        <input type="submit" value=" 搜 索 " class="btn btn-sm btn-primary" />
+      </div>
+      <div class="search_line">
+        <label>审核状态：</label>
+        <input type="hidden" name="status" value="" />
+                  <button name="status" value="0" class="on">全部(6)</button>
+                  <button name="status" value="1" class="">通过</button>
+                  <button name="status" value="2" class="">待审核(6)</button>
+                  <button name="status" value="3" class="">失效</button>
+              </div>
+      <div class="search_line">
+        <label>上架状态：</label>
+        <input type="hidden" name="online" value="" />
+                  <button name="online" value="0" class="on">全部(6)</button>
+                  <button name="online" value="1" class="">上架(6)</button>
+                  <button name="online" value="2" class="">下架</button>
+                  <button name="online" value="3" class="">过滤</button>
+                  <button name="online" value="4" class="">侵权</button>
+                  <button name="online" value="5" class="">屏蔽</button>
+              </div>
+      <div class="search_line">
+        <label>产品类型：</label>
+        <input type="hidden" name="type" value="" />
+                  <button name="type" value="0" class="on">全部(6)</button>
+                  <button name="type" value="1" class="">重点</button>
+                  <button name="type" value="2" class="">原创</button>
+                  <button name="type" value="3" class="">海外</button>
+                  <button name="type" value="4" class="">抓取</button>
+                  <button name="type" value="5" class="">其它</button>
+                  <button name="type" value="6" class="">产品库(6)</button>
+              </div>
+    </form>
+  </div>
+  <div class="form-inline checkbox_box">
+    全选：<input type="checkbox" id="bt_check_all" value="all" >&nbsp;&nbsp;&nbsp;
+    选中项：
+    <select class="form-control input-sm" id="goods_multi_edit">
+      <option value="">操作</option>
+            <option value="del">删除</option>
+      <option value="online_1">上架</option>
+      <option value="online_2">下架</option>
+      <option value="status_2">待审核</option>
+      <option value="status_1">审核通过</option>
+          </select>
+    <a href="javascript:" id="bt_actionall" class="bt_actionall">批量修改</a>
+    <div id="count-info">
+      <span class="btn btn-sm btn-default" id="bt_spider_cat" data-toggle="tooltip" data-placement="top" title="点击把当前选中的产品类目设置为产品采集默认分类">采集分类：<span id="path_spider_cat"></span></span>
+      <span>产品数量：6</span>
+      <span>审核通过：0</span>
+      <span>含变体产品数：3</span>
+      <span>变体总数：16</span>
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead><th width="50px">选择</th><th width="100px">图片</th><th>产品信息</th>
+    <th width="250px">操作人</th></thead>
+    <tbody>
+    
+      <tr>
+        <td class="text_center"><input type="checkbox" class="checkbox_goods" value="1307683"></td>
+        <td class="text_center">
+          <a href="http://z.kershop.com/z/index.php/m/goods/edit/1307683">
+            <img class="goods_thumb" src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/litb/0623/562889/1.jpg@0o_0l_200w_90q.src" />
+          </a>
+        </td>
+        <td>
+          <div class="goods_title"><a href="http://z.kershop.com/z/index.php/m/goods/edit/1307683" title="Sprinkle® Sink Faucets Contemporary with Chrome Single Handle One Hole Feature for Waterfall / Centerset"></a></div>
+          <div class="goods_info">
+            <span>Sprinkle® Sink Faucets Contemporary with Chrome Single Handle One Hole Feature for Waterfall / Centerset</span>          </div>
+          <div class="goods_price">
+            <span class="goods_id">编号：1307683</span>
+            <span class="goods_sku">SKU：</span>
+            <span class="price_base">¥430.80</span>
+            <span class="price_sale">¥430.80</span>
+            <span class="price_postage hide">¥0</span>
+            <span class="goods_source"><a href="http://www.lightinthebox.com/sprinkle-waterfall-bathroom-sink-faucet_p240093.html?category_id=70617&prm=1.2.1.1" target="_blank">litb</a></span>
+            <span class="goods_status">待审核</span>
+            <span class="goods_online">上架</span>
+            <span class="goods_status">产品库</span>
+          </div>
+        </td>
+        <td>
+          <div>
+            <span class="goods_utime">07/30 14:18</span>
+            <span class="goods_editor">业务员：Ker06 </span>
+          </div>
+          <div class="goods_action">
+                        <a href="http://z.kershop.com/z/index.php/m/goods/edit/1307683">修改</a>
+                          <a href="http://z.kershop.com/z/index.php/m/goods/delete/1307683" onclick="return confirm('确定删除嘛？');">删除</a>
+                                  </div>
+        </td>
+      </tr>
+
+    
+      <tr>
+        <td class="text_center"><input type="checkbox" class="checkbox_goods" value="1307206"></td>
+        <td class="text_center">
+          <a href="http://z.kershop.com/z/index.php/m/goods/edit/1307206">
+            <img class="goods_thumb" src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/litb/0623/562897/1.jpg@0o_0l_200w_90q.src" />
+          </a>
+        </td>
+        <td>
+          <div class="goods_title"><a href="http://z.kershop.com/z/index.php/m/goods/edit/1307206" title="Sprinkle® Sink Faucets Contemporary with Chrome Single Handle One Hole Feature for Centerset"></a></div>
+          <div class="goods_info">
+            <span>Sprinkle® Sink Faucets Contemporary with Chrome Single Handle One Hole Feature for Centerset</span>          </div>
+          <div class="goods_price">
+            <span class="goods_id">编号：1307206</span>
+            <span class="goods_sku">SKU：</span>
+            <span class="price_base">¥396.00</span>
+            <span class="price_sale">¥396.00</span>
+            <span class="price_postage hide">¥0</span>
+            <span class="goods_source"><a href="http://www.lightinthebox.com/sprinkle-by-lightinthebox-solid-brass-contemporary-bathroom-sink-faucet-chrome-finish_p373131.html?category_id=70617&prm=1.2.1.1" target="_blank">litb</a></span>
+            <span class="goods_status">待审核</span>
+            <span class="goods_online">上架</span>
+            <span class="goods_status">产品库</span>
+          </div>
+        </td>
+        <td>
+          <div>
+            <span class="goods_utime">07/30 08:33</span>
+            <span class="goods_editor">业务员：Ker06 </span>
+          </div>
+          <div class="goods_action">
+                        <a href="http://z.kershop.com/z/index.php/m/goods/edit/1307206">修改</a>
+                          <a href="http://z.kershop.com/z/index.php/m/goods/delete/1307206" onclick="return confirm('确定删除嘛？');">删除</a>
+                                  </div>
+        </td>
+      </tr>
+
+    
+      <tr>
+        <td class="text_center"><input type="checkbox" class="checkbox_goods" value="1085366"></td>
+        <td class="text_center">
+          <a href="http://z.kershop.com/z/index.php/m/goods/edit/1085366">
+            <img class="goods_thumb" src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/5507842.jpg@0o_0l_200w_90q.src" />
+          </a>
+        </td>
+        <td>
+          <div class="goods_title"><a href="http://z.kershop.com/z/index.php/m/goods/edit/1085366" title="Women PU Leather Handbags Six-piece Sets Mother Package Large Capacity Weave Pattern Colored Ribbon Ladies Bag">Women PU Leather Handbags Six-piece Sets Mother Package Large Capacity Weave Pattern Colored Ribbon Ladies Bag</a></div>
+          <div class="goods_info">
+            <span>Women PU Leather Handbags Six-piece Sets Mother Package Large Capacity Weave Pattern Colored Ribbon Ladies Bag</span>          </div>
+          <div class="goods_price">
+            <span class="goods_id">编号：1085366</span>
+            <span class="goods_sku">SKU：</span>
+            <span class="price_base">¥81.00</span>
+            <span class="price_sale">¥0.00</span>
+            <span class="price_postage hide">¥15</span>
+            <span class="goods_source"><a href="https://detail.1688.com/offer/559984742542.html?spm=a2615.7691456.0.0.28a30e06OON9Xl" target="_blank">1688</a></span>
+            <span class="goods_status">待审核</span>
+            <span class="goods_online">上架</span>
+            <span class="goods_status">产品库</span>
+          </div>
+        </td>
+        <td>
+          <div>
+            <span class="goods_utime">05/08 08:27</span>
+            <span class="goods_editor">业务员：Ker06 </span>
+          </div>
+          <div class="goods_action">
+                        <a href="http://z.kershop.com/z/index.php/m/goods/edit/1085366">修改</a>
+                          <a href="http://z.kershop.com/z/index.php/m/goods/delete/1085366" onclick="return confirm('确定删除嘛？');">删除</a>
+                                  </div>
+        </td>
+      </tr>
+
+    
+      <tr>
+        <td class="text_center"><input type="checkbox" class="checkbox_goods" value="1085365"></td>
+        <td class="text_center">
+          <a href="http://z.kershop.com/z/index.php/m/goods/edit/1085365">
+            <img class="goods_thumb" src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842149/5507828.jpg@0o_0l_200w_90q.src" />
+          </a>
+        </td>
+        <td>
+          <div class="goods_title"><a href="http://z.kershop.com/z/index.php/m/goods/edit/1085365" title="Women PU Leather Handbags New Two-piece Mother Package Large Capacity Fashion Wild Shoulder Messenger Bag">Women PU Leather Handbags New Two-piece Mother Package Large Capacity Fashion Wild Shoulder Messenger Bag</a></div>
+          <div class="goods_info">
+            <span>Women PU Leather Handbags New Two-piece Mother Package Large Capacity Fashion Wild Shoulder Messenger Bag</span>          </div>
+          <div class="goods_price">
+            <span class="goods_id">编号：1085365</span>
+            <span class="goods_sku">SKU：</span>
+            <span class="price_base">¥64.00</span>
+            <span class="price_sale">¥0.00</span>
+            <span class="price_postage hide">¥15</span>
+            <span class="goods_source"><a href="https://detail.1688.com/offer/559999411253.html?spm=a2615.7691456.0.0.55924f04NJzNiN" target="_blank">1688</a></span>
+            <span class="goods_status">待审核</span>
+            <span class="goods_online">上架</span>
+            <span class="goods_status">产品库</span>
+          </div>
+        </td>
+        <td>
+          <div>
+            <span class="goods_utime">05/08 08:27</span>
+            <span class="goods_editor">业务员：Ker06 </span>
+          </div>
+          <div class="goods_action">
+                        <a href="http://z.kershop.com/z/index.php/m/goods/edit/1085365">修改</a>
+                          <a href="http://z.kershop.com/z/index.php/m/goods/delete/1085365" onclick="return confirm('确定删除嘛？');">删除</a>
+                                  </div>
+        </td>
+      </tr>
+
+    
+      <tr>
+        <td class="text_center"><input type="checkbox" class="checkbox_goods" value="1085364"></td>
+        <td class="text_center">
+          <a href="http://z.kershop.com/z/index.php/m/goods/edit/1085364">
+            <img class="goods_thumb" src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842146/5507805.jpg@0o_0l_200w_90q.src" />
+          </a>
+        </td>
+        <td>
+          <div class="goods_title"><a href="http://z.kershop.com/z/index.php/m/goods/edit/1085364" title="Women PU Leather Handbags New Five-piece Sets Quilted Chain Bag Fashion Shoulder Messenger Bag Mother Package">Women PU Leather Handbags New Five-piece Sets Quilted Chain Bag Fashion Shoulder Messenger Bag Mother Package</a></div>
+          <div class="goods_info">
+            <span>Women PU Leather Handbags New Five-piece Sets Quilted Chain Bag Fashion Shoulder Messenger Bag Mother Package</span>          </div>
+          <div class="goods_price">
+            <span class="goods_id">编号：1085364</span>
+            <span class="goods_sku">SKU：</span>
+            <span class="price_base">¥81.00</span>
+            <span class="price_sale">¥0.00</span>
+            <span class="price_postage hide">¥15</span>
+            <span class="goods_source"><a href="https://detail.1688.com/offer/560148099435.html?spm=a2615.7691456.0.0.2b9db5f28mZjaF" target="_blank">1688</a></span>
+            <span class="goods_status">待审核</span>
+            <span class="goods_online">上架</span>
+            <span class="goods_status">产品库</span>
+          </div>
+        </td>
+        <td>
+          <div>
+            <span class="goods_utime">05/08 08:27</span>
+            <span class="goods_editor">业务员：Ker06 </span>
+          </div>
+          <div class="goods_action">
+             <a href="http://z.kershop.com/z/index.php/m/goods/edit/1085364">修改</a>
+             <a href="http://z.kershop.com/z/index.php/m/goods/delete/1085364" onclick="return confirm('确定删除嘛？');">删除</a>
+          </div>
+        </td>
+      </tr>
+
+    
+      <tr>
+        <td class="text_center"><input type="checkbox" class="checkbox_goods" value="911642"></td>
+        <td class="text_center">
+          <a href="http://z.kershop.com/z/index.php/m/goods/edit/911642">
+            <img class="goods_thumb" src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1002/758272/1506929625_12829.png@0o_0l_200w_90q.src" />
+          </a>
+        </td>
+        <td>
+          <div class="goods_title"><a href="http://z.kershop.com/z/index.php/m/goods/edit/911642" title="">盒装,无接缝,发圈,4cm,螺纹,高弹力,扎头发,皮筋,不伤发,发绳30根</a></div>
+          <div class="goods_info">
+            <span></span>          </div>
+          <div class="goods_price">
+            <span class="goods_id">编号：911642</span>
+            <span class="goods_sku">SKU：</span>
+            <span class="price_base">¥7.20</span>
+            <span class="price_sale">¥0.00</span>
+            <span class="price_postage hide">¥0</span>
+            <span class="goods_source"><a href="https://detail.1688.com/offer/554246297820.html?spm=a261y.7663282.1998411376.2.74863b0cy6wFoZ" target="_blank">1688</a></span>
+            <span class="goods_status">待审核</span>
+            <span class="goods_online">上架</span>
+            <span class="goods_status">产品库</span>
+          </div>
+        </td>
+        <td>
+          <div>
+            <span class="goods_utime">01/13 14:33</span>
+            <span class="goods_editor">业务员：Ker06 </span>
+          </div>
+          <div class="goods_action">
+                        <a href="http://z.kershop.com/z/index.php/m/goods/edit/911642">修改</a>
+                          <a href="http://z.kershop.com/z/index.php/m/goods/delete/911642" onclick="return confirm('确定删除嘛？');">删除</a>
+                                  </div>
+        </td>
+      </tr>
+
+        </tbody>
+  </table>
+  <nav style="text-align:right; padding:10px 20px;"><ul style="margin:0;" class="pagination pagination-sm"><li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li><li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li><li class="disabled"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li></ul><select onChange="javascript:window.location='http://z.kershop.com/z/index.php/m/goods/page?title=&sku_id=&start_date=&end_date=&status=&type=&cat_id=&cat_path=&online=&goods_level=&page=1&page='+this.value;" class="form-control input-sm" style="display: inline; width:auto; vertical-align: top;"><option value="1" selected="selected">1</option></select></div>
+<script type="text/javascript">
+  $(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+    $('#bt_spider_cat').hover(function(){
+      $('#cat_path').removeClass('bounce animated').addClass('bounce animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+        $(this).removeClass('bounce animated');
+      });
+    },function(){});
+    $('#bt_spider_cat').click(function(){
+      var cat_id = $('#cat_id').val();
+      if(cat_id == "" || cat_id == undefined){
+        alert('没有选中产品类目');
+        return false;
+      }else{
+        $('#path_spider_cat').html('<i class="fa fa-refresh fa-spin fa-fw" aria-hidden="true"></i>');
+        $.post('http://z.kershop.com/z/index.php/m/goods/actionSpiderCatId',{action: 'set_spider_cat_id', spider_cat_id:cat_id},function(json){
+          if(json.code==1){
+            $('#path_spider_cat').text(json.data.cat_path);
+          }else{
+            alert(json.msg);
+          }
+        },"json");
+      }
+    });
+
+    $('.bt_put_pool').click(function(){
+      if(confirm('加入产品处理库将删除本条产品并加入产品库，待图片处理完成后可从库中获取，确定移入产品库吗？')){
+        var goods_id = $(this).attr('data-id');
+        if(goods_id == undefined || goods_id == 0){
+          alert('产品信息错误');
+          return false;
+        }
+        $.post('http://z.kershop.com/z/index.php/m/goods/actionPutPool',{goods_action: 'put_pool', goods_id:goods_id},function(json){
+          if(json.code==1){
+            alert(json.msg);
+            $('#bt_put_pool_'+json.data.goods_id).hide();
+          }else{
+            alert(json.msg);
+          }
+        },"json");
+      }
+    });
+
+    $('.bt_put_pool_done').click(function(){
+      if(confirm('加入产品处理库将删除本条产品并加入产品库，状态为完成可直接使用，确定移入产品库吗？')){
+        var goods_id = $(this).attr('data-id');
+        if(goods_id == undefined || goods_id == 0){
+          alert('产品信息错误');
+          return false;
+        }
+        $.post('http://z.kershop.com/z/index.php/m/goods/actionPutPoolDone',{goods_action: 'put_pool', goods_id:goods_id},function(json){
+          if(json.code==1){
+            alert(json.msg);
+            $('#bt_put_pool_done_'+json.data.goods_id).hide();
+            $('#bt_put_pool_'+json.data.goods_id).hide();
+          }else{
+            alert(json.msg);
+          }
+        },"json");
+      }
+    });
+
+    $("#bt_check_all").click(function(){
+      if($(this).is(':checked')){
+        $(".checkbox_goods").prop("checked",true);//全选
+      }else{
+        $(".checkbox_goods").prop("checked",false);//全选
+      }
+    })
+    $('#goods_multi_edit').change(function(){
+      var goods_action = $(this).val();
+      var goods_ids = [];
+      $(".checkbox_goods").each(function(){
+        if($(this).is(':checked')){
+          goods_ids.push($(this).val());
+        }
+      });
+      if($.isEmptyObject(goods_ids)){
+        alert('未选中任何产品');
+        $(this).val('');
+        return false;
+      }
+      $.post('http://z.kershop.com/z/index.php/m/goods/actionAjax',{goods_action: goods_action, goods_ids:goods_ids},function(json){
+        if(json.code==1){
+          window.location = window.location;
+        }else{
+          alert(json.msg);
+        }
+      },"json");
+    });
+
+    $("#start_date").datetimepicker({format: 'yyyy-mm-dd',autoclose: true,todayBtn: true, minView:2, language:'cn' });
+    $("#end_date").datetimepicker({format: 'yyyy-mm-dd',autoclose: true,todayBtn: true, minView:2, language:'cn' });
+
+  });
+</script>
+<style type="text/css">
+  #cat_box{
+    position: absolute; top:30px; display: none; left:330px; max-height:500px;
+    border:1px solid #ccc; border-radius: 3px; background: #fff;
+    padding:5px; z-index:100;
+  }
+  #cat_box #cat_container{height: 100%;}
+  #cat_box ul{height:100%;overflow-x: hidden; overflow-y: auto; float:left; padding:0; margin:0; list-style-type: none;  }
+  #cat_box ul li{padding:3px 10px 3px 3px; margin:2px 5px; cursor: pointer; white-space:nowrap;}
+  #cat_box ul li:hover{color: #c45500;}
+  #cat_box ul li.on{color: #c45500; background: #eee; border-radius: 3px;}
+</style>
+<div id="cat_box">
+  <div id="cat_container"></div>
+  <div class="clea"></div>
+</div>
+<script type="text/javascript">
+
+  var user_id = 414;
+  var is_get_cat = false;
+  var current_cat_path_ele = '#cat_path';
+  var current_cat_id_ele = '#cat_id';
+
+  $(function(){
+
+    $(document).on('click',function(event){
+      hideCat();
+    });
+    $(document).on('click','#cat_path',function(event){
+      event.stopPropagation();
+      current_cat_path_ele = '#cat_path';
+      current_cat_id_ele = '#cat_id';
+      showCat('#cat_path');
+    });
+    $(document).on('click','.cat_item',function(event){
+      event.stopPropagation();
+      $(this).siblings('.cat_item').removeClass('on');
+      $(this).addClass('on');
+      var parent_id = $(this).attr('data-id');
+      var cat_level = $(this).attr('data-level');
+      cat_level = parseInt(cat_level);
+      if(cat_level == 3){
+        var cat_path = $(this).attr('data-path');
+        $(current_cat_path_ele).val(cat_path);
+        $(current_cat_id_ele).val(parent_id);
+        hideCat();
+      }else{
+        getChild(parent_id,cat_level);
+      }
+    });
+  });
+  function showCat(id){
+      if(is_get_cat == false){
+          $('#cat_container').html('<i class="fa fa-circle-o-notch fa-spin" style="padding:30px; font-size:24px;"></i>');
+          $.get('/apicat/getcatlist',{parent_id:0,cat_level:1,user_id:user_id},function(data){
+              is_get_cat = true;
+              $('#cat_container').html('');
+              $('#cat_container').append(data);
+          });
+      }
+      var cat_box = $('#cat_box');
+      $(current_cat_path_ele).after(cat_box);
+      var position_top = $(current_cat_path_ele).position().top+$(current_cat_path_ele).outerHeight();
+      var position_left = $(current_cat_path_ele).position().left;
+      cat_box.css('left',position_left);
+      cat_box.css('top',position_top);
+      cat_box.show();
+  }
+  function hideCat(){
+    $('#cat_box').hide();
+  }
+  function getChild(parent_id,cat_level){
+    var get_level = parseInt(cat_level)+1;
+    $('.cat_level_'+get_level).remove();
+    if(get_level == 2){
+      $('.cat_level_'+3).remove();
+    }
+    $.get('/apicat/getcatlist',{parent_id:parent_id,cat_level:get_level,user_id:user_id},function(data){
+      $('#cat_container').append(data);
+    });
+  }
+</script>
+<style type="text/css">
+  #actionModal .modal-body, #actionModal .modal-body .form-group{font-size:14px;}
+  #actionModal .modal-body .form-group .radio-inline input[type="radio"]{margin-top:3px;}
+  #actionModal .modal-body label{margin-bottom:0;}
+  .action_item{margin-bottom:5px;}
+  .action_item.block{margin-bottom:15px;}
+  .bt_translate{}
+  .bt_translate.ed{background: #5cb85c; color:white;}
+  .bt_translate_box{float:left; text-align:center; margin-right:5px;}
+  #notice_goods_num{font-weight: bold;}
+</style>
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">批量编辑&nbsp;&nbsp;(选中<span id="notice_goods_num">0</span>件产品)</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-inline">
+          <div class="action_item">
+            <label>审核状态：</label>
+            <div class="form-group">
+              <label class="radio-inline">
+                <input type="radio" name="edit_status" ckecked value="1">通过
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="edit_status" value="2">待审核
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="edit_status" value="3">失效
+              </label>
+            </div>
+          </div>
+          <div class="action_item">
+            <label>审核状态：</label>
+            <div class="form-group">
+              <label class="radio-inline">
+                <input type="radio" name="edit_type" ckecked value="1">重点
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="edit_type" value="2">原创
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="edit_type" value="3">海外
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="edit_type" value="4">抓取
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="edit_type" value="5">其它
+              </label>
+            </div>
+          </div>
+          <div class="action_item block">
+            <label>上架状态：</label>
+            <div class="form-group">
+              <label class="radio-inline">
+                <input type="radio" name="edit_online" ckecked value="1">上架
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="edit_online" value="2">下架
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="edit_online" value="3">过滤
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="edit_online" value="4">侵权
+              </label>
+              <label class="radio-inline">
+                <input type="radio" name="edit_online" value="5">屏蔽
+              </label>
+            </div>
+          </div>
+          <div class="action_item block">
+            <label>产品类目：</label>
+            <input type="text" name="cat_path_edit" id="cat_path_edit" readonly value="" class="form-control input-sm" size='35' placeholder="分类" />
+            <input type="hidden" name="cat_id_edit" id="cat_id_edit" value="" />
+          </div>
+          <div class="action_item">
+            <div class="input-group">
+              <div class="input-group-addon">厂家:</div>
+              <input type="text" class="form-control input-sm" name="manufactuer" value="">
+            </div>
+            <div class="input-group">
+              <div class="input-group-addon">厂家编号:</div>
+              <input type="text" class="form-control input-sm" name="manufactuer_id" value="">
+            </div>
+          </div>
+          <div class="action_item">
+            <div class="input-group">
+              <div class="input-group-addon">品牌:</div>
+              <input type="text" class="form-control input-sm" name="brand" value="">
+            </div>
+            <div class="input-group">
+              <div class="input-group-addon">商品简称:</div>
+              <input type="text" class="form-control input-sm" name="title_short" value="">
+            </div>
+          </div>
+          <div class="action_item block">
+            <div class="input-group">
+              <div class="input-group-addon">重量:</div>
+              <input type="text" class="form-control input-sm" size="4" name="weight" value="">
+              <div class="input-group-addon">(kg)</div>
+            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="input-group">
+              <div class="input-group-addon">长:</div>
+              <input type="text" class="form-control input-sm" size="3" name="size_l" value="">
+              <div class="input-group-addon">宽:</div>
+              <input type="text" class="form-control input-sm" size="3" name="size_w" value="">
+              <div class="input-group-addon">高:</div>
+              <input type="text" class="form-control input-sm" size="3" name="size_h" value="">
+              <div class="input-group-addon">(cm)</div>
+            </div>
+          </div>
+          <div class="action_item block">
+            <div class="input-group">
+              <div class="input-group-addon">标题前面加:</div>
+              <input type="text" class="form-control input-sm" name="title_prefix" value="">
+            </div>
+            <div class="input-group">
+              <div class="input-group-addon">后面加:</div>
+              <input type="text" class="form-control input-sm" name="title_suffix" value="">
+            </div>
+          </div>
+          <div class="action_item block">
+            <div class="input-group">
+              <div class="input-group-addon">卖&nbsp;&nbsp;&nbsp;点:
+                <br><br>
+                <label class="checkbox-inline">
+                  <input value="addon" name="edit_addon_keypoints" checked type="checkbox">追加
+                </label>
+              </div>
+              <textarea class="form-control" rows="2" cols="52" name="keypoints" id="keypoints" placeholder="卖点"></textarea>
+            </div>
+          </div>
+          <div class="action_item block">
+            <div class="input-group">
+              <div class="input-group-addon">关键词:
+                <br><br>
+                <label class="checkbox-inline">
+                  <input value="addon" name="edit_addon_keywords" checked type="checkbox">追加
+                </label>
+              </div>
+              <textarea class="form-control" rows="2" cols="52" name="keywords" id="keywords" placeholder="关键词"></textarea>
+            </div>
+          </div>
+          <div class="action_item block">
+            <div class="input-group">
+              <div class="input-group-addon">描述前面加:</div>
+              <textarea class="form-control" rows="2" cols="48" name="des_prefix" id="des_prefix" placeholder="描述前面加"></textarea>
+            </div>
+          </div>
+          <div class="action_item block">
+            <div class="input-group">
+              <div class="input-group-addon">描述后面加:</div>
+              <textarea class="form-control" rows="2" cols="48" name="des_suffix" id="des_suffix" placeholder="描述后面加"></textarea>
+            </div>
+          </div>
+          <div class="action_item">
+            <button type="button" class="btn btn-default btn-sm" id="bt_save_current">保存当前单独修改的内容</button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="bt_translate_box">
+          <button type="button" class="btn btn-default bt_translate ed" data-target="zh">中</button>
+          <br>
+          <input value="zh" name="edit_lang" checked type="checkbox">
+        </div>
+        <div class="bt_translate_box">
+          <button type="button" class="btn btn-default bt_translate" data-target="all">翻译</button>
+        </div>
+        <div class="bt_translate_box">
+          <button type="button" class="btn btn-default bt_translate" id="bt_lang_en" data-target="en">英</button>
+          <br>
+          <input value="en" name="edit_lang" checked type="checkbox">
+        </div>
+        <div class="bt_translate_box">
+          <button type="button" class="btn btn-default bt_translate" id="bt_lang_fr" data-target="fr">法</button>
+          <br>
+          <input value="fr" name="edit_lang" checked type="checkbox">
+        </div>
+        <div class="bt_translate_box">
+          <button type="button" class="btn btn-default bt_translate" id="bt_lang_de" data-target="de">德</button>
+          <br>
+          <input value="de" name="edit_lang" checked type="checkbox">
+        </div>
+        <div class="bt_translate_box">
+          <button type="button" class="btn btn-default bt_translate" id="bt_lang_it" data-target="it">意</button>
+          <br>
+          <input value="it" name="edit_lang" checked type="checkbox">
+        </div>
+        <div class="bt_translate_box">
+          <button type="button" class="btn btn-default bt_translate" id="bt_lang_es" data-target="es">西</button>
+          <br>
+          <input value="es" name="edit_lang" checked type="checkbox">
+        </div>
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" id="bt_submit">提交</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  var current_json = {};
+  var current_lang = 'zh';
+  var lang_arr = ['en','fr','de','it','es'];
+  $(function(){
+    $('#bt_actionall').click(function(){
+      var goods_ids = [];
+      $(".checkbox_goods").each(function(){
+        if($(this).is(':checked')){
+          goods_ids.push($(this).val());
+        }
+      });
+      $('#notice_goods_num').text(goods_ids.length);
+      $('#actionModal').modal('show');
+    });
+
+    $(document).on('click','#cat_path_edit',function(event){
+      event.stopPropagation();
+      current_cat_path_ele = '#cat_path_edit';
+      current_cat_id_ele = '#cat_id_edit';
+      showCat('#cat_path_edit');
+    });
+
+    $('.bt_translate').click(function(){
+      var trans_target = $(this).attr('data-target');
+      if(trans_target == 'zh'){
+        current_lang = trans_target;
+        show_lang('zh');
+        $('.bt_translate').removeClass('ed');
+        $(this).addClass('ed');
+      }else if(trans_target == 'all'){
+        if(current_lang == 'zh'){
+          get_zh();
+          if(confirm('翻译后将重新生成各语言的内容')){
+            translate_lang();
+          }
+        }else{
+          alert('切换到中文后再翻译');
+        }
+      }else{
+        if(current_json.zh == undefined){
+          get_zh();
+        }
+        if(show_lang(trans_target)){
+          current_lang = trans_target;
+          $('.bt_translate').removeClass('ed');
+          $(this).addClass('ed');
+        }
+      }
+    });
+
+    $('#bt_submit').click(function(){
+      var goods_ids = [];
+      $(".checkbox_goods").each(function(){
+        if($(this).is(':checked')){
+          goods_ids.push($(this).val());
+        }
+      });
+      if($.isEmptyObject(goods_ids)){
+        alert('未选中任何产品');
+        return false;
+      }
+      get_current();
+      if(current_json.en == undefined){
+        //alert('请先翻译');
+        //return false;
+      }
+      if(!confirm('是否确定提交当前批量修改？('+goods_ids.length+'条记录)')){
+        return false;
+      }
+
+      var edit_lang_arr = [];
+      $("input[name=edit_lang]").each(function(){
+        if($(this).is(':checked')){
+          edit_lang_arr.push($(this).val());
+        }
+      });
+
+      var edit_status = $('input[name=edit_status]:checked').val();
+      var edit_type = $('input[name=edit_type]:checked').val();
+      var edit_online = $('input[name=edit_online]:checked').val();
+      var manufactuer = $('input[name=manufactuer]').val();
+      var manufactuer_id = $('input[name=manufactuer_id]').val();
+      var brand = $('input[name=brand]').val();
+      var title_short = $('input[name=title_short]').val();
+      //重量 尺寸
+      var weight = $('input[name=weight]').val();
+      var size_l = $('input[name=size_l]').val();
+      var size_w = $('input[name=size_w]').val();
+      var size_h = $('input[name=size_h]').val();
+
+      var cat_id_edit = $('input[name=cat_id_edit]').val();
+      var edit_addon_keypoints = $('input[name=edit_addon_keypoints]:checked').val();
+      var edit_addon_keywords = $('input[name=edit_addon_keywords]:checked').val();
+      if(edit_addon_keypoints == undefined){
+        edit_addon_keypoints = 'update';
+      }
+      if(edit_addon_keywords == undefined){
+        edit_addon_keywords = 'update';
+      }
+      current_json.edit_cat_id = cat_id_edit;
+      current_json.edit_lang_arr = edit_lang_arr;
+      current_json.edit_status = edit_status;
+      current_json.edit_type = edit_type;
+      current_json.edit_online = edit_online;
+      current_json.manufactuer = manufactuer;
+      current_json.manufactuer_id = manufactuer_id;
+      current_json.brand = brand;
+      current_json.title_short = title_short;
+      //重量尺寸
+      current_json.weight = weight;
+      current_json.size_l = size_l;
+      current_json.size_w = size_w;
+      current_json.size_h = size_h;
+
+      current_json.edit_addon_keypoints = edit_addon_keypoints;
+      current_json.edit_addon_keywords = edit_addon_keywords;
+      current_json.goods_ids = goods_ids;
+      $.post('http://z.kershop.com/z/index.php/m/goods/actionAjaxEdit',current_json,function(json){
+        if(json.code==1){
+          alert(json.msg);
+          $('#actionModal').modal('hide');
+          location=location;
+        }else{
+          alert(json.msg);
+        }
+      },"json");
+    });
+
+    $('#bt_save_current').click(function(){
+      get_current();
+    });
+  });
+
+  function get_current(){
+    var zh_json = {};
+    zh_json.title_prefix = $('input[name=title_prefix]').val().trim();
+    zh_json.title_suffix = $('input[name=title_suffix]').val().trim();
+    zh_json.keypoints = $('#keypoints').val().trim();
+    zh_json.keywords = $('#keywords').val().trim();
+    zh_json.des_prefix = $('#des_prefix').val().trim();
+    zh_json.des_suffix = $('#des_suffix').val().trim();
+    current_json[current_lang] = zh_json;
+  }
+
+  function get_zh(){
+    var zh_json = {};
+    zh_json.title_prefix = $('input[name=title_prefix]').val().trim();
+    zh_json.title_suffix = $('input[name=title_suffix]').val().trim();
+    zh_json.keypoints = $('#keypoints').val().trim();
+    zh_json.keywords = $('#keywords').val().trim();
+    zh_json.des_prefix = $('#des_prefix').val().trim();
+    zh_json.des_suffix = $('#des_suffix').val().trim();
+    current_json.zh = zh_json;
+  }
+  function show_lang(lang){
+    var lang_json = current_json[lang];
+    if(lang_json == undefined){
+      alert('请先翻译');
+      return false;
+    }
+    $('input[name=title_prefix]').val(lang_json.title_prefix);
+    $('input[name=title_suffix]').val(lang_json.title_suffix);
+    $('#keypoints').val(lang_json.keypoints);
+    $('#keywords').val(lang_json.keywords);
+    $('#des_prefix').val(lang_json.des_prefix);
+    $('#des_suffix').val(lang_json.des_suffix);
+    return true;
+  }
+  function translate_lang(){
+    for(var lang_index in lang_arr){
+      var lang = lang_arr[lang_index];
+      $('#bt_lang_'+lang).addClass('ed');
+      var json_post = current_json.zh;
+      json_post.target = lang;
+      $.post('http://z.kershop.com/translate/translate_goods_list.php',json_post,function(json){
+        if(json.code==1){
+          var get_lang = json.data.target;
+          current_json[get_lang] = json.data;
+          $('#bt_lang_'+get_lang).removeClass('ed');
+        }else{
+          alert(json.msg);
+        }
+      },"json");
+    }
+  }
+</script><div id="footer">
+XM
+</div>
+<style type="text/css">
+    .site_msg_box{
+        display: none;
+        position: fixed;bottom:40px;right:15px; z-index: 100;
+        width:300px; height:200px;
+        border:3px solid #337ab7;
+        background: white;
+    }
+    .site_msg_box .site_msg_title{padding:5px; background: #337ab7; color:white; font-size:14px; line-height: 14px;}
+    .site_msg_box .site_msg_close{float: right; font-size:13px; cursor: pointer;}
+    .site_msg_box .site_msg_body{padding:10px; color:black; font-size:12px; line-height: 20px;}
+
+    .site_nav_pro{position: fixed;bottom:5px;right:15px;}
+</style>
+<div class="btn-group site_nav_pro">
+    <a href="javascript:" class="btn btn-default hide" id="site_nav_bt_note">笔记本</a>
+    <a href="javascript:" class="btn btn-default hide" id="site_nav_bt_feedback">留言</a>
+    <a href="javascript:" class="btn btn-default" id="site_nav_bt_msg">消息</a>
+</div>
+<div class="site_msg_box">
+    <div class="site_msg_title"><span class="site_msg_title_text">消息</span><span class="site_msg_close glyphicon glyphicon-remove"></span></div>
+    <div class="site_msg_body">主体</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('#site_nav_bt_msg').click(function(){
+            $('.site_msg_title_text').text('消息');
+            $('.site_msg_body').html('');
+            $('.site_msg_body').append('<a href="http://z.kershop.com/z/index.php/m/task/plug">采集插件,开始内侧,点击查看</a>');
+            $('.site_msg_box').fadeIn();
+        });
+        $('#site_nav_bt_feedback').click(function(){
+            $('.site_msg_title_text').text('留言');
+            $('.site_msg_body').text('建设中');
+            $('.site_msg_box').fadeIn();
+        });
+        $('#site_nav_bt_note').click(function(){
+            $('.site_msg_title_text').text('笔记本');
+            $('.site_msg_body').text('暂无');
+            $('.site_msg_box').fadeIn();
+        });
+        $('.site_msg_close').click(function(){
+            $('.site_msg_box').fadeOut();
+        });
+    });
+</script>
+</body>
+</html>

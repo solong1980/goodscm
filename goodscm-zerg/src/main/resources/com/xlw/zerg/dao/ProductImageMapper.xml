@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xlw.zerg.dao.ProductImageMapper" >
+  <resultMap id="BaseResultMap" type="com.xlw.zerg.model.ProductImage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="img_id" property="imgId" jdbcType="INTEGER" />
+    <result column="delete_time" property="deleteTime" jdbcType="INTEGER" />
+    <result column="order" property="order" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_image
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xlw.zerg.model.ProductImage" >
+    insert into product_image (id, img_id, delete_time, 
+      order, product_id)
+    values (#{id,jdbcType=INTEGER}, #{imgId,jdbcType=INTEGER}, #{deleteTime,jdbcType=INTEGER}, 
+      #{order,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xlw.zerg.model.ProductImage" >
+    update product_image
+    set img_id = #{imgId,jdbcType=INTEGER},
+      delete_time = #{deleteTime,jdbcType=INTEGER},
+      order = #{order,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, img_id, delete_time, order, product_id
+    from product_image
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, img_id, delete_time, order, product_id
+    from product_image
+  </select>
+</mapper>

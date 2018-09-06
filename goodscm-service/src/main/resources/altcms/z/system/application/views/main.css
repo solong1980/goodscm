@@ -1,0 +1,150 @@
+﻿/*
+$Id: general.css 13504 2007-11-08 09:51:13ZX weberliu $
+*/
+
+body {
+  margin: 0px;
+  padding: 10px;
+  /*color: #192E32;*/
+  font: 12px "sans-serif", "Arial", "Verdana";
+  background:#e8ecf0;
+}
+
+p, td, div {
+  font: 12px "sans-serif", "Arial", "Verdana";
+}
+
+th {
+  font: 12px "sans-serif", "Arial", "Verdana";
+  font-weight: bold;
+}
+
+form {
+  margin: 0px;
+  padding: 0px;
+}
+
+input, textarea, select {
+  border:1px solid #999;
+  font: 12px "courier new";
+}
+
+a:visited {
+  /*color: #335B64;*/
+  text-decoration: none;
+}
+/*
+a:link {
+  color: #335B64;
+  text-decoration: none;
+}
+*/
+a:hover {
+  /*color: #EB8A3D;*/
+  text-decoration: none;
+}
+
+a:active {
+  /*color: #EB8A3D;*/
+  text-decoration: none;
+}
+.red{ color:#ff0000;}
+.clea {clear: both;float: none;font-size: 0px;margin: 0;padding: 0;display:block; height:0; overflow:hidden;}
+
+.nowrap {white-space:nowrap;}
+
+h1 {background: #f6f7f7;border-bottom: 1px solid #ccc;color: #4f799d;font-size: 14px;padding: 7px 10px;margin: 0 0 10px 0;overflow:hidden;}
+/*
+h1 a:visited {color: #333;}
+h1 a:link {color: #333;}
+h1 a:hover {color: #EB8A3D;}
+*/
+h1 span{zoom:1;}
+
+h1 .action-span {float: right;}
+h1 .action-span a {color: #666; font-size: 12px; font-weight: 400;text-decoration: none;display:block;padding:2px 5px 2px 23px;
+  *padding:4px 5px 2px 23px; border:1px solid #278296;border-right:2px solid #278296;border-bottom:2px solid #278296;
+  background:#DDEEF2 url(./images/icon_add.gif) no-repeat 3px center;
+  *background:#DDEEF2 url(./images/icon_add.gif) no-repeat 3px 3px;
+}
+
+h1 .action-span a:hover { border:1px solid #5FA6B6;
+  border-right:2px solid #5FA6B6;border-bottom:2px solid #5FA6B6;
+  background:#FFF url(./images/icon_add.gif) no-repeat 3px center;
+  *background:#FFF url(./images/icon_add.gif) no-repeat 3px 3px;color:#666;text-decoration:none;
+}
+
+h1 .action-span1 {float:left; margin-top:2px;}
+
+.main-div {background: #fffffe;border: 1px solid #ccc;margin-bottom: 10px;padding: 2px;}
+
+.tab-div {background: #fefefe;border: 1px solid #ccc;margin: 0 0 10px 0;padding: 1px;}
+#tabbar-div {background: #eee;padding-left: 10px;height: 22px;padding-top: 1px;}
+#tabbar-div p {margin: 2px 0 0 0;}
+td.label { text-align: right;vertical-align: top;font-weight: bold;padding: 5px 1em;width: 30%;}
+.tab-front {background: #bbb; line-height: 20px;font-weight: bold;padding: 4px 15px 4px 18px;border-right: 2px solid #278296;cursor: pointer;}
+
+.tab-back {
+  color: #000; line-height: 20px; padding: 4px 15px 4px 18px; border-right: 1px solid #FFF;
+  cursor: pointer;}
+.tab-hover {
+  color: #000;background: #94C9D3; line-height: 20px;padding: 4px 15px 4px 18px;border-right: 1px solid #FFF;
+  cursor: hand;cursor: pointer;}
+td.narrow-label {
+  text-align: right;vertical-align: top;
+  font-weight: bold; padding: 5px 1em; width: 20%;
+}
+
+/*
+ 列表部分的样式
+ */
+
+/*
+.list-div table {width: 100%;}
+.list-div th {line-height: 24px; background: #eee ;white-space: nowrap;}
+.list-div td {background: #fefefe;line-height: 22px;}
+.list-div td.first-cell{font-weight: bold;padding-left: 10px;}
+.list-div input { vertical-align: middle;}
+.list-div a:visited, .list-div a:link{text-decoration: none;color: #192E32;}
+.list-div a.btn:visited, .list-div a.btn:link{text-decoration: none;color: #fff;}
+.list-div a:hover { color: #9D7250;}
+.list-div input, list-div img {vertical-align: middle;}
+.list-div .footer {background: #F4FAFB;text-align: right;}
+*/
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th{vertical-align: middle;}
+
+.table > tbody > tr > th,.table > tfoot > tr > th,.table > thead > tr > th{ text-align:center;}
+
+#page-table {
+  width: 100%;
+}
+
+#page-link {
+  margin-left: 1em;
+  padding-left: 1em;
+  border-left: 1px solid #999;
+}
+
+.form-div {
+  /*background: #f6f7f7;
+  border: 1px solid #ccc;
+  color: #808080;
+  */
+  padding: 5px;
+  margin: 0 0 10px 0;
+}
+
+.form-div select, .form-div input, .form-div img {
+  vertical-align: middle;
+}
+#footer {
+  /*background: #ddd;*/
+  border-top: 1px solid #ddd;
+  padding: 20px;
+  color: #9CACAF;
+  text-align: center;
+}
+.button-div {
+  text-align: center;
+  padding: 3px 0;
+}

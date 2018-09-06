@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xlw.zerg.dao.BannerItemMapper" >
+  <resultMap id="BaseResultMap" type="com.xlw.zerg.model.BannerItem" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="img_id" property="imgId" jdbcType="INTEGER" />
+    <result column="key_word" property="keyWord" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="delete_time" property="deleteTime" jdbcType="INTEGER" />
+    <result column="banner_id" property="bannerId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="INTEGER" />
+    
+    <association property="image" javaType="com.xlw.zerg.model.Image">
+	  <id column="img_id" property="id" />
+	  <result column="url" property="url" />
+	  <result column="from" property="from" />
+	  <result column="image_delete_time" property="deleteTime" />
+	  <result column="image_update_time" property="updateTime" />
+	</association>
+    
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from banner_item
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.xlw.zerg.model.BannerItem" >
+    insert into banner_item (id, img_id, key_word, 
+      type, delete_time, banner_id, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{imgId,jdbcType=INTEGER}, #{keyWord,jdbcType=VARCHAR}, 
+      #{type,jdbcType=TINYINT}, #{deleteTime,jdbcType=INTEGER}, #{bannerId,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=INTEGER})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.xlw.zerg.model.BannerItem" >
+    update banner_item
+    set img_id = #{imgId,jdbcType=INTEGER},
+      key_word = #{keyWord,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      delete_time = #{deleteTime,jdbcType=INTEGER},
+      banner_id = #{bannerId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, img_id, key_word, type, delete_time, banner_id, update_time
+    from banner_item
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, img_id, key_word, type, delete_time, banner_id, update_time
+    from banner_item
+  </select>
+  
+  <select id="selectByBannerId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select 
+     banner_item.id, 
+     img_id, 
+     key_word, 
+     type, 
+     banner_item.delete_time, 
+     banner_id, 
+     banner_item.update_time, 
+     concat('https://www.bdkaierliang.com/images',url) as url, 
+     `from`, 
+     image.delete_time as image_delete_time,
+     image.update_time as image_update_time
+    from banner_item ,image  
+    where image.id = banner_item.img_id and  banner_id = #{id}
+  </select>
+</mapper>

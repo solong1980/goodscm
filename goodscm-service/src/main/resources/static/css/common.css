@@ -1,0 +1,174 @@
+body{
+    background:#fff none repeat scroll 0 0;
+    font-weight: 400;
+    hyphens: auto;
+    overflow-wrap: break-word;   
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-family:"Microsoft Yahei";
+}
+body,pre {
+    line-height:1.6;
+}
+.am-wrap{
+    width: 1200px;
+    margin: auto;
+}
+
+.am-p-gray{
+	color:#777;
+}
+.am-text-shadow{
+	text-shadow: 1px 0 1px #8B4513, 0 1px 1px #8B4513, 0 -1px 1px #8B4513, -1px 0 1px #8B4513;
+}
+.must{
+	background:rgba(0, 0, 0, 0) url(../images/must.gif)/*tpa=http://www.dianchaoren.com/default/static/images/must.gif*/ no-repeat scroll 20px center;
+}
+
+
+/***************msgbox.html*****************/
+
+.wrapper{
+	padding-bottom:15px;
+	width:470px;
+	margin-left:-235px;
+	border:1px solid #CCC;
+	background:#F2F2F2;
+	position:absolute;
+	left:50%;
+	top:50%;
+	-webkit-box-shadow:0px 0px 9px 1px #616161;
+	-moz-box-shadow:0px 0px 9px 1px #616161;
+	box-shadow:0px 0px 9px 1px #616161;
+	-o-box-shadow:0px 0px 9px 1px #616161;
+	-ms-box-shadow:0px 0px 9px 1px #616161;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	-o-border-radius: 2px;
+	-ms-border-radius: 2px;
+	font-size:14px;
+}
+
+.header{
+	height:75px;
+	line-height: 50px;
+	padding-left:15px;
+	font-size:15px;
+	font-weight: bold;
+
+	-webkit-border-top-left-radius: 2px;
+	-moz-border-top-left-radius: 2px;
+	border-top-left-radius: 2px;
+	-o-border-top-left-radius: 2px;
+	-ms-border-top-left-radius: 2px;
+
+	-webkit-border-top-right-radius: 2px;
+	-moz-border-top-right-radius: 2px;
+	border-top-right-radius: 2px;
+	-o-border-top-right-radius: 2px;
+	-ms-border-top-right-radius: 2px;
+}
+
+.content{padding:15px 25px;}
+
+.long-txt{
+	width:400px;font-size:14px;
+	height: 32px;
+	line-height: 32px;
+}
+
+.lb{display: block;padding:5px 0px;word-spacing:8px;}
+.form-item{clear: both;padding-bottom:10px;}
+
+.error,.info,.warn{
+	position: static;
+	padding:5px 8px 5px 27px;
+	line-height:32px;
+	margin:0 0 10px 0;
+	display:block;
+}
+
+/*分页CSS*/
+.pager{
+	padding-top: 10px;
+}
+
+.PAGER_NORMAL{float:left;margin:1px;}
+
+.pager a{
+	display: inline-block;
+	vertical-align: center;
+	cursor: pointer;
+	height: 25px;
+	line-height: 25px;
+	float: left;
+	padding: 0 10px;
+	margin:1px;
+}
+
+.PAGER_NEXT{
+	background-position:0 -26px;
+}
+
+a.PAGER_NEXT:hover{
+	background-position:-26px -26px;
+}
+
+a.PAGER_PREV:hover{
+	background-position:-26px 0px;
+}
+
+.PAGER_FIRST{
+	background-position:0 -78px;
+}
+
+a.PAGER_FIRST:hover{
+	background-position:-26px -78px;
+}
+
+.PAGER_LAST{
+	background-position:0 -52px;
+}
+
+a.PAGER_LAST:hover{
+	background-position:-26px -52px;
+}
+.float-right{
+	float:right;
+}
+.action-bar {
+    clear: both;
+    height: 42px;
+    line-height: 42px;
+    padding: 10px 0;
+    width: 100%;
+}
+.pager a{
+	background-color: #EEEEEE;
+}
+
+.pager a:hover{
+	background-color: #004F9D;
+	color:#FFFFFF;
+}
+
+.pager .PAGER_CURRENT{
+	background: #279AD7; 
+	color:#fff;
+}
+/*------分页CSS-----*/
+
+
+.no-found{margin-top:61px;}
+.no-found img{width:100%;display:block;}
+/*------文章页-----*/
+
+.bread{margin-bottom: 30px;margin-top: 15px;font-size:14px;}
+.bread a{font-size:14px;color:#49a0f5;}
+
+.am-help-right .title{border-bottom: 1px dotted #eee;text-align: center;}
+.am-help-right .sub-title{ color: #999;padding: 10px 0;}
+.am-help-right .title h3{ font-size: 1.5em;font-weight: bold;padding-bottom: 10px;}
+.am-help-right .content{color: #666;line-height: 28px;padding: 15px;font-size:14px;}
+.am-help-right .content img{max-width:100%;}

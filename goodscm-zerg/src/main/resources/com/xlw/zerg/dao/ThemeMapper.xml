@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xlw.zerg.dao.ThemeMapper" >
+  <resultMap id="BaseResultMap" type="com.xlw.zerg.model.Theme" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="topic_img_id" property="topicImgId" jdbcType="INTEGER" />
+    <result column="delete_time" property="deleteTime" jdbcType="INTEGER" />
+    <result column="head_img_id" property="headImgId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="INTEGER" />
+    
+    <association property="topicImage" column="topic_img_id" javaType="com.xlw.zerg.model.Image">
+      <id column="topic_img_id" property="id" />
+	  <result column="topic_url" property="url" />
+	  <result column="topic_from" property="from" />
+	  <result column="topic_delete_time" property="deleteTime" />
+	  <result column="topic_update_time" property="updateTime" />
+    </association>
+    
+    <association property="headImage" column="head_img_id" javaType="com.xlw.zerg.model.Image">
+      <id column="head_img_id" property="id" />
+	  <result column="head_url" property="url" />
+	  <result column="head_from" property="from" />
+	  <result column="head_delete_time" property="deleteTime" />
+	  <result column="head_update_time" property="updateTime" />
+    </association>
+  </resultMap>
+  
+  <resultMap id="ComplexResultMap" type="com.xlw.zerg.model.Theme" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="topic_img_id" property="topicImgId" jdbcType="INTEGER" />
+    <result column="delete_time" property="deleteTime" jdbcType="INTEGER" />
+    <result column="head_img_id" property="headImgId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="INTEGER" />
+    
+    <collection property="products" javaType="ArrayList" column="id" ofType="com.xlw.zerg.model.Product" select="com.xlw.zerg.dao.ThemeProductMapper.selectProductsByThemeId"/>
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from theme
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.xlw.zerg.model.Theme" >
+    insert into theme (id, name, description, 
+      topic_img_id, delete_time, head_img_id, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{topicImgId,jdbcType=INTEGER}, #{deleteTime,jdbcType=INTEGER}, #{headImgId,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=INTEGER})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.xlw.zerg.model.Theme" >
+    update theme
+    set name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      topic_img_id = #{topicImgId,jdbcType=INTEGER},
+      delete_time = #{deleteTime,jdbcType=INTEGER},
+      head_img_id = #{headImgId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByPrimaryKey" resultMap="ComplexResultMap" parameterType="java.lang.Integer" >
+    select id, name, description, topic_img_id, delete_time, head_img_id, update_time
+    from theme
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, name, description, topic_img_id, delete_time, head_img_id, update_time
+    from theme
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap" >
+    select t.id, name, description, topic_img_id, t.delete_time, head_img_id, t.update_time,
+     it.url as topic_url,
+     it.`from` as topic_from,
+     it.delete_time as topic_delete_time,
+     it.update_time as topic_update_time,
+     ih.url as head_url,
+     ih.`from` as head_from,
+     ih.delete_time as head_delete_time,
+     ih.update_time as head_update_time
+     from theme  t left join image it on t.topic_img_id = it.id left join image ih on 
+     t.head_img_id = ih.id
+     where t.id in 
+    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
+  
+</mapper>

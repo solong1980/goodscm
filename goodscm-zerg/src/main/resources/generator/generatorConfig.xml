@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<!--数据库驱动 -->
+	<classPathEntry location="D:/tools/.m2/repository/mysql/mysql-connector-java/5.1.42/mysql-connector-java-5.1.42.jar" />
+	<context id="DB2Tables" targetRuntime="MyBatis3Simple">
+		<!--关闭MyBatis注释 type="org.xlw.generator.MyCommentGenerator" -->
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+
+		<!--数据库链接地址账号密码 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/zerg" userId="longlh"
+			password="SolonG">
+		</jdbcConnection>
+		
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="true" />
+		</javaTypeResolver>
+		
+		<!--生成Model类存放位置 -->
+		<javaModelGenerator targetPackage="com.xlw.zerg.model" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<!--生成映射文件存放位置 -->
+		<sqlMapGenerator targetPackage="com.xlw.zerg.dao" targetProject="src/main/resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		
+		<!--生成Dao类存放位置 -->
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.xlw.zerg.dao" targetProject="src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<!--生成对应表及类名 -->
+		<!-- mybatis-generator:generate -->
+		<table tableName="user" domainObjectName="User" enableSelectByExample="true"></table>
+		<table tableName="user_address" domainObjectName="UserAddress" enableSelectByExample="true"></table>
+		<table tableName="third_app" domainObjectName="ThirdApp" enableSelectByExample="true"></table>
+		<table tableName="theme_product" domainObjectName="ThemeProduct" enableSelectByExample="true"></table>
+	    <table tableName="theme" domainObjectName="Theme" enableSelectByExample="true"></table>
+		<table tableName="product_property" domainObjectName="ProductProperty" enableSelectByExample="true"></table>
+		<table tableName="product_image" domainObjectName="ProductImage" enableSelectByExample="true"></table>
+		<table tableName="product" domainObjectName="Product" enableSelectByExample="true"></table>
+		<table tableName="order_product" domainObjectName="OrderProduct" enableSelectByExample="true"></table>
+		
+		<table tableName="order" domainObjectName="Order" enableSelectByExample="true"></table> 
+		<table tableName="image" domainObjectName="Image" enableSelectByExample="true"></table>  
+		<table tableName="category" domainObjectName="Category"></table> 
+		<table tableName="banner_item" domainObjectName="BannerItem"></table> 
+		<table tableName="banner" domainObjectName="Banner"></table> 
+	</context>
+</generatorConfiguration>

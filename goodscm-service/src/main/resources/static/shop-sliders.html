@@ -1,0 +1,154 @@
+<style>
+#marquee {
+	line-height: 40px;
+	background-color: rgba(5, 5, 5, 0.4) !important;
+	color: yellow;
+	font-size: 20px;
+}
+</style>
+<script src="./js/ueditor.config.js"></script>
+<script src="./js/ueditor.all.min.js"></script>
+<script src="./js/en.js"></script>
+<style>
+.upload-button {
+	position: relative;
+	display: inline-block;
+	padding: 4px 12px;
+	overflow: hidden;
+	text-decoration: none;
+	text-indent: 0;
+	line-height: 20px;
+	color: #fff;
+	background-color: #27ae60;
+	text-align: center;
+	width: 100px;
+}
+
+.upload-button input {
+	position: absolute;
+	font-size: 100px;
+	right: 0;
+	top: 0;
+	opacity: 0;
+}
+
+.upload-img-box .upload-pre-item {
+	float: left;
+	padding: 0px;
+	margin: 1px 10px 1px 1px;
+	width: 150px;
+	max-height: 180px;
+	overflow: hidden;
+	text-align: center;
+	cursor: pointer;
+	border: 1px solid #ccc;
+	transition: all .3s linear;
+}
+
+.upload-pre-item img {
+	border-bottom: 1px solid #ccc;
+}
+
+.upload-pre-item div {
+	background-color: lightgrey;
+}
+</style>
+<div id="main" class="main" style="min-height: 257px;">
+    <h2>设置店铺首页轮播图</h2>
+	<div class="tab-wrap">
+	    <div class="tab-content">
+	        <form action="/shop-sliders?id=6&amp;admin_id=10" method="post" class="form-horizontal">
+	            <!-- 基础 -->
+	            <div id="tab1" class="tab-pane in tab1">
+	                <div class="controls">
+	                    <label class="item-label">首页轮播图片<span class="check-tips">（最多3张，请上传尺寸为420*150的图片，格式为jpg、png、gif，上传图片大小必须在2M以下）</span></label>
+	                    <div class="upload-button">
+	                        <span class="uploadify-button-text">上传图片</span>
+	                        <input type="file" id="uploadImage" accept="image/png,image/jpeg,image/gif" num="3" onchange="upload(this,&#39;shop_img&#39;,&#39;pics[]&#39;)" count="1">
+	                    </div>
+	                    <input type="hidden" name="shop_img" id="shop_img" value="">
+							<div class="upload-img-box">
+								<div class="upload-pre-item" id="shop_img_1">
+	                                <img src="./images/6_1.jpg">
+	                                <div class="shop_img_1" onclick="delImg('uploadImage','shop_img_1')">删除</div>
+	                                <input type="hidden" name="pics[]" class="shop_img_1" value="/uploads/sliders/imgs/10/6_1.jpg">
+	                            </div>
+							</div>
+	                </div>
+		            <!-- 高级 -->
+		            <div class="form-item">
+		                <input type="hidden" name="id" value="6">
+		                <input type="hidden" name="shop_id" value="6">
+		                <input type="hidden" name="admin_id" value="10">
+		                <button type="submit" id="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定
+		                </button>
+		                <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		            </div>
+	        
+	    		</div>
+	    	</form>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+        function delImg(upInputId, fileId) {
+            var _this = $("#" + upInputId);
+            var count = parseInt(_this.attr('count'));
+            _this.attr('count', count - 1);
+            $("#" + fileId).remove();
+        }
+        function upload(obj, imgId, name) {
+            var _self = obj;
+            var _this = $(obj);
+            var fileReader = new FileReader();
+            fileReader.onload = function (e) {
+                if (fileReader.readyState == FileReader.DONE) {
+                    var file = _self.files[0];
+                    var type = file.type;
+                    var size = parseInt(file.size);
+                    var allowSize = parseInt(2097152); //限制上传图片大小1M以下,2*1024*1024
+                    if (size > allowSize) {
+                        layer.msg('上传图片大小必须在2M以下');
+                        return false;
+                    }
+                    var accept = _this.attr('accept');//上传图片数量
+                    var param_num = _this.attr('num');//上传图片数量
+                    var param_count = _this.attr('count');//已上传图片数量
+                    var acceptArr = accept.split(",");
+                    if ($.inArray(type, acceptArr) < 0) {
+                        layer.msg('请上传'+accept+'等格式的文件');
+                        return false;
+                    }
+                    if (param_num == null || param_num == undefined) {
+                        _this.attr('num', 1);
+                    }
+                    if (param_count == null || param_count == undefined) {
+                        _this.attr('count', 0);
+                    }
+                    var num = parseInt(_this.attr('num'));
+                    var count = parseInt(_this.attr('count'));
+                    if (count < num) {
+                        count = count + 1;
+                        var upFileId = _this.attr('id');
+                        var fileId = imgId + '_' + count;
+                        var func = 'delImg("' + upFileId + '","' + fileId + '")';
+                        $("#" + imgId).parent().find('.upload-img-box').append(
+                                '<div class="upload-pre-item" id="' + fileId + '"><img src="' + this.result + '"/><div class="' + fileId + '" onclick=' + func + '>删除</div><input type="hidden" name="' + name + '" class="' + fileId + '"  value="' + this.result + '"></div>'
+                        );
+                        _this.attr('count', count);
+                    } else {
+                        layer.msg('最多上传' + num + '张');
+                        return false;
+                    }
+                    _self.value = ''; //清空上传成功后的value值
+                }
+            };
+            //一次加载多个文件
+            var i = 0, src = _self.files;
+            fileReader.readAsDataURL(src[i]);
+            fileReader.onloadend = function () {
+                i++;
+                if (i < src.length) fileReader.readAsDataURL(src[i]);
+            }
+        }
+    </script>

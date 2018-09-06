@@ -1,0 +1,1277 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="../js/layui-v2.2.5/css/layui.css" />
+<style type="text/css">
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th,
+	.table>thead>tr>td, .table>thead>tr>th {
+	vertical-align: middle;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th,
+	.table>thead>tr>td, .table>thead>tr>th {
+	vertical-align: middle;
+}
+
+.table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>th {
+	text-align: center;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th,
+	.table>thead>tr>td, .table>thead>tr>th {
+	padding: 8px;
+	line-height: 1.42857143;
+	vertical-align: top;
+	border-bottom: 1px solid #ddd;
+}
+
+p, td, div {
+	font: 12px "sans-serif", "Arial", "Verdana";
+}
+
+html, body, p, td, div {
+	font-size: 14px;
+}
+
+.grid-demo {
+	padding: 10px;
+	line-height: 10px;
+	text-align: center;
+	background-color: #79C48C;
+	color: #fff;
+}
+
+.table {
+	width: 100%;
+	max-width: 100%;
+	margin-bottom: 20px;
+}
+
+.layui-container>div.layui-row {
+	padding: 8px;
+	line-height: 1.42857143;
+	vertical-align: top;
+}
+
+.layui-container>div.layui-row>div.layui-col-md2 {
+	font: bold;
+	font-size: large;
+	border-top: 1px solid #ddd;
+}
+
+.layui-container>div.layui-row>div.layui-col-md9 {
+	vertical-align: middle;
+	padding-top: 9px;
+}
+
+.clear {
+	clear: both;
+}
+
+#sku_type {
+	border-bottom: 1px solid #ccc;
+	padding: 10px 0;
+}
+
+#sku_type ul li .sku_text:hover {
+	background: #ccc;
+}
+
+#sku_type ul li .sku_text {
+	padding: 10px;
+}
+
+#sku_type span {
+	float: left;
+	padding: 10px 0;
+}
+
+#sku_type ul li {
+	float: left;
+	padding: 0;
+	margin: 0 10px 0 0;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	cursor: pointer;
+	position: relative;
+}
+
+#sku_type ul li .bt_del_skutype {
+	position: absolute;
+	top: -14px;
+	right: -8px;
+	width: 18px;
+	height: 18px;
+	padding: 0 !important;
+	line-height: 15px;
+	text-align: center;
+	font-size: 14px;
+	background: grey;
+	color: white;
+	opacity: .3;
+	border-radius: 3px;
+}
+
+#sku_type span {
+	float: left;
+	padding: 10px 0;
+}
+
+#sku_type_detail {
+	border-bottom: 1px solid #ccc;
+	padding: 10px 0;
+	margin: 0 0 20px 0;
+}
+
+#sku_type_detail .detial_item {
+	padding: 5px 3px;
+}
+
+#sku_type_detail .detial_item .detial_title {
+	float: left;
+	display: inline-block;
+	padding: 5px;
+}
+
+#sku_type_detail .detial_item .detial_values {
+	float: left;
+	margin: 0 0 0 10px;
+	list-style-type: none;
+}
+
+#sku_type_detail .detial_item .detial_values li {
+	float: left;
+	padding: 5px;
+	margin: 0 5px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+#sku_map thead {
+	background: #F7F7F9;
+}
+
+ul {
+	margin: 0px;
+	padding: 0px;
+	margin-left: 20px;
+}
+
+.img_list1, .img_list2 {
+	list-style-type: none;
+	margin: 0px;
+	float: left;
+}
+
+.img_list1 li, .img_list2 li {
+	float: left;
+	margin: 2px;
+	width: 52px;
+	height: 53px;
+	border: solid 1px black;
+	background-color: #E0E0E0;
+}
+
+.img_list2 li {
+	border: 1px solid #DE364C;
+}
+
+.img_list1 li img, .img_list2 li img {
+	width: 50px;
+	height: 50px;
+}
+
+.placeHolder {
+	margin: 2px !important;
+	width: 52px !important;
+	height: 52px !important;
+	background-color: white !important;
+	border: dashed 1px gray !important;
+}
+
+.label_lang_success {
+	background-color: #4cae4c !important;
+}
+
+.border_red {
+	border: 1px solid red;
+}
+
+.table-bordered {
+	border: 1px solid #ddd;
+}
+
+table {
+	background-color: transparent;
+	border-spacing: 0;
+	border-collapse: collapse;
+	display: table;
+	border-color: grey;
+}
+
+.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+    border: 1px solid #ddd;
+}
+.table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>thead>tr>th {
+    padding: 1px;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th,
+	.table>thead>tr>td, .table>thead>tr>th {
+	padding: 8px;
+	line-height: 1.42857143;
+	vertical-align: top;
+	border-top: 1px solid #ddd;
+}
+</style>
+
+<script src="../js/layui-v2.2.5/layui.js"></script>
+
+<script>
+	layui.use([ 'layer', 'form', 'element' ], function() {
+		var layer = layui.layer, form = layui.form, element = layui.element;
+		var device = layui.device();
+		layer.msg('Hello World');
+		console.log(device)
+	});
+</script>
+</head>
+
+<body class=" ">
+	<div class="layui-container">
+		<div class="layui-row">
+			<div class="layui-col-md12">
+				<h2><i class="layui-icon">&#xe678;</i>商品详细</h2>
+			</div>
+		</div>
+	</div>
+	<form class="layui-form layui-form-pane" action="">
+		<div class="layui-form-item">
+			<label class="layui-form-label">产品分类</label>
+			<div class="layui-input-block">
+				<input type="text" name="title" required lay-verify="required"
+					placeholder="服装,鞋靴,箱包/皮具箱包/拉杆箱" autocomplete="off"
+					class="layui-input"/>
+			</div>
+		</div>
+		<div class="layui-form-item" style="display: none">
+			<label class="layui-form-label">密码框</label>
+			<div class="layui-input-inline">
+				<input type="password" name="password" required
+					lay-verify="required" placeholder="请输入密码" autocomplete="off"
+					class="layui-input"/>
+			</div>
+			<div class="layui-form-mid layui-word-aux">辅助文字</div>
+		</div>
+		
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">审核状态</label>
+			</div>
+			<div class="layui-inline">
+				<input type="radio" name="status" title="通过" /> <input type="radio"
+					name="status" title="待审核" checked /> <input type="radio"
+					name="status" title="失效" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+			<label class="layui-form-label">上下架</label>
+			</div>
+			<div class="layui-inline">
+				<input type="radio" name="online" value="上架" title="上架" /> <input
+					type="radio" name="online" value="下架" title="下架" checked /> <input
+					type="radio" name="online" value="过滤" title="过滤" /> <input
+					type="radio" name="online" value="侵权" title="侵权" /> <input
+					type="radio" name="online" value="屏蔽" title="屏蔽" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">产品类型</label>
+			</div>
+			<div class="layui-inline">
+				<input type="radio" name="type" value="重点" title="重点" /> <input
+					type="radio" name="type" value="原创" title="原创" checked /> <input
+					type="radio" name="type" value="海外" title="海外" /> <input
+					type="radio" name="type" value="抓取" title="抓取" /> <input
+					type="radio" name="type" value="其它" title="其它" /> <input
+					type="radio" name="type" value="产品库" title="产品库" />
+			</div>
+		</div>
+		
+		
+		
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">商家信息</label>
+			</div>
+			<div class="layui-inline">
+				<button class="layui-btn layui-btn-warm">产品页</button>
+			</div>
+		</div>
+		
+		
+		
+		<div class="layui-form-item">
+			<label class="layui-form-label">产品信息</label>
+			<hr class="layui-bg-green"/>
+			<div class="layui-input-block">
+				<div class="layui-container">
+					<div class="layui-row">
+						<div class="layui-col-md9">
+							<label class="layui-form-label">厂商名称:</label>
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input" name="manufactuer"
+									value="" placeholder="建议填写" />
+							</div>
+							<!-- <div class="layui-form-mid"> </div> -->
+							<label class="layui-form-label">品牌名称:</label>
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input" name="brand" value=""
+									placeholder="建议填写" />
+							</div>
+						</div>
+					</div>
+					<!-- <label class="layui-form-label">范围</label>
+			    <div class="layui-input-inline" style="width: 100px;">
+			      <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input"/>
+			    </div>
+			    <div class="layui-form-mid">-</div>
+			    <div class="layui-input-inline" style="width: 100px;">
+			      <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input"/>
+			    </div> -->
+					<div class="layui-row">
+						<label class="layui-form-label">厂商编号:</label>
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" name="manufactuer_id"
+								value="" placeholder="建议填写"></input>
+						</div>
+						<label class="layui-form-label">内部SKU:</label>
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" name="sku_id" value=""
+								placeholder="sku" />
+						</div>
+
+						<div class="layui-form-mid">-</div>
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" name="sku_id_ext" alt=""
+								value="" placeholder="sku修正" />
+						</div>
+						<span style="position: absolute;padding-top: 10px">可不填(建议两位英文字母)</span>
+					</div>
+
+					<div class="layui-row">
+						<label class="layui-form-label">产品来源:</label>
+						<div class="layui-input-block">
+							<input type="text" class="layui-input" name="source_site"
+								value="1688" placeholder="1688" />
+						</div>
+					</div>
+
+					<div class="layui-row">
+						<label class="layui-form-label">来源网址:</label>
+						<div class="layui-input-block">
+							<textarea class="layui-textarea" rows="2" cols="52"
+								name="source_url" placeholder="来源网址">https://detail.1688.com/offer/559984742542.html?spm=a2615.7691456.0.0.28a30e06OON9Xl</textarea>
+						</div>
+					</div>
+
+					<div class="layui-row">
+						<label class="layui-form-label">附加备注:</label>
+						<div class="layui-input-inline">
+							<input type="text" class="layui-input" size="54" name="mark"
+								value="" placeholder="附加备注" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">产品码</label>
+			</div>
+			<div class="layui-inline">
+				<select name="upc_type" lay-verify="required">
+					<option value="EAN" selected="">EAN</option>
+					<option value="UPC">UPC</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label">成本运费</label>
+			<hr class="layui-bg-green"/>
+			<div class="layui-input-block">
+				<div class="layui-container">
+					<div class="layui-row">
+						<div class="layui-col-md22">
+							<div class="layui-form-label">采购价格:</div>
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input" size="10"
+									name="price_base" value="81.00" placeholder="采购价格" />
+							</div>
+							<div class="layui-form-mid">人民币(¥)</div>
+
+							<div class="layui-form-label">产品重量:</div>
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input" size="5" name="weight"
+									value="0.90" />
+							</div>
+							<div class="layui-form-mid">千克(kg)</div>
+
+						</div>
+					</div>
+					<div class="layui-row">
+						<div class="layui-col-md22">
+							<div class="layui-form-label">尺寸:长</div>
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input" size="4" name="size_l"
+									value="31" placeholder="长" />
+							</div>
+							<div class="layui-form-mid">宽</div>
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input" size="4" name="size_w"
+									value="12" placeholder="宽" />
+							</div>
+							<div class="layui-form-mid">高</div>
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input" size="4" name="size_h"
+									value="20" placeholder="高" />
+							</div>
+							<div class="layui-form-mid">厘米(cm)</div>
+						</div>
+					</div>
+					<div class="layui-row">
+						<div class="layui-col-md22">
+							<div class="layui-form-label">国内运费:</div>
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input" size="12"
+									name="postage_local" value="15.00" placeholder="国内运费" />
+							</div>
+							<div class="layui-form-mid">¥</div>
+
+							<div class="layui-form-label">折扣:</div>
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input" size="10" name="discount"
+									value="1.00" placeholder="折扣系数" /> <input type="hidden"
+									name="exchange_day" value="2018-08-17" />
+							</div>
+							<div class="layui-form-mid">系数</div>
+						</div>
+					</div>
+					<div class="layui-row">
+						<table class="table table-bordered"
+							style="width: 80%; margin: 0 5px;">
+							<thead>
+								<tr>
+									<th style="text-align: right; width: 170px;">#</th>
+									<th>美国<label style="color: #f60;">[价格未保存]</label></th>
+									<th>加拿大<label style="color: #f60;">[价格未保存]</label></th>
+									<th>墨西哥<label style="color: #f60;">[价格未保存]</label></th>
+									<th>英国<label style="color: #f60;">[价格未保存]</label></th>
+									<th>法国<label style="color: #f60;">[价格未保存]</label></th>
+									<th>德国<label style="color: #f60;">[价格未保存]</label></th>
+									<th>意大利<label style="color: #f60;">[价格未保存]</label></th>
+									<th>西班牙<label style="color: #f60;">[价格未保存]</label></th>
+									<th>日本<label style="color: #f60;">[价格未保存]</label></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="multi_postage_new">
+									<td style="text-align: right; font-weight: bold;">运费(¥)</td>
+									<td>小包<br>55.8</td>
+									<td>小包<br>46.5</td>
+									<td>小包<br>205.8</td>
+									<td>小包<br>50.55</td>
+									<td>小包<br>78.01</td>
+									<td>小包<br>61.85</td>
+									<td>小包<br>76.16</td>
+									<td>小包<br>57.2</td>
+									<td>小包<br>36</td>
+								</tr>
+								<tr class="multi_price_new">
+									<td style="text-align: right; font-weight: bold;">售价(¥)</td>
+									<td>333.22</td>
+									<td>312.81</td>
+									<td>662.49</td>
+									<td>321.7</td>
+									<td>381.98</td>
+									<td>346.5</td>
+									<td>377.92</td>
+									<td>336.3</td>
+									<td>289.76</td>
+								</tr>
+								<tr class="multi_price2_new">
+									<td style="text-align: right; font-weight: bold;">外币(<i
+										class="fa fa-question tippy"
+										title="汇率日期：2018-08-17<br>USD : 0.1452<br>MXN : 2.7370<br>JPY : 16.1100<br>GBP : 0.1143<br>EUR : 0.1277<br>CAD : 0.1908<br>AUD : 0.1950<br>"
+										style="color: #f60;"></i>)
+									</td>
+									<td>48.39[USD]</td>
+									<td>59.69[CAD]</td>
+									<td>1813.24[MXN]</td>
+									<td>36.78[GBP]</td>
+									<td>48.78[EUR]</td>
+									<td>44.25[EUR]</td>
+									<td>48.27[EUR]</td>
+									<td>42.95[EUR]</td>
+									<td>4668.04[JPY]</td>
+								</tr>
+								<tr class="multi_price3_new" style="color: #449d44;">
+									<td style="text-align: right; font-weight: bold;">优化</td>
+									<td>48.99[USD]</td>
+									<td>59.99[CAD]</td>
+									<td>1813.99[MXN]</td>
+									<td>36.99[GBP]</td>
+									<td>48.99[EUR]</td>
+									<td>44.99[EUR]</td>
+									<td>48.99[EUR]</td>
+									<td>42.99[EUR]</td>
+									<td>4668.99[JPY]</td>
+								</tr>
+								<tr class="multi_price4_new" style="color: #449d44;">
+									<td style="text-align: right; font-weight: bold;">最终(<a
+										href="javascript:" id="bt_price_refresh"><i
+											class="fa fa-refresh"></i></a>)
+									</td>
+									<td><input type="text" class="layui-input" size="8"
+										value="0.00" name="price_us"></td>
+									<td><input type="text" class="layui-input" size="8"
+										value="0.00" name="price_ca"></td>
+									<td><input type="text" class="layui-input" size="8"
+										value="0.00" name="price_mx"></td>
+									<td><input type="text" class="layui-input" size="8"
+										value="0.00" name="price_uk"></td>
+									<td><input type="text" class="layui-input" size="8"
+										value="0.00" name="price_fr"></td>
+									<td><input type="text" class="layui-input" size="8"
+										value="0.00" name="price_de"></td>
+									<td><input type="text" class="layui-input" size="8"
+										value="0.00" name="price_it"></td>
+									<td><input type="text" class="layui-input" size="8"
+										value="0.00" name="price_es"></td>
+									<td><input type="text" class="layui-input" size="8"
+										value="0.00" name="price_ja"></td>
+								</tr>
+								<tr class="multi_price5_new" style="color: #449d44;">
+									<td style="text-align: right; font-weight: bold;">利润(<span
+										class="tippy" title="最终售价换算人民币-采购成本-国际物流-国内快递"
+										style="color: #f60;">¥</span>)
+									</td>
+									<td>185.6(55.01%)</td>
+									<td>171.92(54.68%)</td>
+									<td>360.97(54.47%)</td>
+									<td>177.08(54.72%)</td>
+									<td>209.63(54.65%)</td>
+									<td>194.47(55.2%)</td>
+									<td>211.48(55.13%)</td>
+									<td>183.45(54.5%)</td>
+									<td>157.82(54.46%)</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="layui-row">
+						<div class="layui-col-md22">
+							<div class="layui-form-label">库存数量:</div>
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input" size="12" name="stock"
+									value="36" />
+							</div>
+							<div class="layui-form-mid">&nbsp;&nbsp;</div>
+
+							<div class="layui-form-label">预处理时间:</div>
+							<div class="layui-input-inline">
+								<input type="text" class="layui-input" size="6"
+									name="pretreatment" value="1" />
+							</div>
+							<div class="layui-form-mid">天（现货填1）</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+			<label class="layui-form-label">产品简称</label>
+			</div>
+			<div class="layui-inline">
+				<div class="layui-form-label">英文简称:</div>
+				<div class="layui-input-inline">
+					<input type="text" class="layui-input" name="title_short"
+						value="bag" placeholder="英文简称" />
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">产品介绍</label>
+			<hr class="layui-bg-green"/>
+			<div class="layui-input-block">
+				<div class="layui-tab">
+					<ul class="layui-tab-title">
+						<li class="layui-this">中文</li>
+						<li>英语</li>
+						<li>法语</li>
+						<li>德语</li>
+						<li>意大利语</li>
+						<li>西班牙语</li>
+						<li>日语</li>
+					</ul>
+					<div class="layui-tab-content">
+						<div class="layui-tab-item layui-show">
+							<div id="tab_lang_zh" class="tab-pane fade active in"
+								role="tabpanel">
+								<div class="layui-form-item">
+									<label>产品标题：(中文)&nbsp;&nbsp;&nbsp;&nbsp; <a
+										class="layui-btn" style="display: none" href="javascript:"
+										id="btn_translate_all" role="button">一键翻译</a>
+									</label>
+									<textarea name="title_zh" id="title_zh" class="layui-textarea"
+										rows="2" cols="75" placeholder="产品标题">Women PU Leather Handbags Six-piece Sets Mother Package Large Capacity Weave Pattern Colored Ribbon Ladies Bag</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>关键字 不超过5行：(中文)</label>
+									<textarea name="keywords_zh" id="keywords_zh"
+										class="layui-textarea" rows="4" cols="75"
+										placeholder="关键字 不超过5行">Women's Handbag, Shoulder Bag, Top Handle Bags, Satchels
+Tote Bag, Cross Body Bags, PU Leather bag, Messenger Bag
+Shoulder Pack, Daypack, men Sling Bag, Multiple Pockets, Long Strap
+Large Capacity, Light Weight, room, compartment</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>要点说明 不超过5行：(中文)</label>
+									<textarea name="keypoints_zh" id="keypoints_zh"
+										class="layui-textarea" rows="4" cols="80"
+										placeholder="要点说明 不超过5行">Trendy fashion unique design
+It has a detachable single shoulder strap that can be worn multiple ways
+Capacity: Can hold your wallet, umbrella, books, etc.
+High-quality PU material; smooth zipper; resistant to pollution; the perfect size for ladies
+Applications: Work, weekend getaways, occasional excursions, gyms, mountaineering etc. to provide personalized luggage.</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>产品描述：(中文)</label>
+									<textarea name="description_zh" id="description_zh"
+										class="layui-textarea" rows="6" cols="80" placeholder="产品描述">款式:女式单肩包
+面料质地:PU
+里料质地:PU
+箱包潮流款式:子母包
+开盖方式:拉链
+流行元素:编织
+包内部结构:手机袋,拉链暗袋
+肩带根数:单根
+箱包大小:中
+图案:纯色
+风格:民族风
+加工方式:压花
+硬度:中偏软
+颜色:红色,浅灰色,蓝色,黑色,粉红色</textarea>
+								</div>
+							</div>
+						</div>
+
+						<div class="layui-tab-item">
+							<div id="tab_lang_en" class="tab-pane fade " role="tabpanel">
+								<div class="layui-form-item">
+									<label>产品标题：(英语)&nbsp;&nbsp;&nbsp;&nbsp; <a
+										class="layui-btn btn-success btn_translate" data-target="en"
+										href="javascript:" role="button">翻译</a> <a
+										class="layui-btn btn-success" href="javascript:"
+										id="btn_translate_all_en" role="button">一键从英文翻译</a>
+									</label>
+									<textarea name="title_en" id="title_en" class="layui-textarea"
+										rows="2" cols="75" placeholder="产品标题">Women PU Leather Handbags Six-piece Sets Mother Package Large Capacity Weave Pattern Colored Ribbon Ladies Bag</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>关键字 不超过5行：(英语)</label>
+									<textarea name="keywords_en" id="keywords_en"
+										class="layui-textarea" rows="4" cols="75"
+										placeholder="关键字 不超过5行">Women's Handbag Shoulder Bag Top Handle Bags Satchels
+Tote Bag Cross Body Bags PU Leather Bag Messenger Bag
+Shoulder Pack Daypack Men Sling Bag Multiple Pockets Long Strap
+Large Capacity Light Weight Room Compartment</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>要点说明 不超过5行：(英语)</label>
+									<textarea name="keypoints_en" id="keypoints_en"
+										class="layui-textarea" rows="4" cols="80"
+										placeholder="要点说明 不超过5行">Trendy fashion unique design
+It has a detachable single shoulder strap that can be worn multiple ways
+Capacity: Can hold your wallet, umbrella, books, etc.
+High-quality PU material; smooth zipper; resistant to pollution; the perfect size for ladies
+Applications: Work, weekend getaways, occasional excursions, gyms, mountaineering etc. to provide personalized luggage.</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>产品描述：(英语)</label>
+									<textarea name="description_en" id="description_en"
+										class="layui-textarea" rows="6" cols="80" placeholder="产品描述">Style: women's shoulder bag
+Fabric texture: PU
+Lining texture: PU
+Bags trendy style: Nut package
+Opening way: zipper
+Popular elements: weaving
+Package internal structure: cell phone pocket, zipper pocket
+Strap root number: single
+Bag size: Medium
+pattern: plain
+Style: Ethnic style
+Processing methods: embossing
+Hardness: Medium soft
+Color: red, light gray, blue, black, pink</textarea>
+								</div>
+							</div>
+						</div>
+
+						<div class="layui-tab-item">
+							<div id="tab_lang_fr" class="tab-pane fade" role="tabpanel">
+								<div class="layui-form-item">
+									<label>产品标题：(法语)&nbsp;&nbsp;&nbsp;&nbsp; <a
+										class="layui-btn btn-success btn_translate" data-target="fr"
+										href="javascript:" role="button">翻译</a>&nbsp;&nbsp; <a
+										class="layui-btn btn-success btn_translate_en"
+										data-target="fr" href="javascript:" role="button">从英文翻译</a>
+									</label>
+									<textarea name="title_fr" id="title_fr" class="layui-textarea"
+										rows="2" cols="75" placeholder="产品标题">Femmes En Cuir PU Sacs à Main Six-pièces Ens Mère Paquet De Grande Capacité Weave Motif Coloré Ruban Sac De Dames</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>关键字 不超过5行：(法语)</label>
+									<textarea name="keywords_fr" id="keywords_fr"
+										class="layui-textarea" rows="4" cols="75"
+										placeholder="关键字 不超过5行">Sac à Main Pour Femmes Sac à Bandoulière Sacs à Poignée Supérieure Sacoches
+Sac Fourre-tout Sacs De Corps De Croix Sac En Cuir D'unité Centrale Sac De Messager
+Sac à Bandoulière Sac à Dos Sac à Bandoulière Pour Hommes Poches Multiples Longue Sangle
+Grande Capacité Poids Léger Pièce Compartiment</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>要点说明 不超过5行：(法语)</label>
+									<textarea name="keypoints_fr" id="keypoints_fr"
+										class="layui-textarea" rows="4" cols="80"
+										placeholder="要点说明 不超过5行">Mode unique à la mode
+Il a une bandoulière unique détachable qui peut être porté de plusieurs façons
+Capacité: Peut contenir votre portefeuille, votre parapluie, vos livres, etc.
+Matériau PU de haute qualité, fermeture à glissière lisse, résistant à la pollution, la taille parfaite pour les dames
+Applications: Travail, escapades de week-end, excursions occasionnelles, gymnases, alpinisme etc. pour fournir des bagages personnalisés.</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>产品描述：(法语)</label>
+									<textarea name="description_fr" id="description_fr"
+										class="layui-textarea" rows="5" cols="80" placeholder="产品描述">Style: sac à bandoulière pour femme
+Texture de tissu: PU
+Texture de doublure: PU
+Sacs à la mode style: paquet de noix
+Manière d'ouverture: fermeture à glissière
+Éléments populaires: tissage
+Structure interne du paquet: poche pour téléphone portable, poche zippée
+Strap numéro de la racine: single
+Taille du sac: moyen
+Motif: couleur unie
+Style: Style ethnique
+Méthodes de traitement: gaufrage
+Dureté: moyen doux
+Couleur: rouge, gris clair, bleu, noir, rose</textarea>
+								</div>
+							</div>
+						</div>
+
+						<div class="layui-tab-item">
+							<div id="tab_lang_de" class="tab-pane fade" role="tabpanel">
+								<div class="layui-form-item">
+									<label>产品标题：(德语)&nbsp;&nbsp;&nbsp;&nbsp; <a
+										class="layui-btn btn-success btn_translate" data-target="de"
+										href="javascript:" role="button">翻译</a>&nbsp;&nbsp; <a
+										class="layui-btn btn-success btn_translate_en"
+										data-target="de" href="javascript:" role="button">从英文翻译</a>
+									</label>
+									<textarea name="title_de" id="title_de" class="layui-textarea"
+										rows="2" cols="75" placeholder="产品标题">Frauen Pu-leder Handtaschen Sechsteilige Sätze Mutter Paket Große Kapazität Weben Muster Farbige Band Damen Tasche</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>关键字 不超过5行：(德语)</label>
+									<textarea name="keywords_de" id="keywords_de"
+										class="layui-textarea" rows="4" cols="75"
+										placeholder="关键字 不超过5行">Frauen-Handtasche Schultertasche Henkeltasche Schulranzen
+Tragetasche Umhängetasche PU-Leder-Tasche Messenger Bag
+Shoulder Pack Daypack Herren Sling Bag Mehrere Taschen Langer Riemen
+Große Kapazität Geringes Gewicht Raum Fach</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>要点说明 不超过5行：(德语)</label>
+									<textarea name="keypoints_de" id="keypoints_de"
+										class="layui-textarea" rows="4" cols="80"
+										placeholder="要点说明 不超过5行">Einzigartiger Entwurf der modischen Mode
+Es hat einen abnehmbaren einzelnen Schultergurt, der auf mehrere Arten getragen werden kann
+Kapazität: Kann Ihre Brieftasche, Regenschirm, Bücher, etc. halten
+Hochwertige PU-Material, glatte Reißverschluss, resistent gegen Verschmutzung, die perfekte Größe für Damen
+Anwendungen: Arbeit, Wochenendausflüge, gelegentliche Ausflüge, Fitnessstudios, Bergsteigen usw., um personalisiertes Gepäck zu liefern.</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>产品描述：(德语)</label>
+									<textarea name="description_de" id="description_de"
+										class="layui-textarea" rows="6" cols="80" placeholder="产品描述">Stil: Damen Schultertasche
+Gewebebeschaffenheit: PU
+Futter Textur: PU
+Taschen trendy Stil: Nuss-Paket
+Öffnungsart: Reißverschluss
+Beliebte Elemente: Weben
+Paket interne Struktur: Handytasche, Reißverschlusstasche
+Bandwurzelnummer: einzeln
+Taschengröße: Medium
+Muster: Einfarbig
+Stil: Ethnischer Stil
+Verarbeitungsmethoden: Prägung
+Härte: Mittelweich
+Farbe: rot, hellgrau, blau, schwarz, pink</textarea>
+								</div>
+							</div>
+						</div>
+
+						<div class="layui-tab-item">
+							<div id="tab_lang_it" class="tab-pane fade" role="tabpanel">
+								<div class="layui-form-item">
+									<label>产品标题：(意大利语)&nbsp;&nbsp;&nbsp;&nbsp; <a
+										class="layui-btn btn-success btn_translate" data-target="it"
+										href="javascript:" role="button">翻译</a>&nbsp;&nbsp; <a
+										class="layui-btn btn-success btn_translate_en"
+										data-target="it" href="javascript:" role="button">从英文翻译</a>
+									</label>
+									<textarea name="title_it" id="title_it" class="layui-textarea"
+										rows="2" cols="75" placeholder="产品标题">Borse In Pelle Da Donna In PU Set Da Sei Pezzi Borsa Da Donna Grande Capacità Tessere Modello Borsa Da Donna In Nastro Colorato</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>关键字 不超过5行：(意大利语)</label>
+									<textarea name="keywords_it" id="keywords_it"
+										class="layui-textarea" rows="4" cols="75"
+										placeholder="关键字 不超过5行">Borsa Da Donna Borsa A Tracolla Borse Con Manico Superiore Cartelle
+Tote Bag Cross Body Bags Borsa In Pelle PU Messenger Bag
+Shoulder Pack Daypack Borsa A Tracolla Per Uomo Tasche Multiple Cinturino Lungo
+Grande Capacità Peso Leggero Stanza Compartimento</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>要点说明 不超过5行：(意大利语)</label>
+									<textarea name="keypoints_it" id="keypoints_it"
+										class="layui-textarea" rows="4" cols="80"
+										placeholder="要点说明 不超过5行">Design unico alla moda alla moda
+Ha una tracolla singola staccabile che può essere indossata in più modi
+Capacità: può contenere portafoglio, ombrello, libri, ecc.
+Materiale in PU di alta qualità, cerniera liscia, resistente all'inquinamento, la taglia perfetta per le donne
+Applicazioni: lavoro, fughe del fine settimana, escursioni occasionali, palestre, alpinismo ecc. Per fornire bagagli personalizzati.</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>产品描述：(意大利语)</label>
+									<textarea name="description_it" id="description_it"
+										class="layui-textarea" rows="5" cols="80" placeholder="产品描述">Stile: borsa a tracolla da donna
+Tessitura del tessuto: PU
+Fodera interna: PU
+Borse stile alla moda: pacchetto Nut
+Modo di apertura: cerniera
+Elementi popolari: tessitura
+Struttura interna del pacchetto: tasca per cellulare, tasca con cerniera
+Numero della radice della cinghia: singolo
+Dimensione della borsa: media
+Modello: tinta unita
+Stile: stile etnico
+Metodi di elaborazione: goffratura
+Durezza: mediamente morbida
+Colore: rosso, grigio chiaro, blu, nero, rosa</textarea>
+								</div>
+							</div>
+						</div>
+
+						<div class="layui-tab-item">
+							<div id="tab_lang_es" class="tab-pane fade" role="tabpanel">
+								<div class="layui-form-item">
+									<label>产品标题：(西班牙语)&nbsp;&nbsp;&nbsp;&nbsp; <a
+										class="layui-btn btn-success btn_translate" data-target="es"
+										href="javascript:" role="button">翻译</a>&nbsp;&nbsp; <a
+										class="layui-btn btn-success btn_translate_en"
+										data-target="es" href="javascript:" role="button">从英文翻译</a>
+									</label>
+									<textarea name="title_es" id="title_es" class="layui-textarea"
+										rows="2" cols="75" placeholder="产品标题">Bolsos De Cuero De La PU De Las Mujeres Conjuntos De Seis Piezas Paquete De La Madre De Gran Capacidad Armadura Patrón Coloreado Señoras De La Cinta Bolsa</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>关键字 不超过5行：(西班牙语)</label>
+									<textarea name="keywords_es" id="keywords_es"
+										class="layui-textarea" rows="4" cols="75"
+										placeholder="关键字 不超过5行">Bolso De La Mujer Bolso De Hombro Bolsos Superiores De La Manija Bolsos
+La Bolsa De Asas Bolsas Cruzadas Del Cuerpo Bolso De Cuero De La PU Bolso Del Mensajero
+Paquete De Hombro Mochila Bolso Honda Para Hombres Bolsillos Múltiples Correa Larga
+Gran Capacidad Peso Ligero Habitación Compartimento</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>要点说明 不超过5行：(西班牙语)</label>
+									<textarea name="keypoints_es" id="keypoints_es"
+										class="layui-textarea" rows="4" cols="80"
+										placeholder="要点说明 不超过5行">Diseño único de moda
+Tiene una correa de hombro individual desmontable que se puede usar de múltiples maneras
+Capacidad: puede contener su billetera, paraguas, libros, etc.
+Material PU de alta calidad, cremallera lisa, resistente a la contaminación, el tamaño perfecto para damas
+Aplicaciones: trabajo, escapadas de fin de semana, excursiones ocasionales, gimnasios, montañismo, etc. para proporcionar equipaje personalizado.</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>产品描述：(西班牙语)</label>
+									<textarea name="description_es" id="description_es"
+										class="layui-textarea" rows="5" cols="80" placeholder="产品描述">Estilo: bolso de hombro de las mujeres
+Textura de la tela: PU
+Textura de la guarnición: PU
+Bolsos estilo de moda: paquete de tuerca
+Forma de apertura: cremallera
+Elementos populares: tejido
+Estructura interna del paquete: bolsillo del teléfono celular, bolsillo con cremallera
+Número de raíz de la correa: solo
+Tamaño de la bolsa: medio
+Patrón: color sólido
+Estilo: estilo étnico
+Métodos de procesamiento: relieve
+Dureza: medio suave
+Color: rojo, gris claro, azul, negro, rosa</textarea>
+								</div>
+							</div>
+						</div>
+
+						<div class="layui-tab-item">
+							<div id="tab_lang_ja" class="tab-pane fade" role="tabpanel">
+								<div class="layui-form-item">
+									<label>产品标题：(日语)&nbsp;&nbsp;&nbsp;&nbsp; <a
+										class="layui-btn btn-success btn_translate" data-target="ja"
+										href="javascript:" role="button">翻译</a>&nbsp;&nbsp; <a
+										class="layui-btn btn-success btn_translate_en"
+										data-target="ja" href="javascript:" role="button">从英文翻译</a>
+									</label>
+									<textarea name="title_ja" id="title_ja" class="layui-textarea"
+										rows="2" cols="75" placeholder="产品标题">レディースPUレザーハンドバッグ6ピースセットマザーパッケージ大容量織りパターンカラーリボンレディースバッグ</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>关键字 不超过5行：(日语)</label>
+									<textarea name="keywords_ja" id="keywords_ja"
+										class="layui-textarea" rows="4" cols="75"
+										placeholder="关键字 不超过5行">レディースハンドバッグ、ショルダーバッグ、トップハンドルバッグ、サッチェル
+トートバッグ、クロスボディバッグ、PUレザーバッグ、メッセンジャーバッグ
+ショルダーパック、デイパック、男性スリングバッグ、マルチポケット、ロングストラップ
+大容量、軽量、部屋、コンパートメント</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>要点说明 不超过5行：(日语)</label>
+									<textarea name="keypoints_ja" id="keypoints_ja"
+										class="layui-textarea" rows="4" cols="80"
+										placeholder="要点说明 不超过5行">トレンディなファッションのユニークなデザイン
+それは複数の方法で着用することができる取り外し可能なシングルショルダーストラップを持っています
+能力：財布、傘、書籍などを持ち込むことができます。
+高品質のPU素材、滑らかなジッパー、汚染に強い、女性のための完璧なサイズ
+アプリケーション：パーソナライズされた荷物を提供するために、仕事、週末旅行、時折の遠足、ジム、登山など。</textarea>
+								</div>
+								<div class="layui-form-item">
+									<label>产品描述：(日语)</label>
+									<textarea name="description_ja" id="description_ja"
+										class="layui-textarea" rows="5" cols="80" placeholder="产品描述">スタイル：女性のショルダーバッグ
+ファブリックテクスチャ：PU
+ライニングテクスチャ：PU
+バッグトレンディなスタイル：ナットパッケージ
+オープニングウェイ：ジッパー
+人気の要素：製織
+パッケージ内部構造：携帯電話ポケット、ファスナーポケット
+ストラップルート番号：シングル
+バッグサイズ：中
+パターン：無地
+スタイル：エスニックスタイル
+加工方法：エンボス加工
+硬度：中程度の柔らかさ
+カラー：レッド、ライトグレー、ブルー、ブラック、ピンク</textarea>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<div class="layui-inline">
+			<label class="layui-form-label">原始规格</label>
+			</div>
+			<div class="layui-inline">
+				价格方式：<strong></strong><br> 价格：81.00 <br> 变体参数：<br>
+							&nbsp;&nbsp;<strong>颜色</strong>:&nbsp;&nbsp;<a
+							class="layui-btn layui-btn-primary" style="margin: 5px;">红色</a>&nbsp;&nbsp;<a
+							class="layui-btn layui-btn-primary" style="margin: 5px;">浅灰色</a>&nbsp;&nbsp;<a
+							class="layui-btn layui-btn-primary" style="margin: 5px;">蓝色</a>&nbsp;&nbsp;<a
+							class="layui-btn layui-btn-primary" style="margin: 5px;">黑色</a>&nbsp;&nbsp;<a
+							class="layui-btn layui-btn-primary" style="margin: 5px;">粉红色</a>&nbsp;&nbsp;<br>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label">规格变体</label>
+			<hr class="layui-bg-green"/>
+			<div class="layui-input-block">
+				<div class="layui-container">
+					<div class="layui-row">
+						<div id="sku_type" data-sku="" class="layui-col-md22">
+							<span>变体参数(点击编辑)：</span>
+							<ul>
+								<li><span class="sku_text">Color</span><span
+									class="close bt_del_skutype">x</span></li>
+								<li><span class="sku_text">SizeName</span><span
+									class="close bt_del_skutype">x</span></li>
+							</ul>
+							<button type="button" class="layui-btn btn-primary"
+								id="skuModalLabel">添加</button>
+							<div class="clear"></div>
+						</div>
+
+						<div id="sku_type_detail">
+							<div class="detial_item">
+								<span class="detial_title">Color</span>
+								<ul class="detial_values">
+									<li>Red</li>
+									<li>LightGray</li>
+									<li>Blue</li>
+									<li>Black</li>
+									<li>Pink</li>
+								</ul>
+								<div class="clear"></div>
+							</div>
+							<div class="detial_item">
+								<span class="detial_title">SizeName</span>
+								<ul class="detial_values">
+									<li>OneSize</li>
+								</ul>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-row">
+						<table class="table-condensed table-bordered" id="sku_map">
+                            <thead>
+                            <tr><th>序号</th><th>变体组合</th><th>SKU修正</th><th>加价(人民币)</th><th>库存</th><th>UPC/EAN</th><th>操作</th><th>选择图片</th><th>已选图片</th></tr>
+                            </thead>
+							<tbody id="sku_body">
+								<tr>
+									<td class="map_index">1</td>
+									<td class="map_title">Red-OneSize</td>
+									<td><input type="text"
+										class="layui-input input-sm sku_id_ext" size="6" value=""></td>
+									<td><input type="text"
+										class="layui-input input-sm add_money" size="6" value=""></td>
+									<td><input type="text" class="layui-input input-sm stock"
+										size="6" value=""></td>
+									<td><input type="text"
+										class="layui-input input-sm upc_value" size="12" value=""></td>
+									<td><a class="layui-btn btn-default bt_sku_del">删除</a></td>
+									<td><a class="img_list2 layui-btn btn-default"
+										href="javascript:">选择图片</a></td>
+									<td><ul class="img_list1">
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/5507840.jpg@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/5507840.jpg"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511763206_13995.jpg@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511763206_13995.jpg"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511763000_34222.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511763000_34222.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762997_16947.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762997_16947.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762999_61758.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762999_61758.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762995_46708.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762995_46708.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762995_14880.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762995_14880.png"></li>
+										</ul></td>
+								</tr>
+								<tr>
+									<td class="map_index">2</td>
+									<td class="map_title">LightGray-OneSize</td>
+									<td><input type="text"
+										class="layui-input input-sm sku_id_ext" size="6" value=""></td>
+									<td><input type="text"
+										class="layui-input input-sm add_money" size="6" value=""></td>
+									<td><input type="text" class="layui-input input-sm stock"
+										size="6" value=""></td>
+									<td><input type="text"
+										class="layui-input input-sm upc_value" size="12" value=""></td>
+									<td><a class="layui-btn btn-default bt_sku_del">删除</a></td>
+									<td><a class="img_list2 layui-btn btn-default"
+										href="javascript:">选择图片</a></td>
+									<td><ul class="img_list1">
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/5507839.jpg@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/5507839.jpg"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511763206_13995.jpg@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511763206_13995.jpg"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511763000_34222.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511763000_34222.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762997_16947.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762997_16947.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762996_64307.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762996_64307.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762995_46708.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762995_46708.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762995_14880.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762995_14880.png"></li>
+										</ul></td>
+								</tr>
+								<tr>
+									<td class="map_index">3</td>
+									<td class="map_title">Blue-OneSize</td>
+									<td><input type="text"
+										class="layui-input input-sm sku_id_ext" size="6" value=""></td>
+									<td><input type="text"
+										class="layui-input input-sm add_money" size="6" value=""></td>
+									<td><input type="text" class="layui-input input-sm stock"
+										size="6" value=""></td>
+									<td><input type="text"
+										class="layui-input input-sm upc_value" size="12" value=""></td>
+									<td><a class="layui-btn btn-default bt_sku_del">删除</a></td>
+									<td><a class="img_list2 layui-btn btn-default"
+										href="javascript:">选择图片</a></td>
+									<td><ul class="img_list1">
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/5507838.jpg@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/5507838.jpg"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511763206_13995.jpg@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511763206_13995.jpg"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511763000_34222.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511763000_34222.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762997_16947.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762997_16947.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762999_61758.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762999_61758.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762995_46708.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762995_46708.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762995_14880.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762995_14880.png"></li>
+										</ul></td>
+								</tr>
+								<tr>
+									<td class="map_index">4</td>
+									<td class="map_title">Black-OneSize</td>
+									<td><input type="text"
+										class="layui-input input-sm sku_id_ext" size="6" value=""></td>
+									<td><input type="text"
+										class="layui-input input-sm add_money" size="6" value=""></td>
+									<td><input type="text" class="layui-input input-sm stock"
+										size="6" value=""></td>
+									<td><input type="text"
+										class="layui-input input-sm upc_value" size="12" value=""></td>
+									<td><a class="layui-btn btn-default bt_sku_del">删除</a></td>
+									<td><a class="img_list2 layui-btn btn-default"
+										href="javascript:">选择图片</a></td>
+									<td><ul class="img_list1">
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/5507842.jpg@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/5507842.jpg"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511763206_13995.jpg@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511763206_13995.jpg"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511763000_34222.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511763000_34222.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762997_16947.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762997_16947.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762996_64307.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762996_64307.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762995_46708.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762995_46708.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762995_14880.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762995_14880.png"></li>
+										</ul></td>
+								</tr>
+								<tr>
+									<td class="map_index">5</td>
+									<td class="map_title">Pink-OneSize</td>
+									<td><input type="text"
+										class="layui-input input-sm sku_id_ext" size="6" value=""></td>
+									<td><input type="text"
+										class="layui-input input-sm add_money" size="6" value=""></td>
+									<td><input type="text" class="layui-input input-sm stock"
+										size="6" value=""></td>
+									<td><input type="text"
+										class="layui-input input-sm upc_value" size="12" value=""></td>
+									<td><a class="layui-btn btn-default bt_sku_del">删除</a></td>
+									<td><a class="img_list2 layui-btn btn-default"
+										href="javascript:">选择图片</a></td>
+									<td><ul class="img_list1">
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/5507837.jpg@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/5507837.jpg"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511763206_13995.jpg@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511763206_13995.jpg"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511763000_34222.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511763000_34222.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762997_16947.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762997_16947.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762999_61758.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762999_61758.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762995_46708.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762995_46708.png"></li>
+											<li><img
+												src="http://1ju.img-cn-hongkong.aliyuncs.com/2017/1122/842151/1511762995_14880.png@0o_0l_200w_90q.src"
+												data-url="2017/1122/842151/1511762995_14880.png"></li>
+										</ul></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="layui-form-item">
+			<label class="layui-form-label">开关</label>
+			<div class="layui-input-block">
+				<input type="checkbox" name="switch" lay-skin="switch">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			</div>
+		</div>
+	</form>
+	<script>
+		layui.use('form', function() {
+			var form = layui.form;
+
+			//监听提交
+			form.on('submit(formDemo)', function(data) {
+				layer.msg(JSON.stringify(data.field));
+				return false;
+			});
+		});
+	</script>
+
+</body>
+</html>

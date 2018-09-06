@@ -1,0 +1,241 @@
+ <script id="order-item-template" type="text/x-handlebars-template">
+	<tbody id="row_{{id}}">
+		<tr><td colspan="20" class="sep-row"></td></tr>
+		<tr>
+			<th colspan="20">
+				<span class="ml10">订单编号：<em>{{ordeNo}}</em><i class="icon-mobile-phone"></i></span>
+				<span>下单时间：<em class="goods-time">{{createTime}}</em></span>
+			</th>
+		</tr>
+		<tr>
+			<td class="bdl"></td>
+			<td class="w120">
+				<div class="ncsc-goods-thumb">
+					<img src="./images/16_1_60.jpg">
+				</div>
+			</td>
+			<td class="tl" style="width: 45%">
+				<dl class="goods-name">
+					<dt style="color:#333;">{{goodsName}}</dt>
+				</dl>
+			</td>
+			<td><p>0.01</p></td>
+			<td>x 1</td>
+			<td class="bdl" rowspan="1">
+				<div class="buyer">{{buyer}}
+				  <p member_id="100003"></p>
+				  <div class="buyer-info">
+				  <em></em>
+				  <div class="con">
+					<h3><i></i><span>联系信息</span></h3>
+					<dl>
+						<dt>姓名：</dt>
+						<dd>{{cutomerName}}</dd>
+					</dl>
+					<dl>
+						<dt>电话：</dt>
+						<dd>{{phone}}</dd>
+					</dl>
+					<dl>
+						<dt>地址：</dt>
+						<dd>{{address}}</dd>
+					</dl>
+				  </div>
+                  </div>
+                 </div>
+             </td>
+             <td class="bdl bdr" rowspan="1">
+               <p class="ncsc-order-amount">0.01</p>
+               <p class="goods-pay" title="支付方式：货到付款" style="color:orange">{{payStlye}}</p>
+             </td>
+             <td class="w60 bdr" rowspan="1">1</td>
+             <td class="w60 bdr" rowspan="1">0</td>
+             <td class="bdl bdr" rowspan="1">
+                <p style="color: red ">未付款</p>
+                <p><a href="javascript:;">订单详情</a></p>
+                <p style="color: orange ">已超时</p>
+             </td>
+             <td class="w60 bdr" rowspan="1"> --- </td>
+             <td class="bdl bdr" rowspan="1">
+               <p><a href="javascript:void(0)" class="ncbtn-mini mt5 ajax-get" onclick="cancle('4460')">取消订单</a></p>
+               <p style="padding-top: 5px;"><a href="javascript:void(0)" class="ncbtn-mini ncbtn-bluejeansjeans mt10" onclick="send('4460','6')">派送订单</a></p>
+             </td>
+		</tr>
+	</tbody>
+</script>
+
+ <div id="main" class="main" style="min-height: 685px;">
+	<div id="top-alert" class="fixed alert alert-error" style="display: none;">
+	    <button class="close fixed" style="margin-top: 4px;">×</button>
+	    <div class="alert-content">这是内容</div>
+	</div>
+	<!-- 标题栏 -->
+    <div class="main-title">
+        <h2>订单列表 [ <span style="color: red">全部 </span> ]</h2>
+    </div>
+    <div class="cf">
+        <div class="fl">
+            <a class="btn" href="https://www.qudingshui.com/center/single/order?type=1">超  时</a>
+            <a class="btn" href="https://www.qudingshui.com/center/single/order?type=3">待接单</a>
+            <a class="btn" href="https://www.qudingshui.com/center/single/order?type=4">配送中</a>
+            <a class="btn" href="https://www.qudingshui.com/center/single/order?type=5">已完成</a>
+            <a class="btn" href="https://www.qudingshui.com/center/single/order?type=2">未付款</a>
+        </div>
+        <!-- 高级搜索 -->
+        <div class="search-form fr cf">
+            <div class="sleft">
+                <input type="text" name="keyword" class="search-input" value="" placeholder="请输入订单号">
+                <a class="sch-btn" href="javascript:;" id="search" url="https://www.qudingshui.com/center/single/order"><i class="btn-search"></i></a>
+            </div>
+            <div class="btn-group-click adv-sch-pannel fr">
+                <button class="btn">高 级<i class="btn-arrowdown"></i></button>
+                <div class="dropdown cf" style="display: none;">
+                    <div class="row">
+                        <label>下单时间：</label>
+                        <input type="text" id="time-start" name="time-start" class="text input-2x" value="" placeholder="起始时间"> -
+                        <input type="text" id="time-end" name="time-end" class="text input-2x" value="" placeholder="结束时间">
+                    </div>
+                    <div class="row">
+                        <label>买家：</label>
+                        <input type="text" name="buyer_name" class="text input-2x" value="" placeholder="请输入买家姓名">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 数据列表 -->
+    <div class="data-table table-striped">
+        <table id="order_list" class="ncsc-default-table order">
+            <thead>
+            <tr>
+                <th class="w10"></th>
+                <th colspan="2">商品</th>
+                <th class="w100">单价（元）</th>
+                <th class="w40">数量</th>
+                <th class="w100">买家</th>
+                <th class="w100">订单金额</th>
+                <th class="w40">订水数量</th>
+                <th class="w40">回桶数量</th>
+                <th class="w90">交易状态</th>
+                <th class="w40">配送员</th>
+                <th class="w120">交易操作</th>
+            </tr>
+            </thead>
+		</table>
+    </div>
+    <div class="page">
+                    <div>
+                <a class="first" href="https://www.qudingshui.com/center/single/order?page=1&amp;type=0">首页</a>
+                <span class="current">1</span>
+                  <a class="num" href="https://www.qudingshui.com/center/single/order?page=2&amp;type=0">2</a>
+                  <a class="num" href="https://www.qudingshui.com/center/single/order?page=3&amp;type=0">3</a>
+                  <a class="num" href="https://www.qudingshui.com/center/single/order?page=4&amp;type=0">4</a>
+                  <a class="num" href="https://www.qudingshui.com/center/single/order?page=5&amp;type=0">5</a>
+                  <a class="num" href="https://www.qudingshui.com/center/single/order?page=6&amp;type=0">6</a>
+                  <a class="num" href="https://www.qudingshui.com/center/single/order?page=7&amp;type=0">7</a>
+                  <a class="num" href="https://www.qudingshui.com/center/single/order?page=8&amp;type=0">8</a>
+                  <a class="num" href="https://www.qudingshui.com/center/single/order?page=9&amp;type=0">9</a>
+                  <a class="num" href="https://www.qudingshui.com/center/single/order?page=10&amp;type=0">10</a>
+                  <a class="next" href="https://www.qudingshui.com/center/single/order?page=2&amp;type=0">&gt;&gt;</a>
+                                <a class="last" href="https://www.qudingshui.com/center/single/order?page=27&amp;type=0">末页</a>
+                <span class="rows">共 264 条记录</span>
+            </div>
+            </div>
+    </div>
+
+ <script type="text/javascript">
+	 function cancle(id) {
+	     layer.open({
+	         type: 2,
+	         title:'取消订单',
+	         area: ['600px', '200px'],
+	         fixed: false, //不固定
+	         maxmin: true,
+	         content: 'https://www.qudingshui.com/center/single/order-cancle?id='+id
+	     });
+	 }
+	
+	 function send(id,shop_id) {
+	     layer.open({
+	         type: 2,
+	         title:'派送订单',
+	         area: ['400px', '150px'],
+	         fixed: false, //不固定
+	         maxmin: true,
+	         content: '/static/order-send.html'
+	     });
+	 }
+	
+	 function resend(id,shop_id) {
+	     layer.open({
+	         type: 2,
+	         title:'改派订单',
+	         area: ['400px', '150px'],
+	         fixed: false, //不固定
+	         maxmin: true,
+	         content: 'https://www.qudingshui.com/center/single/order-send?id='+id+'&shop_id='+shop_id
+	     });
+	 }
+	
+	 //搜索功能
+	 $("#search").click(function(){
+	     var url = $(this).attr('url');
+	     var shop_id = $("#sch-sort-txt").attr("data");
+	     var query  = $('.search-form').find('input').serialize();
+	     query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+	     query = query.replace(/^&/g,'');
+	     if(shop_id != ''){
+	         query = 'shop_id=' + shop_id + "&" + query;
+	     }
+	     if( url.indexOf('?')>0 ){
+	         url += '&' + query;
+	     }else{
+	         url += '?' + query;
+	     }
+	     window.location.href = url;
+	 });
+	
+	 /* 状态搜索子菜单 */
+	 $(".search-form").find(".drop-down").hover(function(){
+	     $("#sub-sch-menu").removeClass("hidden");
+	 },function(){
+	     $("#sub-sch-menu").addClass("hidden");
+	 });
+	 $("#sub-sch-menu li").find("a").each(function(){
+	     $(this).click(function(){
+	         var text = $(this).text();
+	         $("#sch-sort-txt").text(text).attr("data",$(this).attr("value"));
+	         $("#sub-sch-menu").addClass("hidden");
+	         var shop_id = $(this).attr("value");
+	         if (shop_id) {
+	             window.location.href = 'https://www.qudingshui.com/center/single/order?shop_id=' + shop_id;
+	             return;
+	         }
+	         window.location.href = 'https://www.qudingshui.com/center/single/order';
+	     })
+	 });
+	 //回车自动提交
+	 $('.search-form').find('input').keyup(function(event){
+	     if(event.keyCode===13){
+	         $("#search").click();
+	     }
+	 });
+	
+	 $('#time-start').datetimepicker({
+	     format: 'yyyy-mm-dd',
+	     language:"zh-CN",
+	     minView:2,
+	     autoclose:true
+	 });
+	
+	 $('#time-end').datetimepicker({
+	     format: 'yyyy-mm-dd',
+	     language:"zh-CN",
+	     minView:2,
+	     autoclose:true
+	 });
+ 
+ 	 var compiled = Handlebars.compile($('#order-item-template').html());
+ 	 var html = compiled({})
+     $("#order_list").append(html)
+ </script>
