@@ -8,16 +8,19 @@
     <result column="delete_time" property="deleteTime" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="INTEGER" />
   </resultMap>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from image
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
   <insert id="insert" parameterType="com.xlw.zerg.model.Image" >
     insert into image (id, url, from, 
       delete_time, update_time)
     values (#{id,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{from,jdbcType=TINYINT}, 
       #{deleteTime,jdbcType=INTEGER}, #{updateTime,jdbcType=INTEGER})
   </insert>
+  
   <update id="updateByPrimaryKey" parameterType="com.xlw.zerg.model.Image" >
     update image
     set url = #{url,jdbcType=VARCHAR},
@@ -26,13 +29,16 @@
       update_time = #{updateTime,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select id, url, from, delete_time, update_time
     from image
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, url, from, delete_time, update_time
     from image
   </select>
+  
 </mapper>

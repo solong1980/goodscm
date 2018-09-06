@@ -74,9 +74,24 @@
 	</select>
 	
 	<select id="selectByCategoryIdPaginate" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-		select id, name, price, stock, delete_time, category_id, main_img_url, `from`, create_time,
-			update_time, summary, img_id
-		from product
+		select 
+			p.id, 
+			name, 
+			price, 
+			stock, 
+			p.delete_time, 
+			category_id, 
+			main_img_url, 
+			p.`from`, 
+			p.create_time,
+			p.update_time, 
+			summary, 
+			img_id,
+			url, 
+	        i.`from` as image_from, 
+	        i.delete_time as image_delete_time,
+	        i.update_time as image_update_time
+		from product p left join image i on p.img_id=i.id
 			where category_id = #{catId,jdbcType=INTEGER}
 	</select>
 	
@@ -98,13 +113,13 @@
 		stock, 
 		p.delete_time, 
 		category_id, 
-		concat('https://www.bdkaierliang.com/images',main_img_url) as main_img_url, 
+		main_img_url, 
 		p.`from`, 
 		p.create_time,
 		p.update_time, 
 		summary, 
 		img_id,
-		concat('https://www.bdkaierliang.com/images',url) as url, 
+		url, 
         i.`from` as image_from, 
         i.delete_time as image_delete_time,
         i.update_time as image_update_time

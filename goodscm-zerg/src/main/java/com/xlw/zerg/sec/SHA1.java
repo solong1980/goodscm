@@ -1,4 +1,4 @@
-package com.xlw.zerg;
+package com.xlw.zerg.sec;
 
 import java.security.MessageDigest;
 import java.util.Arrays;

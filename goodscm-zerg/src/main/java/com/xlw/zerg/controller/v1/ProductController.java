@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xlw.zerg.model.Product;
 import com.xlw.zerg.service.ProductService;
 
 @RestController
-@RequestMapping("/zerg/public/v1/product")
+@RequestMapping("/zerg/public/api/v1/product")
 public class ProductController {
 
 	@Autowired
@@ -39,8 +40,8 @@ public class ProductController {
 		return productService.productRecent(pageName);
 	}
 
-	@RequestMapping(value = "/by_category/{catId}", method = RequestMethod.GET)
-	public List<Product> getByCategory(@PathVariable("catId") Integer catId) {
+	@RequestMapping(value = "/by_category", method = RequestMethod.GET)
+	public List<Product> getByCategory(@RequestParam("id") Integer catId) {
 		return productService.getByCategory(catId);
 	}
 

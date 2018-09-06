@@ -65,7 +65,7 @@
      banner_item.delete_time, 
      banner_id, 
      banner_item.update_time, 
-     concat('https://www.bdkaierliang.com/images',url) as url, 
+     url, 
      `from`, 
      image.delete_time as image_delete_time,
      image.update_time as image_update_time

@@ -20,7 +20,7 @@ public class Image {
     }
 
     public String getUrl() {
-        return url;
+        return "https://www.bdkaierliang.com/images"+url;
     }
 
     public void setUrl(String url) {

@@ -21,4 +21,6 @@ public interface OrderMapper {
 	int updatePrePayIdByPrimaryKey(Order record);
 
 	void updateStatus(@Param("orderId") Integer orderId, @Param("status") Integer status);
+
+	List<Order> selectByUserId(@Param("userId") Integer userId, @Param("start") Integer start, @Param("pageCount") Integer pageCount);
 }

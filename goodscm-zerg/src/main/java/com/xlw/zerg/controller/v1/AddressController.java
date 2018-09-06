@@ -13,7 +13,7 @@ import com.xlw.zerg.model.UserAddress;
 import com.xlw.zerg.service.UserService;
 
 @RestController
-@RequestMapping("/zerg/public/v1/address")
+@RequestMapping("/zerg/public/api/v1/address")
 public class AddressController {
 
 	@Autowired
@@ -24,12 +24,12 @@ public class AddressController {
 	 * 
 	 * @return array
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<UserAddress> getUserAddress(@RequestHeader("token") String token) {
 		return userService.getUserAddress(token);
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public String createOrUpdateAddress(@RequestBody UserAddress userAddress) {
 		return userService.createOrUpdateAddress(userAddress);
 	}

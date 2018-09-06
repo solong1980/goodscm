@@ -19,8 +19,6 @@ import com.github.wxpay.sdk.WXPayConfig;
 import com.github.wxpay.sdk.WXPayUtil;
 import com.xlw.goodscm.utils.JsonUtilTool;
 import com.xlw.zerg.OrderStatusEnum;
-import com.xlw.zerg.WxSetting;
-import com.xlw.zerg.ZergWXPayConfig;
 import com.xlw.zerg.dao.OrderMapper;
 import com.xlw.zerg.dao.OrderProductMapper;
 import com.xlw.zerg.model.Order;
@@ -32,6 +30,8 @@ import com.xlw.zerg.vo.OrderStatus;
 import com.xlw.zerg.vo.ProductSnap;
 import com.xlw.zerg.vo.ProductStatus;
 import com.xlw.zerg.vo.WxUnifiedOrder;
+import com.xlw.zerg.wx.WXZergPayConfig;
+import com.xlw.zerg.wx.WxSetting;
 
 @Service
 public class OrderService extends ZergService {
@@ -84,9 +84,9 @@ public class OrderService extends ZergService {
 	}
 
 	private OrderSnap createOrderByTrans(Integer uid, List<OrderProduct> orderProducts, OrderSnap orderSnap) {
-		//订单号
+		// 订单号
 		String orderNo = makeOrderNo();
-		
+
 		Order order = new Order();
 		order.setOrderNo(orderNo);
 		order.setUserId(uid);
@@ -210,13 +210,13 @@ public class OrderService extends ZergService {
 		}
 		Integer uid = getCurUserId(token);
 		User user = userService.getUser(uid);
-		
+
 		String openid = (user == null) ? null : user.getOpenid();
 		if (StringUtils.isEmpty(openid)) {
 			throw new InvalidParameterException("no openid");
 		}
 
-		WXPayConfig wxPayConfig = new ZergWXPayConfig();
+		WXPayConfig wxPayConfig = new WXZergPayConfig();
 		WXPay wxOrderData = new WXPay(wxPayConfig);
 		Map<String, String> unifiedOrder = wxOrderData.unifiedOrder(new HashMap<String, String>() {
 			private static final long serialVersionUID = 1L;
@@ -292,6 +292,14 @@ public class OrderService extends ZergService {
 	}
 
 	public void orderDelivery(Order order) {
+	}
+
+	public List<Order> userOrders(String token, Integer pageNo, Integer pageCount) {
+		Integer userId = getCurUserId(token);
+		if (userId == null) {
+			throw new InvalidParameterException("no user");
+		}
+		return orderMapper.selectByUserId(userId, pageNo * pageCount,pageCount);
 	}
 
 }

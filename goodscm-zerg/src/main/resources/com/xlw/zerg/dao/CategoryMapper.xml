@@ -8,11 +8,22 @@
     <result column="delete_time" property="deleteTime" jdbcType="INTEGER" />
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="update_time" property="updateTime" jdbcType="INTEGER" />
+    
+    <association property="topicImage" javaType="com.xlw.zerg.model.Image">
+		<id column="topic_img_id" property="id" />
+		<result column="url" property="url" />
+		<result column="image_from" property="from" />
+		<result column="image_delete_time" property="deleteTime" />
+		<result column="image_update_time" property="updateTime" />
+	</association>
+    
   </resultMap>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from category
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
   <insert id="insert" parameterType="com.xlw.zerg.model.Category" >
     insert into category (id, name, topic_img_id, 
       delete_time, description, update_time
@@ -21,6 +32,7 @@
       #{deleteTime,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{updateTime,jdbcType=INTEGER}
       )
   </insert>
+  
   <update id="updateByPrimaryKey" parameterType="com.xlw.zerg.model.Category" >
     update category
     set name = #{name,jdbcType=VARCHAR},
@@ -30,13 +42,36 @@
       update_time = #{updateTime,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, name, topic_img_id, delete_time, description, update_time
-    from category
-    where id = #{id,jdbcType=INTEGER}
+    select c.id, 
+    	name, 
+    	topic_img_id, 
+	    c.delete_time, 
+	    description, 
+	    c.update_time
+	    url, 
+	    i.`from` as image_from, 
+	    i.delete_time as image_delete_time,
+	    i.update_time as image_update_time
+	    from category c left join image i
+	    on c.topic_img_id = i.id 
+	where id = #{id,jdbcType=INTEGER}
   </select>
+  
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, name, topic_img_id, delete_time, description, update_time
-    from category
+    select 
+    	c.id, 
+    	name, 
+    	topic_img_id, 
+	    c.delete_time, 
+	    description, 
+	    c.update_time,
+	    url, 
+	    i.`from` as image_from, 
+	    i.delete_time as image_delete_time,
+	    i.update_time as image_update_time
+    from category c left join image i
+	    on c.topic_img_id = i.id
   </select>
 </mapper>

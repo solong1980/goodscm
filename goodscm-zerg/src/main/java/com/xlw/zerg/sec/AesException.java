@@ -1,4 +1,4 @@
-package com.xlw.zerg;
+package com.xlw.zerg.sec;
 
 @SuppressWarnings("serial")
 public class AesException extends Exception {

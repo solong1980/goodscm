@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.alibaba.fastjson.JSONObject;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.xlw.goodscm.utils.JsonUtilTool;
-import com.xlw.zerg.WxSetting;
 import com.xlw.zerg.dao.UserMapper;
 import com.xlw.zerg.model.User;
+import com.xlw.zerg.wx.WxSetting;
 
 @Service
 public class TokenService extends ZergService {

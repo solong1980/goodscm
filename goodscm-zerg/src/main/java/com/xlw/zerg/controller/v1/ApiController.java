@@ -13,7 +13,7 @@ import com.xlw.zerg.model.Theme;
 import com.xlw.zerg.service.FrontEndService;
 
 @RestController
-@RequestMapping("/zerg/public/v1")
+@RequestMapping("/zerg/public/api/v1")
 public class ApiController {
 
 	@Autowired

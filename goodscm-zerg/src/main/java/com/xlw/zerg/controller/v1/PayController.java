@@ -14,7 +14,7 @@ import com.xlw.zerg.service.WxCallbackService;
 import com.xlw.zerg.vo.OrderStatus;
 
 @RestController
-@RequestMapping("/zerg/public/v1/pay")
+@RequestMapping("/zerg/public/api/v1/pay")
 public class PayController {
 
 	@Autowired

@@ -6,12 +6,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.wxpay.sdk.WXPayConstants;
 import com.github.wxpay.sdk.WXPayUtil;
-import com.xlw.zerg.WxSetting;
 import com.xlw.zerg.model.Order;
 import com.xlw.zerg.vo.OrderStatus;
+import com.xlw.zerg.wx.WxSetting;
 
 @Service
 public class WxCallbackService extends ZergService {

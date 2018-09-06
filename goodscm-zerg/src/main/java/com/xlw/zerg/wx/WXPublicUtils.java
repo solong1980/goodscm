@@ -1,9 +1,11 @@
-package com.xlw.zerg;
+package com.xlw.zerg.wx;
 
 import java.util.Random;
 
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
+import com.xlw.zerg.sec.AesException;
+import com.xlw.zerg.sec.SHA1;
 
 public class WXPublicUtils {
 

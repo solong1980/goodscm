@@ -1,4 +1,4 @@
-package com.xlw.zerg;
+package com.xlw.zerg.wx;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -7,10 +7,10 @@ import java.io.InputStream;
 
 import com.github.wxpay.sdk.WXPayConfig;
 
-public class ZergWXPayConfig implements WXPayConfig {
+public class WXZergPayConfig implements WXPayConfig {
 	private byte[] certData;
 
-	public ZergWXPayConfig() throws Exception {
+	public WXZergPayConfig() throws Exception {
 		String certPath = "/path/to/apiclient_cert.p12";
 		File file = new File(certPath);
 		InputStream certStream = new FileInputStream(file);

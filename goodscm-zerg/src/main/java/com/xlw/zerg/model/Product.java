@@ -86,7 +86,7 @@ public class Product {
     }
 
     public String getMainImgUrl() {
-        return mainImgUrl;
+        return "https://www.bdkaierliang.com/images"+mainImgUrl;
     }
 
     public void setMainImgUrl(String mainImgUrl) {

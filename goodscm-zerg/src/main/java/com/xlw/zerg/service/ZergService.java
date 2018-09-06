@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.cache.Cache;
 import com.xlw.goodscm.utils.JsonUtilTool;
-import com.xlw.zerg.WXPublicUtils;
+import com.xlw.zerg.wx.WXPublicUtils;
 
 public class ZergService {
 

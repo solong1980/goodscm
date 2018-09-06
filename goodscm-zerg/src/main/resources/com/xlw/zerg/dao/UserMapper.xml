@@ -10,10 +10,12 @@
     <result column="create_time" property="createTime" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="INTEGER" />
   </resultMap>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
   <insert id="insert" parameterType="com.xlw.zerg.model.User" >
     insert into user (id, openid, nickname, 
       extend, delete_time, create_time, 
@@ -22,6 +24,7 @@
       #{extend,jdbcType=VARCHAR}, #{deleteTime,jdbcType=INTEGER}, #{createTime,jdbcType=INTEGER}, 
       #{updateTime,jdbcType=INTEGER})
   </insert>
+  
   <update id="updateByPrimaryKey" parameterType="com.xlw.zerg.model.User" >
     update user
     set openid = #{openid,jdbcType=VARCHAR},
@@ -32,11 +35,19 @@
       update_time = #{updateTime,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select id, openid, nickname, extend, delete_time, create_time, update_time
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  <select id="selectByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, openid, nickname, extend, delete_time, create_time, update_time
+    from user
+    where openid = #{openId,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, openid, nickname, extend, delete_time, create_time, update_time
     from user

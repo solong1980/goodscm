@@ -1,4 +1,4 @@
-package com.xlw.zerg;
+package com.xlw.zerg.wx;
 
 public class WXPublicConstants {
 

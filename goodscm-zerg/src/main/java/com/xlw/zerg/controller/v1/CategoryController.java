@@ -12,18 +12,18 @@ import com.xlw.zerg.model.Category;
 import com.xlw.zerg.service.CategoryService;
 
 @RestController
-@RequestMapping("/zerg/public/v1/category")
+@RequestMapping("/zerg/public/api/v1/category")
 public class CategoryController {
 
 	@Autowired
 	private CategoryService categoryService;
 
-	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Category getCategory(@PathVariable("id") Integer id) {
 		return categoryService.getCategory(id);
 	}
 
-	@RequestMapping(value = "/category/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public List<Category> getAllCategories() {
 		return categoryService.getAllCategories();
 	}

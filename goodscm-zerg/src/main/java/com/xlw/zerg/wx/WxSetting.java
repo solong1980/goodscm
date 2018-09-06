@@ -1,4 +1,4 @@
-package com.xlw.zerg;
+package com.xlw.zerg.wx;
 
 public class WxSetting {
 	public static final String wxAppID = "wxb7082308df49a90b";
