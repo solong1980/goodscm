@@ -14,9 +14,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.support.GenericConversionService;
 import org.springframework.http.CacheControl;
 import org.springframework.web.bind.support.ConfigurableWebBindingInitializer;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.util.Captcha;
 
 import com.xlw.security.filter.xss.XssAlertFilter;
@@ -27,29 +29,31 @@ public class WebConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/", "classpath:/altcms/")
+				.setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic());
+
 		registry.addResourceHandler("/altcms/**").addResourceLocations("classpath:/altcms/")
 				.setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic());
 	}
 
 	// 配置JSP视图解析器
-	// @Bean
-	// public ViewResolver viewResolver() {
-	// InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-	// resolver.setPrefix("/static/");
-	// resolver.setSuffix(".html");
-	// resolver.setExposeContextBeansAsAttributes(true);
-	// return resolver;
-	// }
+	@Bean
+	public ViewResolver staticViewResolver() {
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setPrefix("/static/");
+		resolver.setSuffix(".html");
+		resolver.setExposeContextBeansAsAttributes(true);
+		return resolver;
+	}
 
-	//
-	// @Bean
-	// public ViewResolver altcmsViewResolver() {
-	// InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-	// resolver.setPrefix("/altcms/");
-	// resolver.setSuffix(".html");
-	// resolver.setExposeContextBeansAsAttributes(true);
-	// return resolver;
-	// }
+	@Bean
+	public ViewResolver altcmsViewResolver() {
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setPrefix("/altcms/");
+		resolver.setSuffix(".html");
+		resolver.setExposeContextBeansAsAttributes(true);
+		return resolver;
+	}
 
 	/**
 	 * 文件上传配置

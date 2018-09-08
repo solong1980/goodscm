@@ -20,7 +20,9 @@ import com.xlw.goodscm.pojo.CmResult;
 @ComponentScan(value = { "com.xlw.goodscm.controller", "com.xlw.sys.controller", "com.xlw.goodscm.service", "com.xlw.broker.service",
 		"com.xlw.sys.service" })
 @ComponentScan(value = { "springboot.shiro", "springboot.listener", "com.xlw.sys.shiro" })
-@RestController
+//@RestController
+
+@RequestMapping(path="")
 public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -33,8 +35,21 @@ public class Application {
 
 	@RequestMapping("/login")
 	@ResponseBody
-	public CmResult index() throws Exception {
+	public CmResult login() throws Exception {
 		// return "login";
 		return CmResult.build(ReturnCode.Codes.NO_LOGIN);
+	}
+
+	/**
+	 * 管理平台demo
+	 */
+	@RequestMapping("/index")
+	public String index() throws Exception {
+		return "index";
+	}
+	
+	@RequestMapping("/main")
+	public String main() throws Exception {
+		return "main";
 	}
 }

@@ -1,3 +1,206 @@
+<link href="/static/bootstrap-4.1.3/css/bootstrap.css" rel="stylesheet" type="text/css">
+<link type="text/css" href="/static/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" >
+<style>
+        #marquee{
+            line-height: 40px;
+            background-color:rgba(5, 5, 5, 0.4)!important;
+            color:yellow;
+            font-size: 20px;
+        }
+    </style>
+    <style>
+        .ncsc-default-table {
+            line-height: 20px;
+            width: 100%;
+            border-collapse: collapse;
+            clear: both;
+        }
+        tbody {
+            display: table-row-group;
+            vertical-align: middle;
+            border-color: inherit;
+        }
+        thead {
+            display: table-header-group;
+            vertical-align: middle;
+            border-color: inherit;
+        }
+        tr {
+            display: table-row;
+            vertical-align: inherit;
+            border-color: inherit;
+        }
+        .ncsc-default-table thead th {
+            line-height: 20px;
+            /*color: #999;*/
+            /*background-color: #FFF;*/
+            text-align: center;
+            height: 20px;
+            padding: 8px 0;
+            border-bottom: solid 1px #DDD;
+        }
+        .w10 {
+            width: 10px;
+        }
+        .w100 {
+            width: 100px !important;
+        }
+        .w40 {
+            width: 40px !important;
+        }
+        .w60 {
+            width: 60px !important;
+        }
+        .w90 {
+            width: 90px;
+        }
+        .w120 {
+            width: 120px !important;
+        }
+        .order tbody tr td.sep-row {
+            height: 12px;
+            padding: 0;
+            border: 0;
+        }
+        .order tbody tr td.sep-row { height:12px; padding:0; border:0;background-color: #F6F6F6;}
+        .order tbody tr th { border: solid 1px #DDD; }
+        .order tbody tr th h3 { font-size: 12px; line-height: 20px; font-weight: bold; color: #555; vertical-align: middle; display: inline-block; margin: 0 10px;}
+        .order tbody tr th time { font-size: 11px; line-height: 20px; color: #999; vertical-align: middle; display: inline-block; margin-right: 20px; -webkit-text-size-adjust:none;}
+        .order tbody tr th time i { font-size: 12px; margin-right: 4px;}
+        .order tbody tr td { border-bottom: 1px solid #E6E6E6; vertical-align: top; }
+        .order tbody tr td.bdl { border-left: 1px solid #E6E6E6; }
+        .order tbody tr td.bdr { border-right: 1px solid #E6E6E6; }
+        .order .norecord {border-bottom:0 !important;}
+        .order .buyer { color: #555; position:relative; display:block; }
+        .order .buyer-info { display:none; }
+        .order .buyer:hover .buyer-info { *width:250px/*IE7*/; display:block; position:absolute; z-index:8; top:-40px; left: 90px; border: solid 1px #FEC500; background-color:#FFF9D4; padding:4px; border-radius:5px;}
+        .order .buyer-info em {  width: 8px; height: 14px; position: absolute; z-index: 9; top: 37px; left:-8px;}
+        .order .buyer-info .con { display:block; overflow:hidden; background: #FFF; padding:5px;}
+        .order .buyer-info h3 { font-size:1em; font-weight:700; color: #C33700; padding: 5px 0; overflow:hidden;}
+        .order .buyer-info h3 i { width: 17px; height: 11px; float:left; margin: 5px 5px 4px 12px;}
+        .order .buyer-info h3  span { float:left;}
+        .order .buyer-info dl { color: #777; padding:2px 0; width:220px; overflow:hidden; clear:both;}
+        .order .buyer-info dt { float:left; width:50px; text-align:right;}
+        .order .buyer-info dd { float:left; width:140px; text-align:left;}
+        .ncsc-default-table tbody th span {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 30px;
+        }
+        .ml10 {
+            margin-left: 10px!important;
+        }
+        .ncsc-default-table tbody th span {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 30px;
+        }
+        /* 隔行变色 行默认颜色 */
+        .table-striped tbody tr {
+            background-color: #f2f2f2;
+            color: #686868;
+        }
+        /* 隔行变色 偶数行配色 */
+        .table-striped tbody tr:nth-child(even) {
+            background-color: #fefefe;
+
+        }
+        .order tbody tr th {
+            border: solid 1px #DDD;
+        }
+        .ncsc-default-table tbody th {
+            background-color: #FAFAFA;
+            border: solid #E6E6E6;
+            border-width: 1px 0;
+            padding: 4px 0;
+        }
+        caption, th {
+            text-align: left;
+        }
+        i, cite, em {
+            font-size: 1em;
+            font-style: normal;
+            font-weight: normal;
+        }
+        .ncsc-default-table tbody td {
+            color: #999;
+            background-color: #FFF;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .order tbody tr td.bdl {
+            border-left: 1px solid #E6E6E6;
+        }
+        .order tbody tr td {
+            border-bottom: 1px solid #E6E6E6;
+            vertical-align: top;
+        }
+        .ncsc-order-amount {
+            font: bold 12px/20px Verdana;
+            color: #C00;
+        }
+        a.ncbtn-bluejeansjeans {
+            background-color: #5D9CEC;
+        }
+        a.ncbtn-greenjeansjeans {
+            background-color: green;
+        }
+        a.ncbtn-mini {
+            line-height: 16px;
+            height: 16px;
+            padding: 3px 7px;
+            border-radius: 2px;
+        }
+        a.ncbtn-mini, a.ncbtn {
+            font: normal 12px/20px "microsoft yahei", arial;
+            color: #FFF;
+            background-color: #CCD0D9;
+            text-align: center;
+            vertical-align: middle;
+            display: inline-block;
+            height: 20px;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .order tbody tr td.bdr {
+            border-right: 1px solid #E6E6E6;
+        }
+        .order tbody tr td.bdl {
+            border-left: 1px solid #E6E6E6;
+        }
+        .order tbody tr td {
+            border-bottom: 1px solid #E6E6E6;
+            vertical-align: top;
+        }
+        .ncsc-default-table tbody td {
+            color: #999;
+            background-color: #FFF;
+            text-align: center;
+            padding: 10px 0;
+        }
+        a.ncbtn-grapefruit {
+            background-color: #ED5564;
+        }
+        a.ncbtn {
+            height: 16px;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+        a.ncbtn-bluejeansjeans {
+            background-color: #5D9CEC;
+        }
+        a.ncbtn-mini {
+            line-height: 16px;
+            /* height: 16px; */
+            padding: 3px 7px;
+            border-radius: 2px;
+        }
+    </style>
+
+<script type="text/javascript" src="/static/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="/static/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
  <script id="order-item-template" type="text/x-handlebars-template">
 	<tbody id="row_{{id}}">
 		<tr><td colspan="20" class="sep-row"></td></tr>
@@ -137,7 +340,7 @@
                   <a class="num" href="https://www.qudingshui.com/center/single/order?page=9&amp;type=0">9</a>
                   <a class="num" href="https://www.qudingshui.com/center/single/order?page=10&amp;type=0">10</a>
                   <a class="next" href="https://www.qudingshui.com/center/single/order?page=2&amp;type=0">&gt;&gt;</a>
-                                <a class="last" href="https://www.qudingshui.com/center/single/order?page=27&amp;type=0">末页</a>
+                  <a class="last" href="https://www.qudingshui.com/center/single/order?page=27&amp;type=0">末页</a>
                 <span class="rows">共 264 条记录</span>
             </div>
             </div>

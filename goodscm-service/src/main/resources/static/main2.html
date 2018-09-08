@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>趣订水管理平台</title>
+    <link href="/static/logo.png" type="image/x-icon" rel="shortcut icon">
+    <meta name="csrf-token" content="WV1kBlxM0od7YKo6cwDeqkmRT3kqhqgcb6btXUWg">
+    
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="/static/layer/theme/default/layer.css" id="layui_layer_skinlayercss" style="">
+    
+    <link rel="stylesheet" type="text/css" href="/static/css/base.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/static/css/module.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" media="all">
+    <link rel="stylesheet" type="text/css" href="/static/css/default_color.css" media="all">
+    
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/static/jquery/jquery-1.10.2.js"></script>
+    <![endif]-->
+    <!--[if gte IE 9]><!-->
+    <script type="text/javascript" src="/static/jquery/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="/static/layer/layer.js"></script>
+    <script type="text/javascript" src="/static/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="/static/handlebars/handlebars-v4.0.11.js"></script>
+    
+    <script type="text/javascript" src="/static/js/common.js"></script>
+    
+    <!-- 菜单模板 -->
+     <script id="menu-entry-template" type="text/x-handlebars-template">
+
+		{{#each menus}}
+          <h3><i class="icon icon-unfold"></i>{{menu}}</h3>
+          <ul class="side-sub-menu">
+			{{#each submenu}}
+			<li class="">
+				<a class="item" href="#!{{link}}">{{name}}</a>
+			</li>
+			{{/each}}
+          </ul>
+        {{/each}}
+
+    </script>
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        	error: function (xhr, status, e) {
+        		alert("系统产生异常"); 
+        	}
+        });
+        
+        (function($) {
+            var compiled = {};
+            $.fn.handlebars = function(template, data) {
+                if (template instanceof jQuery) {
+                    template = $(template).html();
+                }
+                if(!compiled[template]){
+	                compiled[template] = Handlebars.compile(template);
+                }
+                this.html(compiled[template](data));
+            };
+        })(jQuery);
+    </script>
+    <!--<![endif]-->
+    </head>
+<body style="">
+<!-- 头部 -->
+<div class="header">
+    <!-- Logo -->
+    <span class="logo"></span>
+    <!-- /Logo -->
+    <!-- 主导航 -->
+    <ul class="main-nav">
+       <li class="current"><a href="https://www.qudingshui.com/center/single/member">水站</a>
+       </li>
+       <li class="current"><a href="https://www.qudingshui.com/center/single/member">水站</a>
+       </li>
+    </ul>
+    <!-- /主导航 -->
+
+    <!-- 用户栏 -->
+    <div class="user-bar">
+        <a href="javascript:;" class="user-entrance"><i class="icon-user"></i></a>
+        <ul class="nav-list user-menu hidden">
+            <li class="manager">你好，<em title="趣订水演示版">趣订水演示版</em></li>
+            <li><a href="https://www.qudingshui.com/center/admin/edit-password">修改密码</a></li>           
+             <li><a href="https://www.qudingshui.com/center/admin/edit-nickname">修改昵称</a></li>            
+             <li><a href="https://www.qudingshui.com/login/logout">退出</a></li>
+        </ul>
+    </div>
+</div>
+<!-- /头部 -->
+
+<!-- 边栏 -->
+<div class="sidebar">
+    <div id="subnav" class="subnav">
+    	<input type="hidden" id="main_member_url" value="https://www.qudingshui.com/center/single/member">
+	</div>
+</div>
+<!-- /边栏 -->
+
+<!-- 内容区 -->
+<div id="main-content">
+    <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+        <button class="close fixed" style="margin-top: 4px;">×</button>
+        <div class="alert-content">这是内容</div>
+    </div>
+    <div id="main" class="main" style="">
+    </div>
+    <div class="cont-ft">
+        <div class="copyright">
+            <div class="fl">感谢使用<a href="http://www.qds.com/" target="_blank">趣订水</a>管理平台</div>
+            <div class="fr"></div>
+        </div>
+    </div>
+</div>
+<!-- /内容区 -->
+
+<script type="text/javascript">
+    +function () {
+    	var $window = $(window), $subnav = $("#subnav"), url;
+        $window.resize(function () {
+            $("#main").css("min-height", $window.height() - 130);
+        }).resize();
+
+        /* 左边菜单高亮 */
+		//url = window.location.pathname + window.location.search;
+		//url = url.replace(/(\/(p)\/\d+)|(&p=\d+)|(\/(id)\/\d+)|(&id=\d+)|(\/(group)\/\d+)|(&group=\d+)/, "");
+		//$subnav.find("a[href='" + url + "']").parent().addClass("current");
+
+        /* 左边菜单显示收起 */
+        $("#subnav").on("click", "h3", function () {
+            var $this = $(this);
+            $this.find(".icon").toggleClass("icon-fold");
+            $this.next().slideToggle("fast").siblings(".side-sub-menu:visible").prev("h3").find("i").addClass("icon-fold").end().end().hide();
+        });
+
+        $("#subnav h3 a").click(function (e) {
+            e.stopPropagation()
+        });
+
+        /* 头部管理员菜单 */
+        $(".user-bar").mouseenter(function () {
+            var userMenu = $(this).children(".user-menu ");
+            userMenu.removeClass("hidden");
+            clearTimeout(userMenu.data("timeout"));
+        }).mouseleave(function () {
+            var userMenu = $(this).children(".user-menu");
+            userMenu.data("timeout") && clearTimeout(userMenu.data("timeout"));
+            userMenu.data("timeout", setTimeout(function () {
+                userMenu.addClass("hidden")
+            }, 100));
+        });
+
+        /* 表单获取焦点变色 */
+        $("form").on("focus", "input", function () {
+            $(this).addClass('focus');
+        }).on("blur", "input", function () {
+            $(this).removeClass('focus');
+        });
+        $("form").on("focus", "textarea", function () {
+            $(this).closest('label').addClass('focus');
+        }).on("blur", "textarea", function () {
+            $(this).closest('label').removeClass('focus');
+        });
+
+        // 导航栏超出窗口高度后的模拟滚动条
+        var sHeight = $(".sidebar").height();
+        var subHeight = $(".subnav").height();
+        var diff = subHeight - sHeight; //250
+        var sub = $(".subnav");
+        if (diff > 0) {
+            $(window).mousewheel(function (event, delta) {
+                if (delta > 0) {
+                    if (parseInt(sub.css('marginTop')) > -10) {
+                        sub.css('marginTop', '0px');
+                    } else {
+                        sub.css('marginTop', '+=' + 10);
+                    }
+                } else {
+                    if (parseInt(sub.css('marginTop')) < '-' + (diff - 10)) {
+                        sub.css('marginTop', '-' + (diff - 10));
+                    } else {
+                        sub.css('marginTop', '-=' + 10);
+                    }
+                }
+            });
+        }
+        
+        $('#subnav').handlebars($('#menu-entry-template'), {
+			menus:[
+				{
+					menu:"用户管理",
+					submenu:[
+				   		{
+							name:"用户列表",
+							link:"/static/users.html"
+						}
+					]
+				},
+				{
+					menu:"订单管理",
+					submenu:[
+				   		{
+							name:"送水订单",
+							link:"/static/orders.html"
+						},{
+							name:"水票订单",
+							link:"https://www.qudingshui.com/center/single/bill-order"
+						}
+					]
+				},{
+					menu:"店铺管理",
+					submenu:[
+				   		{
+							name:"我的店铺",
+							link:"/static/shops.html"
+						},{
+							name:"续费记录",
+							link:"https://www.qudingshui.com/center/single/shop-charge-record"
+						},{
+							name:"外设列表",
+							link:"https://www.qudingshui.com/center/single/peripheral-index"
+						}
+					]
+				},{
+					menu:"商品管理",
+					submenu:[
+				   		{
+							name:"商品列表",
+							link:"https://www.qudingshui.com/center/single/goods"
+						}
+					]
+				},{
+					menu:"水票管理",
+					submenu:[
+				   		{
+							name:"水票列表",
+							link:"https://www.qudingshui.com/center/single/bill"
+						},{
+							name:"水票套餐",
+							link:"https://www.qudingshui.com/center/single/bill-category"
+						}
+					]
+				},{
+					menu:"水桶管理",
+					submenu:[
+				   		{
+							name:"水桶记录",
+							link:"https://www.qudingshui.com/center/single/bucket-data"
+						},{
+							name:"水桶品牌",
+							link:"https://www.qudingshui.com/center/single/bucket-category"
+						}
+					]
+				},{
+					menu:"工人管理",
+					submenu:[
+				   		{
+							name:"工人列表",
+							link:"https://www.qudingshui.com/center/single/worker"
+						}
+					]
+				},{
+					menu:"微信设置",
+					submenu:[
+				   		{
+							name:"微信设置",
+							link:"https://www.qudingshui.com/center/single/wechat"
+						}
+					]
+				}
+			]
+		});
+    }();
+    
+    //菜单绑定点击事件
+    $(function(){
+    	   $("a[class='item']").bind('click',function(){
+    			var link = $(this).attr("href");
+    			//切换点击后的菜单项样式
+       			highlight_subnav(link)
+    			if(link&&link.indexOf('#!')>-1)
+    				link = link.substring(2);
+       			//alert(link);
+       			$("#main").load(link);
+    	   });
+    	   $($("a[class='item']")[1]).trigger('click');
+    })
+        
+</script>
+</body></html>

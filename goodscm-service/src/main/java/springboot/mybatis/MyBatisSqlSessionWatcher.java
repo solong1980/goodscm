@@ -1,5 +1,6 @@
 package springboot.mybatis;
 
+import java.net.URI;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,7 +27,6 @@ import org.springframework.core.io.Resource;
  * mybatis的mapper文件有改动时，手动重新加载
  */
 public class MyBatisSqlSessionWatcher extends MyBatisSqlSessionManager {
-
 	public MyBatisSqlSessionWatcher(SqlSessionFactory sqlSessionFactory) {
 		super(sqlSessionFactory);
 	}
@@ -34,18 +34,37 @@ public class MyBatisSqlSessionWatcher extends MyBatisSqlSessionManager {
 	public void refreshMapper() throws Exception {
 		// Create Watcher
 		super.scanMapperXml();
-		
+
 		Resource[] mapperLocations = getMapperLocations();
 
 		WatchService mapperWatchService = FileSystems.getDefault().newWatchService();
-		Kind<?>[] events = { StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE,
-				StandardWatchEventKinds.ENTRY_MODIFY };
+		Kind<?>[] events = { StandardWatchEventKinds.ENTRY_CREATE, StandardWatchEventKinds.ENTRY_DELETE, StandardWatchEventKinds.ENTRY_MODIFY };
 
 		Map<Path, WatchKey> pathWatchKeyPathMap = new HashMap<>();
 
 		Set<Path> dirs = new HashSet<>();
 		for (Resource resource : mapperLocations) {
-			Path path = Paths.get(resource.getURI());
+			URI uri = resource.getURI();
+			//log.debug("mapping file resource1: " + uri.toString());
+			//log.debug("mapping file resource2: " + new UrlResource(uri).toString());
+			if("jar".equals(uri.getScheme())){
+				//if file in jar ,can not be changed,so skip 
+				/**
+			    for (FileSystemProvider provider: FileSystemProvider.installedProviders()) {
+			        if (provider.getScheme().equalsIgnoreCase("jar")) {
+			            try {
+			                provider.getFileSystem(uri);
+			            } catch (FileSystemNotFoundException e) {
+			                // in this case we need to initialize it first:
+			                provider.newFileSystem(uri, Collections.emptyMap());
+			            }
+			        }
+			    }
+			    */
+				continue;
+			}
+			//Path path = FileSystems.getDefault().getPath(new UrlResource(resource.getURI()).toString());
+			Path path = Paths.get(uri);
 			boolean directory = Files.isDirectory(path);
 			if (!directory) {
 				Path parent = path.getParent();
@@ -99,7 +118,7 @@ public class MyBatisSqlSessionWatcher extends MyBatisSqlSessionManager {
 					}
 				}
 			};
-			
+
 			ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
 			service.schedule(runnable, 1, TimeUnit.SECONDS);
 		} catch (Exception e) {
