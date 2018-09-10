@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="csrf-token" content="WV1kBlxM0od7YKo6cwDeqkmRT3kqhqgcb6btXUWg">
-  <title>趣订水管理平台</title>
+  <title>情趣水订管理平台</title>
   <link href="/static/logo.png" type="image/x-icon" rel="shortcut icon">
   <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
   <style type="text/css">
@@ -19,13 +19,16 @@
 	 .menu-item{
 	 	margin-left: 10px;
 	 }
+	 .content-row-height{
+	 	height: 30px;
+	 }
   </style>
 </head>
 
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
-    <div class="layui-logo">水战</div>
+    <div class="layui-logo">水War</div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
       <li class="layui-nav-item"><a href="">控制台</a></li>
@@ -40,7 +43,7 @@
         </dl>
       </li>
     </ul>
-    <div class="layui-nav layui-layout-right platform_header_title">你好，<em title="趣订水演示版">趣订水演示版</em></div>
+    <div class="layui-nav layui-layout-right platform_header_title">Hi，<em title="趣订水演示版">Qin趣水订演示版</em></div>
     <ul class="layui-nav layui-layout-right">
       <li class="layui-nav-item">
         <a href="javascript:;">
@@ -103,7 +106,17 @@
 layui.use('element', function(){
   var element = layui.element;
 });
- 
+/* layui.define(['element','layer','form'], function(exports){
+	  var layer = layui.layer
+	  ,form = layui.form,
+	  element = layui.element;
+	  layer.msg('Hello World');
+	  exports('main', {
+		  breadcrumb:function(){
+			  element.breadcrumb();
+		  }
+	  });
+}); */
 $.ajaxSetup({
 	headers: {
 		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -142,7 +155,7 @@ $.ajaxSetup({
 					submenu:[
 				   		{
 							name:"送水订单",
-							link:"/static/orders.html"
+							link:"/orders"
 						},{
 							name:"水票订单",
 							link:"https://www.qudingshui.com/center/single/bill-order"
@@ -214,10 +227,19 @@ $.ajaxSetup({
 })(jQuery);
 
 //导航高亮
-function highlight_subnav(url){
+function highlightSubnav(url){
 	var c = $("dd[class='layui-this']");
 	c&&c.removeClass('layui-this');
     $('dd').find('a[href="'+url+'"]').parent().addClass('layui-this');
+}
+
+function loadContent(that){
+	//优化缓存页面
+	var link = $(that).attr("href");
+	//切换点击后的菜单项样式
+	if(link&&link.indexOf('#!')>-1)
+		link = link.substring(2);
+	$("#main").load(link);
 }
 
 //菜单绑定点击事件
@@ -225,11 +247,8 @@ $(function(){
 	   $("a[class='menu-item']").bind('click',function(){
 			var link = $(this).attr("href");
 			//切换点击后的菜单项样式
-   			highlight_subnav(link)
-			if(link&&link.indexOf('#!')>-1)
-				link = link.substring(2);
-   			//alert(link);
-   			$("#main").load(link);
+   			highlightSubnav(link)
+   			loadContent(this)
 	   });
 	   $($("a[class='menu']")[1]).parent().addClass('layui-nav-itemed');
 	   $($("a[class='menu-item']")[1]).trigger('click');

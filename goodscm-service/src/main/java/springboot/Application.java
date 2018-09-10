@@ -52,4 +52,9 @@ public class Application {
 	public String main() throws Exception {
 		return "main";
 	}
+	
+	@RequestMapping("/orders")
+	public String orders() throws Exception {
+		return "orders";
+	}
 }
