@@ -57,8 +57,8 @@
              </td>
              <td class="w60 bdr" rowspan="1"> --- </td>
              <td class="bdl bdr" rowspan="1">
-               <p><a href="javascript:void(0)" class="ncbtn-mini mt5 ajax-get" onclick="cancle('4460')">取消订单</a></p>
-               <p style="padding-top: 5px;"><a href="javascript:void(0)" class="ncbtn-mini ncbtn-bluejeansjeans mt10" onclick="send('4460','6')">派送订单</a></p>
+               <p><a href="javascript:void(0)" class="ncbtn-mini mt5 ajax-get" onclick="cancle('{{id}}')">取消订单</a></p>
+               <p style="padding-top: 5px;"><a href="javascript:void(0)" class="ncbtn-mini ncbtn-bluejeansjeans mt10" onclick="send('{{id}}','6')">派送订单</a></p>
              </td>
 		</tr>
 	</tbody>
@@ -75,15 +75,16 @@
  	<div class="layui-row content-row-height">
  		<!-- 标题栏 -->
 	    <div class="main-title layui-col-md12">
-	        <h2>订单列表 [ <span style="color: red">全部 </span> ]</h2>
+	        <h2>订单列表 [ <span id="orders-sub-title" style="color: red">全部 </span> ]</h2>
 	    </div>
     </div>
  	<div class="layui-row content-row-height">
 	        <div class="layui-col-md6" style="margin-top: 5px">
-	            <a class="btn layui-btn layui-btn-xs" href="#!/orders?type=1">超  时</a>
+	            <a class="btn layui-btn layui-btn-xs" href="#!/orders">全部</a>
+	            <a class="btn layui-btn layui-btn-xs" href="#!/orders?type=1">超 &nbsp;&nbsp;时<span class="layui-badge layui-bg-orange">(1单)</span></a>
 	            <a class="btn layui-btn layui-btn-xs" href="#!/orders?type=3">待接单</a>
 	            <a class="btn layui-btn layui-btn-xs" href="#!/orders?type=4">配送中</a>
-	            <a class="btn layui-btn layui-btn-xs" href="#!/orders?type=5">已完成</a>
+	            <a class="btn layui-btn layui-btn-xs" href="#!/orders?type=5">已完成<span class="layui-badge layui-bg-gray">(1单)</span></a>
 	            <a class="btn layui-btn layui-btn-xs" href="#!/orders?type=2">未付款</a>
 	        </div>
 	        <!-- 高级搜索 -->
@@ -94,18 +95,7 @@
 	                	<a class="sch-btn" href="javascript:;" id="search" href="https://www.qudingshui.com/center/single/order"><span class="layui-badge">Q</span></a>
 	                </div>
 		            <div class="btn-group-click layui-col-md4">
-		                <button class="btn layui-btn  layui-btn-sm">高 级<i class="layui-icon layui-icon-down"></i></button>
-		                <div class="dropdown" style="display: none;">
-		                    <div class="row">
-		                        <label>下单时间：</label>
-		                        <input type="text" id="time-start" name="time-start" class="text input-2x" value="" placeholder="起始时间"> -
-		                        <input type="text" id="time-end" name="time-end" class="text input-2x" value="" placeholder="结束时间">
-		                    </div>
-		                    <div class="row">
-		                        <label>买家：</label>
-		                        <input type="text" name="buyer_name" class="text input-2x" value="" placeholder="请输入买家姓名">
-		                    </div>
-		                </div>
+		                <button id="adv-search-btn" class="layui-btn  layui-btn-sm">高 级<i class="layui-icon layui-icon-down"></i></button>
 		            </div>
 	        	</div>
  
@@ -134,13 +124,49 @@
     </div>
     <div id="page" class="page">
     </div>
- </div>
+</div>
+ 
+  
+<div id="adv-search-form" class="dropdown layui-form-item" style="display: none;">
+	<div class="layui-inline">
+		<label class="layui-form-label">下单时间：</label>
+		<div class="layui-input-inline">
+			<input type="text" id="time-start" name="time-start"class="layui-input" placeholder="起始时间" lay-key="1">
+		</div>
+	</div> -
+	<div class="layui-inline">
+		<label class="layui-form-label">下单时间：</label>
+		<div class="layui-input-inline">
+			<input type="text" id="time-end" name="time-end" class="layui-input" value="" placeholder="结束时间" lay-key="2">
+		</div>
+	</div>
+	<div class="layui-inline">
+		<label class="layui-form-label">买家：</label>
+		<div class="layui-input-inline">
+			<input type="text" name="buyer_name" class="layui-input" value="" placeholder="请输入买家姓名">
+		</div>
+	</div>
+</div>
 
  <script type="text/javascript">
- 	layui.use(['element','laypage'], function(){
+ 	layui.use(['element','laypage','layer','laydate'], function(){
 	  	var element = layui.element,
-	  	laypage = layui.laypage;
+	  	laypage = layui.laypage,
+	  	layer = layui.layer,
+	  	laydate = layui.laydate
+	  	;
  		element.init();
+ 		
+ 		laydate.render({
+			elem: '#time-start'
+			,theme: 'molv'
+ 		});
+ 		
+ 		laydate.render({
+			elem: '#time-end'
+			,theme: 'molv'
+ 		});
+ 		
  		 //执行一个laypage实例
 		laypage.render({
  		    elem: 'page' //注意，这里的 test1 是 ID，不用加 # 号
@@ -162,11 +188,57 @@
 				}
 			}
 		});
-	});
- 	
-	$("a[class='btn']").bind('click',function(){
-		//loadContent(this);
-		//只刷新tabel内容
+ 		 
+		$('#adv-search-btn').bind('click',function(){
+			layer.open({
+			    type: 1,
+			    title: ['订单-高级查询','font-size:13px;margin-top:10px;'],  
+			    content:$('#adv-search-form'),
+			    btn: ['确定', '取消'],
+			    offset: [($(this).offset().top+$(this).height()+10)+'px', ($(this).offset().left-800) + 'px'],
+			    area: ['900px', '200px'],
+			    shade :false,
+			    maxmin :false,
+			    anim: 1,
+			    yes: function(index,layero){}
+	 		});
+		});
+		
+		$("a[class*='btn']").each(function(index,item){
+	 		var link = $(item).attr("href");
+	 		var curlink = location.hash;
+	 		if(link === curlink){
+	 			$(item).removeClass("layui-btn-primary");
+	 			$(item).addClass("layui-btn-normal");//设置按钮样式
+	 			$('#orders-sub-title').text($(item).text());
+	 		}
+		});
+
+	 	$("a[class*='btn']").bind('click',function(){
+	 		var link = $(this).attr("href");
+	 		//切换点击后的菜单项样式
+	 		if(link&&link.indexOf('#!')>-1)
+	 			link = link.substring(2);
+	 		if(location)
+			loadContent(this);
+			//如果只刷新tabel内容
+			$(this).removeClass("layui-btn-primary");
+	 		$(this).addClass("layui-btn-normal");//设置按钮样式
+		});
+	 	
+	 	 var compiled = Handlebars.compile($('#order-item-template').html());
+	 	 var html = compiled({
+	 		id:4406,
+	 		ordeNo:'1980050622116', 
+	 		createTime:'2018-09-11',
+	 		goodsName:'农夫山泉', 
+	 		buyer:'高科技有限公司', 
+	 		cutomerName:'龙良华', 
+	 		phone:'18888888888', 
+	 		address:'没花岛路8899号', 
+	 		payStlye:'支付宝'
+	 	 });
+	     $("#order_list").append(html);
 	});
 
 	 function cancle(id) {
@@ -246,23 +318,6 @@
 	     }
 	 });
 	
- 	 var compiled = Handlebars.compile($('#order-item-template').html());
- 	 var html = compiled({});
-     $("#order_list").append(html);
- 	 
- 	 
- 	/*  $('#time-start').datetimepicker({
-	     format: 'yyyy-mm-dd',
-	     language:"zh-CN",
-	     minView:2,
-	     autoclose:true
-	 });
-	
-	 $('#time-end').datetimepicker({
-	     format: 'yyyy-mm-dd',
-	     language:"zh-CN",
-	     minView:2,
-	     autoclose:true
-	 }); */
+
  
  </script>
