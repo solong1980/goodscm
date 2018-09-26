@@ -35,7 +35,7 @@ public class MyExceptionHandler implements HandlerExceptionResolver {
 	@Override
 	public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			Object o, Exception ex) {
-		logger.error("method:[" + o.toString() + "] error", ex);
+		logger.error("method:[" + (o != null ? o.toString() : "Null Object ") + "] error", ex);
 		ModelAndView mv = new ModelAndView();
 		FastJsonJsonView view = new FastJsonJsonView();
 		Map<String, Object> attributes = new HashMap<String, Object>();
