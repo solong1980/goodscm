@@ -35,7 +35,8 @@ import com.xlw.sys.model.SysUser;
 public class BaseTest {
 	// 39.107.24.81
 	// 120.55.189.150
-	public static final String localhost = "http://localhost:9905";
+	//"http://112.74.182.104:9905";
+	public static final String localhost = "http://127.0.0.1:9905";
 	public String sessionId = "5c162a48-f26f-49c3-b1bd-b44819ce1d45";
 
 	@BeforeClass

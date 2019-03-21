@@ -203,6 +203,33 @@
 		limit #{page.start},#{page.count}
 	</select>
 	
+	<select id="pageQueryCount" resultType="Integer"
+		parameterType="com.xlw.goodscm.model.Goods">
+		select count(1) from goods g, goods_category gc where g.category_id = gc.id 
+			<if test="category!=null and category.categoryCodeRadical!=null">
+				and gc.category_code like
+				concat(#{category.categoryCodeRadical,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="status!=null and status>0">
+				and g.status =#{status,jdbcType=SMALLINT}
+			</if>
+			<if test="code!=null">
+				and g.code like
+				concat('%',#{code,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="shortName!=null">
+				and (
+					g.code like concat('%',#{shortName,jdbcType=VARCHAR},'%')
+					or 
+					g.short_name like concat('%',#{shortName,jdbcType=VARCHAR},'%')
+					or 
+					g.name_zh like concat('%',#{shortName,jdbcType=VARCHAR},'%')
+					or 
+					g.name_en like concat('%',#{shortName,jdbcType=VARCHAR},'%')
+				)
+			</if>
+	</select>
+	
 	<select id="pageQuery" resultMap="BaseResultMap"
 		parameterType="com.xlw.goodscm.pojo.CmPage">
 		select

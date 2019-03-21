@@ -10,6 +10,9 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,18 +44,40 @@ public class GoodsServiceImpl implements GoodsService {
 	@Autowired
 	private GoodsPicService goodsPicService;
 
-	@Autowired(required=false)
+	@Autowired(required = false)
 	private ActiveMQService activeMQService;
 
+	@Autowired
+	private GoodsService self;
+	
+	
 	@Override
 	public List<Goods> query(Goods goods) {
 		List<Goods> all = goodsMapper.selectAll();
 		return all;
 	}
-
+	
+	/**
+	 * 通过返回goods对象放入缓存
+	 * @param goods
+	 * @return
+	 */
 	@Override
-	public List<Goods> pageQuery(CmPage<Goods, List<?>> goodsPageQuery) {
-		List<Goods> pageQuery = goodsMapper.pageQuery(goodsPageQuery);
+	@CachePut(value = "goods", key = "#goods.id")
+	public Goods addGoods(Goods goods) {
+		goodsMapper.insert(goods);
+		return goods;
+	}
+	
+	@Override
+	public CmPage<Goods, List<?>> pageQuery(CmPage<Goods, List<?>> cmPage) {
+		//query total number
+		int total = goodsMapper.pageQueryCount(cmPage.getC());
+		//query record
+		List<Goods> pageQuery = goodsMapper.pageQuery(cmPage);
+		cmPage.setTotal(total);
+		cmPage.setT(pageQuery);
+		
 		// query supplier recode for every row
 		List<Long> goodsIds = new ArrayList<>();
 		for (Goods goods : pageQuery) {
@@ -61,7 +86,7 @@ public class GoodsServiceImpl implements GoodsService {
 		// query supplier record order by goods id and update date
 		List<SupplierRecord> supplierRecords = supplierRecordService.batchQuery(goodsIds);
 		if (supplierRecords == null || supplierRecords.isEmpty())
-			return pageQuery;
+			return cmPage;
 
 		// group by goods id
 		Multimap<Long, SupplierRecord> supplierRecordMap = ArrayListMultimap.create();
@@ -98,10 +123,11 @@ public class GoodsServiceImpl implements GoodsService {
 			}
 		}
 
-		return pageQuery;
+		return cmPage;
 	}
 
 	@Override
+	@Cacheable(value = "goods", key = "#id")
 	public Goods getById(Long id) {
 		Goods goods = goodsMapper.selectByPrimaryKey(id);
 		if (goods != null) {
@@ -149,6 +175,7 @@ public class GoodsServiceImpl implements GoodsService {
 	 * @see com.xlw.goodscm.service.GoodsService#getGoodsInfoById(java.lang.Long)
 	 */
 	@Override
+	@Cacheable(value = "goods", key = "#id")
 	public Goods getGoodsInfoById(Long id) {
 		Goods goods = goodsMapper.selectByPrimaryKey(id);
 		if (goods != null) {
@@ -166,7 +193,7 @@ public class GoodsServiceImpl implements GoodsService {
 		checkGoodsCodeDuplicate(goods);
 
 		goods.setCreateTime(new Date());
-		goodsMapper.insert(goods);
+		self.addGoods(goods);
 		Long goodsId = goods.getId();
 		List<SupplierRecord> supplierRecords = goods.getSupplierRecords();
 		if (supplierRecords != null && !supplierRecords.isEmpty()) {
@@ -179,6 +206,8 @@ public class GoodsServiceImpl implements GoodsService {
 		}
 		return goodsId;
 	}
+	
+	
 
 	@Override
 	@Transactional
@@ -197,11 +226,12 @@ public class GoodsServiceImpl implements GoodsService {
 				}
 			}
 		}
-		//发送消息，不应在事务内调用
+		// 发送消息，不应在事务内调用
 		activeMQService.sendGoodAddMsg(goods);
 	}
 
 	@Override
+	@CacheEvict(value = "goods")
 	@Transactional
 	public void update(Goods goods) throws Exception {
 		if (goods.getId() == null) {
@@ -245,6 +275,7 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	@Override
+	@CacheEvict(value = "goods")
 	public void deleteById(Long id) {
 		goodsMapper.deleteByPrimaryKey(id);
 	}

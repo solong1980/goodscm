@@ -24,6 +24,8 @@ public interface GoodsMapper {
 
 	List<Goods> pageQuery(@Param("page") CmPage<Goods, List<?>> goodsPageQuery);
 	
+	int pageQueryCount(Goods goods);
+	
 	List<Goods> queryNewGoods(@Param("page") CmPage<Goods, List<?>> goodsPageQuery);
 
 	void fastUpdateByPrimaryKey(Goods goods);

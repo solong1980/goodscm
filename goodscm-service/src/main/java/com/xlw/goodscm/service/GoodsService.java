@@ -12,10 +12,12 @@ import com.xlw.goodscm.pojo.CmPage;
 public interface GoodsService {
 	List<Goods> query(Goods goods);
 
+	Goods addGoods(Goods goods);
+
 	Goods getById(Long id);
 
 	Long add(Goods goods);
-
+	
 	void updateStatus(Goods goods);
 
 	void deleteById(Long id);
@@ -27,11 +29,12 @@ public interface GoodsService {
 	@Deprecated
 	void addSavePics(Goods goods) throws IOException;
 
-	List<Goods> pageQuery(CmPage<Goods, List<?>> goodsPageQuery);
+	CmPage<Goods, List<?>> pageQuery(CmPage<Goods, List<?>> goodsPageQuery);
 	
 	List<Goods> queryNewGoods(CmPage<Goods, List<?>> goodsPageQuery);
 
 	void fastUpdate(Goods goods);
 
 	Goods getGoodsInfoById(Long id);
+
 }

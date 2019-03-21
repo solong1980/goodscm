@@ -34,27 +34,40 @@ public class WebConfig implements WebMvcConfigurer {
 
 		registry.addResourceHandler("/altcms/**").addResourceLocations("classpath:/altcms/")
 				.setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic());
+		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/")
+		.setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic());
+		registry.addResourceHandler("/goodscm/**").addResourceLocations("classpath:/goodscm/")
+		.setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic());
 	}
 
 	// 配置JSP视图解析器
-	@Bean
-	public ViewResolver staticViewResolver() {
-		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-		resolver.setPrefix("/static/");
-		resolver.setSuffix(".html");
-		resolver.setExposeContextBeansAsAttributes(true);
-		return resolver;
-	}
-
-	@Bean
-	public ViewResolver altcmsViewResolver() {
-		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-		resolver.setPrefix("/altcms/");
-		resolver.setSuffix(".html");
-		resolver.setExposeContextBeansAsAttributes(true);
-		return resolver;
-	}
-
+//	@Bean
+//	public ViewResolver staticViewResolver() {
+//		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+//		resolver.setPrefix("/static/");
+//		resolver.setSuffix(".html");
+//		resolver.setExposeContextBeansAsAttributes(true);
+//		return resolver;
+//	}
+//
+//	@Bean
+//	public ViewResolver altcmsViewResolver() {
+//		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+//		resolver.setPrefix("/altcms/");
+//		resolver.setSuffix(".html");
+//		resolver.setExposeContextBeansAsAttributes(true);
+//		return resolver;
+//	}
+//
+//	@Bean
+//	public ViewResolver goodscmViewResolver() {
+//		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+//		resolver.setPrefix("/goodscm/");
+//		resolver.setSuffix(".html");
+//		resolver.setExposeContextBeansAsAttributes(true);
+//		return resolver;
+//	}
+	
 	/**
 	 * 文件上传配置
 	 * 

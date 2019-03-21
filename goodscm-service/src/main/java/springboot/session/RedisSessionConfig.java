@@ -5,6 +5,7 @@ import org.apache.shiro.session.mgt.SessionManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisSessionDAO;
+import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -56,7 +57,7 @@ public class RedisSessionConfig {
 	 * 
 	 * @return
 	 */
-	@Bean
+	@Bean(autowire=Autowire.BY_NAME,name="sessionCacheManager")
 	public CacheManager cacheManager() {
 		RedisCacheManager redisCacheManager = new RedisCacheManager();
 		redisCacheManager.setRedisManager(redisManager());

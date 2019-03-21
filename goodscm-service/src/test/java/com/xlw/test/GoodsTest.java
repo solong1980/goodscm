@@ -1,6 +1,7 @@
 package com.xlw.test;
 
 import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -9,7 +10,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.Map.Entry;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
@@ -28,6 +31,7 @@ import com.xlw.goodscm.model.SupplierRecord;
 import com.xlw.goodscm.pojo.CmPage;
 import com.xlw.goodscm.pojo.CmResult;
 import com.xlw.goodscm.utils.JsonUtilTool;
+import com.xlw.sys.model.SysUser;
 
 public class GoodsTest extends BaseTest {
 
@@ -36,6 +40,23 @@ public class GoodsTest extends BaseTest {
 		login();
 	}
 
+	@Test
+	public void testCDologin() {
+		SysUser user = new SysUser();
+		user.setUsername("longlianghua");
+		user.setPassword("admin");
+		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(user), createJsonHeader());
+		ResponseEntity<String> forEntity = restTemplate.exchange("http://127.0.0.1:9907/auth/login", HttpMethod.POST, httpEntity, String.class);
+
+		String body = forEntity.getBody();
+		HttpHeaders headers = forEntity.getHeaders();
+		for (Entry<String, List<String>> entry : headers.entrySet()) {
+			System.out.println(entry.getKey());
+			System.out.println(entry.getValue());
+		}
+		System.out.println(body);
+	}
+	
 	@Test
 	public void testGoodsQuery() {
 		Goods goods = new Goods();
@@ -50,7 +71,7 @@ public class GoodsTest extends BaseTest {
 		page.setC(goods);
 		page.setPageNum(1);
 		page.setCount(50);
-
+		System.out.println(JsonUtilTool.toJson(page));
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(page), createJsonHeader());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/query", HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());

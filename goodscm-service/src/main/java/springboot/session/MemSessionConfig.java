@@ -4,6 +4,7 @@ import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.MemoryConstrainedCacheManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
+import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,7 @@ public class MemSessionConfig {
 		return mySessionManager;
 	}
 
-	@Bean
+	@Bean(autowire=Autowire.BY_NAME,name="sessionCacheManager")
 	public CacheManager cacheManager() {
 		return new MemoryConstrainedCacheManager();
 	}

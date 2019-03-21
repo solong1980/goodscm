@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,7 +22,7 @@ import com.xlw.goodscm.pojo.CmResult;
 		"com.xlw.sys.service" })
 @ComponentScan(value = { "springboot.shiro", "springboot.listener", "com.xlw.sys.shiro" })
 //@RestController
-
+@EnableCaching
 @RequestMapping(path="")
 public class Application {
 	public static void main(String[] args) {

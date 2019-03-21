@@ -30,7 +30,7 @@ public class GoodsPicsTest extends BaseTest {
 		URI url = new URI(localhost + "/goodspic/getthumbnail/picid/61");
 		url = new URI(localhost + "/goodspic/getthumbnail/goodsid/22");
 		
-		ResponseEntity<byte[]> responseEntity = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<>(createMultiPartHeader()), byte[].class);
+		ResponseEntity<byte[]> responseEntity = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<>(createJsonHeader()), byte[].class);
 		
 		int statusCodeValue = responseEntity.getStatusCodeValue();
 		if (statusCodeValue != 200) {
@@ -81,9 +81,9 @@ public class GoodsPicsTest extends BaseTest {
 
 	@Test
 	public void testGetGoodsPic() throws URISyntaxException, IOException {
-		URI url = new URI(localhost + "/goodspic/pic/52");
+		URI url = new URI(localhost + "/goodspic/pic/150");
 
-		ResponseEntity<byte[]> responseEntity = restTemplate.exchange(url, HttpMethod.POST, null, byte[].class);
+		ResponseEntity<byte[]> responseEntity = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<>(createJsonHeader()), byte[].class);
 		HttpHeaders headers = responseEntity.getHeaders();
 		List<String> list = headers.get("filename");
 		String filename = "52.jpg";

@@ -61,8 +61,7 @@ public class GoodsController {
 			if (shortName != null)
 				c.setShortName(shortName.replaceAll("\\s+", "%"));
 		}
-		List<Goods> goodsList = goodsService.pageQuery(goodsCmPage);
-		goodsCmPage.setT(goodsList);
+		goodsCmPage = goodsService.pageQuery(goodsCmPage);
 		CmResult cmResult = CmResult.build(Codes.SUCCESS, goodsCmPage);
 		return cmResult;
 	}

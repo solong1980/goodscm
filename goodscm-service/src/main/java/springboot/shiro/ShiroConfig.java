@@ -3,6 +3,8 @@ package springboot.shiro;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.SecurityManager;
@@ -12,6 +14,7 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -21,7 +24,10 @@ import com.xlw.sys.shiro.UserRealm;
 
 @Configuration
 public class ShiroConfig {
-
+	
+//	@Resource(name="sessionCacheManager")
+//	private CacheManager sessionCacheManager;
+	
 	@Bean
 	public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
 		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -34,11 +40,11 @@ public class ShiroConfig {
 		// 配置不会被拦截的链接 顺序判断
 		filterChainDefinitionMap.put("/static/**", "anon");
 		filterChainDefinitionMap.put("/altcms/**", "anon");
-		
-//		filterChainDefinitionMap.put("/css/**", "anon");
-//		filterChainDefinitionMap.put("/img/**", "anon");
-//		filterChainDefinitionMap.put("/js/**", "anon");
-		
+
+		// filterChainDefinitionMap.put("/css/**", "anon");
+		// filterChainDefinitionMap.put("/img/**", "anon");
+		// filterChainDefinitionMap.put("/js/**", "anon");
+
 		filterChainDefinitionMap.put("/index", "anon");
 		filterChainDefinitionMap.put("/login", "anon");
 		filterChainDefinitionMap.put("/login/captcha.jpg", "anon");
@@ -74,11 +80,11 @@ public class ShiroConfig {
 	}
 
 	@Bean
-	public SecurityManager securityManager(SessionManager sessionManager, CacheManager cacheManager) {
+	public SecurityManager securityManager(SessionManager sessionManager,@Qualifier("sessionCacheManager") CacheManager sessionCacheManager) {
 		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 		securityManager.setRealm(userRealm());
 		securityManager.setSessionManager(sessionManager);
-		securityManager.setCacheManager(cacheManager);
+		securityManager.setCacheManager(sessionCacheManager);
 		return securityManager;
 	}
 
