@@ -175,9 +175,9 @@
 	</update>
 	
 	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-		select <include refid="Columns"></include>
-		from goods
-		where id = #{id,jdbcType=BIGINT}
+		select g.*,gc.category_code
+		from goods g left join goods_category gc on g.category_id = gc.id 
+		where g.id = #{id,jdbcType=BIGINT}
 	</select>
 	
 	<select id="selectAll" resultMap="BaseResultMap">
