@@ -3,203 +3,214 @@ package com.xlw.goodscm.model;
 import java.util.Date;
 
 public class Customer {
-    private Long id;
+	private Long id;
 
-    private Long groupId;
+	private Long groupId;
 
-    private Long priceLevelId;
+	private Long priceLevelId;
 
-    private String code;
+	private String code;
 
-    private String name;
+	private String name;
 
-    private String fullName;
+	private String fullName;
 
-    private String contact;
+	private String contact;
 
-    private String mobile;
+	private String mobile;
 
-    private String phone;
+	private String phone;
 
-    private String fax;
+	private String fax;
 
-    private String qq;
+	private String qq;
 
-    private String wechat;
+	private String wechat;
 
-    private String wangwangNo;
+	private String wangwangNo;
 
-    private String otherContact;
+	private String otherContact;
 
-    private String email;
+	private String email;
 
-    private String website;
+	private String website;
 
-    private String address;
+	private String address;
 
-    private Date createTime;
+	private Date createTime;
 
-    private Date updateTime;
+	private Date updateTime;
 
-    private String memo;
+	private String memo;
 
-    public Long getId() {
-        return id;
-    }
+	private Short status;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Long getGroupId() {
-        return groupId;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
-    }
+	public Long getGroupId() {
+		return groupId;
+	}
 
-    public Long getPriceLevelId() {
-        return priceLevelId;
-    }
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
+	}
 
-    public void setPriceLevelId(Long priceLevelId) {
-        this.priceLevelId = priceLevelId;
-    }
+	public Long getPriceLevelId() {
+		return priceLevelId;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public void setPriceLevelId(Long priceLevelId) {
+		this.priceLevelId = priceLevelId;
+	}
 
-    public void setCode(String code) {
-        this.code = code == null ? null : code.trim();
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setCode(String code) {
+		this.code = code == null ? null : code.trim();
+	}
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getFullName() {
-        return fullName;
-    }
+	public void setName(String name) {
+		this.name = name == null ? null : name.trim();
+	}
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName == null ? null : fullName.trim();
-    }
+	public String getFullName() {
+		return fullName;
+	}
 
-    public String getContact() {
-        return contact;
-    }
+	public void setFullName(String fullName) {
+		this.fullName = fullName == null ? null : fullName.trim();
+	}
 
-    public void setContact(String contact) {
-        this.contact = contact == null ? null : contact.trim();
-    }
+	public String getContact() {
+		return contact;
+	}
 
-    public String getMobile() {
-        return mobile;
-    }
+	public void setContact(String contact) {
+		this.contact = contact == null ? null : contact.trim();
+	}
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile == null ? null : mobile.trim();
-    }
+	public String getMobile() {
+		return mobile;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	public void setMobile(String mobile) {
+		this.mobile = mobile == null ? null : mobile.trim();
+	}
 
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public String getFax() {
-        return fax;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone == null ? null : phone.trim();
+	}
 
-    public void setFax(String fax) {
-        this.fax = fax == null ? null : fax.trim();
-    }
+	public String getFax() {
+		return fax;
+	}
 
-    public String getQq() {
-        return qq;
-    }
+	public void setFax(String fax) {
+		this.fax = fax == null ? null : fax.trim();
+	}
 
-    public void setQq(String qq) {
-        this.qq = qq == null ? null : qq.trim();
-    }
+	public String getQq() {
+		return qq;
+	}
 
-    public String getWechat() {
-        return wechat;
-    }
+	public void setQq(String qq) {
+		this.qq = qq == null ? null : qq.trim();
+	}
 
-    public void setWechat(String wechat) {
-        this.wechat = wechat == null ? null : wechat.trim();
-    }
+	public String getWechat() {
+		return wechat;
+	}
 
-    public String getWangwangNo() {
-        return wangwangNo;
-    }
+	public void setWechat(String wechat) {
+		this.wechat = wechat == null ? null : wechat.trim();
+	}
 
-    public void setWangwangNo(String wangwangNo) {
-        this.wangwangNo = wangwangNo == null ? null : wangwangNo.trim();
-    }
+	public String getWangwangNo() {
+		return wangwangNo;
+	}
 
-    public String getOtherContact() {
-        return otherContact;
-    }
+	public void setWangwangNo(String wangwangNo) {
+		this.wangwangNo = wangwangNo == null ? null : wangwangNo.trim();
+	}
 
-    public void setOtherContact(String otherContact) {
-        this.otherContact = otherContact == null ? null : otherContact.trim();
-    }
+	public String getOtherContact() {
+		return otherContact;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setOtherContact(String otherContact) {
+		this.otherContact = otherContact == null ? null : otherContact.trim();
+	}
 
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getWebsite() {
-        return website;
-    }
+	public void setEmail(String email) {
+		this.email = email == null ? null : email.trim();
+	}
 
-    public void setWebsite(String website) {
-        this.website = website == null ? null : website.trim();
-    }
+	public String getWebsite() {
+		return website;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public void setWebsite(String website) {
+		this.website = website == null ? null : website.trim();
+	}
 
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public void setAddress(String address) {
+		this.address = address == null ? null : address.trim();
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
+	public Date getUpdateTime() {
+		return updateTime;
+	}
 
-    public String getMemo() {
-        return memo;
-    }
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
 
-    public void setMemo(String memo) {
-        this.memo = memo == null ? null : memo.trim();
-    }
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo == null ? null : memo.trim();
+	}
+
+	public Short getStatus() {
+		return status;
+	}
+
+	public void setStatus(Short status) {
+		this.status = status;
+	}
+
 }

@@ -34,7 +34,7 @@ public class CustomerTest extends BaseTest {
 		customer.setWebsite("网站");
 		customer.setAddress("经营地址");
 		customer.setMemo("备注");
-		
+		customer.setStatus((short) 0);
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(customer), createJsonHeader());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/customer/add", HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
@@ -57,7 +57,7 @@ public class CustomerTest extends BaseTest {
 	@Test
 	public void testUpdate() {
 		Customer customer = new Customer();
-
+		customer.setId(44L);
 		customer.setGroupId(1L);
 		customer.setPriceLevelId(1L);
 		customer.setCode("01020");
@@ -76,7 +76,7 @@ public class CustomerTest extends BaseTest {
 		customer.setWebsite("网站");
 		customer.setAddress("经营地址");
 		customer.setMemo("备注");
-
+		customer.setStatus((short) 1);
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(customer), createJsonHeader());
 
 		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/customer/update", HttpMethod.POST, httpEntity, String.class);
@@ -102,6 +102,9 @@ public class CustomerTest extends BaseTest {
 
 	@Test
 	public void test() {
+		HttpEntity<String> httpEntity = new HttpEntity<String>("{}", createJsonHeader());
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/customer/all", HttpMethod.POST, httpEntity, String.class);
+		System.out.println(responseEntity.getBody());
 	}
 
 }

@@ -22,6 +22,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="memo" jdbcType="LONGVARCHAR" property="memo" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
   </resultMap>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -49,7 +50,8 @@
     address,
     create_time,
     update_time,
-    memo
+    memo,
+    status
   </sql>
   
   <insert id="insert" parameterType="com.xlw.goodscm.model.Customer" useGeneratedKeys="true" keyProperty="id">
@@ -71,7 +73,8 @@
 	    website,
 	    address,
 	    create_time,
-	    memo
+	    memo,
+	    status
 	)
     values (
       #{groupId,jdbcType=BIGINT},
@@ -91,7 +94,8 @@
       #{website,jdbcType=VARCHAR},
       #{address,jdbcType=VARCHAR},
       #{createTime,jdbcType=TIMESTAMP},
-      #{memo,jdbcType=LONGVARCHAR}
+      #{memo,jdbcType=LONGVARCHAR},
+      #{status,jdbcType=SMALLINT}
      )
   </insert>
   
@@ -113,7 +117,8 @@
       email = #{email,jdbcType=VARCHAR},
       website = #{website,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
-      memo = #{memo,jdbcType=LONGVARCHAR}
+      memo = #{memo,jdbcType=LONGVARCHAR},
+      status = #{status,jdbcType=SMALLINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
   
@@ -125,7 +130,7 @@
   
   <select id="selectAll" resultMap="BaseResultMap">
     select <include refid="Columns"></include>
-    from customer
+    from customer where status=0
   </select>
 
   <select id="pageQuery" resultMap="BaseResultMap" parameterType="com.xlw.goodscm.pojo.CmPage">
