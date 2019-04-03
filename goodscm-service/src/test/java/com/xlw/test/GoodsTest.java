@@ -136,6 +136,8 @@ public class GoodsTest extends BaseTest {
 
 		goods.setExtInfo("ext_info");
 
+		goods.setFinish(0);
+		
 		goods.setSupplierRecords(new ArrayList<SupplierRecord>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -202,7 +204,7 @@ public class GoodsTest extends BaseTest {
 		goods.setCode("1111");
 		goods.setCategoryId(1000L);
 		goods.setShortName("company short name");
-
+		goods.setFinish(0);
 		goods.setNameZh("强强强");
 
 		goods.setNameEn("strongstring");
@@ -247,7 +249,7 @@ public class GoodsTest extends BaseTest {
 		param.setAll(jsonObj);
 
 		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param,
-				createJsonHeader());
+				createMultiPartHeader());
 		System.out.println(httpEntity.toString());
 		ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
 		System.out.println(responseEntity.getBody());
@@ -341,7 +343,7 @@ public class GoodsTest extends BaseTest {
 		goods.setTradePrice(new BigDecimal("200"));
 
 		goods.setStock(new BigDecimal("33"));
-
+		goods.setFinish(0);
 		goods.setStockUnit((short) 1);
 		goods.setMemo("中国最酷逼的科技公司");
 

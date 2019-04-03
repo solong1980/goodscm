@@ -24,6 +24,7 @@
 		<result column="trade_price" jdbcType="DECIMAL" property="tradePrice" />
 		<result column="stock" jdbcType="DECIMAL" property="stock" />
 		<result column="stock_unit" jdbcType="SMALLINT" property="stockUnit" />
+		<result column="finish" jdbcType="SMALLINT" property="finish" />
 		<result column="status" jdbcType="SMALLINT" property="status" />
 		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
 		<result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -58,6 +59,7 @@
 		trade_price,
 		stock,
 		stock_unit,
+		finish,
 		status,
 		memo,
 		zh_info,
@@ -93,6 +95,7 @@
 			trade_price,
 			stock,
 			stock_unit,
+			finish,
 			status,
 			memo,
 			zh_info,
@@ -120,6 +123,7 @@
 			#{tradePrice,jdbcType=DECIMAL}, 
 			#{stock,jdbcType=DECIMAL}, 
 			#{stockUnit,jdbcType=SMALLINT},
+			#{finish,jdbcType=SMALLINT}, 
 			#{status,jdbcType=SMALLINT}, 
 			#{memo,jdbcType=LONGVARCHAR},
 			#{zhInfo,jdbcType=LONGVARCHAR},
@@ -154,6 +158,7 @@
 		zh_info = #{zhInfo,jdbcType=LONGVARCHAR},
 		en_info = #{enInfo,jdbcType=LONGVARCHAR},
 		ext_info = #{extInfo,jdbcType=LONGVARCHAR},
+		finish = #{finish,jdbcType=SMALLINT},
 		status = #{status,jdbcType=SMALLINT}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
@@ -170,6 +175,7 @@
 		stock = #{stock,jdbcType=DECIMAL},
 		stock_unit = #{stockUnit,jdbcType=SMALLINT},
 		memo = #{memo,jdbcType=LONGVARCHAR},
+		finish = #{finish,jdbcType=SMALLINT},
 		status = #{status,jdbcType=SMALLINT}
 		where id = #{id,jdbcType=BIGINT}
 	</update>

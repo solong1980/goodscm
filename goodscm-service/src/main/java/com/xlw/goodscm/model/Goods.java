@@ -71,7 +71,9 @@ public class Goods {
 	private List<SupplierRecord> supplierRecords;
 
 	private List<GoodsPic> goodsPics;
-
+	
+	private int finish;
+	
 	public Long getId() {
 		return id;
 	}
@@ -334,6 +336,14 @@ public class Goods {
 
 	public void setGoodsPics(List<GoodsPic> goodsPics) {
 		this.goodsPics = goodsPics;
+	}
+
+	public int getFinish() {
+		return finish;
+	}
+
+	public void setFinish(int finish) {
+		this.finish = finish;
 	}
 
 }
