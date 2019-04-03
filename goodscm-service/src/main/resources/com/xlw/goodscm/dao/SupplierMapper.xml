@@ -101,7 +101,7 @@
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, group_id, name, code, contacts, mobile, phone, fax, qq, wechat, email, 
     website, address, status, create_time, update_time, description, memo
-    from supplier where status=0
+    from supplier
   </select>
   
   <select id="pageQuery" resultMap="BaseResultMap"

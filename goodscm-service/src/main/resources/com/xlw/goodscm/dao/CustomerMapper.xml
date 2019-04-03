@@ -130,7 +130,7 @@
   
   <select id="selectAll" resultMap="BaseResultMap">
     select <include refid="Columns"></include>
-    from customer where status=0
+    from customer
   </select>
 
   <select id="pageQuery" resultMap="BaseResultMap" parameterType="com.xlw.goodscm.pojo.CmPage">

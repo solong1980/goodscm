@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -156,7 +157,11 @@ public class GoodsPicController {
 			if (savePath == null) {
 				savePath = Consts.SUB_DIR;
 			}
-			savePath = directory + File.separator + savePath + File.separator + "goodspics";
+			
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+			String format = dateFormat.format(new Date());
+			
+			savePath = directory + File.separator + savePath + File.separator + "goodspics"+File.separator+format;
 			List<GoodsPic> goodsPics = new ArrayList<>();
 			for (int i = 0; i < files.length; i++) {
 				GoodsPic goodsPic = new GoodsPic();

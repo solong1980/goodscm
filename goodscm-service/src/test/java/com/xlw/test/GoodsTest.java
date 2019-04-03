@@ -342,7 +342,7 @@ public class GoodsTest extends BaseTest {
 
 		goods.setStock(new BigDecimal("33"));
 
-		goods.setStockUnit((short) 2);
+		goods.setStockUnit((short) 1);
 		goods.setMemo("中国最酷逼的科技公司");
 
 		System.out.println(JsonUtilTool.toJson(goods));
