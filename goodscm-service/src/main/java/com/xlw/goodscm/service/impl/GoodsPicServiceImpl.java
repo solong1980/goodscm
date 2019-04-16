@@ -107,4 +107,18 @@ public class GoodsPicServiceImpl implements GoodsPicService {
 		return goodsPicMapper.selectGoodsPics(goodsId);
 	}
 
+	@Override
+	public void delete(List<Long> picIds) {
+		if (picIds == null || picIds.isEmpty())
+			return;
+		goodsPicMapper.batchDelete(picIds);
+	}
+
+	@Override
+	public void deleteByGoodsId(Long goodsId) {
+		if (goodsId == null || goodsId == 0)
+			return;
+		goodsPicMapper.deleteByGoodsId(goodsId);
+	}
+
 }

@@ -23,4 +23,8 @@ public interface GoodsPicMapper {
 	void updateGoodsId(GoodsPic goodsPic);
 
 	List<GoodsPic> selectGoodsPics(@Param("goodsId") Long goodsId);
+
+	void batchDelete(List<Long> ids);
+
+	void deleteByGoodsId(Long goodsId);
 }

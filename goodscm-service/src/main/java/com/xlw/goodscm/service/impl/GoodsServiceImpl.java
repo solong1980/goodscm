@@ -219,8 +219,11 @@ public class GoodsServiceImpl implements GoodsService {
 				}
 			}
 		}
+		Long goodsId = goods.getId();
 		// no matter goods id ,update all record
 		List<GoodsPic> goodsPics = goods.getGoodsPics();
+		//delete pictures by goods id
+		goodsPicService.deleteByGoodsId(goodsId);
 		if (goodsPics != null) {
 			for (GoodsPic goodsPic : goodsPics) {
 				if (goodsPic.getIsThumbnail()) {

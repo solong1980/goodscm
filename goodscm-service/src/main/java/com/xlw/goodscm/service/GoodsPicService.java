@@ -28,4 +28,8 @@ public interface GoodsPicService {
 	void updateGoodsId(List<GoodsPic> goodsPics);
 
 	void createThumbnail(GoodsPic goodsPic) throws Exception;
+	
+	void delete(List<Long> picIds);
+
+	void deleteByGoodsId(Long goodsId);
 }

@@ -13,8 +13,21 @@
 	</resultMap>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-		delete from goods_pic
+		update goods_pic set state = 1
 		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	
+	<delete id="deleteByGoodsId" parameterType="java.lang.Long">
+		update goods_pic set state = 1
+		where goods_id = #{goodId,jdbcType=BIGINT}
+	</delete>
+	
+	<delete id="batchDelete" parameterType="java.lang.Long">
+		update goods_pic set state = 1
+		where id in 
+		 <foreach collection="id" open="(" close=")" separator="," item="list">
+    		#{id,jdbcType=BIGINT}
+    	</foreach>
 	</delete>
 
 	<insert id="insert" parameterType="com.xlw.goodscm.model.GoodsPic" useGeneratedKeys="true" keyProperty="id">
@@ -68,9 +81,7 @@
 	
 	<select id="selectGoodsPics" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select id, goods_id, no, relative_path, name, is_thumbnail, state, create_time
-		from goods_pic where goods_id = #{goodsId,jdbcType=BIGINT}
+		from goods_pic where state = 0 and goods_id = #{goodsId,jdbcType=BIGINT} order by id
 	</select>
-	
-	
 
 </mapper>
