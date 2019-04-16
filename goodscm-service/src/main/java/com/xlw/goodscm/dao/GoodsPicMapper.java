@@ -27,4 +27,6 @@ public interface GoodsPicMapper {
 	void batchDelete(List<Long> ids);
 
 	void deleteByGoodsId(Long goodsId);
+
+	void deleteNoInPicIds(@Param("goodsId")Long goodsId, @Param("picIds")List<Long> picIds);
 }

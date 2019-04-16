@@ -32,4 +32,6 @@ public interface GoodsPicService {
 	void delete(List<Long> picIds);
 
 	void deleteByGoodsId(Long goodsId);
+
+	void deleteNoInPicIds(Long goodsId, List<Long> picIds);
 }

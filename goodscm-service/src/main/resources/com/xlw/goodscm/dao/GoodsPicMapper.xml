@@ -25,7 +25,18 @@
 	<delete id="batchDelete" parameterType="java.lang.Long">
 		update goods_pic set state = 1
 		where id in 
-		 <foreach collection="id" open="(" close=")" separator="," item="list">
+		 <foreach collection="list" open="(" close=")" separator="," item="id">
+    		#{id,jdbcType=BIGINT}
+    	</foreach>
+	</delete>
+	
+	<delete id="deleteNoInPicIds" parameterType="java.lang.Long">
+		update goods_pic set state = 1
+		where 
+		 goods_id = #{goodsId,jdbcType=BIGINT}
+		  and
+		 id not in 
+		 <foreach collection="picIds" open="(" close=")" separator="," item="id">
     		#{id,jdbcType=BIGINT}
     	</foreach>
 	</delete>

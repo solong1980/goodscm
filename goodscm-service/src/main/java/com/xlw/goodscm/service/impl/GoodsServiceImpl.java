@@ -223,16 +223,22 @@ public class GoodsServiceImpl implements GoodsService {
 		// no matter goods id ,update all record
 		List<GoodsPic> goodsPics = goods.getGoodsPics();
 		//delete pictures by goods id
-		goodsPicService.deleteByGoodsId(goodsId);
-		if (goodsPics != null) {
-			for (GoodsPic goodsPic : goodsPics) {
-				if (goodsPic.getIsThumbnail()) {
-					goodsPicService.createThumbnail(goodsPic);
-				}
-				goodsPic.setGoodsId(goods.getId());
-			}
-			goodsPicService.updateGoodsId(goodsPics);
+		//goodsPicService.deleteByGoodsId(goodsId);
+		//delete not exist in goodsPics
+		if (goodsPics == null || goodsPics.isEmpty()) {
+			return;
 		}
+		List<Long> picIds = new ArrayList<>();
+		for (GoodsPic goodsPic : goodsPics) {
+			picIds.add(goodsPic.getId());
+			if (goodsPic.getIsThumbnail()) {
+				goodsPicService.createThumbnail(goodsPic);
+			}
+			goodsPic.setGoodsId(goodsId);
+		}
+		goodsPicService.deleteNoInPicIds(goodsId,picIds);
+		goodsPicService.updateGoodsId(goodsPics);
+
 	}
 
 	@Override

@@ -121,4 +121,13 @@ public class GoodsPicServiceImpl implements GoodsPicService {
 		goodsPicMapper.deleteByGoodsId(goodsId);
 	}
 
+	@Override
+	public void deleteNoInPicIds(Long goodsId, List<Long> picIds) {
+		if (goodsId == null || goodsId == 0)
+			return;
+		if (picIds == null || picIds.isEmpty())
+			return;
+		goodsPicMapper.deleteNoInPicIds(goodsId, picIds);
+	}
+
 }
