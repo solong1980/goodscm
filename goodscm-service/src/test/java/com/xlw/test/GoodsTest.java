@@ -79,7 +79,7 @@ public class GoodsTest extends BaseTest {
 	
 	@Test
 	public void testGoodsGet() {
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/137", HttpMethod.GET,
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/26", HttpMethod.GET,
 				new HttpEntity<String>(createJsonHeader()), String.class);
 		System.out.println(responseEntity.getBody());
 	}
@@ -94,7 +94,7 @@ public class GoodsTest extends BaseTest {
 		Goods goods = new Goods();
 		//goods.setCode("");
 		goods.setCategoryId(22L);
-		goods.setShortName("尼康");
+		goods.setShortName("尼康4");
 
 		goods.setNameZh("尼康金圈镜头R0007");
 
@@ -265,7 +265,7 @@ public class GoodsTest extends BaseTest {
 
 		HttpHeaders headers = createJsonHeader();
 
-		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/22", HttpMethod.GET,
+		ResponseEntity<String> responseEntity = restTemplate.exchange(localhost + "/goods/get/26", HttpMethod.GET,
 				new HttpEntity<String>(headers), String.class);
 		System.out.println(responseEntity.getBody());
 		CmResult result = JsonUtilTool.fromJson(responseEntity.getBody(), CmResult.class);

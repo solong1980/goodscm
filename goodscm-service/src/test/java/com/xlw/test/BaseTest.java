@@ -35,7 +35,9 @@ import com.xlw.sys.model.SysUser;
 public class BaseTest {
 	// 39.107.24.81
 	// 120.55.189.150
-	public static final String localhost = "http://localhost:9905";
+	//112.74.182.104
+	//127.0.0.1
+	public static final String localhost = "http://127.0.0.1:9905";
 	public String sessionId = "5c162a48-f26f-49c3-b1bd-b44819ce1d45";
 
 	@BeforeClass
@@ -175,17 +177,17 @@ public class BaseTest {
 
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
 
-		param.add("fileName", "2016-10-19 2016-10-19 002 001.jpg");
-		FileSystemResource resource = new FileSystemResource(new File("2016-10-19 2016-10-19 002 001.jpg"));
+		param.add("fileName", "f684c6a0edbd477f9f652265cd40c5c2.jpg");
+		FileSystemResource resource = new FileSystemResource(new File("f684c6a0edbd477f9f652265cd40c5c2.jpg"));
 		param.add("files", resource);
 
-		param.add("fileName", "2016-10-27 2016-10-27 001 001.jpg");
-		resource = new FileSystemResource(new File("2016-10-27 2016-10-27 001 001.jpg"));
-		param.add("files", resource);
-
-		param.add("fileName", "2016-11-01 2016-11-01 001 001.jpg");
-		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.jpg"));
-		param.add("files", resource);
+//		param.add("fileName", "2016-10-27 2016-10-27 001 001.jpg");
+//		resource = new FileSystemResource(new File("2016-10-27 2016-10-27 001 001.jpg"));
+//		param.add("files", resource);
+//
+//		param.add("fileName", "2016-11-01 2016-11-01 001 001.jpg");
+//		resource = new FileSystemResource(new File("2016-11-01 2016-11-01 001 001.jpg"));
+//		param.add("files", resource);
 
 		HttpHeaders headers = createMultiPartHeader();
 		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(param, headers);

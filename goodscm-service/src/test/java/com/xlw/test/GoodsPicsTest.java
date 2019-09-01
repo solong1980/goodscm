@@ -15,6 +15,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import com.xlw.goodscm.utils.JsonUtilTool;
+
 public class GoodsPicsTest extends BaseTest {
 
 
@@ -81,10 +83,13 @@ public class GoodsPicsTest extends BaseTest {
 
 	@Test
 	public void testGetGoodsPic() throws URISyntaxException, IOException {
-		URI url = new URI(localhost + "/goodspic/pic/52");
-
-		ResponseEntity<byte[]> responseEntity = restTemplate.exchange(url, HttpMethod.POST, null, byte[].class);
+		URI url = new URI(localhost + "/goodspic/pic/1292");
+		HttpEntity<String> httpEntity = new HttpEntity<String>("", createJsonHeader());
+		
+		ResponseEntity<byte[]> responseEntity = restTemplate.exchange(url, HttpMethod.POST, httpEntity, byte[].class);
 		HttpHeaders headers = responseEntity.getHeaders();
+		
+		String first = responseEntity.getHeaders().getFirst("Content-Disposition");
 		List<String> list = headers.get("filename");
 		String filename = "52.jpg";
 		if (list != null && !list.isEmpty())

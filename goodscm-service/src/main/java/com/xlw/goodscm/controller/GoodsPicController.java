@@ -84,6 +84,7 @@ public class GoodsPicController {
 				} else {
 					fileName = URLDecoder.decode(fileName, characterEncoding);// 其他浏览器
 				}
+				fileName = Long.toString(goodsPic.getId());
 				response.setContentLengthLong(f.length());
 				response.setHeader("Content-disposition",
 						"attachment; filename=" + new String(fileName.getBytes("utf-8"), "ISO8859-1")); // 指定下载的文件名
