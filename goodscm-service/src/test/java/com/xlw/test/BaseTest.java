@@ -35,7 +35,6 @@ import com.xlw.sys.model.SysUser;
 public class BaseTest {
 	// 39.107.24.81
 	// 120.55.189.150
-	//112.74.182.104
 	//127.0.0.1
 	public static final String localhost = "http://127.0.0.1:9905";
 	public String sessionId = "5c162a48-f26f-49c3-b1bd-b44819ce1d45";
@@ -102,8 +101,8 @@ public class BaseTest {
 
 	public HttpHeaders login() {
 		SysUser user = new SysUser();
-		user.setUsername("wangshengui");
-		user.setPassword("admin");
+		user.setUsername("ssdfas");
+		user.setPassword("sdfsad");
 		HttpEntity<String> httpEntity = new HttpEntity<String>(JsonUtilTool.toJson(user), createJsonHeader());
 		ResponseEntity<String> forEntity = restTemplate.exchange(localhost + "/login/dologin", HttpMethod.POST, httpEntity, String.class);
 
