@@ -21,6 +21,12 @@ import com.xlw.goodscm.pojo.CmResult;
 import com.xlw.goodscm.service.GoodsService;
 import com.xlw.sys.shiro.ShiroTag;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value = "商品管理中心服务接口", consumes = "application/json")
 @Controller
 @RequestMapping("/goods")
 public class GoodsController {
@@ -37,11 +43,13 @@ public class GoodsController {
 		return "goods";
 	}
 
+	@ApiOperation(value = "分页查询商品", notes = "根据查询条件")
+	//@ApiImplicitParam(name = "goodsCmPage", value = "goodsCmPage", required = true)
 	@ResponseBody
 	// 只用同时具有user:view和user:create权限才能访问
 	// @RequiresPermissions(value = { "user:view", "user:create" }, logical =
 	// Logical.AND)
-	@RequestMapping("/query")
+	@RequestMapping(value = "/query", method = RequestMethod.POST)
 	public CmResult query(@RequestBody CmPage<Goods, List<?>> goodsCmPage) throws Exception {
 		logger.info("query " + goodsCmPage);
 		Goods c = goodsCmPage.getC();
@@ -69,9 +77,9 @@ public class GoodsController {
 
 	@ResponseBody
 	@RequestMapping("/querynewgoods")
-	public CmResult queryNewGoods(@RequestBody(required=false) CmPage<Goods, List<?>> goodsCmPage) throws Exception {
+	public CmResult queryNewGoods(@RequestBody(required = false) CmPage<Goods, List<?>> goodsCmPage) throws Exception {
 		logger.info("query " + goodsCmPage);
-		if(goodsCmPage==null) {
+		if (goodsCmPage == null) {
 			goodsCmPage = new CmPage<>();
 		}
 		Goods c = goodsCmPage.getC();
@@ -96,7 +104,7 @@ public class GoodsController {
 		CmResult cmResult = CmResult.build(Codes.SUCCESS, goodsCmPage);
 		return cmResult;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/get/{id}")
 	public CmResult get(@PathVariable("id") Long id) throws Exception {
@@ -165,8 +173,11 @@ public class GoodsController {
 	 * @return
 	 * @throws Exception
 	 */
+	@ApiOperation(value = "审核商品", notes = "根据ID, 状态")
+	@ApiImplicitParams(value = { @ApiImplicitParam(name = "id", value = "id", required = true, dataType = "Long"),
+			@ApiImplicitParam(name = "status", value = "status", required = true, dataType = "Short"), })
 	@ResponseBody
-	@RequestMapping("/audit/{id}/{status}")
+	@RequestMapping(value = "/audit/{id}/{status}", method = { RequestMethod.GET, RequestMethod.POST })
 	public CmResult audit(@PathVariable("id") Long id, @PathVariable("status") Short status) throws Exception {
 		logger.info("update goods id=" + id + " to status=" + status);
 		Goods goods = new Goods();
